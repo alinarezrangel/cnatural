@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es_VEN">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Generation - The CSS Based framework</title>
+		<link href="css/generation.css" rel="stylesheet"/>
+		<link href="css/pallete_basics.css" rel="stylesheet"/>
+		<script src="js/generation.js"></script>
+	</head>
+	<body>
+		<header class="container color-black">
+			<div class="flexible center">
+				<h1>Generation 1</h1>
+				<h2>The CSS3 based framework</h2>
+			</div>
+		</header>
+		<div class="modal" id="modal1">
+			<div class="modal-content">
+				<header class="container color-aqua">
+					<span class="close-button" data-close-modal="modal1">Close</span>
+					<h1>Modal #1</h1>
+				</header>
+				<section class="container color-white">
+					<p>
+						This is a modal!
+					</p>
+				</section>
+			</div>
+		</div>
+		<div class="modal" id="modal2">
+			<div class="modal-content">
+				<header class="container color-aqua">
+					<span class="close-button" data-close-modal="modal2">Close</span>
+					<h1>Modal #2</h1>
+				</header>
+				<section class="container color-white">
+					<p>
+						This is a modal too!
+					</p>
+				</section>
+			</div>
+		</div>
+		<main class="container color-white">
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Buttons</h3>
+				</header>
+				<h4>Colors (normal)</h4>
+				<div class="button-group">
+					<button type="button" class="button color-black">button</button>
+					<button type="button" class="button color-white">button</button>
+					<button type="button" class="button color-green">button</button>
+					<button type="button" class="button color-red">button</button>
+					<button type="button" class="button color-yellow">button</button>
+					<button type="button" class="button color-blue">button</button>
+					<button type="button" class="button color-aqua">button</button>
+					<button type="button" class="button color-grey">button</button>
+				</div>
+				<h4>Colors (light)</h4>
+				<div class="button-group">
+					<button type="button" class="button color-black">button</button>
+					<button type="button" class="button color-white">button</button>
+					<button type="button" class="button color-light-green">button</button>
+					<button type="button" class="button color-light-red">button</button>
+					<button type="button" class="button color-light-yellow">button</button>
+					<button type="button" class="button color-light-blue">button</button>
+					<button type="button" class="button color-light-aqua">button</button>
+					<button type="button" class="button color-light-grey">button</button>
+				</div>
+				<h4>Colors (dark)</h4>
+				<div class="button-group">
+					<button type="button" class="button color-black">button</button>
+					<button type="button" class="button color-white">button</button>
+					<button type="button" class="button color-dark-green">button</button>
+					<button type="button" class="button color-dark-red">button</button>
+					<button type="button" class="button color-dark-yellow">button</button>
+					<button type="button" class="button color-dark-blue">button</button>
+					<button type="button" class="button color-dark-aqua">button</button>
+					<button type="button" class="button color-dark-grey">button</button>
+				</div>
+				<h4>Colors (color pallete basics, by default)</h4>
+				<div class="button-group wrap">
+					<button type="button" class="button color-water">water</button>
+					<button type="button" class="button color-ocean">ocean</button>
+					<button type="button" class="button color-greenapple">greenapple</button>
+					<button type="button" class="button color-sky">sky</button>
+					<button type="button" class="button color-flowered">flowered</button>
+					<button type="button" class="button color-purple">purple</button>
+					<button type="button" class="button color-evergreen">evergreen</button>
+					<button type="button" class="button color-cyan">cyan</button>
+					<button type="button" class="button color-magenta">magenta</button>
+					<button type="button" class="button color-sand">sand</button>
+					<button type="button" class="button color-simplegreen">simplegreen</button>
+					<button type="button" class="button color-simpleblue">simpleblue</button>
+					<button type="button" class="button color-everred">everred</button>
+					<button type="button" class="button color-everblack">everblack</button>
+					<button type="button" class="button color-tree">tree</button>
+					<button type="button" class="button color-rusticred">rusticred</button>
+					<button type="button" class="button color-earth">earth</button>
+				</div>
+			</section>
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Containers</h3>
+				</header>
+				<div class="container border margin">
+					Container
+				</div>
+				<div class="fcontainer border margin">
+					Flexible Container
+				</div>
+				<div class="flexible center border margin">
+					<div class="box">
+						Flexible
+					</div>
+					<div class="box">
+						With
+					</div>
+					<div class="box">
+						Center
+					</div>
+				</div>
+				<div class="flexible right border margin">
+					<div class="box">
+						Flexible
+					</div>
+					<div class="box">
+						With
+					</div>
+					<div class="box">
+						Right
+					</div>
+				</div>
+				<div class="flexible left border margin">
+					<div class="box">
+						Flexible
+					</div>
+					<div class="box">
+						With
+					</div>
+					<div class="box">
+						Left
+					</div>
+				</div>
+				<div class="section border margin">
+					Section
+				</div>
+			</section>
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Navigation</h3>
+				</header>
+				<nav class="navigation color-dark-aqua margin">
+					<a href="#">N</a>
+					<a href="#">a</a>
+					<a href="#">v</a>
+					<a href="#">i</a>
+					<a href="#">g</a>
+					<a href="#">a</a>
+					<a href="#">t</a>
+					<a href="#">i</a>
+					<a href="#">o</a>
+					<a href="#">n</a>
+				</nav>
+				<nav class="top-navigation color-dark-green margin">
+					<a href="#">N</a>
+					<a href="#">a</a>
+					<a href="#">v</a>
+					<a href="#">i</a>
+					<a href="#">g</a>
+					<a href="#">a</a>
+					<a href="#">t</a>
+					<a href="#">i</a>
+					<a href="#">o</a>
+					<a href="#">n</a>
+				</nav>
+				<nav class="side-navigation color-dark-yellow margin">
+					<a href="#">N</a>
+					<a href="#">a</a>
+					<a href="#">v</a>
+					<a href="#">i</a>
+					<a href="#">g</a>
+					<a href="#">a</a>
+					<a href="#">t</a>
+					<a href="#">i</a>
+					<a href="#">o</a>
+					<a href="#">n</a>
+				</nav>
+			</section>
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Forms</h3>
+				</header>
+				<form class="form" action="index.html" method="get">
+					<label class="label">
+						Your first name:
+						<input class="input" type="text"/>
+					</label>
+					<label class="label">
+						Your password:
+						<input class="input" type="password"/>
+					</label>
+					<fieldset class="fieldset">
+						<legend>Your car color</legend>
+						<label class="label">
+							<input class="input" type="radio" name="A"/>
+							Red
+						</label>
+						<label class="label">
+							<input class="input" type="radio" name="A"/>
+							Green
+						</label>
+						<label class="label">
+							<input class="input" type="radio" name="A"/>
+							Blue
+						</label>
+					</fieldset>
+					<fieldset class="fieldset">
+						<legend>A bird</legend>
+						<label class="label">
+							<input class="input" type="checkbox" name="A"/>
+							A
+						</label>
+						<label class="label">
+							<input class="input" type="checkbox" name="A"/>
+							B
+						</label>
+						<label class="label">
+							<input class="input" type="checkbox" name="A"/>
+							C
+						</label>
+					</fieldset>
+				</form>
+			</section>
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Dropdowns &amp; Cards</h3>
+				</header>
+				<p>
+					A
+					<span class="dropdown">
+						FILO
+						<span class="dropdown-content inline-block color-red">
+							First In Last Out
+						</span>
+					</span>
+					std template is std::stack&lt;T&gt; in &lt;stack&gt; header.
+				</p>
+				<div class="dropdown">
+					<button type="button" class="button color-red">
+						Danger!
+					</button>
+					<div class="dropdown-content card">
+						A core of the CPU is in high-performance mode.
+					</div>
+				</div>
+				<div class="card">
+					A card!
+				</div>
+				<div class="card">
+					A card!
+				</div>
+				<div class="card">
+					A card!
+				</div>
+			</section>
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Responsible 12 columns fluid grid</h3>
+				</header>
+				<p>
+					The flexible 12 columns fluid grid based on flex-boxes.
+					The grid container is optional and you can use the rows directly.
+				</p>
+				<div class="grid">
+					<div class="row no-wrap justify-space-around">
+						<div class="col color-red f1">
+							A
+						</div>
+						<div class="col color-blue f2">
+							A
+						</div>
+						<div class="col color-green f1">
+							A
+						</div>
+					</div>
+					<div class="row no-wrap justify-space-around">
+						<div class="col color-aqua f3">
+							B
+						</div>
+						<div class="col color-grey f1">
+							B
+						</div>
+						<div class="col color-yellow f1">
+							B
+						</div>
+					</div>
+					<div class="row no-wrap justify-space-around">
+						<div class="col color-red f1">
+							C
+						</div>
+						<div class="col color-blue f1">
+							C
+						</div>
+						<div class="col color-green f4">
+							C
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Fonts</h3>
+				</header>
+				<p>
+					Generation 1 includes a set of font sizes:
+				</p>
+				<div class="container text-tiny">
+					text-tiny
+				</div>
+				<div class="container text-small">
+					text-small
+				</div>
+				<div class="container text-normal">
+					text-normal
+				</div>
+				<div class="container text-big">
+					text-big
+				</div>
+				<div class="container text-ultra-big">
+					text-ultra-big
+				</div>
+				<div class="container text-large">
+					text-large
+				</div>
+				<div class="container text-xlarge">
+					text-xlarge
+				</div>
+				<div class="container text-jumbo">
+					text-jumbo
+				</div>
+				<div class="container text-jumbo-2">
+					text-jumbo-2
+				</div>
+				<div class="container text-jumbo-3">
+					text-jumbo-3
+				</div>
+				<div class="container text-jumbo-4">
+					text-jumbo-4
+				</div>
+				<div class="container text-jumbo-5">
+					text-jumbo-5
+				</div>
+				<div class="container font-normal">
+					font-normal
+				</div>
+				<div class="container font-monospace">
+					font-monospace
+				</div>
+				<div class="container font-italic">
+					font-italic
+				</div>
+				<div class="container font-bold">
+					font-bold
+				</div>
+				<div class="container font-serif">
+					font-serif
+				</div>
+			</section>
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Generation 1 JavaScript engine</h3>
+				</header>
+				<p>
+					Generation 1 includes a javascript engine designed for web
+					developers:
+				</p>
+				<div class="button color-red text-color-light-grey" id="btn1">
+					Click me!
+				</div>
+				<div class="button color-green text-color-light-grey" id="btn2">
+					Restore
+				</div>
+			</section>
+			<section class="section border">
+				<header class="container color-grey">
+					<h3>Modals</h3>
+				</header>
+				<p>
+					A modal is a sub-window styled with CSS, but powered by ECMAScript/JavaScript:
+				</p>
+				<button class="button color-red text-color-light-grey" data-open-modal="modal1" type="button">
+					Show modal 1
+				</button>
+				<button class="button color-green text-color-light-grey" data-open-modal="modal2" type="button">
+					Show modal 2
+				</button>
+				<p>
+					The ECMAScript/JavaScript script for this modals are:
+				</p>
+				<code>
+					// None :)
+				</code>
+				<p>
+					Yes, Generation initializes the modals at start! you only need these HTML attributes:
+				</p>
+				<ul class="list">
+					<li>data-open-modal="<i>id</i>": When click this element, open the modal with ID</li>
+					<li>data-close-modal="<i>id</i>": When click this element, close the modal with ID</li>
+				</ul>
+			</section>
+		</main>
+		<footer class="fcontainer center color-black">
+			<p>
+				Example by Generation Framework<br />
+				Uses Generation 1<br />
+				By Alejandro Linarez Rangel
+			</p>
+		</footer>
+		<script>
+			if(typeof Generation !== "undefined")
+			{
+				if(Generation.compatible(1))
+				{
+					Generation.get("btn1").click(function()
+					{
+						Generation.get("btn1").html("Thanks you!");
+					});
+					Generation.get("btn2").click(function()
+					{
+						Generation.get("btn1").html("Click me!");
+					});
+				}
+			}
+		</script>
+	</body>
+</html>

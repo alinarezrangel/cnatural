@@ -1,0 +1,61 @@
+/**************************************
+* Generation: A CSS3 Based framework. *
+*      This is Generation 1.0         *
+**************************************/
+
+/* I take this colors from http://www.w3schools.com/colors/colors_palettes.asp */
+
+.color-water {background-color: #92a8d1; color: #000;}
+.color-ocean {background-color: #034f84; color: #fff;}
+.color-greenapple {background-color: #b1cbbb; color: #000;}
+.color-sky {background-color: #deeaee; color: #000;}
+.color-flowered {background-color: #c94c4c; color: #000;}
+.color-purple {background-color: #50394c; color: #fff;}
+.color-evergreen {background-color: #618685; color: #000;}
+.color-cyan {background-color: #80ced6; color: #000;}
+.color-magenta {background-color: #4040a1; color: #fff;}
+.color-sand {background-color: #f4e1d2; color: #000;}
+.color-simpleblue {background-color: #36486b; color: #fff;}
+.color-simplegreen {background-color: #618685; color: #000;}
+.color-everred {background-color: #bc5a45; color: #000;}
+.color-everblack {background-color: #3b3a30; color: #fff;}
+.color-tree {background-color: #77a8a8; color: #000;}
+.color-rusticred {background-color: #563f46; color: #000;}
+.color-earth {background-color: #625750; color: #000;}
+
+.text-color-water {color: #92a8d1;}
+.text-color-ocean {color: #034f84;}
+.text-color-greenapple {color: #b1cbbb;}
+.text-color-sky {color: #deeaee;}
+.text-color-flowered {color: #c94c4c;}
+.text-color-purple {color: #50394c;}
+.text-color-evergreen {color: #618685;}
+.text-color-cyan {color: #80ced6;}
+.text-color-magenta {color: #4040a1;}
+.text-color-sand {color: #f4e1d2;}
+.text-color-simpleblue {color: #36486b;}
+.text-color-simplegreen {color: #618685;}
+.text-color-everred {color: #bc5a45;}
+.text-color-everblack {color: #3b3a30;}
+.text-color-tree {color: #77a8a8;}
+.text-color-rusticred {color: #563f46;}
+.text-color-earth {color: #625750;}
+
+.border-color-water {border-color: #92a8d1;}
+.border-color-ocean {border-color: #034f84;}
+.border-color-greenapple {border-color: #b1cbbb;}
+.border-color-sky {border-color: #deeaee;}
+.border-color-flowered {border-color: #c94c4c;}
+.border-color-purple {border-color: #50394c;}
+.border-color-evergreen {border-color: #618685;}
+.border-color-cyan {border-color: #80ced6;}
+.border-color-magenta {border-color: #4040a1;}
+.border-color-sand {border-color: #f4e1d2;}
+.border-color-simpleblue {border-color: #36486b;}
+.border-color-simplegreen {border-color: #618685;}
+.border-color-everred {border-color: #bc5a45;}
+.border-color-everblack {border-color: #3b3a30;}
+.border-color-tree {border-color: #77a8a8;}
+.border-color-rusticred {border-color: #563f46;}
+.border-color-earth {border-color: #625750;}
+

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es_VEN">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Generation - The CSS Based framework</title>
+		<link href="css/generation.css" rel="stylesheet"/>
+		<script src="js/generation.js"></script>
+	</head>
+	<body>
+		<header class="container color-black">
+			<div class="flexible center">
+				<h1>Generation 1</h1>
+				<h2>The CSS3 based framework</h2>
+				<h3>Tutorial</h3>
+			</div>
+		</header>
+		<main class="container color-white">
+			<section id="starterkit" class="border margin">
+				<header class="container color-grey">
+					<h3>Getting started</h3>
+				</header>
+				<section class="container">
+					<p>
+						Generation is a CSS3 based framework for HTML5, with a minimal
+						ECMAScript 5/6 API for general purposes. The system requisites
+						for using Generation are:
+					</p>
+					<ul class="list">
+						<li>
+							CSS3 support. All major browsers can view a Generation page
+							without any trouble.
+						</li>
+						<li>
+							HTML5 support. All major browsers support HTML5.
+						</li>
+					</ul>
+					<p>
+						The syntax of Generation is easy to learn, but first, you need
+						download Generation 1.
+					</p>
+					<a href="css/generation.css" download="download" class="button color-green">
+						Get Generation 1 (CSS3 Core)
+					</a>
+					<p>
+						Unzip the file in your page root's directory, after this, you
+						can use Generation with this code (insert it in your head tag):
+					</p>
+					<div class="container border border-color-aqua">
+						<code class="font-monospace" data-highlight-lang="html">
+							&lt;link href="generation/css/generation.css" rel="stylesheet"/&gt;<br />
+							&lt;script src="generation/js/generation.js"&gt;&lt;/script&gt;
+						</code>
+					</div>
+					<p>
+						And you are ready for make a hello world page.
+					</p>
+				</section>
+			</section>
+			<section id="helloworld" class="border margin">
+				<header class="container color-grey">
+					<h3>The "Hello World"</h3>
+				</header>
+				<section class="container">
+					<p>
+						Create a directory named "helloworld" and unzip
+						the Generation 1 framework in it.
+					</p>
+					<p>
+						After this, create a file named "index.html" in it
+						and copy the next code in the file:
+					</p>
+					<div class="container border border-color-aqua">
+						<code class="font-monospace" data-highlight-lang="html">
+							&lt;!DOCTYPE html&gt;<br />
+							&lt;html&gt;<br />
+							&nbsp;&nbsp;&lt;head&gt;<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&lt;meta charset="utf-8/&gt;<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Hello World&lt;/title&gt;<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&lt;link href="generation/css/generation.css" rel="stylesheet"/&gt;<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&lt;script src="generation/js/generation.js"&gt;&lt;/script&gt;<br />
+							&nbsp;&nbsp;&lt;/head&gt;<br />
+							&nbsp;&nbsp;&lt;body&gt;<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&lt;main class="flexible center color-white"&gt;<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Hello World&lt;/h1&gt;<br />
+							&nbsp;&nbsp;&nbsp;&nbsp;&lt;/main&gt;<br />
+							&nbsp;&nbsp;&lt;/body&gt;<br />
+							&lt;/html&gt;
+						</code>
+					</div>
+				</section>
+			</section>
+			<section id="helloworld" class="border margin">
+				<header class="container color-grey">
+					<h3>Syntax</h3>
+				</header>
+				<section class="container">
+					<p>
+						Generation 1 uses a global syntax for groups of classes:
+					</p>
+					<h4>Colors</h4>
+					<p>
+						In Generation 1, the colors have the syntax:
+					</p>
+					<div class="container border border-color-aqua">
+						<code class="font-monospace" data-highlight-lang="html">
+							color-<i>name</i> <b>(1)</b><br />
+							color-light-<i>name</i> <b>(2)</b><br />
+							color-dark-<i>name</i> <b>(3)</b>
+						</code>
+					</div>
+					<p>
+						The predefined names are:
+					</p>
+					<ul class="list">
+						<li>white</li>
+						<li>black</li>
+						<li>red</li>
+						<li>green</li>
+						<li>blue</li>
+						<li>aqua</li>
+						<li>yellow</li>
+						<li>grey</li>
+					</ul>
+					<p>
+						The colors are: <b>(1)</b> the color, <b>(2)</b> the color
+						with more intensity and <b>(3)</b> the color with more
+						darkness.
+					</p>
+					<p>
+						For more colors, you can use the color palletes, they are files
+						with the form <code>generation/css/pallete-<i>name</i>.css</code>
+						and the buildins palletes are:
+					</p>
+					<ul class="list">
+						<li>
+							basic: A simple color pallete with the colors:
+						</li>
+					</ul>
+					<p>
+						You can create a color pallete with the tutorial at the appendix A.
+					</p>
+					<p>
+						An example of the predefined colors are:
+					</p>
+					<div class="button-group">
+						<button class="button color-red" type="button">color-red</button>
+						<button class="button color-dark-green" type="button">color-dark-green</button>
+						<button class="button color-white" type="button">color-white</button>
+						<button class="button color-light-aqua" type="button">color-light-aqua</button>
+						<button class="button color-black" type="button">color-black</button>
+					</div>
+					<h4>Blocks and containers</h4>
+					<p>
+						In Generation 1, are 3 types of blocks:
+					</p>
+					<ul class="list">
+						<li>
+							boxes: A simple block.
+						</li>
+						<li>
+							containers: A block with padding and margin.
+						</li>
+						<li>
+							flexibles: A flexible box (see CSS3 flex-boxes).
+						</li>
+					</ul>
+					<p>
+						The classes for they are:
+					</p>
+					<ul class="list">
+						<li>
+							boxes: <code>box</code>, <code>card</code>, <code>grid</code>.
+						</li>
+						<li>
+							containers: <code>container</code>, <code>group</code>, <code>section</code>.
+						</li>
+						<li>
+							flexibles: <code>row</code>, <code>flexible</code>, <code>fcontainer</code>, <code>button-group</code>.
+						</li>
+					</ul>
+					<p>
+						Generation 1 have sub-types of blocks:
+					</p>
+					<ul class="list">
+						<li>box: A simple box.</li>
+						<li>card: A box with shadow.</li>
+						<li>grid: A multiple collumn grid.</li>
+						<li>container: A simple container.</li>
+						<li>group: A collection of boxes, containers or flexibles.</li>
+						<li>section: A container with margin.</li>
+						<li>row: A simple flexible.</li>
+						<li>flexible: A simple flexible as a row.</li>
+						<li>fcontainer: As a container, but with flexible properties.</li>
+						<li>button-group: A sub-class of group, for buttons.</li>
+					</ul>
+					<p>
+						You can see the aspect of they in the <a href="index.html">demonstration file</a>.
+					</p>
+					<p>
+						The usage is:
+					</p>
+					<div class="container border border-color-aqua">
+						<code class="font-monospace" data-highlight-lang="html">
+							&lt;<i>element</i> class="<i>block-type</i> <i>classes</i>"&gt;...
+						</code>
+					</div>
+					<p>
+						Where: <i>element</i> is any HTML element to style, <i>block-type</i> is any
+						of the sub-types of blocks and <i>classes</i> are any other Generation 1 class.
+					</p>
+					<h4>12 columns fluid grid</h4>
+					<p>
+						Generation 1 have a multiple columns grid based on CSS3 flexboxes,
+						but for general purposes, is safe use 12 of it.
+					</p>
+					<p>
+						if you need a grid with multiple columns, you can use the "grid" class, but if
+						you need only a layout of elements in the same row, use the "row" class instead.
+					</p>
+					<p>
+						For example: a grid of pure columns:
+					</p>
+					<div class="grid">
+						<div class="row no-wrap justify-space-around">
+							<div class="col color-red f1">
+								A
+							</div>
+							<div class="col color-blue f2">
+								A
+							</div>
+							<div class="col color-green f1">
+								A
+							</div>
+						</div>
+						<div class="row no-wrap justify-space-around">
+							<div class="col color-aqua f3">
+								B
+							</div>
+							<div class="col color-grey f1">
+								B
+							</div>
+							<div class="col color-yellow f1">
+								B
+							</div>
+						</div>
+						<div class="row no-wrap justify-space-around">
+							<div class="col color-red f1">
+								C
+							</div>
+							<div class="col color-blue f1">
+								C
+							</div>
+							<div class="col color-green f4">
+								C
+							</div>
+						</div>
+					</div>
+					<p>
+						And a row of cards:
+					</p>
+					<div class="row margin no-wrap justify-space-around">
+						<div class="col f1 card">
+							A
+						</div>
+						<div class="col f1 card">
+							A
+						</div>
+						<div class="col f1 card">
+							A
+						</div>
+					</div>
+					<p>
+						By default, all items in a row have the same width,
+						but you can change it with the classes <code>f<i>n</i></code>
+						where <i>n</i> is a number between 1 and 12 (inclusive).
+					</p>
+					<p>
+						You can control the width of an item with these classes,
+						a f1 item have a default width, a f2 item have the double of
+						default width, but if all items in the row have a f2 class,
+						their really have a default width, not the double!.
+					</p>
+					<p>
+						For a very good explanation of this unexpected result, you can
+						see the official CSS3 FlexBox reference.
+					</p>
+					<p>
+						In standards terms, the "f" class sets the CSS flex property, and the
+						"o" class sets the order property (o1, o2, o3, o4 ...).
+					</p>
+					<p>
+						You can set a lot of properties with classes, for example: "wrap" and
+						"no-wrap", "align-stretch" or "self-start", etc. The basic flexible classes
+						are:
+					</p>
+					<ul class="list">
+						<li>f<i>n</i>: Sets the flex width</li>
+						<li>o<i>n</i>: Sets the order</li>
+						<li>self-start: (on columns) align this item to the top of the flex</li>
+						<li>self-end: (on columns) align this item to the bottom of the flex</li>
+						<li>self-stretch: (on columns) align this item to the height of the flex</li>
+						<li>self-center: (on columns) align this item to the center of the flex</li>
+						<li>align-<i>class</i>: aligns all items. <i>class</i> is start, end, stretch of center</li>
+						<li>direction-row: set the flex direction to row (default in rows)</li>
+						<li>direction-column: set the flex direction to column (default with center)</li>
+						<li>wrap: wraps the items</li>
+						<li>no-wrap: never wrap items</li>
+					</ul>
+					<h4>Borders</h4>
+					<p>
+						For set the border of an element, you can use the border class, but if
+						you not need all borders use it's sub-classes:
+					</p>
+					<ul class="list">
+						<li>border: sets all borders</li>
+						<li>border-vertical: sets only the top and bottom borders</li>
+						<li>border-horizontal: sets only the left and right borders</li>
+						<li>no-border: removes all borders</li>
+						<li>no-border-<i>side</i>: removes the <i>side</i> border, the sides are top, bottom, left or right</li>
+					</ul>
+					<p>
+						For sets the border color, use any of the <code>border-color-<i>name</i></code> classes, the
+						names are normal color names, and support light and dark colors:
+					</p>
+					<div class="card border border-color-aqua">
+						class="card border border-color-aqua"
+					</div>
+					<div class="card border-horizontal border-color-dark-green">
+						class="card border-horizontal border-color-dark-green"
+					</div>
+					<div class="card border-vertical border-color-light-red">
+						class="card border-vertical border-color-light-red"
+					</div>
+					<p>
+						For sets the border width, use the "bs-<i>n</i>" classes, where <i>n</i>
+						is: 1, 2, 4, 6, 8, 16, 32 or 64 (measures in px).
+					</p>
+					<div class="card bs-4 border border-color-aqua">
+						class="card bs-4 border border-color-aqua"
+					</div>
+					<div class="card bs-2 border-horizontal border-color-dark-green">
+						class="card bs-2 border-horizontal border-color-dark-green"
+					</div>
+					<div class="card bs-32 border-vertical border-color-light-red">
+						class="card bs-32 border-vertical border-color-light-red"
+					</div>
+					<h4>Others and utilities</h4>
+					<h5>Padding</h5>
+					<p>
+						"padding-<i>n</i>" where <i>n</i> is 1, 2, 4, 8, 16, 32 or 64.
+					</p>
+					<p>
+						Remove the padding with "no-padding".
+					</p>
+					<h5>Margin</h5>
+					<p>
+						"margin-<i>n</i>" where <i>n</i> is 1, 2, 4, 8, 16, 32 or 64.
+					</p>
+					<p>
+						Remove the margin with "no-margin".
+					</p>
+					<h5>Width and height</h5>
+					<p>
+						"total-width" set the width to 100vh (screen width). "width-block" set the width to 100% (all containers width).
+					</p>
+					<p>
+						"total-height" set the height to 100vh (screen height). "width-block" set the height to 100% (all containers height).
+					</p>
+					<h5>Tables</h5>
+					<p>
+						You can style tables with the "table" class and "color-*" classes:
+					</p>
+					<table class="table border-color-black width-block">
+						<caption>A simple table</caption>
+						<thead class="color-aqua">
+							<th>A</th>
+							<th>B</th>
+							<th>C</th>
+						</thead>
+						<tbody>
+							<td>a</td>
+							<td>b</td>
+							<td>c</td>
+						</tbody>
+					</table>
+				</section>
+			</section>
+		</main>
+		<footer class="fcontainer center color-black">
+			<p>
+				Example by Generation Framework<br />
+				Uses Generation 1<br />
+				By Alejandro Linarez Rangel
+			</p>
+		</footer>
+		<script>
+			if(typeof Generation !== "undefined")
+			{
+				if(Generation.compatible(1))
+				{
+					Generation.get("btn1").click(function()
+					{
+						Generation.get("btn1").html("Thanks you!");
+					});
+					Generation.get("btn2").click(function()
+					{
+						Generation.get("btn1").html("Click me!");
+					});
+				}
+			}
+		</script>
+	</body>
+</html>

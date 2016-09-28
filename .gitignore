@@ -1,0 +1,9 @@
+.vscore/
+*.log
+log.*
+*.log.*
+
+*.o
+*.out
+*.a
+*.so
