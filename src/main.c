@@ -162,6 +162,12 @@ int request_handler(
 		(void*) page,
 		MHD_RESPMEM_PERSISTENT
 	);
+	MHD_add_response_header(res, "Content-Security-Policy", "default-src 'self'");
+	MHD_add_response_header(res, "X-Frame-Options", "DENY");
+	MHD_add_response_header(res, "X-XSS-Protection", "0");
+	MHD_add_response_header(res, "X-Content-Type-Options", "nosniff");
+	MHD_add_response_header(res, "X-Permitted-Cross-Domain-Policies", "none");
+	MHD_add_response_header(res, "Strict-Transport-Security", "max-age=31536000 ; includeSubDomains");
 
 	ret = MHD_queue_response(conn, MHD_HTTP_OK, res);
 	MHD_destroy_response(res);

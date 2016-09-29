@@ -27,6 +27,6 @@ limitations under the License.
 #include <stdlib.h>
 #include <string.h>
 
-
+typedef int (*cnatural_ajax_handler)();
 
 #endif /* ~__CNATURAL_AJAX_CORE_H__ */
