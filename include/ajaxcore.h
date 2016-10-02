@@ -26,7 +26,35 @@ limitations under the License.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
-typedef int (*cnatural_ajax_handler)();
+typedef struct
+{
+	char* attached_data;
+	size_t attached_data_size;
+	char* output_buffer;
+	size_t output_buffer_size;
+	char* output_mimetype;
+} cnatural_ajax_argument_t;
+
+/**
+* @brief A simple AJAX handler.
+* The availables return codes are:
+*  -1: An error occours and ERRNO is set.
+*  0: Good.
+*  1: This path not matches with this AJAX handler path.
+* bufferout and outmime can be NULL.
+* @param path String with the AJAX path.
+* @param inout Arguments for the AJAX.
+* @return Any of the return codes.
+*/
+typedef int (*cnatural_ajax_handler_t)(
+	const char* path,
+	cnatural_ajax_argument_t* inout
+);
+
+int cnatural_ajax_test(const char*, cnatural_ajax_argument_t*);
+
+int cnatural_try_ajax(const char*, cnatural_ajax_argument_t*);
 
 #endif /* ~__CNATURAL_AJAX_CORE_H__ */
