@@ -8,8 +8,8 @@ html, body {
 	height:             100%;
 	margin:             0px;
 	padding:            0px;
-	background-color: white;
-	color:            black;
+	background-color:   white;
+	color:              black;
 	font-family:        Arial, Helvetica, sans-serif;
 	font-size:          16px;
 	-moz-box-sizing:    border-box;
@@ -118,24 +118,24 @@ html, body {
 }
 
 .button {
-	display:           inline-block;
-	background-color: black;
-	color:            white;
+	display:            inline-block;
+	background-color:   black;
+	color:              white;
 	border:             none;
 	padding:            8px 16px;
 	text-align:         center;
 	text-decoration:    none;
 	box-shadow:         0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 	cursor:             pointer;
+	transition:         box-shadow 0.4s ease 0.01s;
 }
 
 .button:hover {
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-	transition: box-shadow 0.7s ease 0.01s;
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.40), 0 17px 50px 0 rgba(0,0,0,0.45);
 }
 
 .button:active {
-	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.40), 0 17px 50px 0 rgba(0,0,0,0.45);
 }
 
 .button-group > .button {
@@ -160,7 +160,7 @@ html, body {
 .navigation > a:hover, .navigation > .link:hover {
 	background-color: #ccc;
 	color:            #000;
-	transition:         background-color 0.5s ease 0.01s;
+	transition:       background-color 0.5s ease 0.01s;
 }
 
 .top-navigation > a, .top-navigation > .link {
@@ -207,7 +207,7 @@ html, body {
 .side-navigation > a:hover, .side-navigation > .link:hover {
 	background-color: #ccc;
 	color:            #000;
-	transition:         background-color 0.5s ease 0.01s;
+	transition:       background-color 0.5s ease 0.01s;
 }
 
 .form {
@@ -226,8 +226,8 @@ html, body {
 
 .input {
 	display:            inline-block;
-	background-color: #fff;
-	color:            #000;
+	background-color:   #fff;
+	color:              #000;
 	border:             none;
 	margin:             4px;
 	padding:            8px 16px;
@@ -236,10 +236,10 @@ html, body {
 	box-sizing:         border-box;
 }
 
-.input[type="text"], .input[type="password"], .select, .textarea, .inputtext {
+.input[type="text"], .input[type="password"], .select, .textarea, .inputtext, textarea.input, select.input {
 	display:            inline-block;
-	background-color: #fff;
-	color:            #000;
+	background-color:   #fff;
+	color:              #000;
 	border:             none;
 	border-bottom:      1px solid #ccc;
 	width:              100%;
@@ -856,6 +856,7 @@ html, body {
 
 /* colors */
 
+.color-transparent {background-color: rgba(0, 0, 0, 0); color: #000;}
 .color-black {background-color: #000; color: #fff;}
 .color-white {background-color: #fff; color: #000;}
 .color-red {background-color: #a10; color: #fff;}
@@ -879,6 +880,7 @@ html, body {
 .color-dark-yellow {background-color: #990; color: #fff;}
 .color-dark-grey {background-color: #999; color: #000;}
 
+.text-color-transparent {color: rgba(0, 0, 0, 0);}
 .text-color-black {color: #000;}
 .text-color-white {color: #fff;}
 .text-color-red {color: #a10;}
@@ -902,6 +904,7 @@ html, body {
 .text-color-dark-yellow {color: #990;}
 .text-color-dark-grey {color: #999;}
 
+.border-color-transparent {border-color: rgba(0, 0, 0, 0);}
 .border-color-black {border-color: #000;}
 .border-color-white {border-color: #fff;}
 .border-color-red {border-color: #a10;}
