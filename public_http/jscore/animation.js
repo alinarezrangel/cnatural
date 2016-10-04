@@ -52,7 +52,10 @@ limitations under the License.
 		}
 		window.NaturalObject.prototype.animatable = function()
 		{
+			if(this.isAnimatable === true)
+				return this;
 			this.animateEndEvent = function(){};
+			this.isAnimatable = true;
 			this.on("animationend", (ev) =>
 			{
 				console.log("Animation end");
@@ -60,14 +63,32 @@ limitations under the License.
 			});
 			return this;
 		};
+		window.NaturalObject.prototype.hide = function()
+		{
+			this.animatable().addClass("gui-hidden");
+			return this;
+		};
+		window.NaturalObject.prototype.show = function()
+		{
+			this.animatable().removeClass("gui-hidden");
+			return this;
+		};
 		window.NaturalObject.prototype.hideSlideUp = function()
 		{
-			this.addClass("animate-hide-slide-up");
-			this.animateEndEvent = function()
-			{
-				alert("GUI HIDDEN");
-				this.addClass("gui-hidden");
-			};
+			this.animatable()
+				.addClass("animate-hide-slide-up")
+				.animateEndEvent = () =>
+				{
+					this.hide();
+				};
+			return this;
+		};
+		window.NaturalObject.prototype.showSlideDown = function()
+		{
+			this.animatable()
+				.show()
+				.addClass("animate-show-slide-down")
+				.animateEndEvent = () => {};
 			return this;
 		};
 	};

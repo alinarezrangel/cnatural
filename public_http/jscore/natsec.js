@@ -46,9 +46,9 @@ limitations under the License.
 		{
 			if(typeof i === "number")
 			{
-				return this.original[i];
+				return new NaturalObject(his.original[i]);
 			}
-			return this.original;
+			return new NaturalObject(this.original);
 		};
 		NaturalObject.prototype.child = function(sq)
 		{
@@ -80,7 +80,7 @@ limitations under the License.
 			{
 				for(var i = 0; i < this.original.length; i++)
 				{
-					return func(this.get(i));
+					return func(this.get(i).original);
 				}
 			}
 			else
@@ -108,7 +108,7 @@ limitations under the License.
 			{
 				for(var i = 0; i < this.original.length; i++)
 				{
-					func(this.get(i));
+					func(this.get(i).original);
 				}
 			}
 			else
@@ -127,7 +127,7 @@ limitations under the License.
 			{
 				for(var i = 0; i < this.original.length; i++)
 				{
-					func(this.get(i));
+					func(this.get(i).original);
 				}
 			}
 			else
@@ -146,7 +146,7 @@ limitations under the License.
 			{
 				for(var i = 0; i < this.original.length; i++)
 				{
-					func(this.get(i));
+					func(this.get(i).original);
 				}
 			}
 			else
@@ -168,7 +168,7 @@ limitations under the License.
 			{
 				for(var i = 0; i < this.original.length; i++)
 				{
-					func(this.get(i));
+					func(this.get(i).original);
 				}
 			}
 			else

@@ -30,7 +30,11 @@ limitations under the License.
 }
 
 .animate-hide-slide-up {
-	animation: animation-hide-slide-up 2s linear 0s 1 normal;
+	animation: animation-hide-slide-up 1.5s ease-in-out 0s 1 normal;
+}
+
+.animate-show-slide-down {
+	animation: animation-hide-slide-up 1.5s ease-in-out 0s 1 reverse;
 }
 
 .gui-clickeable {
@@ -46,6 +50,20 @@ limitations under the License.
 	height: 100vh;
 	padding: 0px;
 	margin: 0px;
+}
+
+/* flexible center justify-center direction-column align-center content-center wrap wrap-center */
+.gui-flexcore {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	align-content: center;
+	flex-wrap: wrap;
+}
+
+.gui-flexcore > *, .gui-flexcore > .centerme {
+	margin: auto;
 }
 
 .gui-main {

@@ -24,6 +24,10 @@ $ntc(window).on("load", function()
 {
 	$ntc("#_bootscreen").on("click", function()
 	{
-		$ntc("#_bootscreen").animatable().hideSlideUp();
+		$ntc("#_bootscreen").hideSlideUp();
+		setTimeout(function()
+		{
+			$ntc("#_bootscreen").showSlideDown();
+		}, 5000);
 	});
 });
