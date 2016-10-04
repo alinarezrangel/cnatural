@@ -20,6 +20,10 @@ limitations under the License.
 **********************
 ************************************************/
 
+html, body {
+	overflow: hidden;
+}
+
 @keyframes animation-hide-slide-up {
 	from {
 	}

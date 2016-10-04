@@ -5,39 +5,112 @@
 
 /* Natural Color Pallete */
 
-.color-natural-red {background-color: #F31212; color: #FFF;}
-.color-natural-green {background-color: #12A312; color: #000;}
-.color-natural-blue {background-color: #1212F3; color: #FFF;}
+.color-natural-red {background-color: #F31212 !important; color: #FFF;}
+.color-natural-green {background-color: #12A312 !important; color: #000;}
+.color-natural-blue {background-color: #1212F3 !important; color: #FFF;}
 
-.color-natural-yellow {background-color: #F3F312; color: #000;}
-.color-natural-magenta {background-color: #A312A3; color: #FFF;}
-.color-natural-cyan {background-color: #12A3A3; color: #000;}
-.color-natural-pink {background-color: #FF12FF; color: #000;}
-.color-natural-purple {background-color: #700A90; color: #FFF;}
+.color-natural-yellow {background-color: #F3F312 !important; color: #000;}
+.color-natural-magenta {background-color: #A312A3 !important; color: #FFF;}
+.color-natural-cyan {background-color: #12A3A3 !important; color: #000;}
+.color-natural-pink {background-color: #FF12FF !important; color: #000;}
+.color-natural-purple {background-color: #700A90 !important; color: #FFF;}
 
-.color-natural-deepred {background-color: #FF0A0A; color: #000;}
-.color-natural-ember {background-color: #AC1A1A; color: #FFF;}
-.color-natural-darkred {background-color: #AA0A0A; color: #FFF;}
-.color-natural-deepblue {background-color: #0A0AFF; color: #FFF;}
-.color-natural-indigo {background-color: #18207A; color: #FFF;}
-.color-natural-darkblue {background-color: #0A0AAA; color: #FFF;}
-.color-natural-deepgreen {background-color: #0AAA0A; color: #000;}
-.color-natural-teal {background-color: #004D40; color: #FFF;}
-.color-natural-darkgreen {background-color: #056605; color: #FFF;}
+.color-natural-deepred {background-color: #FF0A0A !important; color: #000;}
+.color-natural-ember {background-color: #AC1A1A !important; color: #FFF;}
+.color-natural-darkred {background-color: #AA0A0A !important; color: #FFF;}
+.color-natural-deepblue {background-color: #0A0AFF !important; color: #FFF;}
+.color-natural-indigo {background-color: #18207A !important; color: #FFF;}
+.color-natural-darkblue {background-color: #0A0AAA !important; color: #FFF;}
+.color-natural-deepgreen {background-color: #0AAA0A !important; color: #000;}
+.color-natural-teal {background-color: #004D40 !important; color: #FFF;}
+.color-natural-darkgreen {background-color: #056605 !important; color: #FFF;}
 
-.color-natural-grey {background-color: #888; color: #000;}
-.color-natural-bluegrey {background-color: #88A; color: #000;}
-.color-natural-greengrey {background-color: #8A8; color: #000;}
-.color-natural-redgrey {background-color: #A88; color: #000;}
-.color-natural-middlegrey {background-color: #555; color: #FFF;}
+.color-natural-grey {background-color: #888 !important; color: #000;}
+.color-natural-bluegrey {background-color: #88A !important; color: #000;}
+.color-natural-greengrey {background-color: #8A8 !important; color: #000;}
+.color-natural-redgrey {background-color: #A88 !important; color: #000;}
+.color-natural-middlegrey {background-color: #555 !important; color: #FFF;}
 
-.color-natural-orange {background-color: #FF9800; color: #000;}
-.color-natural-brown {background-color: #795548; color: #000;}
-.color-natural-deeporange {background-color: #FF5722; color: #FFF;}
-.color-natural-deepbrown {background-color: #3E2723; color: #FFF;}
+.color-natural-orange {background-color: #FF9800 !important; color: #000;}
+.color-natural-brown {background-color: #795548 !important; color: #000;}
+.color-natural-deeporange {background-color: #FF5722 !important; color: #FFF;}
+.color-natural-deepbrown {background-color: #3E2723 !important; color: #FFF;}
 
-.color-natural-white {background-color: #FFF; color: #000;}
-.color-natural-black {background-color: #000; color: #FFF;}
-.color-natural-accent {background-color: #; color: #000;}
-.color-natural-outset {background-color: #FFF; color: #000;}
+.color-natural-white {background-color: #FFF !important; color: #000;}
+.color-natural-black {background-color: #000 !important; color: #FFF;}
+.color-natural-accent {background-color: #F0F !important; color: #000;}
+.color-natural-outset {background-color: #FFF !important; color: #000;}
 
+/* Text Colors */
+
+.text-color-natural-red {color: #F31212 !important;}
+.text-color-natural-green {color: #12A312 !important;}
+.text-color-natural-blue {color: #1212F3 !important;}
+
+.text-color-natural-yellow {color: #F3F312 !important;}
+.text-color-natural-magenta {color: #A312A3 !important;}
+.text-color-natural-cyan {color: #12A3A3 !important;}
+.text-color-natural-pink {color: #FF12FF !important;}
+.text-color-natural-purple {color: #700A90 !important;}
+
+.text-color-natural-deepred {color: #FF0A0A !important;}
+.text-color-natural-ember {color: #AC1A1A !important;}
+.text-color-natural-darkred {color: #AA0A0A !important;}
+.text-color-natural-deepblue {color: #0A0AFF !important;}
+.text-color-natural-indigo {color: #18207A !important;}
+.text-color-natural-deepgreen {color: #0AAA0A !important;}
+.text-color-natural-teal {color: #004D40 !important;}
+.text-color-natural-darkgreen {color: #056605 !important;}
+
+.text-color-natural-grey {color: #888 !important;}
+.text-color-natural-bluegrey {color: #88A !important;}
+.text-color-natural-greengrey {color: #8A8 !important;}
+.text-color-natural-redgrey {color: #A88 !important;}
+.text-color-natural-middlegrey {color: #555 !important;}
+
+.text-color-natural-orange {color: #FF9800 !important;}
+.text-color-natural-brown {color: #795548 !important;}
+.text-color-natural-deeporange {color: #FF5722 !important;}
+.text-color-natural-deepbrown {color: #3E2723 !important;}
+
+.text-color-natural-white {color: #FFF !important;}
+.text-color-natural-black {color: #000 !important;}
+.text-color-natural-accent {color: #F0F !important;}
+.text-color-natural-outset {color: #FFF !important;}
+
+/* Border colors */
+
+.border-color-natural-red {border-color: #F31212 !important;}
+.border-color-natural-green {border-color: #12A312 !important;}
+.border-color-natural-blue {border-color: #1212F3 !important;}
+
+.border-color-natural-yellow {border-color: #F3F312 !important;}
+.border-color-natural-magenta {border-color: #A312A3 !important;}
+.border-color-natural-cyan {border-color: #12A3A3 !important;}
+.border-color-natural-pink {border-color: #FF12FF !important;}
+.border-color-natural-purple {border-color: #700A90 !important;}
+
+.border-color-natural-deepred {border-color: #FF0A0A !important;}
+.border-color-natural-ember {border-color: #AC1A1A !important;}
+.border-color-natural-darkred {border-color: #AA0A0A !important;}
+.border-color-natural-deepblue {border-color: #0A0AFF !important;}
+.border-color-natural-indigo {border-color: #18207A !important;}
+.border-color-natural-deepgreen {border-color: #0AAA0A !important;}
+.border-color-natural-teal {border-color: #004D40 !important;}
+.border-color-natural-darkgreen {border-color: #056605 !important;}
+
+.border-color-natural-grey {border-color: #888 !important;}
+.border-color-natural-bluegrey {border-color: #88A !important;}
+.border-color-natural-greengrey {border-color: #8A8 !important;}
+.border-color-natural-redgrey {border-color: #A88 !important;}
+.border-color-natural-middlegrey {border-color: #555 !important;}
+
+.border-color-natural-orange {border-color: #FF9800 !important;}
+.border-color-natural-brown {border-color: #795548 !important;}
+.border-color-natural-deeporange {border-color: #FF5722 !important;}
+.border-color-natural-deepbrown {border-color: #3E2723 !important;}
+
+.border-color-natural-white {border-color: #FFF !important;}
+.border-color-natural-black {border-color: #000 !important;}
+.border-color-natural-accent {border-color: #F0F !important;}
+.border-color-natural-outset {border-color: #FFF !important;}

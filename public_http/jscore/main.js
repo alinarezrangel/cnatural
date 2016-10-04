@@ -22,12 +22,25 @@ limitations under the License.
 
 $ntc(window).on("load", function()
 {
+	$natural.ajax({
+		url: "/api/ajax/coreutils/test",
+		args: {},
+		async: true
+	}, function(err, res)
+	{
+		if(err)
+		{
+			console.error(err);
+			return;
+		}
+		if(res !== "Hello World")
+		{
+			// The server AJAX is bad, cancel
+		}
+	});
 	$ntc("#_bootscreen").on("click", function()
 	{
 		$ntc("#_bootscreen").hideSlideUp();
-		setTimeout(function()
-		{
-			$ntc("#_bootscreen").showSlideDown();
-		}, 5000);
+		$ntc("#_loginscreen").removeClass("gui-hidden");
 	});
 });

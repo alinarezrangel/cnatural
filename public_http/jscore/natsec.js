@@ -177,6 +177,29 @@ limitations under the License.
 			}
 			return this;
 		};
+		NaturalObject.prototype.ajax = function(options, callback)
+		{
+			var xhrc = new XMLHttpRequest();
+			var params = "";
+			for(var i in options.args)
+			{
+				if(options.args.hasOwnProperty(i))
+				{
+					params += "&" + i + "=" + options.args[i];
+				}
+			}
+			if(params !== "")
+				params = params.substr(1, params.length - 1);
+			xhrc.onreadystatechange = function()
+			{
+				if((this.readyState === 4) && (this.status === 200))
+				{
+					callback(null, this.responseText);
+				}
+			};
+			xhrc.open("POST", options.url + ((params !== "")? ("?" + params) : ""), options.async);
+			xhrc.send();
+		};
 
 		window.NaturalObject = window.NaturalObject || NaturalObject;
 		window.$natural = new window.NaturalObject(document);

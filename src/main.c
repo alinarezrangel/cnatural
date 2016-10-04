@@ -86,7 +86,6 @@ int request_handler(
 {
 	int ret = 0;
 	struct MHD_Response* res = NULL;
-	FILE* resc = NULL;
 	char* ufile = NULL;
 	char* final_file_name = NULL;
 	size_t i = 0;
