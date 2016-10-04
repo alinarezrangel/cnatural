@@ -19,3 +19,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 **********************
 ************************************************/
+
+$ntc(window).on("load", function()
+{
+	alert("On loaded");
+	$ntc(document).on("load", function()
+	{
+		alert("On reloaded");
+		$ntc(document).child("_bootscreen").on("click", function()
+		{
+			alert("Clicked");
+			$ntc(this).addClass("animate-hide-slide-up");
+		});
+	})
+});

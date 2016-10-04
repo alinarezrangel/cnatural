@@ -37,6 +37,11 @@ limitations under the License.
 		{
 			this.original = dom;
 		};
+		NaturalObject.prototype.isNodeList = function()
+		{
+			return (this.original instanceof window.NodeList) ||
+				(this.original instanceof window.HTMLCollection);
+		};
 		NaturalObject.prototype.get = function(i)
 		{
 			if(typeof i === "number")
@@ -59,47 +64,117 @@ limitations under the License.
 		};
 		NaturalObject.prototype.attr = function(name, value)
 		{
-			var i = 0;
-			var sname = name.split("");
-			var j = sname.length;
-			var last = "";
-			for(i = 0; i < j; i++)
+			var func = (to) =>
 			{
-				var at = sname[i];
-				if(at.)
+				if(typeof value === "string")
+				{
+					to.setAttribute(name, value);
+				}
+				else
+				{
+					return to.getAttribure(name);
+				}
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i));
+				}
 			}
-			if(typeof value === "string")
+			else
 			{
-				this.original.setAttribute(name, value);
+				func(this.original);
 			}
 		};
 		NaturalObject.prototype.style = function(obj)
 		{
-			for(var i in obj)
+			var func = (to) =>
 			{
-				if(obj.hasOwnProperty(i))
+				for(var i in obj)
 				{
-					this.original.style[i] = obj[i];
+					if(obj.hasOwnProperty(i))
+					{
+						to.style[i] = obj[i];
+					}
 				}
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i));
+				}
+			}
+			else
+			{
+				func(this.original);
 			}
 		};
 		NaturalObject.prototype.addClass = function(newremove)
 		{
-			this.original.classList.add(newremove);
+			var func = (to) =>
+			{
+				to.classList.add(newremove);
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i));
+				}
+			}
+			else
+			{
+				func(this.original);
+			}
 		};
 		NaturalObject.prototype.removeClass = function(newremove)
 		{
-			this.original.classList.remove(newremove);
+			var func = (to) =>
+			{
+				to.classList.remove(newremove);
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i));
+				}
+			}
+			else
+			{
+				func(this.original);
+			}
 		};
 		NaturalObject.prototype.on = function(evt, cll)
 		{
-			this.original.addEventListener(evt, cll);
+			var func = (to) =>
+			{
+				to.addEventListener(evt, function(ev)
+				{
+					return cll(ev);
+				});
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i));
+				}
+			}
+			else
+			{
+				func(this.original);
+			}
 		};
+
 		window.NaturalObject = window.NaturalObject || NaturalObject;
-		window.$natural = new NaturalObject(window);
+		window.$natural = new NaturalObject(document);
+		window.$ntc = function(obj) {return new NaturalObject(obj);};
 	};
 
-	if(module)
+	if(typeof module !== "undefined")
 	{
 		module.exports = natsec; // NodeJS, AngularJS, NativeScript, RequireJS, etc
 	}
