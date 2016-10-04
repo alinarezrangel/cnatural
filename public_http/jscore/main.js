@@ -22,14 +22,8 @@ limitations under the License.
 
 $ntc(window).on("load", function()
 {
-	alert("On loaded");
-	$ntc(document).on("load", function()
+	$ntc("#_bootscreen").on("click", function()
 	{
-		alert("On reloaded");
-		$ntc(document).child("_bootscreen").on("click", function()
-		{
-			alert("Clicked");
-			$ntc(this).addClass("animate-hide-slide-up");
-		});
-	})
+		$ntc("#_bootscreen").animatable().hideSlideUp();
+	});
 });

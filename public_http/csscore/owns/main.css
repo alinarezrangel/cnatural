@@ -22,24 +22,30 @@ limitations under the License.
 
 @keyframes animation-hide-slide-up {
 	from {
-		visibility: visible;
 	}
 	to {
-		visibility: hidden;
+		display: none;
 		height: 0px;
 	}
 }
 
 .animate-hide-slide-up {
-	animation: animation-hide-slide-up 0s ease 1.5s;
+	animation: animation-hide-slide-up 2s linear 0s 1 normal;
 }
 
 .gui-clickeable {
 	cursor: pointer;
 }
 
+.gui-hidden {
+	display: none !important;
+}
+
 .gui-screen {
-	/* do something fun */
+	width: 100vw;
+	height: 100vh;
+	padding: 0px;
+	margin: 0px;
 }
 
 .gui-main {

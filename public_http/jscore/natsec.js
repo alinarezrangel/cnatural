@@ -69,6 +69,7 @@ limitations under the License.
 				if(typeof value === "string")
 				{
 					to.setAttribute(name, value);
+					return this;
 				}
 				else
 				{
@@ -79,16 +80,20 @@ limitations under the License.
 			{
 				for(var i = 0; i < this.original.length; i++)
 				{
-					func(this.get(i));
+					return func(this.get(i));
 				}
 			}
 			else
 			{
-				func(this.original);
+				return func(this.original);
 			}
 		};
 		NaturalObject.prototype.style = function(obj)
 		{
+			if(typeof obj === "string")
+			{
+				return this.original.style[obj];
+			}
 			var func = (to) =>
 			{
 				for(var i in obj)
@@ -110,6 +115,7 @@ limitations under the License.
 			{
 				func(this.original);
 			}
+			return this;
 		};
 		NaturalObject.prototype.addClass = function(newremove)
 		{
@@ -128,6 +134,7 @@ limitations under the License.
 			{
 				func(this.original);
 			}
+			return this;
 		};
 		NaturalObject.prototype.removeClass = function(newremove)
 		{
@@ -146,6 +153,7 @@ limitations under the License.
 			{
 				func(this.original);
 			}
+			return this;
 		};
 		NaturalObject.prototype.on = function(evt, cll)
 		{
@@ -167,11 +175,19 @@ limitations under the License.
 			{
 				func(this.original);
 			}
+			return this;
 		};
 
 		window.NaturalObject = window.NaturalObject || NaturalObject;
-		window.$natural = new NaturalObject(document);
-		window.$ntc = function(obj) {return new NaturalObject(obj);};
+		window.$natural = new window.NaturalObject(document);
+		window.$ntc = function(obj)
+		{
+			if(typeof obj === "string")
+			{
+				return window.$natural.child(obj);
+			}
+			return window.$natural.wrap(obj);
+		};
 	};
 
 	if(typeof module !== "undefined")
