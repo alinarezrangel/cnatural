@@ -52,13 +52,40 @@ limitations under the License.
 	margin: 0px;
 }
 
-/* flexible center justify-center direction-column align-center content-center wrap wrap-center */
+/* flexcore is a contraction of:
+ * * flexible center justify-center direction-column align-center content-center
+ * * wrap wrap-center
+*/
 .gui-flexcore {
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: -o-flex;
 	display: flex;
+	-moz-justify-content: center;
+	-webkit-justify-content: center;
+	-ms-justify-content: center;
+	-o-justify-content: center;
 	justify-content: center;
+	-moz-flex-direction: column;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	-o-flex-direction: column;
 	flex-direction: column;
+	-moz-align-items: center;
+	-webkit-align-items: center;
+	-ms-align-items: center;
+	-o-align-items: center;
 	align-items: center;
+	-moz-align-content: center;
+	-webkit-align-content: center;
+	-ms-align-content: center;
+	-o-align-content: center;
 	align-content: center;
+	-moz-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	-o-flex-wrap: wrap;
 	flex-wrap: wrap;
 }
 

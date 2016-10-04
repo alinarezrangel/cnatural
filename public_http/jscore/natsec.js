@@ -46,7 +46,7 @@ limitations under the License.
 		{
 			if(typeof i === "number")
 			{
-				return new NaturalObject(his.original[i]);
+				return new NaturalObject(this.original[i]);
 			}
 			return new NaturalObject(this.original);
 		};

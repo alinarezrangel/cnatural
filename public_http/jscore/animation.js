@@ -79,7 +79,7 @@ limitations under the License.
 				.addClass("animate-hide-slide-up")
 				.animateEndEvent = () =>
 				{
-					this.hide();
+					this.hide().removeClass("animate-hide-slide-up");
 				};
 			return this;
 		};
@@ -88,7 +88,9 @@ limitations under the License.
 			this.animatable()
 				.show()
 				.addClass("animate-show-slide-down")
-				.animateEndEvent = () => {};
+				.animateEndEvent = () => {
+					this.removeClass("animate-show-slide-down").removeClass("gui-hidden");
+				};
 			return this;
 		};
 	};
