@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * main file for the CSS core.
+*** * main file for the ECMAScript core.
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -19,15 +19,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 **********************
 ************************************************/
-
-.gui-clickeable {
-	cursor: pointer;
-}
-
-.gui-screen {
-	/* do something fun */
-}
-
-.gui-main {
-	/* do something fun */
-}

@@ -1,6 +1,6 @@
 /************************************************
 **********************
-*** CNatural: Remote embed systems controll.
+*** CNatural: Remote embed systems control.
 *** * main file for the server.
 **********************
 
