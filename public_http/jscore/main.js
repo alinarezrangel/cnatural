@@ -38,9 +38,9 @@ $ntc(window).on("load", function()
 			// The server AJAX is bad, cancel
 		}
 	});
-	$ntc("#_bootscreen").on("click", function()
+	$ntc("#_bootscreen").attach(function(ev)
 	{
 		$ntc("#_bootscreen").hideSlideUp();
 		$ntc("#_loginscreen").removeClass("gui-hidden");
-	});
+	}).on("click");
 });

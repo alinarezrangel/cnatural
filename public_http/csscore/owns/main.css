@@ -24,6 +24,10 @@ html, body {
 	overflow: hidden;
 }
 
+.input:focus {
+	outline: 3px solid #FF0;
+}
+
 @keyframes animation-hide-slide-up {
 	from {
 	}

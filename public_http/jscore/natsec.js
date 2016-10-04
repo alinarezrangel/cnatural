@@ -36,6 +36,7 @@ limitations under the License.
 		var NaturalObject = function(dom)
 		{
 			this.original = dom;
+			this._callbackLastRef = function(ev){};
 		};
 		NaturalObject.prototype.isNodeList = function()
 		{
@@ -155,8 +156,21 @@ limitations under the License.
 			}
 			return this;
 		};
+		NaturalObject.prototype.attach = function(handler)
+		{
+			this._callbackLastRef = handler;
+			return this;
+		};
 		NaturalObject.prototype.on = function(evt, cll)
 		{
+			if(typeof cll !== "undefined")
+			{
+				this._callbackLastRef = cll;
+			}
+			else
+			{
+				cll = this._callbackLastRef;
+			}
 			var func = (to) =>
 			{
 				to.addEventListener(evt, function(ev)
