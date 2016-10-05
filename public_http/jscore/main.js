@@ -33,6 +33,8 @@ $ntc(window).on("load", function()
 			console.error(err);
 			return;
 		}
+		if(res === "Hello World")
+			return;
 		var win = NWCreate(NWDialog, {
 			parent: $ntc("#_bootscreen")
 		});
@@ -43,17 +45,26 @@ $ntc(window).on("load", function()
 		});
 		var text = NWCreate(NWPlainText, {
 			parent: message.getElement(),
-			text: "Response: " + res
+			text: "Error: " + res
 		});
 		win.getElement()
 			.style({
 				top: "50%",
 				left: "50%",
-				width: "50%",
-				height: "12%",
+				maxWidth: "50%",
+				maxHeight: "50%",
 				transform: "translateX(-50%)"
 			})
-			.addClass("color-aqua");
+			.addClass("color-natural-darkred")
+			.addClass("padding-16")
+			.addClass("overflow-hidden")
+			.attach(function(ev)
+			{
+				win.getElement().hide();
+				ev.preventDefault();
+				return false;
+			})
+			.on("click", true);
 		text.pack("APPEND");
 		message.pack("BEGIN");
 		win.pack("APPEND");

@@ -163,7 +163,8 @@ limitations under the License.
 		};
 		NaturalObject.prototype.on = function(evt, cll)
 		{
-			if(typeof cll !== "undefined")
+			var bubbles = (cll === true);
+			if(typeof cll === "function")
 			{
 				this._callbackLastRef = cll;
 			}
@@ -176,7 +177,7 @@ limitations under the License.
 				to.addEventListener(evt, function(ev)
 				{
 					return cll(ev);
-				});
+				}, !bubbles);
 			};
 			if(this.isNodeList())
 			{
