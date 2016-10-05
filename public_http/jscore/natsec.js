@@ -214,6 +214,66 @@ limitations under the License.
 			xhrc.open("POST", options.url + ((params !== "")? ("?" + params) : ""), options.async);
 			xhrc.send();
 		};
+		NaturalObject.prototype.appendChild = function(child)
+		{
+			var func = (to) =>
+			{
+				to.appendChild(child.original);
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i).original);
+				}
+			}
+			else
+			{
+				func(this.original);
+			}
+			return this;
+		};
+		NaturalObject.prototype.remove = function()
+		{
+			var func = (to) =>
+			{
+				if(to.parentNode)
+				{
+					to.parentNode.removeChild(to);
+				}
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i).original);
+				}
+			}
+			else
+			{
+				func(this.original);
+			}
+			return this;
+		};
+		NaturalObject.prototype.removeChild = function(child)
+		{
+			var func = (to) =>
+			{
+				to.removeChild(child.original);
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i).original);
+				}
+			}
+			else
+			{
+				func(this.original);
+			}
+			return this;
+		};
 
 		window.NaturalObject = window.NaturalObject || NaturalObject;
 		window.$natural = new window.NaturalObject(document);

@@ -46,7 +46,7 @@ int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
 	{
 		return -1;
 	}
-	inout->output_buffer_size = msglen;
+	inout->output_buffer_size = msglen - 1;
 	strcpy(inout->output_buffer, msg);
 	inout->output_buffer[msglen - 1] = '\0';
 	inout->output_mimetype = malloc(sizeof(char) * mimelen);

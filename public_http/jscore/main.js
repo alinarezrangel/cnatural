@@ -33,10 +33,30 @@ $ntc(window).on("load", function()
 			console.error(err);
 			return;
 		}
-		if(res !== "Hello World")
-		{
-			// The server AJAX is bad, cancel
-		}
+		var win = NWCreate(NWDialog, {
+			parent: $ntc("#_bootscreen")
+		});
+		var message = NWCreate(NWHeader, {
+			parent: win.getElement(),
+			level: 2,
+			size: "content.title"
+		});
+		var text = NWCreate(NWPlainText, {
+			parent: message.getElement(),
+			text: "Response: " + res
+		});
+		win.getElement()
+			.style({
+				top: "50%",
+				left: "50%",
+				width: "50%",
+				height: "12%",
+				transform: "translateX(-50%)"
+			})
+			.addClass("color-aqua");
+		text.pack("APPEND");
+		message.pack("BEGIN");
+		win.pack("APPEND");
 	});
 	$ntc("#_bootscreen").attach(function(ev)
 	{
