@@ -41,6 +41,7 @@ int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
 	int ecpy = 0;
 	if(strcmp(path, "/api/ajax/coreutils/test") != 0)
 		return 1;
+	printf("Catched /api/ajax/coreutils/test AJAX: sending Hello World");
 	inout->output_buffer = malloc(sizeof(char) * msglen);
 	if(inout->output_buffer == NULL)
 	{
@@ -62,10 +63,52 @@ int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
 	return 0;
 }
 
+int cnatural_ajax_login(const char* path, cnatural_ajax_argument_t* inout)
+{
+	const char* msg = "Hola Mundo";
+	size_t msglen = strlen(msg) + 1; /* strlen not includes the NULL byte */
+	const char* mime = "text/plain";
+	size_t mimelen = strlen(mime) + 1;
+	int ecpy = 0;
+	size_t i = 0;
+	if(strcmp(path, "/api/ajax/coreutils/login") != 0)
+		return 1;
+	printf("Catched /api/ajax/coreutils/login AJAX: sending Hola Mundo");
+	printf("Uploaded data %d: ", inout->attached_data_size);
+	for(i = 0; i < inout->attached_data_size; i++)
+	{
+		printf("%c", inout->attached_data[i]);
+	}
+	printf("\n");
+	fflush(stdout);
+	inout->output_buffer = malloc(sizeof(char) * msglen);
+	if(inout->output_buffer == NULL)
+	{
+		return -1;
+	}
+	inout->output_buffer_size = msglen - 1;
+	memcpy(inout->output_buffer, msg, msglen - 1);
+	inout->output_buffer[msglen - 1] = '\0';
+	inout->output_mimetype = malloc(sizeof(char) * mimelen);
+	if(inout->output_mimetype == NULL)
+	{
+		ecpy = errno;
+		free(inout->output_buffer);
+		errno = ecpy;
+		return -1;
+	}
+	memcpy(inout->output_mimetype, mime, mimelen - 1);
+	inout->output_mimetype[mimelen - 1] = '\0';
+	return 0;
+}
+
 int cnatural_try_ajax(const char* path, cnatural_ajax_argument_t* inout)
 {
 	int ret = 0;
 	ret = cnatural_ajax_test(path, inout);
+	if(ret <= 0)
+		return ret;
+	ret = cnatural_ajax_login(path, inout);
 	if(ret <= 0)
 		return ret;
 	return 1;

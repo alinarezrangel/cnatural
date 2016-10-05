@@ -63,6 +63,10 @@ limitations under the License.
 		{
 			return new NaturalObject(obj);
 		};
+		NaturalObject.prototype.echo = function(obj)
+		{
+			return obj;
+		};
 		NaturalObject.prototype.attr = function(name, value)
 		{
 			var func = (to) =>
@@ -70,7 +74,6 @@ limitations under the License.
 				if(typeof value === "string")
 				{
 					to.setAttribute(name, value);
-					return this;
 				}
 				else
 				{
@@ -88,6 +91,33 @@ limitations under the License.
 			{
 				return func(this.original);
 			}
+			return this;
+		};
+		NaturalObject.prototype.value = function(value)
+		{
+			var func = (to) =>
+			{
+				if(typeof value === "string")
+				{
+					to.value = value;
+				}
+				else
+				{
+					return to.value;
+				}
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					return func(this.get(i).original);
+				}
+			}
+			else
+			{
+				return func(this.original);
+			}
+			return this;
 		};
 		NaturalObject.prototype.style = function(obj)
 		{
@@ -213,7 +243,7 @@ limitations under the License.
 				}
 			};
 			xhrc.open("POST", options.url + ((params !== "")? ("?" + params) : ""), options.async);
-			xhrc.send();
+			xhrc.send(options.pdata);
 		};
 		NaturalObject.prototype.appendChild = function(child)
 		{

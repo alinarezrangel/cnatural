@@ -219,6 +219,44 @@ limitations under the License.
 					});
 			}
 		}));
+
+		window.NWCreateTextDialog = function(parent, level, text, oncreated)
+		{
+			var win = NWCreate(NWDialog, {
+				parent: parent
+			});
+			var message = NWCreate(NWHeader, {
+				parent: win.getElement(),
+				level: level,
+				size: "content.title"
+			});
+			var text = NWCreate(NWPlainText, {
+				parent: message.getElement(),
+				text: text
+			});
+			win.getElement()
+				.style({
+					top: "50%",
+					left: "50%",
+					maxWidth: "50%",
+					maxHeight: "50%",
+					transform: "translateX(-50%)"
+				})
+				.addClass("padding-16")
+				.addClass("overflow-hidden")
+				.attach(function(ev)
+				{
+					win.getElement().hide();
+					ev.preventDefault();
+					return false;
+				})
+				.on("click", true);
+			text.pack("APPEND");
+			message.pack("BEGIN");
+			win.pack("APPEND");
+			oncreated(win, message, text);
+			return win;
+		};
 	};
 
 	if(typeof module !== "undefined")

@@ -43,7 +43,7 @@ int request_handler(
 	const char* method,
 	const char* version,
 	const char* upload_data,
-	size_t upload_data_size,
+	long unsigned int* upload_data_size,
 	void** conn_klass
 );
 char* mystrdup(const char* str);
@@ -80,7 +80,7 @@ int request_handler(
 	const char* method,
 	const char* version,
 	const char* upload_data,
-	size_t upload_data_size,
+	long unsigned int* upload_data_size,
 	void** conn_klass
 )
 {
@@ -100,7 +100,7 @@ int request_handler(
 	{
 		printf("Handling AJAX to %s\n", url);
 		arg.attached_data = upload_data;
-		arg.attached_data_size = upload_data_size;
+		arg.attached_data_size = *upload_data_size;
 		arg.output_buffer = NULL;
 		arg.output_mimetype = NULL;
 		arg.output_buffer_size = 0;

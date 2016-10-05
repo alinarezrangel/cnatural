@@ -25,6 +25,7 @@ $ntc(window).on("load", function()
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},
+		pdata: "",
 		async: true
 	}, function(err, res)
 	{
@@ -35,43 +36,38 @@ $ntc(window).on("load", function()
 		}
 		if(res === "Hello World")
 			return;
-		var win = NWCreate(NWDialog, {
-			parent: $ntc("#_bootscreen")
+		NWCreateTextDialog($ntc("#_bootscreen"), 2, "Error: " + res, function(win, msg, txt)
+		{
+			win.getElement().addClass("text-natural-darkred");
 		});
-		var message = NWCreate(NWHeader, {
-			parent: win.getElement(),
-			level: 2,
-			size: "content.title"
-		});
-		var text = NWCreate(NWPlainText, {
-			parent: message.getElement(),
-			text: "Error: " + res
-		});
-		win.getElement()
-			.style({
-				top: "50%",
-				left: "50%",
-				maxWidth: "50%",
-				maxHeight: "50%",
-				transform: "translateX(-50%)"
-			})
-			.addClass("color-natural-darkred")
-			.addClass("padding-16")
-			.addClass("overflow-hidden")
-			.attach(function(ev)
-			{
-				win.getElement().hide();
-				ev.preventDefault();
-				return false;
-			})
-			.on("click", true);
-		text.pack("APPEND");
-		message.pack("BEGIN");
-		win.pack("APPEND");
 	});
 	$ntc("#_bootscreen").attach(function(ev)
 	{
 		$ntc("#_bootscreen").hideSlideUp();
 		$ntc("#_loginscreen").removeClass("gui-hidden");
+	}).on("click");
+	$ntc("#login_button").attach(function(ev)
+	{
+		var pd = "username: ";
+		pd += $ntc("#login_username").value() + "\n";
+		pd += "password: " + $ntc("#login_password").value();
+		var win = NWCreateTextDialog($ntc("#_loginscreen"), 2, "Iniciando sesión, por favor espere...", function(win, msg, txt)
+		{
+			win.getElement().addClass("text-natural-grey");
+		});
+		$natural.ajax({
+			url: "/api/ajax/coreutils/login",
+			args: {},
+			pdata: pd,
+			async: true
+		}, function(err, res)
+		{
+			if(err)
+			{
+				console.error(err);
+				return;
+			}
+			win.getElement().remove();
+		});
 	}).on("click");
 });

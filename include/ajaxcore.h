@@ -30,8 +30,8 @@ limitations under the License.
 
 typedef struct
 {
-	char* attached_data;
-	size_t attached_data_size;
+	const char* attached_data;
+	long unsigned int attached_data_size;
 	char* output_buffer;
 	size_t output_buffer_size;
 	char* output_mimetype;
@@ -54,6 +54,7 @@ typedef int (*cnatural_ajax_handler_t)(
 );
 
 int cnatural_ajax_test(const char*, cnatural_ajax_argument_t*);
+int cnatural_ajax_login(const char*, cnatural_ajax_argument_t*);
 
 int cnatural_try_ajax(const char*, cnatural_ajax_argument_t*);
 
