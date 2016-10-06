@@ -46,7 +46,6 @@ int request_handler(
 	long unsigned int* upload_data_size,
 	void** conn_klass
 );
-char* mystrdup(const char* str);
 
 int main(int argc, char** argv)
 {
@@ -58,6 +57,9 @@ int main(int argc, char** argv)
 		NULL,
 		NULL,
 		&request_handler,
+		NULL,
+		MHD_OPTION_NOTIFY_COMPLETED,
+		cnatural_basic_post_destroy,
 		NULL,
 		MHD_OPTION_END
 	);
@@ -95,16 +97,44 @@ int request_handler(
 	char* ext = NULL;
 	int filedesc = 0;
 	struct stat fdstat;
+	cnatural_post_processor_data_t* pddata = *conn_klass;
+	cnatural_post_processor_node_t* node;
+
+	if(conn_klass == NULL)
+	{
+		printf("Creating POST data...\n");
+		cnatural_create_post_data(conn, pddata);
+		return MHD_YES;
+	}
 
 	if(strcmp(method, "POST") == 0)
 	{
+		if(*upload_data_size != 0)
+		{
+			printf("Reading POST data...\n");
+			MHD_post_process(pddata->postprocessor, upload_data, *upload_data_size);
+			return MHD_YES;
+		}
 		printf("Handling AJAX to %s\n", url);
 		arg.attached_data = upload_data;
 		arg.attached_data_size = *upload_data_size;
 		arg.output_buffer = NULL;
 		arg.output_mimetype = NULL;
 		arg.output_buffer_size = 0;
+		arg.arguments = pddata;
+
+		if(pddata != NULL)
+		{
+			printf("Detected POST data\n");
+			for(node = pddata->data; node->next != NULL; node = node->next)
+			{
+				printf("Sended POST node %s (%s)\n", node->key, node->value);
+			}
+		}
+
 		use_ajax = cnatural_try_ajax(url, &arg);
+
+		fflush(stdout);
 
 		if(use_ajax == -1)
 		{
@@ -131,6 +161,9 @@ int request_handler(
 
 		ret = MHD_queue_response(conn, MHD_HTTP_OK, res);
 		MHD_destroy_response(res);
+
+		// free(arg.output_buffer);
+		// free(arg.output_mimetype);
 		return ret;
 	}
 
@@ -157,7 +190,7 @@ int request_handler(
 	if(urlsize == 1)
 	{
 		free(ufile);
-		ufile = mystrdup("htcore/index.html");
+		ufile = cnatural_strdup("htcore/index.html");
 	}
 
 	/* Prefix the public_http/ to the filepath */
@@ -257,12 +290,4 @@ int request_handler(
 	free(final_file_name);
 
 	return ret;
-}
-
-char* mystrdup(const char* str)
-{
-	char* res = malloc(strlen(str) * sizeof(char));
-	if(res == NULL)
-		return NULL;
-	return strcpy(res, str);
 }

@@ -22,6 +22,130 @@ limitations under the License.
 
 #include "ajaxcore.h"
 
+char* cnatural_strdup(const char* str)
+{
+	char* res = malloc(strlen(str) * sizeof(char));
+	if(res == NULL)
+		return NULL;
+	/*
+	strcpy(res, str);
+	res[strlen(str)] = '\0';
+	return res;
+	*/
+	return strcpy(res, str);
+}
+
+int cnatural_basic_post_data_handler(
+	void* conn_klass,
+	enum MHD_ValueKind kind,
+	const char* key,
+	const char* filename,
+	const char* content_type,
+	const char* transfer_encoding,
+	const char* sdata,
+	uint64_t off,
+	size_t size
+)
+{
+	cnatural_post_processor_data_t* data = conn_klass;
+	cnatural_post_processor_node_t* it = data->data;
+
+	/* Go to the last element in the list */
+	for(;it->next != NULL; it = it->next);
+
+	cnatural_post_processor_node_t* kl =
+		malloc(sizeof(cnatural_post_processor_node_t));
+	if(kl == NULL)
+	{
+		perror("Error appending a key to the keylist");
+		return MHD_NO;
+	}
+
+	kl->back = it;
+	kl->next = NULL;
+	it->next = kl;
+
+	/* Fill with data */
+	kl->key = cnatural_strdup(key);
+	kl->value = cnatural_strdup(sdata);
+
+	return MHD_YES;
+}
+int cnatural_create_post_data(
+	struct MHD_Connection* conn,
+	cnatural_post_processor_data_t* data
+)
+{
+	cnatural_post_processor_node_t* kl;
+
+	data = malloc(sizeof(cnatural_post_processor_data_t));
+	if(data == NULL)
+	{
+		perror("Error creating the data");
+		return MHD_NO;
+	}
+	kl = malloc(sizeof(cnatural_post_processor_node_t));
+	if(kl == NULL)
+	{
+		perror("Error making the main list chain");
+		return MHD_NO;
+	}
+
+	kl->back = NULL;
+	kl->next = NULL;
+
+	kl->key = cnatural_strdup("_");
+	kl->value = cnatural_strdup("_");
+
+	data->data = kl;
+
+	data->postprocessor = MHD_create_post_processor(
+		conn,
+		CNATURAL_POST_BUFFER_SIZE,
+		cnatural_basic_post_data_handler,
+		(void*) data
+	);
+	if(data->postprocessor == NULL)
+	{
+		perror("Error creating a new PP");
+		return MHD_NO;
+	}
+	return MHD_YES;
+}
+int cnatural_destroy_post_data(cnatural_post_processor_data_t* data)
+{
+	cnatural_post_processor_node_t* it = data->data;
+
+	/* Go to list end */
+	for(;it->next != NULL; it = it->next);
+	/* Iterate in reverse */
+	for(;it != NULL;)
+	{
+		cnatural_post_processor_node_t* bc = it->back;
+		free(it); /* Delete current node and go back */
+		it = bc;
+	}
+	MHD_destroy_post_processor(data->postprocessor);
+	free(data);
+	return MHD_YES;
+}
+void cnatural_basic_post_destroy(
+	void* cls,
+	struct MHD_Connection* conn,
+	void** conn_klass,
+	enum MHD_RequestTerminationCode toe
+)
+{
+	cnatural_post_processor_data_t* data = *conn_klass;
+
+	if(data == NULL)
+	{
+		return;
+	}
+	cnatural_destroy_post_data(data);
+	conn_klass = NULL;
+}
+
 /*
  * AJAX paths structure:
  *  + All paths starts with "/api/ajax/"
@@ -41,7 +165,7 @@ int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
 	int ecpy = 0;
 	if(strcmp(path, "/api/ajax/coreutils/test") != 0)
 		return 1;
-	printf("Catched /api/ajax/coreutils/test AJAX: sending Hello World");
+	printf("Catched /api/ajax/coreutils/test AJAX: sending Hello World\n");
 	inout->output_buffer = malloc(sizeof(char) * msglen);
 	if(inout->output_buffer == NULL)
 	{
@@ -73,14 +197,7 @@ int cnatural_ajax_login(const char* path, cnatural_ajax_argument_t* inout)
 	size_t i = 0;
 	if(strcmp(path, "/api/ajax/coreutils/login") != 0)
 		return 1;
-	printf("Catched /api/ajax/coreutils/login AJAX: sending Hola Mundo");
-	printf("Uploaded data %d: ", inout->attached_data_size);
-	for(i = 0; i < inout->attached_data_size; i++)
-	{
-		printf("%c", inout->attached_data[i]);
-	}
-	printf("\n");
-	fflush(stdout);
+	printf("Catched /api/ajax/coreutils/login AJAX: sending Hola Mundo\n");
 	inout->output_buffer = malloc(sizeof(char) * msglen);
 	if(inout->output_buffer == NULL)
 	{

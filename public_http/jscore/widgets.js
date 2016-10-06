@@ -235,6 +235,8 @@ limitations under the License.
 				text: text
 			});
 			win.getElement()
+				.show()
+				.removeClass("gui-hidden")
 				.style({
 					top: "50%",
 					left: "50%",

@@ -27,6 +27,26 @@ limitations under the License.
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <stdint.h>
+
+#include <microhttpd.h>
+
+#define CNATURAL_POST_BUFFER_SIZE 256
+
+struct cnatural_post_processor_node
+{
+	struct cnatural_post_processor_node* back;
+	struct cnatural_post_processor_node* next;
+	char* key;
+	char* value;
+};
+typedef struct cnatural_post_processor_node cnatural_post_processor_node_t;
+
+typedef struct
+{
+	struct MHD_PostProcessor* postprocessor;
+	cnatural_post_processor_node_t* data;
+} cnatural_post_processor_data_t;
 
 typedef struct
 {
@@ -35,7 +55,33 @@ typedef struct
 	char* output_buffer;
 	size_t output_buffer_size;
 	char* output_mimetype;
+	cnatural_post_processor_data_t* arguments;
 } cnatural_ajax_argument_t;
+
+char* cnatural_strdup(const char*);
+
+int cnatural_basic_post_data_handler(
+	void*,
+	enum MHD_ValueKind,
+	const char*,
+	const char*,
+	const char*,
+	const char*,
+	const char*,
+	uint64_t,
+	size_t
+);
+int cnatural_create_post_data(
+	struct MHD_Connection*,
+	cnatural_post_processor_data_t*
+);
+int cnatural_destroy_post_data(cnatural_post_processor_data_t*);
+void cnatural_basic_post_destroy(
+	void*,
+	struct MHD_Connection*,
+	void**,
+	enum MHD_RequestTerminationCode
+);
 
 /**
 * @brief A simple AJAX handler.

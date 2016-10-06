@@ -68,6 +68,7 @@ $ntc(window).on("load", function()
 				return;
 			}
 			win.getElement().remove();
+			alert(res);
 		});
 	}).on("click");
 });
