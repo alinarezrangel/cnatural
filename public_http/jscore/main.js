@@ -48,11 +48,16 @@ $ntc(window).on("load", function()
 	}).on("click");
 	$ntc("#login_button").attach(function(ev)
 	{
-		var pd = "hello=world";
-		var win = NWCreateTextDialog($ntc("#_loginscreen"), 2, "Iniciando sesión, por favor espere...", function(win, msg, txt)
-		{
-			win.getElement().addClass("text-natural-grey");
-		});
+		var pd = "ping=me";
+		var win = NWCreateTextDialog(
+			$ntc("#_loginscreen"),
+			2,
+			"Iniciando sesión, por favor espere...",
+			function(win, msg, txt)
+			{
+				win.getElement().addClass("text-natural-grey");
+			}
+		);
 		$natural.ajax({
 			url: "/api/ajax/coreutils/login",
 			args: {},
@@ -67,6 +72,18 @@ $ntc(window).on("load", function()
 			}
 			win.getElement().remove();
 			alert(res);
+			if(res !== "pong")
+			{
+				var err = NWCreateTextDialog(
+					$ntc("#_loginscreen"),
+					2,
+					"Error fatal",
+					function(win, msg, txt)
+					{
+						win.getElement().addClass("color-natural-deepred");
+					}
+				);
+			}
 		});
 	}).on("click");
 });

@@ -134,7 +134,7 @@ int request_handler(
 		arg.output_buffer = NULL;
 		arg.output_mimetype = NULL;
 		arg.output_buffer_size = 0;
-		arg.arguments = data;
+		arg.arguments = *conn_klass;
 
 		use_ajax = cnatural_try_ajax(url, &arg);
 
