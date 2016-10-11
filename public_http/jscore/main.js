@@ -25,7 +25,7 @@ $ntc(window).on("load", function()
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},
-		pdata: "",
+		pdata: "name=cnatural&version=0_0_1",
 		async: true
 	}, function(err, res)
 	{
@@ -48,9 +48,7 @@ $ntc(window).on("load", function()
 	}).on("click");
 	$ntc("#login_button").attach(function(ev)
 	{
-		var pd = "username: ";
-		pd += $ntc("#login_username").value() + "\n";
-		pd += "password: " + $ntc("#login_password").value();
+		var pd = "hello=world";
 		var win = NWCreateTextDialog($ntc("#_loginscreen"), 2, "Iniciando sesión, por favor espere...", function(win, msg, txt)
 		{
 			win.getElement().addClass("text-natural-grey");

@@ -31,7 +31,9 @@ limitations under the License.
 
 #include <microhttpd.h>
 
-#define CNATURAL_POST_BUFFER_SIZE 256
+#define CNATURAL_POST_BUFFER_SIZE 512
+#define CNATURAL_POST_TYPE_GET 0
+#define CNATURAL_POST_TYPE_POST 1
 
 struct cnatural_post_processor_node
 {
@@ -45,6 +47,7 @@ typedef struct cnatural_post_processor_node cnatural_post_processor_node_t;
 typedef struct
 {
 	struct MHD_PostProcessor* postprocessor;
+	int type;
 	cnatural_post_processor_node_t* data;
 } cnatural_post_processor_data_t;
 
@@ -73,9 +76,10 @@ int cnatural_basic_post_data_handler(
 );
 int cnatural_create_post_data(
 	struct MHD_Connection*,
-	cnatural_post_processor_data_t*
+	int,
+	cnatural_post_processor_data_t**
 );
-int cnatural_destroy_post_data(cnatural_post_processor_data_t*);
+int cnatural_destroy_post_data(cnatural_post_processor_data_t**);
 void cnatural_basic_post_destroy(
 	void*,
 	struct MHD_Connection*,

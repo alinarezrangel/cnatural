@@ -47,8 +47,16 @@ int cnatural_basic_post_data_handler(
 	size_t size
 )
 {
+	if(conn_klass == NULL)
+	{
+		printf("The POST data not exist\n");
+		return MHD_YES;
+	}
 	cnatural_post_processor_data_t* data = conn_klass;
 	cnatural_post_processor_node_t* it = data->data;
+
+	printf("Handling POST data %s:%s\n", key, sdata);
+	fflush(stdout);
 
 	/* Go to the last element in the list */
 	for(;it->next != NULL; it = it->next);
@@ -58,7 +66,7 @@ int cnatural_basic_post_data_handler(
 	if(kl == NULL)
 	{
 		perror("Error appending a key to the keylist");
-		return MHD_NO;
+		return MHD_YES;
 	}
 
 	kl->back = it;
@@ -69,17 +77,23 @@ int cnatural_basic_post_data_handler(
 	kl->key = cnatural_strdup(key);
 	kl->value = cnatural_strdup(sdata);
 
-	return MHD_YES;
+	printf("Created\n");
+	fflush(stdout);
+
+	return MHD_NO;
 }
 int cnatural_create_post_data(
 	struct MHD_Connection* conn,
-	cnatural_post_processor_data_t* data
+	int create_post,
+	cnatural_post_processor_data_t** data
 )
 {
 	cnatural_post_processor_node_t* kl;
 
-	data = malloc(sizeof(cnatural_post_processor_data_t));
-	if(data == NULL)
+	printf("Creating POST data\n");
+
+	(*data) = malloc(sizeof(cnatural_post_processor_data_t));
+	if((*data) == NULL)
 	{
 		perror("Error creating the data");
 		return MHD_NO;
@@ -91,30 +105,43 @@ int cnatural_create_post_data(
 		return MHD_NO;
 	}
 
+	(*data)->type = (create_post == 0)? CNATURAL_POST_TYPE_POST : CNATURAL_POST_TYPE_GET;
+
 	kl->back = NULL;
 	kl->next = NULL;
 
 	kl->key = cnatural_strdup("_");
 	kl->value = cnatural_strdup("_");
 
-	data->data = kl;
+	(*data)->data = kl;
 
-	data->postprocessor = MHD_create_post_processor(
-		conn,
-		CNATURAL_POST_BUFFER_SIZE,
-		cnatural_basic_post_data_handler,
-		(void*) data
-	);
-	if(data->postprocessor == NULL)
+	if(create_post == 0)
 	{
-		perror("Error creating a new PP");
-		return MHD_NO;
+		(*data)->postprocessor = MHD_create_post_processor(
+			conn,
+			CNATURAL_POST_BUFFER_SIZE,
+			cnatural_basic_post_data_handler,
+			(void*) (*data)
+		);
+		if((*data)->postprocessor == NULL)
+		{
+			perror("Error creating a new PP");
+			free(kl);
+			free(*data);
+			return MHD_NO;
+		}
 	}
+	else
+	{
+		(*data)->postprocessor = NULL;
+	}
+	printf("Done (creating)\n");
+	fflush(stdout);
 	return MHD_YES;
 }
-int cnatural_destroy_post_data(cnatural_post_processor_data_t* data)
+int cnatural_destroy_post_data(cnatural_post_processor_data_t** data)
 {
-	cnatural_post_processor_node_t* it = data->data;
+	cnatural_post_processor_node_t* it = (*data)->data;
 
 	/* Go to list end */
 	for(;it->next != NULL; it = it->next);
@@ -125,8 +152,11 @@ int cnatural_destroy_post_data(cnatural_post_processor_data_t* data)
 		free(it); /* Delete current node and go back */
 		it = bc;
 	}
-	MHD_destroy_post_processor(data->postprocessor);
-	free(data);
+	if((*data)->postprocessor != NULL)
+		MHD_destroy_post_processor((*data)->postprocessor);
+	free(*data);
+	printf("Destroyed POST data\n");
+	fflush(stdout);
 	return MHD_YES;
 }
 void cnatural_basic_post_destroy(
@@ -138,11 +168,15 @@ void cnatural_basic_post_destroy(
 {
 	cnatural_post_processor_data_t* data = *conn_klass;
 
+	printf("Destroying POST request DATA\n");
+
 	if(data == NULL)
 	{
 		return;
 	}
-	cnatural_destroy_post_data(data);
+
+	printf("Destroy...\n");
+	cnatural_destroy_post_data(&data);
 	conn_klass = NULL;
 }
 
@@ -194,7 +228,6 @@ int cnatural_ajax_login(const char* path, cnatural_ajax_argument_t* inout)
 	const char* mime = "text/plain";
 	size_t mimelen = strlen(mime) + 1;
 	int ecpy = 0;
-	size_t i = 0;
 	if(strcmp(path, "/api/ajax/coreutils/login") != 0)
 		return 1;
 	printf("Catched /api/ajax/coreutils/login AJAX: sending Hola Mundo\n");

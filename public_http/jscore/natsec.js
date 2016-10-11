@@ -243,6 +243,9 @@ limitations under the License.
 				}
 			};
 			xhrc.open("POST", options.url + ((params !== "")? ("?" + params) : ""), options.async);
+			xhrc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhrc.setRequestHeader("Content-length", options.pdata.length);
+			xhrc.setRequestHeader("Connection", "close");
 			xhrc.send(options.pdata);
 		};
 		NaturalObject.prototype.appendChild = function(child)

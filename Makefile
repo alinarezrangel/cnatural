@@ -1,6 +1,6 @@
 TARGET=cnatural.out
-SRC=src/
-INC=include/
+SRC=src
+INC=include
 OBJC=main.o ajaxcore.o
 LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil
 INCLUDES=-I$PATH_TO_LIBMHD_INCLUDES -I$(INC)

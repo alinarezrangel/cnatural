@@ -97,40 +97,44 @@ int request_handler(
 	char* ext = NULL;
 	int filedesc = 0;
 	struct stat fdstat;
-	cnatural_post_processor_data_t* pddata = *conn_klass;
-	cnatural_post_processor_node_t* node;
+	cnatural_post_processor_data_t* data = NULL;
 
-	if(conn_klass == NULL)
+	printf("Reading POST data %d...\n", *upload_data_size);
+	fflush(stdout);
+
+	if(*conn_klass == NULL)
 	{
-		printf("Creating POST data...\n");
-		cnatural_create_post_data(conn, pddata);
-		return MHD_YES;
+		data = *conn_klass;
+		ret = cnatural_create_post_data(conn, strcmp(method, "POST"), &data);
+		printf("Exiting C!\n");
+		fflush(stdout);
+		*conn_klass = (void*) data;
+		return ret;
 	}
+
+	printf("Successfull created POST data\n");
+	fflush(stdout);
 
 	if(strcmp(method, "POST") == 0)
 	{
-		if(*upload_data_size != 0)
+		printf("Handling AJAX to %s\n", url);
+
+		if(*upload_data_size)
 		{
-			printf("Reading POST data...\n");
-			MHD_post_process(pddata->postprocessor, upload_data, *upload_data_size);
+			printf("Uploaded data size\n");
+			fflush(stdout);
+			data = *conn_klass;
+			MHD_post_process(data->postprocessor, upload_data, *upload_data_size);
+			*upload_data_size = 0;
 			return MHD_YES;
 		}
-		printf("Handling AJAX to %s\n", url);
+
 		arg.attached_data = upload_data;
 		arg.attached_data_size = *upload_data_size;
 		arg.output_buffer = NULL;
 		arg.output_mimetype = NULL;
 		arg.output_buffer_size = 0;
-		arg.arguments = pddata;
-
-		if(pddata != NULL)
-		{
-			printf("Detected POST data\n");
-			for(node = pddata->data; node->next != NULL; node = node->next)
-			{
-				printf("Sended POST node %s (%s)\n", node->key, node->value);
-			}
-		}
+		arg.arguments = data;
 
 		use_ajax = cnatural_try_ajax(url, &arg);
 
