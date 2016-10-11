@@ -35,17 +35,17 @@
 		**********************************************-->
 	</head>
 	<body>
-		<section id="_bootscreen" class="gui-screen gui-clickeable gui-boot-screen gui-flexcore color-ocean">
-			<div class="col o1 padding-8" style="margin: auto; max-width: 60%;">
+		<section data-widget="screen-container" data-action="this.slideUp.showNext" id="_bootscreen" class="gui-screen gui-clickeable gui-boot-screen gui-flexcore color-ocean">
+			<div data-widget="header-container" class="col o1 padding-8" style="margin: auto; max-width: 60%;">
 				<h1 class="text-jumbo-4 margin-8">Bienvenido a CNatural</h1>
 			</div>
-			<div class="col o2 padding-8" style="margin: auto; max-width: 60%;">
+			<div data-widget="body-container" class="col o2 padding-8" style="margin: auto; max-width: 60%;">
 				<p class="text-ultra-big">
 					Clickea en cualquier lugar o presiona cualquier tecla
 					para iniciar sesión.
 				</p>
 			</div>
-			<noscript class="col o3 padding-8 text-ultra-big text-color-red font-bold" style="margin: auto; max-width: 60%;">
+			<noscript data-widget="noscript-container" class="col o3 padding-8 text-ultra-big text-color-red font-bold" style="margin: auto; max-width: 60%;">
 				<p>
 					Lamentablemente es necesario activar JavaScript
 					para poder utilizar este modo de CNatural.
@@ -55,11 +55,11 @@
 				</p>
 			</noscript>
 		</section>
-		<section id="_loginscreen" class="gui-screen gui-login-screen gui-flexcore color-ocean gui-hidden">
-			<div class="col o1 padding-8" style="margin: auto; max-width: 60%;">
-				<h1 class="text-jumbo-4 margin-8">Iniciar sesión</h1>
+		<section data-widget="screen-container" id="_loginscreen" class="gui-screen gui-login-screen gui-flexcore color-ocean gui-hidden">
+			<div data-widget="header-container" class="col o1 padding-8" style="margin: auto; max-width: 60%;">
+				<h1 class="text-jumbo-4 margin-8" data-widget="header">Iniciar sesión</h1>
 			</div>
-			<div class="col o2 padding-8" style="margin: auto; max-width: 60%;">
+			<div data-widget="body-container" class="col o2 padding-8" style="margin: auto; max-width: 60%;">
 				<input
 					class="input color-natural-white"
 					name="username"
@@ -67,6 +67,7 @@
 					type="text"
 					placeholder="Tu nombre de usuario"
 					value=""
+					data-widget="input"
 					required="required" />
 				<input
 					class="input color-natural-white"
@@ -74,14 +75,27 @@
 					id="login_password"
 					type="password"
 					placeholder="Tu contraseña"
+					data-widget="input"
 					value="" />
 				<button
 					class="button color-natural-green width-block"
 					type="button"
+					data-widget="button"
+					data-action="form.submit.ifTrue.showNext"
 					id="login_button">
 					Iniciar Sesión
 				</button>
 			</div>
 		</section>
+		<!-- Include the shell -->
+		<div
+			class="gui-hidden"
+			data-widget="script"
+			data-action="special.include"
+			data-src="/api/private/resources/htcore/shell.html"
+			data-mime="text/html"
+			data-title="The CNatural Shell"
+			data-object="$shell">
+		</div>
 	</body>
 </html>

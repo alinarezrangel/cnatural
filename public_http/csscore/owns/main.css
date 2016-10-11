@@ -97,6 +97,24 @@ html, body {
 	flex-wrap: wrap;
 }
 
+.gui-flexbasic {
+	display: -moz-flex;
+	display: -webkit-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	-moz-flex-direction: column;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	-o-flex-direction: column;
+	flex-direction: column;
+	-moz-flex-wrap: wrap;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	-o-flex-wrap: wrap;
+	flex-wrap: wrap;
+}
+
 .gui-flexcore > *, .gui-flexcore > .centerme {
 	margin: auto;
 }

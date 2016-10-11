@@ -71,7 +71,6 @@ $ntc(window).on("load", function()
 				return;
 			}
 			win.getElement().remove();
-			alert(res);
 			if(res !== "pong")
 			{
 				var err = NWCreateTextDialog(
@@ -83,6 +82,11 @@ $ntc(window).on("load", function()
 						win.getElement().addClass("color-natural-deepred");
 					}
 				);
+			}
+			else
+			{
+				$ntc("#_loginscreen").hideSlideUp();
+				$ntc("#_mainscreen").removeClass("gui-hidden");
 			}
 		});
 	}).on("click");
