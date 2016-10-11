@@ -74,6 +74,7 @@ limitations under the License.
 				if(typeof value === "string")
 				{
 					to.setAttribute(name, value);
+					return this;
 				}
 				else
 				{
@@ -92,6 +93,10 @@ limitations under the License.
 				return func(this.original);
 			}
 			return this;
+		};
+		NaturalObject.prototype.data = function(name, value)
+		{
+			return this.attr("data-" + name, value);
 		};
 		NaturalObject.prototype.value = function(value)
 		{
@@ -226,6 +231,7 @@ limitations under the License.
 		{
 			var xhrc = new XMLHttpRequest();
 			var params = "";
+			var pdata = "";
 			for(var i in options.args)
 			{
 				if(options.args.hasOwnProperty(i))
@@ -233,20 +239,33 @@ limitations under the License.
 					params += "&" + i + "=" + options.args[i];
 				}
 			}
+			for(var i in options.pdata)
+			{
+				if(options.args.hasOwnProperty(i))
+				{
+					pdata += "&" + i + "=" + options.pdata[i];
+				}
+			}
 			if(params !== "")
 				params = params.substr(1, params.length - 1);
+			if(pdata !== "")
+				pdata = pdata.substr(1, pdata.length - 1);
 			xhrc.onreadystatechange = function()
 			{
 				if((this.readyState === 4) && (this.status === 200))
 				{
 					callback(null, this.responseText);
 				}
+				if((this.readyState === 4) && (this.status !== 200))
+				{
+					callback(new Error("Error: unexpected HTTP !200 code " + this.status));
+				}
 			};
 			xhrc.open("POST", options.url + ((params !== "")? ("?" + params) : ""), options.async);
 			xhrc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhrc.setRequestHeader("Content-length", options.pdata.length);
 			xhrc.setRequestHeader("Connection", "close");
-			xhrc.send(options.pdata);
+			xhrc.send(pdata);
 		};
 		NaturalObject.prototype.appendChild = function(child)
 		{
@@ -308,17 +327,52 @@ limitations under the License.
 			}
 			return this;
 		};
-
-		window.NaturalObject = window.NaturalObject || NaturalObject;
-		window.$natural = new window.NaturalObject(document);
-		window.$ntc = function(obj)
+		NaturalObject.prototype.each = function(cll)
 		{
-			if(typeof obj === "string")
+			if(typeof cll === "function")
 			{
-				return window.$natural.child(obj);
+				this._callbackLastRef = cll;
 			}
-			return window.$natural.wrap(obj);
+			else
+			{
+				cll = this._callbackLastRef;
+			}
+			var func = (to) =>
+			{
+				cll(to);
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					func(this.get(i));
+				}
+			}
+			else
+			{
+				func(this);
+			}
+			return this;
 		};
+		NaturalObject.prototype.reloadGlobals = function(win)
+		{
+			if(typeof win === "undefined")
+			{
+				win = window;
+			}
+			window.NaturalObject = window.NaturalObject || NaturalObject;
+			window.$natural = new window.NaturalObject(document);
+			window.$ntc = function(obj)
+			{
+				if(typeof obj === "string")
+				{
+					return window.$natural.child(obj);
+				}
+				return window.$natural.wrap(obj);
+			};
+		};
+
+		(new NaturalObject(document)).reloadGlobals(window);
 	};
 
 	if(typeof module !== "undefined")

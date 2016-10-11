@@ -71,6 +71,8 @@ limitations under the License.
 				};
 			return this;
 		};
+
+		(new window.NaturalObject(document)).reloadGlobals(window);
 	};
 
 	if(typeof module !== "undefined")

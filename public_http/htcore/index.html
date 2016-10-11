@@ -11,6 +11,7 @@
 		<script src="jscore/natsec.js" type="application/javascript" charset="utf-8"></script>
 		<script src="jscore/animation.js" type="application/javascript" charset="utf-8"></script>
 		<script src="jscore/widgets.js" type="application/javascript" charset="utf-8"></script>
+		<script src="jscore/cdata.js" type="application/javascript" charset="utf-8"></script>
 		<script src="jscore/main.js" type="application/javascript" charset="utf-8"></script>
 		<!--*********************************************
 		**********************
@@ -55,7 +56,7 @@
 				</p>
 			</noscript>
 		</section>
-		<section data-widget="screen-container" id="_loginscreen" class="gui-screen gui-login-screen gui-flexcore color-ocean gui-hidden">
+		<section data-widget="screen-container" id="_loginscreen" class="gui-screen gui-login-screen gui-flexcore color-ocean">
 			<div data-widget="header-container" class="col o1 padding-8" style="margin: auto; max-width: 60%;">
 				<h1 class="text-jumbo-4 margin-8" data-widget="header">Iniciar sesión</h1>
 			</div>
@@ -89,12 +90,12 @@
 		</section>
 		<!-- Include the shell -->
 		<div
-			class="gui-hidden"
+			class="gui-include box no-padding no-margin"
 			data-widget="script"
 			data-action="special.include"
 			data-src="/api/private/resources/htcore/shell.html"
 			data-mime="text/html"
-			data-title="The CNatural Shell"
+			data-sandbox="false"
 			data-object="$shell">
 		</div>
 	</body>

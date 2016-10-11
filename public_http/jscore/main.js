@@ -48,7 +48,6 @@ $ntc(window).on("load", function()
 	}).on("click");
 	$ntc("#login_button").attach(function(ev)
 	{
-		var pd = "ping=me";
 		var win = NWCreateTextDialog(
 			$ntc("#_loginscreen"),
 			2,
@@ -61,7 +60,9 @@ $ntc(window).on("load", function()
 		$natural.ajax({
 			url: "/api/ajax/coreutils/login",
 			args: {},
-			pdata: pd,
+			pdata: {
+				ping: "me"
+			},
 			async: true
 		}, function(err, res)
 		{
