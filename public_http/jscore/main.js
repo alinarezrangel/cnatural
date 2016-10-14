@@ -77,7 +77,7 @@ $ntc(window).on("load", function()
 				var err = NWCreateTextDialog(
 					$ntc("#_loginscreen"),
 					2,
-					"Error fatal",
+					"Error fatal: " + res,
 					function(win, msg, txt)
 					{
 						win.getElement().addClass("color-natural-deepred");

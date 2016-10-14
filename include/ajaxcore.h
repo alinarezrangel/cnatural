@@ -31,37 +31,7 @@ limitations under the License.
 
 #include <microhttpd.h>
 
-#define CNATURAL_POST_BUFFER_SIZE 512
-#define CNATURAL_POST_TYPE_GET 0
-#define CNATURAL_POST_TYPE_POST 1
-
-struct cnatural_post_processor_node
-{
-	struct cnatural_post_processor_node* back;
-	struct cnatural_post_processor_node* next;
-	char* key;
-	char* value;
-};
-typedef struct cnatural_post_processor_node cnatural_post_processor_node_t;
-
-typedef struct
-{
-	struct MHD_PostProcessor* postprocessor;
-	int type;
-	cnatural_post_processor_node_t* data;
-} cnatural_post_processor_data_t;
-
-typedef struct
-{
-	const char* attached_data;
-	long unsigned int attached_data_size;
-	char* output_buffer;
-	size_t output_buffer_size;
-	char* output_mimetype;
-	cnatural_post_processor_data_t* arguments;
-} cnatural_ajax_argument_t;
-
-char* cnatural_strdup(const char*);
+#include "ajaxtypes.h"
 
 int cnatural_basic_post_data_handler(
 	void*,

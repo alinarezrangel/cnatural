@@ -34,8 +34,8 @@ limitations under the License.
 			{
 				doc = document;
 			}
-			var tags = $ntc("*[data-widget=\"script\"]");
-			tags.attach(function(script)
+			var tags = window.$ntc("*[data-widget=\"script\"]");
+			tags.apply((script) =>
 			{
 				var src = script.data("src");
 				var mime = script.data("mime");
@@ -48,14 +48,22 @@ limitations under the License.
 						file: src
 					},
 					async: true
-				}, function(err, res)
+				}, (err, res) =>
 				{
-					//
+					if(err)
+					{
+						script.original.dispatchEvent(new Event("scriptLoadError"));
+						return;
+					}
 				});
-			}).each();
+			}).forEach();
 		};
 
 		(new window.NaturalObject(document)).reloadGlobals(window);
+		(new window.NaturalObject(window)).attach(function()
+		{
+			(new window.NaturalObject(document)).includeScripts(document);
+		}).on("load");
 	};
 
 	if(typeof module !== "undefined")

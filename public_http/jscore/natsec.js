@@ -196,6 +196,14 @@ limitations under the License.
 			this._callbackLastRef = handler;
 			return this;
 		};
+		NaturalObject.prototype.apply = function(handler)
+		{
+			return this.attach(handler);
+		};
+		NaturalObject.prototype.call = function(handler)
+		{
+			return this.attach(handler);
+		};
 		NaturalObject.prototype.on = function(evt, cll)
 		{
 			var bubbles = (cll === true);
@@ -241,7 +249,7 @@ limitations under the License.
 			}
 			for(var i in options.pdata)
 			{
-				if(options.args.hasOwnProperty(i))
+				if(options.pdata.hasOwnProperty(i))
 				{
 					pdata += "&" + i + "=" + options.pdata[i];
 				}
@@ -263,7 +271,7 @@ limitations under the License.
 			};
 			xhrc.open("POST", options.url + ((params !== "")? ("?" + params) : ""), options.async);
 			xhrc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhrc.setRequestHeader("Content-length", options.pdata.length);
+			xhrc.setRequestHeader("Content-length", pdata.length);
 			xhrc.setRequestHeader("Connection", "close");
 			xhrc.send(pdata);
 		};
@@ -353,6 +361,10 @@ limitations under the License.
 				func(this);
 			}
 			return this;
+		};
+		NaturalObject.prototype.forEach = function(cll)
+		{
+			return this.each(cll);
 		};
 		NaturalObject.prototype.reloadGlobals = function(win)
 		{

@@ -22,19 +22,6 @@ limitations under the License.
 
 #include "ajaxcore.h"
 
-char* cnatural_strdup(const char* str)
-{
-	char* res = malloc(strlen(str) * sizeof(char));
-	if(res == NULL)
-		return NULL;
-	/*
-	strcpy(res, str);
-	res[strlen(str)] = '\0';
-	return res;
-	*/
-	return strcpy(res, str);
-}
-
 int cnatural_basic_post_data_handler(
 	void* conn_klass,
 	enum MHD_ValueKind kind,

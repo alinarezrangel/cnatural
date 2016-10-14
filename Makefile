@@ -1,7 +1,7 @@
 TARGET=cnatural.out
 SRC=src
 INC=include
-OBJC=main.o ajaxcore.o
+OBJC=main.o ajaxcore.o ajaxtypes.o
 LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil
 INCLUDES=-I$PATH_TO_LIBMHD_INCLUDES -I$(INC)
 WARN=-Wall
@@ -21,6 +21,9 @@ main.o: $(SRC)/main.c
 
 ajaxcore.o: $(SRC)/ajaxcore.c $(INC)/ajaxcore.h
 	$(CC) -c $(SRC)/ajaxcore.c -o ajaxcore.o $(CFLAGS)
+
+ajaxtypes.o: $(SRC)/ajaxtypes.c $(INC)/ajaxtypes.h
+	$(CC) -c $(SRC)/ajaxtypes.c -o ajaxtypes.o $(CFLAGS)
 
 clean:
 	rm $(TARGET) $(OBJC)
