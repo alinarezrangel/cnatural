@@ -46,6 +46,7 @@ int request_handler(
 	long unsigned int* upload_data_size,
 	void** conn_klass
 );
+void set_response_headers(struct MHD_Response** res);
 
 int main(int argc, char** argv)
 {
@@ -134,6 +135,7 @@ int request_handler(
 		arg.output_buffer = NULL;
 		arg.output_mimetype = NULL;
 		arg.output_buffer_size = 0;
+		arg.output_filedesc = -1;
 		arg.arguments = *conn_klass;
 
 		use_ajax = cnatural_try_ajax(url, &arg);
@@ -151,17 +153,42 @@ int request_handler(
 			return MHD_NO;
 		}
 
-		res = MHD_create_response_from_buffer(
-			arg.output_buffer_size,
-			(void*) arg.output_buffer,
-			MHD_RESPMEM_PERSISTENT
-		);
-		MHD_add_response_header(res, "Content-Security-Policy", "default-src 'self'");
-		MHD_add_response_header(res, "X-Frame-Options", "DENY");
-		MHD_add_response_header(res, "X-XSS-Protection", "0");
-		MHD_add_response_header(res, "X-Content-Type-Options", "nosniff");
-		MHD_add_response_header(res, "X-Permitted-Cross-Domain-Policies", "none");
-		MHD_add_response_header(res, "Strict-Transport-Security", "max-age=31536000 ; includeSubDomains");
+		if(arg.output_buffer != NULL)
+		{
+			res = MHD_create_response_from_buffer(
+				arg.output_buffer_size,
+				(void*) arg.output_buffer,
+				MHD_RESPMEM_PERSISTENT
+			);
+			if(res == NULL)
+			{
+				perror("Unable to alloc the response buffer");
+				return MHD_NO;
+			}
+		}
+		else
+		{
+			ret = fstat(arg.output_filedesc, &fdstat);
+			if(ret == -1)
+			{
+				perror("stating the file");
+				close(arg.output_filedesc);
+				return MHD_NO;
+			}
+
+			res = MHD_create_response_from_fd(
+				fdstat.st_size,
+				arg.output_filedesc
+			);
+			if(res == NULL)
+			{
+				perror("Unable to alloc the response filedesc");
+				close(arg.output_filedesc);
+				return MHD_NO;
+			}
+		}
+
+		set_response_headers(&res);
 
 		ret = MHD_queue_response(conn, MHD_HTTP_OK, res);
 		MHD_destroy_response(res);
@@ -240,17 +267,14 @@ int request_handler(
 	);
 	if(res == NULL)
 	{
+		perror("Unable to alloc the response filedesc system");
 		close(filedesc);
 		free(ufile);
 		free(final_file_name);
+		return MHD_NO;
 	}
 
-	MHD_add_response_header(res, "Content-Security-Policy", "default-src 'self'");
-	MHD_add_response_header(res, "X-Frame-Options", "DENY");
-	MHD_add_response_header(res, "X-XSS-Protection", "0");
-	MHD_add_response_header(res, "X-Content-Type-Options", "nosniff");
-	MHD_add_response_header(res, "X-Permitted-Cross-Domain-Policies", "none");
-	MHD_add_response_header(res, "Strict-Transport-Security", "max-age=31536000 ; includeSubDomains");
+	set_response_headers(&res);
 
 	ext = strrchr(final_file_name, '.');
 
@@ -294,4 +318,13 @@ int request_handler(
 	free(final_file_name);
 
 	return ret;
+}
+void set_response_headers(struct MHD_Response** res)
+{
+	MHD_add_response_header(*res, "Content-Security-Policy", "default-src 'self'");
+	MHD_add_response_header(*res, "X-Frame-Options", "DENY");
+	MHD_add_response_header(*res, "X-XSS-Protection", "0");
+	MHD_add_response_header(*res, "X-Content-Type-Options", "nosniff");
+	MHD_add_response_header(*res, "X-Permitted-Cross-Domain-Policies", "none");
+	MHD_add_response_header(*res, "Strict-Transport-Security", "max-age=31536000 ; includeSubDomains");
 }

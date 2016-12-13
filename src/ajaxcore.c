@@ -92,6 +92,8 @@ int cnatural_create_post_data(
 		return MHD_NO;
 	}
 
+	(*data)->output_filedesc = -1;
+
 	(*data)->type = (create_post == 0)? CNATURAL_POST_TYPE_POST : CNATURAL_POST_TYPE_GET;
 
 	kl->back = NULL;
@@ -244,7 +246,6 @@ int cnatural_ajax_login(const char* path, cnatural_ajax_argument_t* inout)
 		msu = &mspong;
 		printf("PONG sended\n");
 	}
-
 
 	printf("To send %s\n", (*msu));
 	fflush(stdout);

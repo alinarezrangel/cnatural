@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * Types and functions for handling AJAX.
+*** * AJAX CoreUtils module: import function.
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -20,38 +20,13 @@ limitations under the License.
 **********************
 ************************************************/
 
-#include "ajaxtypes.h"
+#include "coreutils/import.h"
 
-char* cnatural_strdup(const char* str)
-{
-	char* res = malloc(strlen(str) * sizeof(char));
-	if(res == NULL)
-		return NULL;
-	/*
-	strcpy(res, str);
-	res[strlen(str)] = '\0';
-	return res;
-	*/
-	return strcpy(res, str);
-}
-
-cnatural_post_processor_data_t* cnatural_get_arg(
-	cnatural_post_processor_data_t** list,
-	const char* key
+int cnatural_ajax_coreutils_import(
+	const char* path,
+	cnatural_ajax_argument_t* args
 )
 {
-	cnatural_post_processor_data_t* it = NULL;
-
-	if(list == NULL)
-		return NULL;
-
-	for(it = *list; it != NULL; it = it->next)
-	{
-		if(strcmp(it->key, key) == 0)
-		{
-			return it;
-		}
-	}
-
-	return NULL;
+	if(strcmp(path, "/api/ajax/coreutils/import") != 0)
+		return 1;
 }

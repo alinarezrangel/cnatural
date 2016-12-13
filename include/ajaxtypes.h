@@ -59,9 +59,14 @@ typedef struct
 	char* output_buffer;
 	size_t output_buffer_size;
 	char* output_mimetype;
+	int output_filedesc;
 	cnatural_post_processor_data_t* arguments;
 } cnatural_ajax_argument_t;
 
 char* cnatural_strdup(const char*);
+cnatural_post_processor_data_t* cnatural_get_arg(
+	cnatural_post_processor_data_t**,
+	const char*
+);
 
 #endif /* ~__CNATURAL_AJAX_TYPES_H__ */
