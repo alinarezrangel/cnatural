@@ -64,8 +64,8 @@ typedef struct
 } cnatural_ajax_argument_t;
 
 char* cnatural_strdup(const char*);
-cnatural_post_processor_data_t* cnatural_get_arg(
-	cnatural_post_processor_data_t**,
+cnatural_post_processor_node_t* cnatural_get_arg(
+	cnatural_post_processor_node_t**,
 	const char*
 );
 

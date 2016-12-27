@@ -43,9 +43,9 @@ limitations under the License.
 					url: "/api/ajax/coreutils/import",
 					args: {},
 					pdata: {
+						file: src,
 						type: "include",
-						expected: mime,
-						file: src
+						expected: mime
 					},
 					async: true
 				}, (err, res) =>

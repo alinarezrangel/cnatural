@@ -166,7 +166,7 @@ int request_handler(
 				return MHD_NO;
 			}
 		}
-		else
+		else if(arg.output_filedesc != -1)
 		{
 			ret = fstat(arg.output_filedesc, &fdstat);
 			if(ret == -1)
@@ -184,6 +184,11 @@ int request_handler(
 			{
 				perror("Unable to alloc the response filedesc");
 				close(arg.output_filedesc);
+				return MHD_NO;
+			}
+			else
+			{
+				fprintf(stderr, "Error in the AJAX call: not response provided\n");
 				return MHD_NO;
 			}
 		}

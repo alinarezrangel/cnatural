@@ -96,7 +96,30 @@ limitations under the License.
 		};
 		NaturalObject.prototype.data = function(name, value)
 		{
-			return this.attr("data-" + name, value);
+			var func = (to) =>
+			{
+				if(typeof value === "string")
+				{
+					to.dataset[name] = value;
+					return this;
+				}
+				else
+				{
+					return to.dataset[name];
+				}
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					return func(this.get(i).original);
+				}
+			}
+			else
+			{
+				return func(this.original);
+			}
+			return this;
 		};
 		NaturalObject.prototype.value = function(value)
 		{
@@ -244,14 +267,15 @@ limitations under the License.
 			{
 				if(options.args.hasOwnProperty(i))
 				{
-					params += "&" + i + "=" + options.args[i];
+					params += "&" + i + "=" + encodeURIComponent(options.args[i]);
 				}
 			}
 			for(var i in options.pdata)
 			{
 				if(options.pdata.hasOwnProperty(i))
 				{
-					pdata += "&" + i + "=" + options.pdata[i];
+					console.log("POST data " + i + " with " + options.pdata[i]);
+					pdata += "&" + i + "=" + encodeURIComponent(options.pdata[i]);
 				}
 			}
 			if(params !== "")
@@ -273,6 +297,7 @@ limitations under the License.
 			xhrc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhrc.setRequestHeader("Content-length", pdata.length);
 			xhrc.setRequestHeader("Connection", "close");
+			console.log("POST is " + pdata);
 			xhrc.send(pdata);
 		};
 		NaturalObject.prototype.appendChild = function(child)

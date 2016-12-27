@@ -1,12 +1,15 @@
 # Generation
 
-Generation is a CSS3 based framework for creating web pages, HTML5 applications and others.
+[![license](https://img.shields.io/github/license/alinarezrangel/generation.svg)]()
+[![GitHub issues](https://img.shields.io/github/issues/alinarezrangel/generation.svg)]()
+
+Generation is a CSS3 based framework for creating web pages, HTML5 applications and more.
 
 This is Generation 1.
 
 ## Instalation
 
-Copy this directory to your proyect and use
+Copy these link and script tags to your project and use
 
 ```html
 <link href="generation/css/generation.css" rel="stylesheet"/>
@@ -17,7 +20,7 @@ The ECMAScript core is optional.
 
 ## Usage
 
-All Generation classes can apply to all elements:
+All Generation classes can be applied to any element:
 
 ```html
 <div class="container">
@@ -28,10 +31,10 @@ All Generation classes can apply to all elements:
 </section>
 ```
 
-A list of the classes can be found on the wiki.
-
-See the tutorial.html file.
+A list of generation classes can be found on the
+[wiki](https://github.com/alinarezrangel/generation/wiki/Class-List).
+For further reading, see the tutorial.html file.
 
 ## License
 
-Generation is under the MIT license (see LICENSE.txt)
+See the [LICENSE.txt](LICENSE.txt) file.

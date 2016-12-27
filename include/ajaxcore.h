@@ -33,6 +33,12 @@ limitations under the License.
 
 #include "ajaxtypes.h"
 
+/* NOTE: These headers are included for it's usage in the cnatural_try_ajax */
+
+#include "coreutils/import.h"
+
+/* End of custom AJAX functions */
+
 int cnatural_basic_post_data_handler(
 	void*,
 	enum MHD_ValueKind,

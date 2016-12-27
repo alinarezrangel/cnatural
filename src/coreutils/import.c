@@ -27,6 +27,38 @@ int cnatural_ajax_coreutils_import(
 	cnatural_ajax_argument_t* args
 )
 {
+	cnatural_post_processor_node_t* it = NULL;
+	int ofile = -1;
+
 	if(strcmp(path, "/api/ajax/coreutils/import") != 0)
 		return 1;
+	printf("Catched /api/ajax/coreutils/import...\n");
+
+	/*
+	it = cnatural_get_arg(&args->arguments->data, "file");
+	if(it == NULL)
+	{
+		printf("Cant get the path");
+		return -1;
+	}
+	*/
+
+	for(it = args->arguments->data; it != NULL; it = it->next)
+	{
+		printf("At %s = %s\n", it->key, it->value);
+		if(strcmp(it->key, "file") == 0)
+		{
+			break;
+		}
+	}
+
+	if(it == NULL)
+	{
+		printf("Cant get the path\n");
+		return -1;
+	}
+
+	printf("Getting the path at %s\n", it->value);
+
+	return 0;
 }

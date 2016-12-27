@@ -22,10 +22,14 @@ limitations under the License.
 
 $ntc(window).on("load", function()
 {
+	$natural.includeScripts(document);
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},
-		pdata: "name=cnatural&version=0_0_1",
+		pdata: {
+			name: "cnatural",
+			version: "1.0.0"
+		},
 		async: true
 	}, function(err, res)
 	{

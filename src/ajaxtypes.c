@@ -35,12 +35,12 @@ char* cnatural_strdup(const char* str)
 	return strcpy(res, str);
 }
 
-cnatural_post_processor_data_t* cnatural_get_arg(
-	cnatural_post_processor_data_t** list,
+cnatural_post_processor_node_t* cnatural_get_arg(
+	cnatural_post_processor_node_t** list,
 	const char* key
 )
 {
-	cnatural_post_processor_data_t* it = NULL;
+	cnatural_post_processor_node_t* it = NULL;
 
 	if(list == NULL)
 		return NULL;

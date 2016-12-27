@@ -92,8 +92,6 @@ int cnatural_create_post_data(
 		return MHD_NO;
 	}
 
-	(*data)->output_filedesc = -1;
-
 	(*data)->type = (create_post == 0)? CNATURAL_POST_TYPE_POST : CNATURAL_POST_TYPE_GET;
 
 	kl->back = NULL;
@@ -278,6 +276,9 @@ int cnatural_try_ajax(const char* path, cnatural_ajax_argument_t* inout)
 	if(ret <= 0)
 		return ret;
 	ret = cnatural_ajax_login(path, inout);
+	if(ret <= 0)
+		return ret;
+	ret = cnatural_ajax_coreutils_import(path, inout);
 	if(ret <= 0)
 		return ret;
 	return 1;
