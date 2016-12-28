@@ -32,8 +32,8 @@ limitations under the License.
 #include "ajaxtypes.h"
 
 /*
- * coreutils.import: returns a file in the private_http directory.
- * Is needed a valid token, maked by coreutils.createToken
+* @brief returns a file in the private_http directory.
+* Is needed a valid token, maked by coreutils.createToken
 */
 int cnatural_ajax_coreutils_import(const char*, cnatural_ajax_argument_t*);
 

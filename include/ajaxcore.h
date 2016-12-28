@@ -23,6 +23,11 @@ limitations under the License.
 #if !defined(__CNATURAL_AJAX_CORE_H__)
 #define __CNATURAL_AJAX_CORE_H__ 1
 
+/**
+* @file ajaxcore.h
+* Core of the AJAX API.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -39,6 +44,9 @@ limitations under the License.
 
 /* End of custom AJAX functions */
 
+/**
+* @brief Handles a POST request using the provided data.
+*/
 int cnatural_basic_post_data_handler(
 	void*,
 	enum MHD_ValueKind,
@@ -50,12 +58,24 @@ int cnatural_basic_post_data_handler(
 	uint64_t,
 	size_t
 );
+
+/**
+* @brief Creates a HTTP POST processor (parser).
+*/
 int cnatural_create_post_data(
 	struct MHD_Connection*,
 	int,
 	cnatural_post_processor_data_t**
 );
+
+/**
+* @brief Destroyes a HTTP POST processor (parser).
+*/
 int cnatural_destroy_post_data(cnatural_post_processor_data_t**);
+
+/**
+* @brief Destroyes a HTTP POST data with the provided arguments.
+*/
 void cnatural_basic_post_destroy(
 	void*,
 	struct MHD_Connection*,
@@ -66,10 +86,11 @@ void cnatural_basic_post_destroy(
 /**
 * @brief A simple AJAX handler.
 * The availables return codes are:
+*
 *  -1: An error occours and ERRNO is set.
 *  0: Good.
 *  1: This path not matches with this AJAX handler path.
-* bufferout and outmime can be NULL.
+*
 * @param path String with the AJAX path.
 * @param inout Arguments for the AJAX.
 * @return Any of the return codes.
@@ -82,6 +103,9 @@ typedef int (*cnatural_ajax_handler_t)(
 int cnatural_ajax_test(const char*, cnatural_ajax_argument_t*);
 int cnatural_ajax_login(const char*, cnatural_ajax_argument_t*);
 
+/**
+* @brief Tries to execute the specified AJAX path with the provided arguments.
+*/
 int cnatural_try_ajax(const char*, cnatural_ajax_argument_t*);
 
 #endif /* ~__CNATURAL_AJAX_CORE_H__ */

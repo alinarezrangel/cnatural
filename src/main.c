@@ -324,10 +324,11 @@ int request_handler(
 
 	return ret;
 }
+
 void set_response_headers(struct MHD_Response** res)
 {
 	MHD_add_response_header(*res, "Content-Security-Policy", "default-src 'self'");
-	MHD_add_response_header(*res, "X-Frame-Options", "DENY");
+	MHD_add_response_header(*res, "X-Frame-Options", "SAMEORIGIN");
 	MHD_add_response_header(*res, "X-XSS-Protection", "0");
 	MHD_add_response_header(*res, "X-Content-Type-Options", "nosniff");
 	MHD_add_response_header(*res, "X-Permitted-Cross-Domain-Policies", "none");

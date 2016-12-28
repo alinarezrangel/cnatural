@@ -69,6 +69,7 @@ int cnatural_basic_post_data_handler(
 
 	return MHD_NO;
 }
+
 int cnatural_create_post_data(
 	struct MHD_Connection* conn,
 	int create_post,
@@ -126,6 +127,7 @@ int cnatural_create_post_data(
 	fflush(stdout);
 	return MHD_YES;
 }
+
 int cnatural_destroy_post_data(cnatural_post_processor_data_t** data)
 {
 	cnatural_post_processor_node_t* it = (*data)->data;
@@ -146,6 +148,7 @@ int cnatural_destroy_post_data(cnatural_post_processor_data_t** data)
 	fflush(stdout);
 	return MHD_YES;
 }
+
 void cnatural_basic_post_destroy(
 	void* cls,
 	struct MHD_Connection* conn,
