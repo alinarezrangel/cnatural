@@ -100,7 +100,7 @@ int request_handler(
 	struct stat fdstat;
 	cnatural_post_processor_data_t* data = NULL;
 
-	printf("Reading POST data %d...\n", *upload_data_size);
+	printf("Reading POST data %lu...\n", *upload_data_size);
 	fflush(stdout);
 
 	if(*conn_klass == NULL)

@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * AJAX CoreUtils module: import function.
+*** * AJAX CoreUtils module: login function.
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -20,26 +20,45 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(__CNATURAL_MODULE_COREUTILS_IMPORT_H__)
-#define __CNATURAL_MODULE_COREUTILS_IMPORT_H__ 1
+#include "coreutils/login.h"
 
-/**
-* @file import.h
-* CoreUtils import function.
-*/
+int cnatural_ajax_coreutils_login(
+	const char* path,
+	cnatural_ajax_argument_t* args
+)
+{
+	cnatural_post_processor_node_t* it = NULL;
+	int ofile = -1;
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
+	if(strcmp(path, "/api/ajax/coreutils/login") != 0)
+		return 1;
+	printf("Catched /api/ajax/coreutils/login...\n");
 
-#include "ajaxtypes.h"
+	/*
+	it = cnatural_get_arg(&args->arguments->data, "file");
+	if(it == NULL)
+	{
+		printf("Cant get the path");
+		return -1;
+	}
+	*/
 
-/*
-* @brief returns a file in the private_http directory.
-* Is needed a valid token, maked by coreutils.createToken
-*/
-int cnatural_ajax_coreutils_import(const char*, cnatural_ajax_argument_t*);
+	for(it = args->arguments->data; it != NULL; it = it->next)
+	{
+		printf("At %s = %s\n", it->key, it->value);
+		if(strcmp(it->key, "file") == 0)
+		{
+			break;
+		}
+	}
 
-#endif /* ~__CNATURAL_MODULE_COREUTILS_IMPORT_H__ */
+	if(it == NULL)
+	{
+		printf("Cant get the path\n");
+		return -1;
+	}
+
+	printf("Getting the path at %s\n", it->value);
+
+	return 0;
+}

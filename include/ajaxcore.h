@@ -40,6 +40,7 @@ limitations under the License.
 
 /* NOTE: These headers are included for it's usage in the cnatural_try_ajax */
 
+#include "coreutils/login.h"
 #include "coreutils/import.h"
 
 /* End of custom AJAX functions */
@@ -101,7 +102,6 @@ typedef int (*cnatural_ajax_handler_t)(
 );
 
 int cnatural_ajax_test(const char*, cnatural_ajax_argument_t*);
-int cnatural_ajax_login(const char*, cnatural_ajax_argument_t*);
 
 /**
 * @brief Tries to execute the specified AJAX path with the provided arguments.

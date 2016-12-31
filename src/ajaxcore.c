@@ -211,74 +211,13 @@ int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
 	return 0;
 }
 
-int cnatural_ajax_login(const char* path, cnatural_ajax_argument_t* inout)
-{
-	const char* mspong = "pong";
-	size_t msponglen = strlen(mspong) + 1; /* strlen not includes the NULL byte */
-	const char* msnot = "ERRATA";
-	size_t msnotlen = strlen(msnot) + 1; /* strlen not includes the NULL byte */
-	const char* mime = "text/plain";
-	size_t mimelen = strlen(mime) + 1;
-
-	size_t* lenu = &msnotlen;
-	char** msu = &msnot;
-
-	int ecpy = 0;
-	int pong = 0;
-	cnatural_post_processor_node_t* it = NULL;
-
-	if(strcmp(path, "/api/ajax/coreutils/login") != 0)
-		return 1;
-	printf("Catched /api/ajax/coreutils/login AJAX: sending response...\n");
-
-	for(it = inout->arguments->data; it != NULL; it = it->next)
-	{
-		printf("At argument %s = %s\n", it->key, it->value);
-		if((strcmp(it->key, "ping") == 0) && (strcmp(it->value, "me") == 0))
-		{
-			pong = 1;
-			break;
-		}
-	}
-
-	if(pong)
-	{
-		lenu = &msponglen;
-		msu = &mspong;
-		printf("PONG sended\n");
-	}
-
-	printf("To send %s\n", (*msu));
-	fflush(stdout);
-
-	inout->output_buffer = malloc(sizeof(char) * (*lenu));
-	if(inout->output_buffer == NULL)
-	{
-		return -1;
-	}
-	inout->output_buffer_size = (*lenu) - 1;
-	memcpy(inout->output_buffer, (*msu), (*lenu) - 1);
-	inout->output_buffer[(*lenu) - 1] = '\0';
-	inout->output_mimetype = malloc(sizeof(char) * mimelen);
-	if(inout->output_mimetype == NULL)
-	{
-		ecpy = errno;
-		free(inout->output_buffer);
-		errno = ecpy;
-		return -1;
-	}
-	memcpy(inout->output_mimetype, mime, mimelen - 1);
-	inout->output_mimetype[mimelen - 1] = '\0';
-	return 0;
-}
-
 int cnatural_try_ajax(const char* path, cnatural_ajax_argument_t* inout)
 {
 	int ret = 0;
 	ret = cnatural_ajax_test(path, inout);
 	if(ret <= 0)
 		return ret;
-	ret = cnatural_ajax_login(path, inout);
+	ret = cnatural_ajax_coreutils_login(path, inout);
 	if(ret <= 0)
 		return ret;
 	ret = cnatural_ajax_coreutils_import(path, inout);

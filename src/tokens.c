@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * AJAX CoreUtils module: import function.
+*** * Natural Token functions.
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -20,26 +20,6 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(__CNATURAL_MODULE_COREUTILS_IMPORT_H__)
-#define __CNATURAL_MODULE_COREUTILS_IMPORT_H__ 1
+#include "tokens.h"
 
-/**
-* @file import.h
-* CoreUtils import function.
-*/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
-
-#include "ajaxtypes.h"
-
-/*
-* @brief returns a file in the private_http directory.
-* Is needed a valid token, maked by coreutils.createToken
-*/
-int cnatural_ajax_coreutils_import(const char*, cnatural_ajax_argument_t*);
-
-#endif /* ~__CNATURAL_MODULE_COREUTILS_IMPORT_H__ */
