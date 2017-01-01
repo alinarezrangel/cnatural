@@ -159,24 +159,14 @@ int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t* token, jwt_t* j
 	if(token == NULL)
 		return -1;
 
-#define MYDEBUG errno =
-
-	printf("Argument %ld (save_in_jwt)\n", token->timestamp.bdata);
-
-	if((MYDEBUG jwt_add_grant_int(jwt, "tm", (long int) token->timestamp.bdata)) != 0)
+	if((errno = jwt_add_grant_int(jwt, "tm", (long int) token->timestamp.bdata)) != 0)
 		return -1;
 
-	printf("Argument %s (save_in_jwt)\n", token->username);
-
-	if((MYDEBUG jwt_add_grant(jwt, "un", (const char*) token->username)) != 0)
+	if((errno = jwt_add_grant(jwt, "un", (const char*) token->username)) != 0)
 		return -1;
 
-	printf("Argument %s (save_in_jwt)\n", token->random_bytes);
-
-	if((MYDEBUG jwt_add_grant(jwt, "rd", (const char*) token->random_bytes)) != 0)
+	if((errno = jwt_add_grant(jwt, "rd", (const char*) token->random_bytes)) != 0)
 		return -1;
-
-#undef MYDEBUG
 
 	return 0;
 }
