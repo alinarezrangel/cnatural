@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * Natural Selectors Library.
+*** * Natural Animations Library.
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel

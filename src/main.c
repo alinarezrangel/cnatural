@@ -210,20 +210,22 @@ int request_handler(
 				close(arg.output_filedesc);
 				return MHD_NO;
 			}
-			else
-			{
-				fprintf(stderr, "Error in the AJAX call: not response provided\n");
-				return MHD_NO;
-			}
+		}
+		else
+		{
+			fprintf(stderr, "Error in the AJAX call: not response provided\n");
+			return MHD_NO;
 		}
 
 		set_response_headers(&res);
+		MHD_add_response_header(res, "Content-type", arg.output_mimetype);
 
 		ret = MHD_queue_response(conn, MHD_HTTP_OK, res);
 		MHD_destroy_response(res);
 
 		// free(arg.output_buffer);
-		// free(arg.output_mimetype);
+		free(arg.output_mimetype);
+
 		return ret;
 	}
 

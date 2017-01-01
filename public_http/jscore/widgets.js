@@ -47,7 +47,7 @@ limitations under the License.
 					}
 					else if(typeof base[i] == "function")
 					{
-						child[i] = base[i]; // Later we chage this.
+						child[i] = base[i]; // Later we change this.
 					}
 					else
 					{
@@ -56,7 +56,7 @@ limitations under the License.
 				}
 				if(base.hasOwnProperty(i) && (typeof child[i] !== "undefined") && (typeof base[i] == "function"))
 				{
-					child._super[i] = base[i]; // Later we chage this.
+					child._super[i] = base[i]; // Later we change this.
 				}
 			}
 			return child;

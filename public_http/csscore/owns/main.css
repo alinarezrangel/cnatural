@@ -128,11 +128,15 @@ html, body {
 }
 
 .gui-widget-text {
-	/* */
+	-moz-user-select: none !important;
+	-webkit-user-select: none !important;
+	-o-user-select: none !important;
+	-ms-user-select: none !important;
+	user-select: none !important;
 }
 
 .gui-widget-button {
-	/* */
+	cursor: pointer;
 }
 
 .gui-widget-header {
@@ -146,5 +150,5 @@ html, body {
 }
 
 .gui-widget-window-dialog {
-	/* */
+	cursor: pointer;
 }

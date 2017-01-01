@@ -173,7 +173,7 @@ int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t* token, jwt_t* j
 
 int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t* jwt)
 {
-	const char* bf = NULL;
+	char* bf = NULL;
 	if(token == NULL)
 		return -1;
 
@@ -186,13 +186,16 @@ int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t*
 	}
 #endif
 
+	free(token->username);
+
 	bf = (char*) jwt_get_grant(jwt, "un");
 
 	if(bf == NULL)
 		return -1;
 
 	token->username = cnatural_strdup(bf);
-	free((void*) bf);
+
+	free(token->random_bytes);
 
 	bf = (char*) jwt_get_grant(jwt, "rd");
 
@@ -200,7 +203,6 @@ int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t*
 		return -1;
 
 	token->random_bytes = cnatural_strdup(bf);
-	free((void*) bf);
 
 	return 0;
 }
@@ -302,7 +304,7 @@ int cnatural_natural_global_tokens_verify(cnatural_natural_token_t* token)
 {
 	cnatural_natural_list_t* it = NULL;
 
-	if(cnatural_natural_token_list == NULL)
+	if((cnatural_natural_token_list == NULL) || (token == NULL))
 		return -1;
 
 	for(it = cnatural_natural_token_list->next; it != cnatural_natural_token_list; it = it->next)

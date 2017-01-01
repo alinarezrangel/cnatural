@@ -22,7 +22,6 @@ limitations under the License.
 
 $ntc(window).on("load", function()
 {
-	$natural.includeScripts(document);
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},
@@ -38,18 +37,22 @@ $ntc(window).on("load", function()
 			console.error(err);
 			return;
 		}
+
 		if(res === "Hello World")
 			return;
+
 		NWCreateTextDialog($ntc("#_bootscreen"), 2, "Error: " + res, function(win, msg, txt)
 		{
 			win.getElement().addClass("text-natural-darkred");
 		});
 	});
+
 	$ntc("#_bootscreen").attach(function(ev)
 	{
 		$ntc("#_bootscreen").hideSlideUp();
 		$ntc("#_loginscreen").removeClass("gui-hidden");
 	}).on("click");
+
 	$ntc("#login_button").attach(function(ev)
 	{
 		var win = NWCreateTextDialog(
@@ -58,7 +61,7 @@ $ntc(window).on("load", function()
 			"Iniciando sesión, por favor espere...",
 			function(win, msg, txt)
 			{
-				win.getElement().addClass("text-natural-grey");
+				win.getElement().addClass("color-natural-grey");
 			}
 		);
 		$natural.ajax({
@@ -76,7 +79,9 @@ $ntc(window).on("load", function()
 				console.error(err);
 				return;
 			}
+
 			win.getElement().remove();
+
 			if(res === "enopass")
 			{
 				var err = NWCreateTextDialog(
@@ -88,13 +93,42 @@ $ntc(window).on("load", function()
 						win.getElement().addClass("color-natural-deepred");
 					}
 				);
+				return;
 			}
-			else
+
+			var st = $natural.getStorage();
+			st.open("CNatural.JS.Storage.Core", function(error)
 			{
-				alert(res);
-				$ntc("#_loginscreen").hideSlideUp();
-				$ntc("#_mainscreen").removeClass("gui-hidden");
-			}
+				if(error)
+				{
+					console.error(error);
+					return;
+				}
+
+				st.set("authtoken", res, function(error)
+				{
+					if(error)
+					{
+						console.error(error);
+						return;
+					}
+
+					st.close(function(error)
+					{
+						if(error)
+						{
+							console.error(error);
+							return;
+						}
+
+						$ntc("#_loginscreen").hideSlideUp();
+						$ntc("#_mainscreen").removeClass("gui-hidden");
+
+
+						$natural.includeScripts(document, res);
+					})
+				})
+			});
 		});
 	}).on("click");
 });

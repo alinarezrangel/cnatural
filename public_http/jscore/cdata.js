@@ -28,7 +28,7 @@ limitations under the License.
 		{
 			throw new Error("Error at CNatural.JS.Core.CData: NaturalObject is undefined");
 		}
-		window.NaturalObject.prototype.includeScripts = function(doc)
+		window.NaturalObject.prototype.includeScripts = function(doc, token)
 		{
 			if(typeof doc === "undefined")
 			{
@@ -45,7 +45,8 @@ limitations under the License.
 					pdata: {
 						file: src,
 						type: "include",
-						expected: mime
+						expected: mime,
+						token: token
 					},
 					async: true
 				}, (err, res) =>
@@ -55,15 +56,15 @@ limitations under the License.
 						script.original.dispatchEvent(new Event("scriptLoadError"));
 						return;
 					}
+
+					var dm = new DOMParser();
+					var dc = dm.parseFromString(res, "text/html");
+					script.appendChild($ntc(dc.body));
 				});
 			}).forEach();
 		};
 
 		(new window.NaturalObject(document)).reloadGlobals(window);
-		(new window.NaturalObject(window)).attach(function()
-		{
-			(new window.NaturalObject(document)).includeScripts(document);
-		}).on("load");
 	};
 
 	if(typeof module !== "undefined")

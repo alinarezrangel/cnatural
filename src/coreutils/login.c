@@ -28,7 +28,7 @@ int cnatural_ajax_coreutils_login(
 )
 {
 	cnatural_post_processor_node_t* it = NULL;
-	cnatural_natural_token_t* tk;
+	cnatural_natural_token_t* tk = NULL;
 	char* uname = "";
 	char* upass = "";
 	char* sr = "";
@@ -41,6 +41,8 @@ int cnatural_ajax_coreutils_login(
 	if(strcmp(path, "/api/ajax/coreutils/login") != 0)
 		return 1;
 	printf("Catched /api/ajax/coreutils/login...\n");
+
+	args->output_mimetype = cnatural_strdup("text/plain");
 
 	/*
 	it = cnatural_get_arg(&args->arguments->data, "file");

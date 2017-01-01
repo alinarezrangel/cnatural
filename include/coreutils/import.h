@@ -34,7 +34,15 @@ limitations under the License.
 #include <errno.h>
 #include <stdint.h>
 
+#include <jwt.h>
+
+#include "tokens.h"
 #include "ajaxtypes.h"
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 /*
 * @brief returns a file in the private_http directory.

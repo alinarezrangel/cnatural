@@ -7,3 +7,5 @@ log.*
 *.out
 *.a
 *.so
+
+core
