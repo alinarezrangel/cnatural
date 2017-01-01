@@ -35,6 +35,8 @@ limitations under the License.
 #include <stdint.h>
 #include <time.h>
 
+#include <errno.h>
+
 #ifndef __STDC_NO_THREADS__
 #	include <threads.h>
 #	define CNATURAL_NATURAL_USE_THREADS 1
@@ -70,33 +72,186 @@ typedef struct cnatural_natural_token
 	char* random_bytes;
 } cnatural_natural_token_t;
 
-#ifdef CNATURAL_NATURAL_USE_THREADS
-extern mtx_t cnatural_natural_tokens_mutex;
-#else
-#warning "Warning: unable to search a way for provide locks to the server tokens"
-#endif
-
 extern cnatural_natural_list_t* cnatural_natural_token_list;
 
-int cnatural_natural_token_create(cnatural_natural_token_t*);
-int cnatural_natural_token_destroy(cnatural_natural_token_t*);
-int cnatural_natural_token_copy(cnatural_natural_token_t*, cnatural_natural_token_t*);
-int cnatural_natural_token_set_username(cnatural_natural_token_t*, char*);
-int cnatural_natural_token_set_random_bytes(cnatural_natural_token_t*, char*);
-int cnatural_natural_token_set_timestamp(cnatural_natural_token_t*, cnatural_natural_timestamp_t*);
-int cnatural_natural_token_get_username(cnatural_natural_token_t*, char**);
-int cnatural_natural_token_get_random_bytes(cnatural_natural_token_t*, char**);
-int cnatural_natural_token_get_timestamp(cnatural_natural_token_t*, cnatural_natural_timestamp_t**);
+/**
+* @brief Creates a new token.
+* The tokens have a timestamp, a random data and the username.
+*
+* @param token Token to create.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_create(cnatural_natural_token_t** token);
 
-bool cnatural_natural_token_are_equals(cnatural_natural_token_t*, cnatural_natural_token_t*);
+/**
+* @brief Destroyes a token.
+* The associated data (username, random bytes, etc) will be destroyed.
+*
+* @param token Token to destroy.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_destroy(cnatural_natural_token_t** token);
 
-int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t*, jwt_t*);
-int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t*, jwt_t*);
+/**
+* @brief Clones (copy) a token.
+* The result is a token with all members sharing the same value (but not indentity)
+* that the source operand. The two tokens need to be created with
+* cnatural_natural_token_create.
+*
+* The dest token may not be deallocated: if the dest token contains data, this
+* function deallocates them and then proceed.
+*
+* @param src Source token, will not be modified.
+* @param dest Destiny token, will be modified.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_copy(cnatural_natural_token_t* src, cnatural_natural_token_t* dest);
 
+/**
+* @brief Sets the username of a token.
+* The token must be created (non NULL pointer).
+*
+* @param token Token where the username will be setted.
+* @param username New username.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_set_username(cnatural_natural_token_t* token, const char* username);
+
+/**
+* @brief Sets the random bytes of a token.
+* The token must be created (non NULL pointer).
+*
+* @param token Token where the random bytes will be setted.
+* @param random_bytes New random bytes.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_set_random_bytes(cnatural_natural_token_t* token, const char* random_bytes);
+
+/**
+* @brief Sets the timestamp of a token.
+* The token must be created (non NULL pointer).
+*
+* @param token Token where the timestamp will be setted.
+* @param timestamp New timestamp.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_set_timestamp(cnatural_natural_token_t* token, cnatural_natural_timestamp_t* timestamp);
+
+/**
+* @brief Gets the username of a token.
+* The token must be created (non NULL pointer).
+*
+* The result must never be destroyed: if you modify the result, the username
+* of the token will be modified with it. If you need a clone of the username
+* you should clone the string directly (cnatural_strdup).
+*
+* @param token Token where the username will be getted.
+* @param username Pointer to the string where the username will be setted.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_get_username(cnatural_natural_token_t* token, char** username);
+
+/**
+* @brief Gets the random bytes of a token.
+* The token must be created (non NULL pointer).
+*
+* The result must never be destroyed: if you modify the result, the random bytes
+* of the token will be modified with it. If you need a clone of the random bytes
+* you should clone the string directly (cnatural_strdup).
+*
+* @param token Token where the random bytes will be getted.
+* @param random_bytes Pointer to the string where the random bytes will be setted.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_get_random_bytes(cnatural_natural_token_t* token, char** random_bytes);
+
+/**
+* @brief Gets the timestamp of a token.
+* The token must be created (non NULL pointer).
+*
+* The result must never be destroyed: if you modify the result, the timestamp
+* of the token will be modified with it. If you need a clone of the timestamp
+* you should clone the object directly.
+*
+* @param token Token where the timestamp will be getted.
+* @param timestamp Pointer to the object where the timestamp will be setted.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_get_timestamp(cnatural_natural_token_t* token, cnatural_natural_timestamp_t** timestamp);
+
+/**
+* @brief Determines if the two tokens are equals.
+* If any of the tokens are invalid, always return false.
+*
+* @param token1 Token to compare.
+* @param token2 Token to compare.
+* @returns true if the tokens are equal, false otherwise.
+*/
+bool cnatural_natural_token_are_equals(cnatural_natural_token_t* token1, cnatural_natural_token_t* token2);
+
+/**
+* @brief Serializes a token in a JWT.
+* The JWT (JSON Web Token / JSON Web Signature) object can be used
+* later with the cnatural_natural_token_load_from_jwt.
+*
+* @param token Token to serialize.
+* @param jwt JWT Object where the token will be serialized.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t* token, jwt_t* jwt);
+
+/**
+* @brief Deserializes a token in a JWT.
+* The JWT (JSON Web Token / JSON Web Signature) object can be used
+* later with the cnatural_natural_token_save_in_jwt.
+*
+* @param token Token to deserialize.
+* @param jwt JWT Object where the token will be deserialize.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t* jwt);
+
+/**
+* @brief Init the global engine of tokens.
+* IS NOT THREAD SAFE.
+*
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
 int cnatural_natural_global_tokens_init(void);
+
+/**
+* @brief Deinit the global engine of tokens.
+* IS NOT THREAD SAFE.
+*
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
 int cnatural_natural_global_tokens_deinit(void);
-int cnatural_natural_global_tokens_add(cnatural_natural_token_t*);
-int cnatural_natural_global_tokens_remove(cnatural_natural_token_t*);
-int cnatural_natural_global_tokens_verify(cnatural_natural_token_t*);
+
+/**
+* @brief Adds a token to the engine.
+* IS NOT THREAD SAFE.
+*
+* @param token Token to add.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_global_tokens_add(cnatural_natural_token_t* token);
+
+/**
+* @brief Removes a token to the engine.
+* IS NOT THREAD SAFE.
+*
+* @param token Token to remove.
+* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
+*/
+int cnatural_natural_global_tokens_remove(cnatural_natural_token_t* token);
+
+/**
+* @brief Verifies if a token is in the engine.
+* IS NOT THREAD SAFE.
+*
+* @param token Token to verify.
+* @returns 0 if the token is valid, 1 if the token is invalid and -1 on error.
+*/
+int cnatural_natural_global_tokens_verify(cnatural_natural_token_t* token);
 
 #endif /* ~__CNATURAL_NATURAL_TOKENS_FUNCTIONS_H__ */

@@ -34,6 +34,9 @@ limitations under the License.
 #include <errno.h>
 #include <stdint.h>
 
+#include <jwt.h>
+
+#include "tokens.h"
 #include "ajaxtypes.h"
 
 /*

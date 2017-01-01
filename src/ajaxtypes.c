@@ -24,7 +24,7 @@ limitations under the License.
 
 char* cnatural_strdup(const char* str)
 {
-	char* res = malloc(strlen(str) * sizeof(char));
+	char* res = malloc((strlen(str) + 1) * sizeof(char));
 	if(res == NULL)
 		return NULL;
 	/*

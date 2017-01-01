@@ -28,7 +28,15 @@ int cnatural_ajax_coreutils_login(
 )
 {
 	cnatural_post_processor_node_t* it = NULL;
-	int ofile = -1;
+	cnatural_natural_token_t* tk;
+	char* uname = "";
+	char* upass = "";
+	char* sr = "";
+	jwt_t* jwt = NULL;
+	cnatural_natural_timestamp_t tms;
+	const char* rd = "WFEWfefweJFEwFEWJFEjewffJWE";
+
+	tms.bdata = time(NULL);
 
 	if(strcmp(path, "/api/ajax/coreutils/login") != 0)
 		return 1;
@@ -46,19 +54,104 @@ int cnatural_ajax_coreutils_login(
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
 		printf("At %s = %s\n", it->key, it->value);
-		if(strcmp(it->key, "file") == 0)
+		if(strcmp(it->key, "uname") == 0)
 		{
-			break;
+			uname = it->value;
+			continue;
+		}
+		if(strcmp(it->key, "upass") == 0)
+		{
+			upass = it->value;
+			continue;
 		}
 	}
 
-	if(it == NULL)
+	printf("Getting the udata at uname:<%s> upass:<%s>\n", uname, upass);
+
+	if((strcmp(args->systdt->username, uname) != 0) || (strcmp(args->systdt->password, upass) != 0))
 	{
-		printf("Cant get the path\n");
+		printf("Invalid login\n");
+		args->output_buffer = cnatural_strdup("enopass");
+		args->output_buffer_size = strlen(args->output_buffer);
+		return 0;
+	}
+
+	printf("Logined...\n");
+
+	if(jwt_new(&jwt) != 0)
+	{
+		perror("Unable to create the JWT (JSON Web Tokens/Signature) object");
 		return -1;
 	}
 
-	printf("Getting the path at %s\n", it->value);
+	if(jwt_add_grant(jwt, "iss", "cnatural_client_default") != 0)
+	{
+		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: iss");
+		return -1;
+	}
+	if(jwt_add_grant_int(jwt, "exp", 9999999L) != 0)
+	{
+		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: exp");
+		return -1;
+	}
+	if(jwt_add_grant(jwt, "nt_svr", "CNatural 1.0.0") != 0)
+	{
+		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: nt_svr");
+		return -1;
+	}
+	if(jwt_set_alg(jwt, JWT_ALG_HS512, (unsigned char*) args->systdt->secret, strlen(args->systdt->secret)) != 0)
+	{
+		perror("Unable to set the JWT (JSON Web Tokens/Signature) algorithm");
+		return -1;
+	}
+
+	if(cnatural_natural_token_create(&tk) != 0)
+	{
+		fprintf(stderr, "Error creating the token\n");
+		return -1;
+	}
+	if(cnatural_natural_token_set_username(tk, (const char*) uname) != 0)
+	{
+		fprintf(stderr, "Error setting the token data: username\n");
+		return -1;
+	}
+	if(cnatural_natural_token_set_random_bytes(tk, rd) != 0)
+	{
+		fprintf(stderr, "Error setting the token data: random bytes\n");
+		return -1;
+	}
+	if(cnatural_natural_token_set_timestamp(tk, &tms) != 0)
+	{
+		fprintf(stderr, "Error setting the token data: timestamp\n");
+		return -1;
+	}
+	if(cnatural_natural_token_save_in_jwt(tk, jwt) != 0)
+	{
+		perror("Serializing the token");
+		return -1;
+	}
+	if(cnatural_natural_global_tokens_add(tk) != 0)
+	{
+		fprintf(stderr, "Error adding the token\n");
+		return -1;
+	}
+	if(cnatural_natural_token_destroy(&tk) != 0)
+	{
+		fprintf(stderr, "Error destroying the token\n");
+		return -1;
+	}
+
+	sr = jwt_encode_str(jwt);
+	if(sr == NULL)
+	{
+		perror("Unable to encode the JWT");
+		return -1;
+	}
+
+	args->output_buffer = sr;
+	args->output_buffer_size = strlen(sr);
+
+	jwt_free(jwt);
 
 	return 0;
 }

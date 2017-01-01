@@ -53,7 +53,7 @@ int cnatural_basic_post_data_handler(
 	if(kl == NULL)
 	{
 		perror("Error appending a key to the keylist");
-		return MHD_YES;
+		return MHD_NO;
 	}
 
 	kl->back = it;
@@ -64,10 +64,10 @@ int cnatural_basic_post_data_handler(
 	kl->key = cnatural_strdup(key);
 	kl->value = cnatural_strdup(sdata);
 
-	printf("Created\n");
+	printf("Created %s=%s\n", key, sdata);
 	fflush(stdout);
 
-	return MHD_NO;
+	return MHD_YES;
 }
 
 int cnatural_create_post_data(

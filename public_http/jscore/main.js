@@ -65,7 +65,8 @@ $ntc(window).on("load", function()
 			url: "/api/ajax/coreutils/login",
 			args: {},
 			pdata: {
-				ping: "me"
+				uname: $ntc("#login_username").value(),
+				upass: $ntc("#login_password").value()
 			},
 			async: true
 		}, function(err, res)
@@ -76,7 +77,7 @@ $ntc(window).on("load", function()
 				return;
 			}
 			win.getElement().remove();
-			if(res !== "pong")
+			if(res === "enopass")
 			{
 				var err = NWCreateTextDialog(
 					$ntc("#_loginscreen"),
@@ -90,6 +91,7 @@ $ntc(window).on("load", function()
 			}
 			else
 			{
+				alert(res);
 				$ntc("#_loginscreen").hideSlideUp();
 				$ntc("#_mainscreen").removeClass("gui-hidden");
 			}

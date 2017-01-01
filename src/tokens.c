@@ -24,25 +24,32 @@ limitations under the License.
 
 cnatural_natural_list_t* cnatural_natural_token_list = NULL;
 
-int cnatural_natural_token_create(cnatural_natural_token_t* token)
+int cnatural_natural_token_create(cnatural_natural_token_t** token)
 {
 	if(token == NULL)
 		return -1;
 
-	token->timestamp.bdata = time(NULL);
-	token->username = NULL;
-	token->random_bytes = NULL;
+	*token = malloc(sizeof(cnatural_natural_token_t));
+
+	if(*token == NULL)
+		return -1;
+
+	(*token)->timestamp.bdata = time(NULL);
+	(*token)->username = NULL;
+	(*token)->random_bytes = NULL;
 
 	return 0;
 }
 
-int cnatural_natural_token_destroy(cnatural_natural_token_t* token)
+int cnatural_natural_token_destroy(cnatural_natural_token_t** token)
 {
 	if(token == NULL)
 		return -1;
 
-	free(token->username);
-	free(token->random_bytes);
+	free((*token)->username);
+	free((*token)->random_bytes);
+
+	free(*token);
 
 	return 0;
 }
@@ -62,7 +69,7 @@ int cnatural_natural_token_copy(cnatural_natural_token_t* src, cnatural_natural_
 	return 0;
 }
 
-int cnatural_natural_token_set_username(cnatural_natural_token_t* token, char* username)
+int cnatural_natural_token_set_username(cnatural_natural_token_t* token, const char* username)
 {
 	if(token == NULL)
 		return -1;
@@ -73,12 +80,12 @@ int cnatural_natural_token_set_username(cnatural_natural_token_t* token, char* u
 	return 0;
 }
 
-int cnatural_natural_token_set_random_bytes(cnatural_natural_token_t* token, char* random_bytes)
+int cnatural_natural_token_set_random_bytes(cnatural_natural_token_t* token, const char* random_bytes)
 {
 	if(token == NULL)
 		return -1;
 
-	free(token->username);
+	free(token->random_bytes);
 	token->random_bytes = cnatural_strdup(random_bytes);
 
 	return 0;
@@ -152,20 +159,31 @@ int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t* token, jwt_t* j
 	if(token == NULL)
 		return -1;
 
-	if(jwt_add_grant_int(jwt, "tm", (int) token->timestamp.bdata) != 0)
+#define MYDEBUG errno =
+
+	printf("Argument %ld (save_in_jwt)\n", token->timestamp.bdata);
+
+	if((MYDEBUG jwt_add_grant_int(jwt, "tm", (long int) token->timestamp.bdata)) != 0)
 		return -1;
 
-	if(jwt_add_grant(jwt, "un", (const char*) token->username) != 0)
+	printf("Argument %s (save_in_jwt)\n", token->username);
+
+	if((MYDEBUG jwt_add_grant(jwt, "un", (const char*) token->username)) != 0)
 		return -1;
 
-	if(jwt_add_grant(jwt, "rd", (const char*) token->random_bytes) != 0)
+	printf("Argument %s (save_in_jwt)\n", token->random_bytes);
+
+	if((MYDEBUG jwt_add_grant(jwt, "rd", (const char*) token->random_bytes)) != 0)
 		return -1;
+
+#undef MYDEBUG
 
 	return 0;
 }
 
 int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t* jwt)
 {
+	const char* bf = NULL;
 	if(token == NULL)
 		return -1;
 
@@ -178,15 +196,21 @@ int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t*
 	}
 #endif
 
-	token->username = cnatural_strdup(jwt_get_grant(jwt, "un"));
+	bf = (char*) jwt_get_grant(jwt, "un");
 
-	if(token->username == NULL)
+	if(bf == NULL)
 		return -1;
 
-	token->random_bytes = cnatural_strdup(jwt_get_grant(jwt, "rd"));
+	token->username = cnatural_strdup(bf);
+	free((void*) bf);
 
-	if(token->random_bytes == NULL)
+	bf = (char*) jwt_get_grant(jwt, "rd");
+
+	if(bf == NULL)
 		return -1;
+
+	token->random_bytes = cnatural_strdup(bf);
+	free((void*) bf);
 
 	return 0;
 }
@@ -212,7 +236,7 @@ int cnatural_natural_global_tokens_deinit(void)
 
 	for(it = cnatural_natural_token_list->next; it != cnatural_natural_token_list; it = it->next)
 	{
-		if(cnatural_natural_token_destroy(it->value) != 0)
+		if(cnatural_natural_token_destroy((cnatural_natural_token_t**) &it->value) != 0)
 			return -1;
 
 		it->value = NULL;
@@ -230,6 +254,10 @@ int cnatural_natural_global_tokens_add(cnatural_natural_token_t* token)
 		return -1;
 
 	ret = cnatural_natural_list_create(&node);
+	if(ret != 0)
+		return ret;
+
+	ret = cnatural_natural_token_create((cnatural_natural_token_t**) &node->value);
 	if(ret != 0)
 		return ret;
 
@@ -267,7 +295,7 @@ int cnatural_natural_global_tokens_remove(cnatural_natural_token_t* token)
 	if(ret != 0)
 		return ret;
 
-	ret = cnatural_natural_token_destroy(it->value);
+	ret = cnatural_natural_token_destroy((cnatural_natural_token_t**) &it->value);
 	if(ret != 0)
 		return ret;
 

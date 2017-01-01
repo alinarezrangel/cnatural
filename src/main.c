@@ -32,9 +32,12 @@ limitations under the License.
 
 #include <microhttpd.h>
 
+#include "tokens.h"
 #include "ajaxcore.h"
 
 #define PORT 8888
+
+static cnatural_system_data_t dt;
 
 int request_handler(
 	void* klass,
@@ -52,7 +55,16 @@ int main(int argc, char** argv)
 {
 	struct MHD_Daemon* daemon;
 
+	dt.username = "hola";
+	dt.password = "mundo";
+	dt.secret = "fewnfieufonfewFWEQBEWIFNGrng";
+
 	setlocale(LC_ALL, "");
+	if(cnatural_natural_global_tokens_init() != 0)
+	{
+		fprintf(stderr, "Error on " __FILE__ ": The global token engine cannot be initialized correctly\n");
+		exit(EXIT_FAILURE);
+	}
 
 	daemon = MHD_start_daemon(
 		MHD_USE_SELECT_INTERNALLY,
@@ -69,12 +81,21 @@ int main(int argc, char** argv)
 	if(daemon == NULL)
 	{
 		perror("Error getting the daemon");
+		if(cnatural_natural_global_tokens_init() != 0)
+		{
+			fprintf(stderr, "Error on " __FILE__ ": The global token engine cannot be initialized correctly\n");
+		}
 		exit(EXIT_FAILURE);
 	}
 
 	getchar();
 
 	MHD_stop_daemon(daemon);
+	if(cnatural_natural_global_tokens_deinit() != 0)
+	{
+		fprintf(stderr, "Error on " __FILE__ ": The global token engine cannot be deinitialized correctly\n");
+		exit(EXIT_FAILURE);
+	}
 	exit(EXIT_SUCCESS);
 }
 
@@ -132,6 +153,7 @@ int request_handler(
 			return MHD_YES;
 		}
 
+		arg.systdt = &dt;
 		arg.attached_data = upload_data;
 		arg.attached_data_size = *upload_data_size;
 		arg.output_buffer = NULL;

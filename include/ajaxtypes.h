@@ -88,6 +88,16 @@ typedef struct cnatural_post_processor_data
 } cnatural_post_processor_data_t;
 
 /**
+* @brief Is the system data and configuration.
+*/
+typedef struct cnatural_system_data
+{
+	char* username;
+	char* password;
+	char* secret;
+} cnatural_system_data_t;
+
+/**
 * @brief (alias cnatural_ajax_argument_t) Contains all argument, data and output values passed to a AJAX function.
 * Any AJAX function will need at least these parameters (some are output arguments):
 *
@@ -115,6 +125,7 @@ typedef struct cnatural_ajax_argument
 	char* output_mimetype;
 	int output_filedesc;
 	cnatural_post_processor_data_t* arguments;
+	cnatural_system_data_t* systdt;
 } cnatural_ajax_argument_t;
 
 /**
