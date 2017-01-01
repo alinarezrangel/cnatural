@@ -52,6 +52,8 @@ int main(int argc, char** argv)
 {
 	struct MHD_Daemon* daemon;
 
+	setlocale(LC_ALL, "");
+
 	daemon = MHD_start_daemon(
 		MHD_USE_SELECT_INTERNALLY,
 		PORT,
@@ -285,27 +287,27 @@ int request_handler(
 
 	printf("Detected MIME type is %s\n", ext);
 
-	if(strcmp(ext, ".html") == 0)
+	if(strcoll(ext, ".html") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "text/html");
 		printf("HiperText Markup Language\n");
 	}
-	else if(strcmp(ext, ".js") == 0)
+	else if(strcoll(ext, ".js") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "application/javascript");
 		printf("JavaScript / ECMAScript\n");
 	}
-	else if(strcmp(ext, ".css") == 0)
+	else if(strcoll(ext, ".css") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "text/css");
 		printf("Cascading Style Sheets\n");
 	}
-	else if(strcmp(ext, ".svg") == 0)
+	else if(strcoll(ext, ".svg") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "image/svg+xml");
 		printf("Scalable Vector Graphics\n");
 	}
-	else if(strcmp(ext, ".png") == 0)
+	else if(strcoll(ext, ".png") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "image/png");
 		printf("Portable Network Graphics\n");

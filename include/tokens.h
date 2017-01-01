@@ -37,11 +37,13 @@ limitations under the License.
 
 #ifndef __STDC_NO_THREADS__
 #	include <threads.h>
+#	define CNATURAL_NATURAL_USE_THREADS 1
 #endif
 
 #include <jwt.h>
 
 #include "list.h"
+#include "ajaxtypes.h"
 
 /**
 * @brief Represents a timestamp.
@@ -68,10 +70,33 @@ typedef struct cnatural_natural_token
 	char* random_bytes;
 } cnatural_natural_token_t;
 
-#ifndef __STDC_NO_THREADS__
+#ifdef CNATURAL_NATURAL_USE_THREADS
 extern mtx_t cnatural_natural_tokens_mutex;
+#else
+#warning "Warning: unable to search a way for provide locks to the server tokens"
 #endif
 
 extern cnatural_natural_list_t* cnatural_natural_token_list;
+
+int cnatural_natural_token_create(cnatural_natural_token_t*);
+int cnatural_natural_token_destroy(cnatural_natural_token_t*);
+int cnatural_natural_token_copy(cnatural_natural_token_t*, cnatural_natural_token_t*);
+int cnatural_natural_token_set_username(cnatural_natural_token_t*, char*);
+int cnatural_natural_token_set_random_bytes(cnatural_natural_token_t*, char*);
+int cnatural_natural_token_set_timestamp(cnatural_natural_token_t*, cnatural_natural_timestamp_t*);
+int cnatural_natural_token_get_username(cnatural_natural_token_t*, char**);
+int cnatural_natural_token_get_random_bytes(cnatural_natural_token_t*, char**);
+int cnatural_natural_token_get_timestamp(cnatural_natural_token_t*, cnatural_natural_timestamp_t**);
+
+bool cnatural_natural_token_are_equals(cnatural_natural_token_t*, cnatural_natural_token_t*);
+
+int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t*, jwt_t*);
+int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t*, jwt_t*);
+
+int cnatural_natural_global_tokens_init(void);
+int cnatural_natural_global_tokens_deinit(void);
+int cnatural_natural_global_tokens_add(cnatural_natural_token_t*);
+int cnatural_natural_global_tokens_remove(cnatural_natural_token_t*);
+int cnatural_natural_global_tokens_verify(cnatural_natural_token_t*);
 
 #endif /* ~__CNATURAL_NATURAL_TOKENS_FUNCTIONS_H__ */

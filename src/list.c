@@ -29,6 +29,10 @@ int cnatural_natural_list_create(cnatural_natural_list_t** head)
 	*head = malloc(sizeof(cnatural_natural_list_t));
 	if(*head == NULL)
 		return -1;
+
+	(*head)->next = *head;
+	(*head)->back = *head;
+
 	return 0;
 }
 

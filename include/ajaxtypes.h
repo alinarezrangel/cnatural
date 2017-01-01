@@ -34,6 +34,8 @@ limitations under the License.
 #include <string.h>
 #include <errno.h>
 #include <stdint.h>
+#include <stdbool.h>
+#include <locale.h>
 
 #include <microhttpd.h>
 

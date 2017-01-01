@@ -8,8 +8,8 @@ WARN=-Wall
 OPT=-O0
 DEBUG=-g
 STD=-std=c99
-CFLAGS=$(STD) $(WARN) $(OPT) $(DEBUG) $(INCLUDES)
-LDFLAGS=$(LIBS)
+CFLAGS=$(STD) $(WARN) $(OPT) $(DEBUG) $(INCLUDES) -pthread
+LDFLAGS=$(LIBS) -ljwt
 CC=gcc
 LD=gcc
 
