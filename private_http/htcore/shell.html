@@ -1,38 +1,28 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-	</head>
-	<body>
-		<section id="_mainscreen" class="gui-screen gui-main-screen gui-flexbasic color-natural-white">
-			<!-- <div id="__topnav" class="col top-navigation no-margin padding-4 o1 color-natural-black">
-				<span class="link gui-clickeable">
-					<img src="/resources/images/topnav/main.svg" alt="Shell del manejador" width="50" height="50" />
-				</span>
-				<span class="link gui-clickeable">
-					<img src="/resources/images/topnav/desktop.svg" alt="Escritorio" width="50" height="50" />
-				</span>
-				<span class="link gui-clickeable">
-					<img src="/resources/images/topnav/" alt="" width="50" height="50" />
-				</span>
-				<span class="link gui-clickeable">
-					<img src="/resources/images/topnav/" alt="" width="50" height="50" />
-				</span>
-				<span class="link gui-clickeable">
-					<img src="/resources/images/topnav/" alt="" width="50" height="50" />
-				</span>
-			</div>
-			<div class="col o2 f1 box no-margin no-padding gui-section gui-flexbasic direction-row">
-				<section id="__windowarea" class="col o1 f1 box no-margin padding-2 overflow-hidden gui-main">
-					CONTENT
-				</section>
-				<div id="__sidenav" class="col navigation no-margin padding-4 o2 color-natural-black">
-					<span class="link">
-						<img src="/resources/images/sidenav/" alt="" width="25" height="25" />
-					</span>
-				</div>
-			</div> -->
-			Hello World
-		</section>
-	</body>
-</html>
+<section
+	id="_mainscreen"
+	class="gui-screen gui-de-select-screen gui-flexbasic overflow-auto gui-intro-bkg gui-no-select"
+	data-widget="screen-container"
+	data-no-header-body="true">
+	<div
+		id="_start_native_shell"
+		class="box card gui-select-desktop-env-box margin-8 padding-8 border-round border border-color-everblack gui-clickeable text-color-white"
+		data-widget="button"
+		data-action="app.start_shell"
+		data-action-param="native">
+		<h2 class="no-padding margin-16 text-center text-ultra-big font-bold">Native</h2>
+		<p class="font-italic">
+			A simple, touch-based desktop environment.
+		</p>
+		<i class="text-center width-block block-right text-small">Click to use</i>
+	</div>
+</section>
+<section
+	id="_loadscreen"
+	class="gui-screen gui-shell-load-screen gui-hidden gui-flexbasic position-relative color-ocean gui-no-select"
+	data-widget="screen-container"
+	data-no-header-body="true">
+	<div class="gui-animation-loadbar-dot gui-animation-loadbar-dot-s1 color-white"></div>
+	<div class="gui-animation-loadbar-dot gui-animation-loadbar-dot-s2 color-white"></div>
+	<div class="gui-animation-loadbar-dot gui-animation-loadbar-dot-s3 color-white"></div>
+	<div class="gui-animation-loadbar-dot gui-animation-loadbar-dot-s4 color-white"></div>
+</section>

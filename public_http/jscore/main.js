@@ -20,6 +20,35 @@ limitations under the License.
 **********************
 ************************************************/
 
+function attach_shell_events(token)
+{
+	var start_native_shell = $ntc("#_start_native_shell");
+
+	start_native_shell.attach(function(ev)
+	{
+		$ntc("#_mainscreen").hideSlideUp();
+		$ntc("#_loadscreen").removeClass("gui-hidden");
+
+		$ntc(document.body).include(token, "htcore/shells/native/shell.html", "text/html", function(err, docmt)
+		{
+			if(err)
+			{
+				console.error(err);
+				NWCreateTextDialog($ntc("#_mainscreen"), 2, "Error: " + res, function(win, msg, txt)
+				{
+					win.getElement().addClass("text-natural-darkred");
+				});
+				return;
+			}
+
+			docmt.on("shellLoaded", function(ev)
+			{
+				$ntc("#_loadscreen").hideSlideUp();
+			});
+		}, true);
+	}).on("click");
+}
+
 $ntc(window).on("load", function()
 {
 	$natural.ajax({
@@ -124,10 +153,12 @@ $ntc(window).on("load", function()
 						$ntc("#_loginscreen").hideSlideUp();
 						$ntc("#_mainscreen").removeClass("gui-hidden");
 
-
-						$natural.includeScripts(document, res);
-					})
-				})
+						$natural.includeScripts(document, res, function(sc)
+						{
+							attach_shell_events(res);
+						}, true);
+					});
+				});
 			});
 		});
 	}).on("click");

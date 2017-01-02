@@ -274,7 +274,7 @@ limitations under the License.
 			{
 				if(options.pdata.hasOwnProperty(i))
 				{
-					console.log("POST data " + i + " with " + options.pdata[i]);
+					// console.log("POST data " + i + " with " + options.pdata[i]);
 					pdata += "&" + i + "=" + encodeURIComponent(options.pdata[i]);
 				}
 			}
@@ -297,7 +297,7 @@ limitations under the License.
 			xhrc.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xhrc.setRequestHeader("Content-length", pdata.length);
 			xhrc.setRequestHeader("Connection", "close");
-			console.log("POST is " + pdata);
+			// console.log("POST is " + pdata);
 			xhrc.send(pdata);
 		};
 		NaturalObject.prototype.appendChild = function(child)

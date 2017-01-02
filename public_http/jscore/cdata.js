@@ -28,17 +28,53 @@ limitations under the License.
 		{
 			throw new Error("Error at CNatural.JS.Core.CData: NaturalObject is undefined");
 		}
-		window.NaturalObject.prototype.includeScripts = function(doc, token)
+		window.NaturalObject.prototype.include = function(token, src, mime, callback)
 		{
+			recursive = (typeof recursive === "boolean")? recursive : false;
+
+			this.ajax({
+				url: "/api/ajax/coreutils/import",
+				args: {},
+				pdata: {
+					file: src,
+					type: "include",
+					expected: mime,
+					token: token
+				},
+				async: true
+			}, (err, res) =>
+			{
+				if(err)
+				{
+					callback(new Event("scriptLoadError"));
+					return;
+				}
+
+				var dm = new DOMParser();
+				var dc = dm.parseFromString(res, "text/html");
+				window.$ntc(dc.body.childNodes).apply((node) =>
+				{
+					this.appendChild(node);
+				}).forEach();
+				callback(null, window.$ntc(dc));
+			});
+		};
+		window.NaturalObject.prototype.includeScripts = function(doc, token, ondone)
+		{
+			ondone = ondone || function(x) {};
+
 			if(typeof doc === "undefined")
 			{
 				doc = document;
 			}
+
 			var tags = window.$ntc("*[data-widget=\"script\"]");
 			tags.apply((script) =>
 			{
 				var src = script.data("src");
 				var mime = script.data("mime");
+				var obj = script.data("object");
+				var tp = script.data("type");
 				this.ajax({
 					url: "/api/ajax/coreutils/import",
 					args: {},
@@ -57,9 +93,33 @@ limitations under the License.
 						return;
 					}
 
-					var dm = new DOMParser();
-					var dc = dm.parseFromString(res, "text/html");
-					script.appendChild($ntc(dc.body));
+					if(tp == "html")
+					{
+						var dm = new DOMParser();
+						var dc = dm.parseFromString(res, "text/html");
+						window.$ntc(dc.body.childNodes).apply((node) =>
+						{
+							window.$ntc(script.original.parentNode).appendChild(node);
+						}).forEach();
+						if(obj !== "")
+							window[obj] = window.$ntc(dc.body);
+						ondone(script);
+					}
+					else if(tp == "javascript")
+					{
+						var scn = document.createElement("script");
+						scn.type = "application/javascript";
+						scn.appendChild(document.createTextNode(res));
+
+						if(obj !== "")
+							window[obj] = window.$ntc(scn);
+
+						scn.addEventListener("load", () =>
+						{
+							ondone(script);
+						});
+					}
+					script.remove();
 				});
 			}).forEach();
 		};

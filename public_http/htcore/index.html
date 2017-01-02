@@ -2,11 +2,16 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
 		<title>CNatural - Natural in C</title>
+
 		<link rel="stylesheet" type="text/css" href="csscore/generation/css/generation.css" />
 		<link rel="stylesheet" type="text/css" href="csscore/generation/css/pallete_basics.css" />
 		<link rel="stylesheet" type="text/css" href="csscore/generation/css/pallete_natural.css" />
+		<link rel="stylesheet" type="text/css" href="csscore/owns/animations.css" />
 		<link rel="stylesheet" type="text/css" href="csscore/owns/main.css" />
+
 		<script src="csscore/generation/js/generation.js" type="application/javascript" charset="utf-8"></script>
 		<script src="jscore/natsec.js" type="application/javascript" charset="utf-8"></script>
 		<script src="jscore/animation.js" type="application/javascript" charset="utf-8"></script>
@@ -83,7 +88,7 @@
 					class="button color-natural-green width-block"
 					type="button"
 					data-widget="button"
-					data-action="form.submit.ifTrue.showNext"
+					data-action="app.login"
 					id="login_button">
 					Iniciar Sesión
 				</button>
@@ -93,8 +98,9 @@
 		<div
 			class="gui-include box no-padding no-margin"
 			data-widget="script"
-			data-action="special.include"
+			data-action="app.include"
 			data-src="htcore/shell.html"
+			data-type="html"
 			data-mime="text/plain"
 			data-sandbox="false"
 			data-object="$shell">

@@ -1,0 +1,74 @@
+
+@keyframes gui-animation-loadbar-dot-s1-anim {
+	0% {
+		left: -100%;
+	}
+	40% {
+		left: 35%;
+	}
+	60% {
+		left: 60%;
+	}
+	100% {
+		left: 200%;
+	}
+}
+
+@keyframes gui-animation-loadbar-dot-s2-anim {
+	0% {
+		left: -100%;
+	}
+	40% {
+		left: 40%;
+	}
+	60% {
+		left: 60%;
+	}
+	100% {
+		left: 200%;
+	}
+}
+
+@keyframes gui-animation-loadbar-dot-s3-anim {
+	0% {
+		left: -100%;
+	}
+	40% {
+		left: 45%;
+	}
+	60% {
+		left: 60%;
+	}
+	100% {
+		left: 200%;
+	}
+}
+
+@keyframes gui-animation-loadbar-dot-s4-anim {
+	0% {
+		left: -100%;
+	}
+	40% {
+		left: 50%;
+	}
+	60% {
+		left: 60%;
+	}
+	100% {
+		left: 200%;
+	}
+}
+
+.gui-animation-loadbar-dot-s1 { animation: gui-animation-loadbar-dot-s1-anim 2.5s linear 0.00s infinite normal; }
+.gui-animation-loadbar-dot-s2 { animation: gui-animation-loadbar-dot-s2-anim 2.5s linear 0.25s infinite normal; }
+.gui-animation-loadbar-dot-s3 { animation: gui-animation-loadbar-dot-s3-anim 2.5s linear 0.50s infinite normal; }
+.gui-animation-loadbar-dot-s4 { animation: gui-animation-loadbar-dot-s4-anim 2.5s linear 0.75s infinite normal; }
+
+.gui-animation-loadbar-dot {
+	position: absolute !important;
+	width: 20px !important;
+	height: 20px !important;
+	border-radius: 100% !important;
+	top: 50% !important;
+	transform: translate(-50%, -50%) !important;
+}
