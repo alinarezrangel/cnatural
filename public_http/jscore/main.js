@@ -51,6 +51,8 @@ function attach_shell_events(token)
 
 $ntc(window).on("load", function()
 {
+	var NaturalToken = "";
+
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},
@@ -157,9 +159,22 @@ $ntc(window).on("load", function()
 						{
 							attach_shell_events(res);
 						}, true);
+
+						NaturalToken = res;
 					});
 				});
 			});
 		});
 	}).on("click");
+
+	/*
+	window.setInterval(function()
+	{
+		if(NaturalToken == "")
+			return;
+		$natural.includeScripts(document, NaturalToken, function(sc)
+		{
+		}, true);
+	}, 2500);
+	*/
 });

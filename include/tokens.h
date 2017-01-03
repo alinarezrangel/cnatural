@@ -72,8 +72,6 @@ typedef struct cnatural_natural_token
 	char* random_bytes;
 } cnatural_natural_token_t;
 
-extern cnatural_natural_list_t* cnatural_natural_token_list;
-
 /**
 * @brief Creates a new token.
 * The tokens have a timestamp, a random data and the username.
@@ -210,48 +208,5 @@ int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t* token, jwt_t* j
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t* jwt);
-
-/**
-* @brief Init the global engine of tokens.
-* IS NOT THREAD SAFE.
-*
-* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
-*/
-int cnatural_natural_global_tokens_init(void);
-
-/**
-* @brief Deinit the global engine of tokens.
-* IS NOT THREAD SAFE.
-*
-* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
-*/
-int cnatural_natural_global_tokens_deinit(void);
-
-/**
-* @brief Adds a token to the engine.
-* IS NOT THREAD SAFE.
-*
-* @param token Token to add.
-* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
-*/
-int cnatural_natural_global_tokens_add(cnatural_natural_token_t* token);
-
-/**
-* @brief Removes a token to the engine.
-* IS NOT THREAD SAFE.
-*
-* @param token Token to remove.
-* @returns 0 on success, 1 when the action cannot be executed and -1 on error.
-*/
-int cnatural_natural_global_tokens_remove(cnatural_natural_token_t* token);
-
-/**
-* @brief Verifies if a token is in the engine.
-* IS NOT THREAD SAFE.
-*
-* @param token Token to verify.
-* @returns 0 if the token is valid, 1 if the token is invalid and -1 on error.
-*/
-int cnatural_natural_global_tokens_verify(cnatural_natural_token_t* token);
 
 #endif /* ~__CNATURAL_NATURAL_TOKENS_FUNCTIONS_H__ */

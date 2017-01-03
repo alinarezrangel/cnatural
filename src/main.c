@@ -60,11 +60,6 @@ int main(int argc, char** argv)
 	dt.secret = "fewnfieufonfewFWEQBEWIFNGrng";
 
 	setlocale(LC_ALL, "");
-	if(cnatural_natural_global_tokens_init() != 0)
-	{
-		fprintf(stderr, "Error on " __FILE__ ": The global token engine cannot be initialized correctly\n");
-		exit(EXIT_FAILURE);
-	}
 
 	daemon = MHD_start_daemon(
 		MHD_USE_SELECT_INTERNALLY,
@@ -81,21 +76,13 @@ int main(int argc, char** argv)
 	if(daemon == NULL)
 	{
 		perror("Error getting the daemon");
-		if(cnatural_natural_global_tokens_init() != 0)
-		{
-			fprintf(stderr, "Error on " __FILE__ ": The global token engine cannot be initialized correctly\n");
-		}
 		exit(EXIT_FAILURE);
 	}
 
 	getchar();
 
 	MHD_stop_daemon(daemon);
-	if(cnatural_natural_global_tokens_deinit() != 0)
-	{
-		fprintf(stderr, "Error on " __FILE__ ": The global token engine cannot be deinitialized correctly\n");
-		exit(EXIT_FAILURE);
-	}
+
 	exit(EXIT_SUCCESS);
 }
 
@@ -123,13 +110,13 @@ int request_handler(
 	struct stat fdstat;
 	cnatural_post_processor_data_t* data = NULL;
 
-	printf("Reading POST data %lu...\n", *upload_data_size);
+	printf("Reading POST data %lu...\n> Processing the URL %s with the method %s %s\n", *upload_data_size, url, method, version);
 	fflush(stdout);
 
 	if(*conn_klass == NULL)
 	{
 		data = *conn_klass;
-		ret = cnatural_create_post_data(conn, strcmp(method, "POST"), &data);
+		ret = cnatural_create_post_data(conn, strcmp(method, MHD_HTTP_METHOD_POST), &data);
 		printf("Exiting C!\n");
 		fflush(stdout);
 		*conn_klass = (void*) data;
@@ -139,7 +126,13 @@ int request_handler(
 	printf("Successfull created POST data\n");
 	fflush(stdout);
 
-	if(strcmp(method, "POST") == 0)
+	/* If starts with /api/private/... */
+	if(strstr(url, "/api/private/") == url)
+	{
+		/* The format is /api/private/[urlencoded-token]/[resource] */
+	}
+
+	if(strcmp(method, MHD_HTTP_METHOD_POST) == 0)
 	{
 		printf("Handling AJAX to %s\n", url);
 
@@ -182,7 +175,7 @@ int request_handler(
 			res = MHD_create_response_from_buffer(
 				arg.output_buffer_size,
 				(void*) arg.output_buffer,
-				MHD_RESPMEM_PERSISTENT
+				MHD_RESPMEM_MUST_FREE
 			);
 			if(res == NULL)
 			{

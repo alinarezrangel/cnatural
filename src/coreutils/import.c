@@ -31,7 +31,6 @@ int cnatural_ajax_coreutils_import(
 
 	cnatural_post_processor_node_t* it = NULL;
 	int ofile = -1;
-	int jres = 0;
 	char* token = "";
 	char* uname = "";
 	char* fname = "";
@@ -71,18 +70,30 @@ int cnatural_ajax_coreutils_import(
 	if((errno = jwt_decode(&jwt, token, (unsigned char*) args->systdt->secret, strlen(args->systdt->secret))) != 0)
 	{
 		perror("Error decoding the token");
+
+		args->output_buffer = cnatural_strdup("enotoken");
+		args->output_buffer_size = strlen(args->output_buffer);
 		return -1;
 	}
 
 	if(cnatural_natural_token_create(&tkobj) != 0)
 	{
-		fprintf(stdout, "Error creating the token\n");
+		fprintf(stderr, "Error creating the token\n");
 		return -1;
 	}
 
 	if(cnatural_natural_token_load_from_jwt(tkobj, jwt) != 0)
 	{
-		fprintf(stdout, "Error loading the token\n");
+		fprintf(stderr, "Error loading the token\n");
+		return -1;
+	}
+
+	if(jwt_get_alg(jwt) != JWT_ALG_HS512)
+	{
+		fprintf(stderr, "Error decrypting the token: the algorithm is not JWT_ALG_HS512\n");
+
+		args->output_buffer = cnatural_strdup("enotoken");
+		args->output_buffer_size = strlen(args->output_buffer);
 		return -1;
 	}
 
@@ -92,22 +103,6 @@ int cnatural_ajax_coreutils_import(
 	cnatural_natural_token_get_random_bytes(tkobj, &rdbytes);
 
 	printf("Loaded the token: %s <%s>\n", uname, rdbytes);
-
-	if((jres = cnatural_natural_global_tokens_verify(tkobj)) < 0)
-	{
-		fprintf(stdout, "Error verifing the token\n");
-		return -1;
-	}
-
-	if(jres != 0)
-	{
-		// Invalid token
-		printf("Invalid token\n");
-
-		args->output_buffer = cnatural_strdup("enotoken");
-		args->output_buffer_size = strlen(args->output_buffer);
-		return 0;
-	}
 
 	realpath = malloc(strlen(fname) + strlen(privatepath) + 1);
 	if(realpath == NULL)

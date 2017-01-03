@@ -132,11 +132,6 @@ int cnatural_ajax_coreutils_login(
 		perror("Serializing the token");
 		return -1;
 	}
-	if(cnatural_natural_global_tokens_add(tk) != 0)
-	{
-		fprintf(stderr, "Error adding the token\n");
-		return -1;
-	}
 	if(cnatural_natural_token_destroy(&tk) != 0)
 	{
 		fprintf(stderr, "Error destroying the token\n");

@@ -75,6 +75,7 @@ limitations under the License.
 				var mime = script.data("mime");
 				var obj = script.data("object");
 				var tp = script.data("type");
+
 				this.ajax({
 					url: "/api/ajax/coreutils/import",
 					args: {},
@@ -104,20 +105,6 @@ limitations under the License.
 						if(obj !== "")
 							window[obj] = window.$ntc(dc.body);
 						ondone(script);
-					}
-					else if(tp == "javascript")
-					{
-						var scn = document.createElement("script");
-						scn.type = "application/javascript";
-						scn.appendChild(document.createTextNode(res));
-
-						if(obj !== "")
-							window[obj] = window.$ntc(scn);
-
-						scn.addEventListener("load", () =>
-						{
-							ondone(script);
-						});
 					}
 					script.remove();
 				});
