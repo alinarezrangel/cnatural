@@ -68,6 +68,8 @@ limitations under the License.
 				doc = document;
 			}
 
+			var ax = false;
+
 			var tags = window.$ntc("*[data-widget=\"script\"]");
 			tags.apply((script) =>
 			{
@@ -75,6 +77,23 @@ limitations under the License.
 				var mime = script.data("mime");
 				var obj = script.data("object");
 				var tp = script.data("type");
+
+				if(tp == "javascript")
+				{
+					var sc = document.createElement("script");
+					sc.src = "/api/private/" + token + "/" + src;
+
+					sc.addEventListener("load", () =>
+					{
+						ondone(script);
+					});
+
+					window.$ntc(script.original.parentNode).appendChild(window.$ntc(sc));
+
+					console.log("Requested " + src);
+
+					return;
+				}
 
 				this.ajax({
 					url: "/api/ajax/coreutils/import",
@@ -105,10 +124,17 @@ limitations under the License.
 						if(obj !== "")
 							window[obj] = window.$ntc(dc.body);
 						ondone(script);
+
+						ax = true;
 					}
 					script.remove();
 				});
 			}).forEach();
+
+			if(ax)
+			{
+				this.includeScripts(doc, token, ondone);
+			}
 		};
 
 		(new window.NaturalObject(document)).reloadGlobals(window);

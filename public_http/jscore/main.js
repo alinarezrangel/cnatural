@@ -20,6 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
+var NaturalToken = "";
+
 function attach_shell_events(token)
 {
 	var start_native_shell = $ntc("#_start_native_shell");
@@ -41,6 +43,11 @@ function attach_shell_events(token)
 				return;
 			}
 
+			$natural.includeScripts(document, token, function(node)
+			{
+				console.log(node);
+			});
+
 			docmt.on("shellLoaded", function(ev)
 			{
 				$ntc("#_loadscreen").hideSlideUp();
@@ -51,8 +58,6 @@ function attach_shell_events(token)
 
 $ntc(window).on("load", function()
 {
-	var NaturalToken = "";
-
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},

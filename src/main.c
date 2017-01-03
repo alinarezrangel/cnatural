@@ -97,18 +97,30 @@ int request_handler(
 	void** conn_klass
 )
 {
-	int ret = 0;
+	int
+		ret = 0,
+		urlsize = 0,
+		use_ajax = -1,
+		filedesc = 0;
+	const char* pfx_public = "public_http/";
+	const char* pfx_private = "private_http/";
+	const char* prefix = pfx_public;
 	struct MHD_Response* res = NULL;
-	char* ufile = NULL;
-	char* final_file_name = NULL;
-	size_t i = 0;
-	int urlsize = 0;
+	char
+		*ufile = NULL,
+		*http_api_token = NULL,
+		*http_api_path = NULL,
+		*final_file_name = NULL,
+		*ext = NULL,
+		*http_api_token_charat = NULL;
+	size_t
+		i = 0,
+		length_http_api_token = 0,
+		length_http_api_path = 0;
 	cnatural_ajax_argument_t arg;
-	int use_ajax = -1;
-	char* ext = NULL;
-	int filedesc = 0;
 	struct stat fdstat;
 	cnatural_post_processor_data_t* data = NULL;
+	jwt_t* jwt = NULL;
 
 	printf("Reading POST data %lu...\n> Processing the URL %s with the method %s %s\n", *upload_data_size, url, method, version);
 	fflush(stdout);
@@ -125,12 +137,6 @@ int request_handler(
 
 	printf("Successfull created POST data\n");
 	fflush(stdout);
-
-	/* If starts with /api/private/... */
-	if(strstr(url, "/api/private/") == url)
-	{
-		/* The format is /api/private/[urlencoded-token]/[resource] */
-	}
 
 	if(strcmp(method, MHD_HTTP_METHOD_POST) == 0)
 	{
@@ -248,11 +254,119 @@ int request_handler(
 		ufile = cnatural_strdup("htcore/index.html");
 	}
 
+	urlsize--;
+
+	/* If starts with /api/private/... */
+	if(strstr(url, "/api/private/") == url)
+	{
+		/* The format is /api/private/[urlencoded-token]/[resource] */
+
+		/* NOTE: 13 = strlen("/api/private/") */
+		http_api_token_charat = strchr(url + 13, '/');
+
+		if(http_api_token_charat == NULL)
+		{
+			fprintf(stderr, "Invalid HTTP API request\n");
+			free(ufile);
+			return MHD_NO;
+		}
+
+		for(i = 0; i < urlsize; i++)
+		{
+			if(&url[i] == http_api_token_charat)
+			{
+				length_http_api_token = i - 13;
+			}
+		}
+
+		length_http_api_path = strlen(url) - 13 - length_http_api_token;
+
+		printf("Length of token/path/url: %lu/%lu/%d\n", length_http_api_token, length_http_api_path, urlsize);
+
+		http_api_token = malloc(sizeof(char) * (length_http_api_token + 1));
+
+		if(http_api_token == NULL)
+		{
+			perror("Unable to alloc the /api/private token");
+			free(ufile);
+			return MHD_NO;
+		}
+
+		memset(http_api_token, '\0', length_http_api_token);
+
+		for(i = 0; i < length_http_api_token; i++)
+		{
+			http_api_token[i] = url[i + 13];
+		}
+
+		http_api_path = malloc(sizeof(char) * (length_http_api_path + 1));
+
+		if(http_api_path == NULL)
+		{
+			perror("Unable to alloc the /api/private path");
+			free(ufile);
+			free(http_api_token);
+			return MHD_NO;
+		}
+
+		/* strlen(url) - 13 <strlen("/api/private/")> - length_http_api_token */
+		memset(http_api_path, '\0', length_http_api_path);
+
+		for(i = 0; i < length_http_api_path; i++)
+		{
+			/* We adds 1 for skip the trailing '/' (slash) */
+			http_api_path[i] = url[14 + length_http_api_token + i];
+		}
+
+		printf("Token: %s\nPath %s\nURL %s\n", http_api_token, http_api_path, url);
+
+		if((errno = jwt_decode(&jwt, http_api_token, (const unsigned char*) dt.secret, strlen(dt.secret))) != 0)
+		{
+			perror("Unable to decode the token");
+
+			free(http_api_path);
+			free(http_api_token);
+			free(ufile);
+
+			return MHD_NO;
+		}
+
+		if(jwt_get_alg(jwt) != JWT_ALG_HS512)
+		{
+			fprintf(stderr, "Error: the JWT token algorithm is not JWT_ALG_HS512: aborting\n");
+
+			free(http_api_path);
+			free(http_api_token);
+			free(ufile);
+
+			return MHD_NO;
+		}
+
+		if(strcmp(jwt_get_grant(jwt, "un"), dt.username) != 0)
+		{
+			fprintf(stderr, "Error: the JWT token's username is not of this system (but have the same secret??? ALERT)\n");
+
+			free(http_api_path);
+			free(http_api_token);
+			free(ufile);
+
+			return MHD_NO;
+		}
+
+		prefix = pfx_private;
+
+		free(ufile);
+		ufile = http_api_path;
+
+		free(http_api_token);
+		jwt_free(jwt);
+	}
+
 	/* Prefix the public_http/ to the filepath */
 	final_file_name = malloc(
 		sizeof(char) *
 		(
-			strlen("public_http/") +
+			strlen(prefix) +
 			strlen(ufile) + 1
 		)
 	);
@@ -262,7 +376,7 @@ int request_handler(
 		free(ufile);
 		return MHD_NO;
 	}
-	sprintf(final_file_name, "public_http/%s", ufile);
+	sprintf(final_file_name, "%s%s", prefix, ufile);
 
 	printf("Handling URL %s with the method %s and the version %s.\n", final_file_name, method, version);
 	/* Open the file */
