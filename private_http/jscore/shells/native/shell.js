@@ -1,2 +1,2 @@
-document.body.dispatchEvent(new Event("shellLoaded"));
+document.body.dispatchEvent(new CustomEvent("shellLoaded", {}));
 alert("Hello, it's me, in that fronzen state");

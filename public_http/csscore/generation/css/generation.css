@@ -898,16 +898,16 @@ html, body {
 	justify-content:         space-between !important;
 }
 .justify-space-around {
-	-moz-justify-content:    flex-start !important;
-	-ms-justify-content:     flex-start !important;
-	-webkit-justify-content: flex-start !important;
-	justify-content:         flex-start !important;
+	-moz-justify-content:    space-around !important;
+	-ms-justify-content:     space-around !important;
+	-webkit-justify-content: space-around !important;
+	justify-content:         space-around !important;
 }
 .justify-center {
-	-moz-justify-content:    flex-start !important;
-	-ms-justify-content:     flex-start !important;
-	-webkit-justify-content: flex-start !important;
-	justify-content:         flex-start !important;
+	-moz-justify-content:    center !important;
+	-ms-justify-content:     center !important;
+	-webkit-justify-content: center !important;
+	justify-content:         center !important;
 }
 
 .wrap {

@@ -48,7 +48,7 @@ function attach_shell_events(token)
 				console.log(node);
 			});
 
-			docmt.on("shellLoaded", function(ev)
+			$ntc(document.body).on("shellLoaded", function(ev)
 			{
 				$ntc("#_loadscreen").hideSlideUp();
 			});
