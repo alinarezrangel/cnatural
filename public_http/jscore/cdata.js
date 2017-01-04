@@ -28,6 +28,56 @@ limitations under the License.
 		{
 			throw new Error("Error at CNatural.JS.Core.CData: NaturalObject is undefined");
 		}
+		window.NaturalObject.prototype.NaturalIconSetMap = {
+			"times": "a",
+			"close": "a",
+			"plus": "b",
+			"add": "b",
+			"menu": "c",
+			"bars": "c",
+			"minimize": "d",
+			"floor": "d",
+			"unmaximize": "e",
+			"maximize": "f",
+			"unminimize": "g",
+			"left": "h",
+			"back": "h",
+			"right": "i",
+			"next": "i",
+			"top": "j",
+			"up": "j",
+			"bottom": "k",
+			"down": "k",
+			"points-left": "l",
+			"arrow-left": "l",
+			"points-right": "m",
+			"arrow-right": "m",
+			"points-top": "n",
+			"arrow-top": "n",
+			"points-bottom": "ñ",
+			"arrow-bottom": "ñ",
+			"see": "o",
+			"view": "o",
+			"no-see": "p",
+			"no-view": "p",
+			"info-stamp": "q",
+			"info-rect": "r",
+			"info": "s",
+			"warning": "t",
+			"apps": "u",
+			"applications": "u",
+			"home": "v",
+			"reload": "w",
+			"swap": "x",
+			"exchange": "x",
+			"papers": "x",
+			"stack": "x",
+			"minus": "y",
+			"by": "z",
+			"percent": "A",
+			"permil": "B",
+			"text": "C"
+		};
 		window.NaturalObject.prototype.include = function(token, src, mime, callback)
 		{
 			recursive = (typeof recursive === "boolean")? recursive : false;
@@ -59,6 +109,30 @@ limitations under the License.
 				callback(null, window.$ntc(dc));
 			});
 		};
+		window.NaturalObject.prototype.parseSemanticIconsetTags = function(doc, ondone)
+		{
+			ondone = ondone || function(x) {};
+
+			if(typeof doc === "undefined")
+			{
+				doc = document;
+			}
+
+			var tags = window.$ntc("*.gui-font-iconset-v2");
+			tags.apply((tag) =>
+			{
+				var text = tag.original.textContent.replace(/\t|\n|\r| /gmi, "");
+
+				while(tag.original.firstChild)
+					tag.original.removeChild(tag.original.firstChild);
+
+				tag.original.appendChild(document.createTextNode(this.NaturalIconSetMap[text]));
+
+				tag.removeClass("gui-font-iconset-v2").addClass("gui-font-iconset-v1");
+
+				ondone(tag);
+			}).forEach();
+		};
 		window.NaturalObject.prototype.includeScripts = function(doc, token, ondone)
 		{
 			ondone = ondone || function(x) {};
@@ -89,8 +163,6 @@ limitations under the License.
 					});
 
 					window.$ntc(script.original.parentNode).appendChild(window.$ntc(sc));
-
-					console.log("Requested " + src);
 
 					return;
 				}
@@ -135,6 +207,8 @@ limitations under the License.
 			{
 				this.includeScripts(doc, token, ondone);
 			}
+
+			this.parseSemanticIconsetTags(doc, function(s) {});
 		};
 
 		(new window.NaturalObject(document)).reloadGlobals(window);

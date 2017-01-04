@@ -36,7 +36,6 @@ limitations under the License.
 			this.isAnimatable = true;
 			this.on("animationend", (ev) =>
 			{
-				console.log("Animation end");
 				this.animateEndEvent(ev);
 			});
 			return this;

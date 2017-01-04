@@ -43,10 +43,7 @@ function attach_shell_events(token)
 				return;
 			}
 
-			$natural.includeScripts(document, token, function(node)
-			{
-				console.log(node);
-			});
+			$natural.includeScripts(document, token, (node) => {});
 
 			$ntc(document.body).on("shellLoaded", function(ev)
 			{
@@ -82,6 +79,8 @@ $ntc(window).on("load", function()
 			win.getElement().addClass("text-natural-darkred");
 		});
 	});
+
+	$natural.parseSemanticIconsetTags(document, (s) => {});
 
 	$ntc("#_bootscreen").attach(function(ev)
 	{
