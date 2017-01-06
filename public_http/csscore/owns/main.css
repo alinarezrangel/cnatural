@@ -153,14 +153,6 @@ html, body {
 	margin: auto;
 }
 
-.gui-main {
-	/* */
-}
-
-.gui-widget {
-	/* */
-}
-
 .gui-widget-text {
 	-moz-user-select: none !important;
 	-webkit-user-select: none !important;
@@ -235,4 +227,30 @@ html, body {
 .gui-hoverable:hover {
 	background-color: #CCC !important;
 	color: #000 !important;
+}
+
+.gui-widget-window {
+	z-index: 1 !important;
+}
+
+.gui-widget-window-header {
+	z-index: 2 !important;
+}
+
+.gui-widget-window-body {
+	z-index: 3 !important;
+}
+
+.gui-widget-window-menu {
+	z-index: 4 !important;
+	position: absolute !important;
+	left: 50% !important;
+	top: 50% !important;
+	transform: translate(-50%, -50%) !important;
+	width: 90% !important;
+	height: 90% !important;
+}
+
+.gui-dock {
+	z-index: 100 !important;
 }

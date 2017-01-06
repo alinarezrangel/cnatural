@@ -1,25 +1,44 @@
+<!--************************************************
+**********************
+*** CNatural: Remote embed systems control.
+*** * Native Desktop Environment (HTML file 1).
+**********************
+
+Copyright 2016 Alejandro Linarez Rangel
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+		http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+**********************
+************************************************-->
+
 <section
 	id="_shellscreen"
 	class="gui-screen gui-shell-screen gui-flexcore gui-no-select"
 	data-widget="screen-container">
-	<div data-widget="header-container" class="gui-flexcore-row col od-1 no-padding no-margin gui-dock gui-button-dock">
-		<div class="gui-font-iconset-v2 gui-widget-button gui-hoverable color-natural-black padding-16 text-center text-ultra-big od-1 fx-1" data-widget="button">
+	<div data-widget="header-container" class="gui-flexcore-row no-wrap col od-1 no-padding no-margin gui-dock gui-button-dock">
+		<div class="gui-font-iconset-v2 gui-widget-button gui-hoverable color-natural-black padding-8 text-center text-ultra-big od-1 fx-1" data-widget="button">
 			applications
 		</div>
-		<div class="gui-font-iconset-v2 gui-widget-button gui-hoverable color-natural-black padding-16 text-center text-ultra-big od-2 fx-1" data-widget="button">
+		<div class="gui-font-iconset-v2 gui-widget-button gui-hoverable color-natural-black padding-8 text-center text-ultra-big od-2 fx-1" data-widget="button">
 			home
 		</div>
 	</div>
-	<div data-widget="body-container" class="col od-2 no-padding no-margin f1">
-		<p class="text-big">
-			Hello
-		</p>
+	<div data-widget="body-container" class="gui-widget-shell-window-area container col od-2 no-padding no-margin fx-1">
 	</div>
-	<div data-widget="footer-container" class="gui-flexcore-row col od-3 no-padding no-margin gui-dock gui-button-dock">
-		<div class="gui-font-iconset-v2 gui-widget-button gui-hoverable color-natural-black padding-16 text-center text-ultra-big od-1 fx-1" data-widget="button">
+	<div data-widget="footer-container" class="gui-flexcore-row no-wrap col od-3 no-padding no-margin gui-dock gui-button-dock">
+		<div class="gui-font-iconset-v2 gui-widget-button gui-hoverable color-natural-black padding-8 text-center text-ultra-big od-1 fx-1" data-widget="button">
 			back
 		</div>
-		<div class="gui-font-iconset-v2 gui-widget-button gui-hoverable color-natural-black padding-16 text-center text-ultra-big od-2 fx-1" data-widget="button">
+		<div class="gui-font-iconset-v2 gui-widget-button gui-hoverable color-natural-black padding-8 text-center text-ultra-big od-2 fx-1" data-widget="button">
 			menu
 		</div>
 	</div>
@@ -31,5 +50,4 @@
 	data-src="jscore/shells/native/shell.js"
 	data-type="javascript"
 	data-mime="text/plain"
-	data-sandbox="false"
-	data-object="$nativejs">
+	data-sandbox="false">

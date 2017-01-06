@@ -20,9 +20,38 @@ limitations under the License.
 **********************
 ************************************************/
 
-var NaturalToken = "";
+function CNaturalGetToken(cll)
+{
+	var st = $natural.getStorage();
 
-function attach_shell_events(token)
+	st.open("CNatural.JS.Storage.Core", (err) =>
+	{
+		if(err)
+		{
+			return cll(err);
+		}
+
+		st.get("authtoken", (err, value) =>
+		{
+			if(err)
+			{
+				return cll(err);
+			}
+
+			st.close((err) =>
+			{
+				if(err)
+				{
+					return cll(err);
+				}
+
+				return cll(null, value);
+			});
+		});
+	});
+}
+
+function _attach_shell_events(token)
 {
 	var start_native_shell = $ntc("#_start_native_shell");
 
@@ -161,10 +190,8 @@ $ntc(window).on("load", function()
 
 						$natural.includeScripts(document, res, function(sc)
 						{
-							attach_shell_events(res);
+							_attach_shell_events(res);
 						}, true);
-
-						NaturalToken = res;
 					});
 				});
 			});

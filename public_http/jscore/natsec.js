@@ -180,6 +180,11 @@ limitations under the License.
 		{
 			var func = (to) =>
 			{
+				if(Array.isArray(newremove))
+				{
+					to.classList.add.apply(to.classList, newremove);
+				}
+
 				to.classList.add(newremove);
 			};
 			if(this.isNodeList())
@@ -211,6 +216,25 @@ limitations under the License.
 			else
 			{
 				func(this.original);
+			}
+			return this;
+		};
+		NaturalObject.prototype.hasClass = function(className)
+		{
+			var func = (to) =>
+			{
+				return to.classList.contains(className);
+			};
+			if(this.isNodeList())
+			{
+				for(var i = 0; i < this.original.length; i++)
+				{
+					return func(this.get(i).original);
+				}
+			}
+			else
+			{
+				return func(this.original);
 			}
 			return this;
 		};

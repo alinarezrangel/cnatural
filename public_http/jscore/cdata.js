@@ -109,6 +109,50 @@ limitations under the License.
 				callback(null, window.$ntc(dc));
 			});
 		};
+		window.NaturalObject.prototype.require = function(async, path, token, private, cll)
+		{
+			private = (typeof private === "undefined")? false : true;
+			cll = (typeof cll === "function")? (this._callbackLastRef = cll) : this._callbackLastRef;
+
+			if((typeof token === "undefined") || (token === null))
+			{
+				if(private)
+				{
+					throw new Error("Error at CNatural.JS.Core.CData: require: The module is in private area but the token is undefined or null");
+				}
+
+				token = "";
+			}
+
+			if(private)
+			{
+				var sc = document.createElement("script");
+				sc.src = "/api/private/" + token + "/" + path;
+
+				sc.async = async;
+
+				sc.addEventListener("load", () =>
+				{
+					cll(window.$ntc(sc));
+				});
+
+				window.$ntc(document.body).appendChild(window.$ntc(sc));
+			}
+			else
+			{
+				var sc = document.createElement("script");
+				sc.src = "/" + path;
+
+				sc.async = async;
+
+				sc.addEventListener("load", () =>
+				{
+					cll(window.$ntc(sc));
+				});
+
+				window.$ntc(document.body).appendChild(window.$ntc(sc));
+			}
+		};
 		window.NaturalObject.prototype.parseSemanticIconsetTags = function(doc, ondone)
 		{
 			ondone = ondone || function(x) {};
@@ -129,6 +173,8 @@ limitations under the License.
 				tag.original.appendChild(document.createTextNode(this.NaturalIconSetMap[text]));
 
 				tag.removeClass("gui-font-iconset-v2").addClass("gui-font-iconset-v1");
+
+				tag.attr("aria-hidden", "true");
 
 				ondone(tag);
 			}).forEach();
