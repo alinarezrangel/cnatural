@@ -33,9 +33,9 @@ limitations under the License.
 
 		window.NaturalShell.Native = window.NaturalShell.Native || {};
 
-		window.NaturalShell.Native.WindowStyle = function(window, appdata)
+		window.NaturalShell.Native.WindowStyle = function(windowObject, appdata)
 		{
-			this.window = window;
+			this.window = windowObject;
 			this.appdata = appdata;
 			this.titlebarColor = null;
 			this.bodyColor = null;

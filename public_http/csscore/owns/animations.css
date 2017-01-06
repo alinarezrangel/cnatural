@@ -80,6 +80,25 @@ limitations under the License.
 	}
 }
 
+@keyframes gui-animation-hide-slide-up {
+	from {
+	}
+	to {
+		display: none;
+		height: 0px;
+	}
+}
+
+@keyframes gui-animation-move-from-top-to-center {
+	from {
+		top: -100%;
+	}
+	to {
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
 .gui-animation-loadbar-dot-s1 { animation: gui-animation-loadbar-dot-s1-anim 2.5s linear 0.00s infinite normal; }
 .gui-animation-loadbar-dot-s2 { animation: gui-animation-loadbar-dot-s2-anim 2.5s linear 0.25s infinite normal; }
 .gui-animation-loadbar-dot-s3 { animation: gui-animation-loadbar-dot-s3-anim 2.5s linear 0.50s infinite normal; }
@@ -92,4 +111,20 @@ limitations under the License.
 	border-radius: 100% !important;
 	top: 50% !important;
 	transform: translate(-50%, -50%) !important;
+}
+
+.gui-animation-hide-slide-up {
+	animation: gui-animation-hide-slide-up 1.5s ease-in-out 0s 1 normal;
+}
+
+.gui-animation-show-slide-down {
+	animation: gui-animation-hide-slide-up 1.5s ease-in-out 0s 1 reverse;
+}
+
+.gui-animation-show-move-from-top-to-center {
+	animation: gui-animation-move-from-top-to-center 1.5s ease-out 0s 1 normal;
+}
+
+.gui-animation-hide-move-from-center-to-top {
+	animation: gui-animation-move-from-top-to-center 1.5s ease-in 0s 1 reverse;
 }

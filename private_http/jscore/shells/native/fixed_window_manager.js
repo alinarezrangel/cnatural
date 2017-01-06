@@ -74,7 +74,7 @@ limitations under the License.
 				}
 			}).forEach();
 
-			windowElement.data("zIndex", maxIndex + 1);
+			windowElement.data("zIndex", (maxIndex + 1) + "");
 			this.context.getWindowArea().appendChild(windowElement);
 			(this.context.getHiddenWindowsCallback())("window.add", windowElement);
 			this.showingWindow = true;
@@ -153,22 +153,17 @@ limitations under the License.
 				}
 			}).forEachChild();
 
-			return rt;
+			return !rt.hasClass("gui-hidden");
 		};
 
 		window.NaturalShell.Native.FixedWindowManager.prototype.unpackWindow = function(cmpfcn)
 		{
-			var rm = null, reshow = false, index = 0, windows = this.context.getWindowArea().child("*[data-widget='window']");
+			var rm = null, index = 0, windows = this.context.getWindowArea().child("*[data-widget='window']");
 
 			windows.apply((windowEl) =>
 			{
 				if(cmpfcn(windowEl))
 				{
-					if(!windowEl.hasClass("gui-hidden"))
-					{
-						reshow = true;
-					}
-
 					index = parseInt(windowEl.data("zIndex"));
 
 					windowEl.remove();
@@ -187,10 +182,7 @@ limitations under the License.
 				}
 			}).forEach();
 
-			if(reshow)
-			{
-				this.showToplevel();
-			}
+			this.showToplevel();
 
 			return rm;
 		};

@@ -53,10 +53,10 @@ limitations under the License.
 		window.NaturalObject.prototype.hideSlideUp = function()
 		{
 			this.animatable()
-				.addClass("animate-hide-slide-up")
+				.addClass("gui-animation-hide-slide-up")
 				.animateEndEvent = () =>
 				{
-					this.hide().removeClass("animate-hide-slide-up");
+					this.hide().removeClass("gui-animation-hide-slide-up");
 				};
 			return this;
 		};
@@ -64,9 +64,29 @@ limitations under the License.
 		{
 			this.animatable()
 				.show()
-				.addClass("animate-show-slide-down")
+				.addClass("gui-animation-hide-slide-down")
 				.animateEndEvent = () => {
-					this.removeClass("animate-show-slide-down").removeClass("gui-hidden");
+					this.removeClass("gui-animation-hide-slide-down").removeClass("gui-hidden");
+				};
+			return this;
+		};
+		window.NaturalObject.prototype.hideMoveFromCenterToTop = function()
+		{
+			this.animatable()
+				.addClass("gui-animation-hide-move-from-center-to-top")
+				.animateEndEvent = () =>
+				{
+					this.hide().removeClass("gui-animation-hide-move-from-center-to-top");
+				};
+			return this;
+		};
+		window.NaturalObject.prototype.showMoveFromTopToCenter = function()
+		{
+			this.animatable()
+				.show()
+				.addClass("gui-animation-show-move-from-top-to-center")
+				.animateEndEvent = () => {
+					this.removeClass("gui-animation-show-move-from-top-to-center").removeClass("gui-hidden");
 				};
 			return this;
 		};

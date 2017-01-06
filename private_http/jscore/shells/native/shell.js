@@ -40,7 +40,7 @@ CNaturalGetToken((err, token) =>
 				importSec(paths[0], paths.slice(1, paths.length), cll);
 			else
 				cll();
-		}).require(true, path, token, true);
+		}).require(false, path, token, true);
 	};
 
 	importSec(
@@ -99,6 +99,23 @@ CNaturalGetToken((err, token) =>
 				"Example Window",
 				example_appdata
 			);
+			var example_sub = CNaturalDefaultWindowSystem.createDefaultWindow(
+				"Example Sub Window",
+				example_appdata
+			);
+			var example_style = example.getStyle();
+			var example_sub_style = example_sub.getStyle();
+
+			example_style.removeBorders();
+			example_sub_style.removeBorders();
+
+			example_style.setTitlebarColor("color-ocean");
+			example_sub_style.setTitlebarColor("color-natural-deeporange");
+			example_style.setBodyColor("color-water");
+			example_sub_style.setBodyColor("color-natural-redgrey");
+
+			example_style.updateColors();
+			example_sub_style.updateColors();
 
 			CNaturalDefaultWindowManager.showToplevel();
 

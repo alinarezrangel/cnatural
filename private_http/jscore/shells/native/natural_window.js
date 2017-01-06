@@ -34,6 +34,11 @@ limitations under the License.
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.NaturalWindow: NaturalShell.WindowStyleBase is undefined");
 		}
 
+		if(typeof window.NaturalShell.Native.NaturalStyle === "undefined")
+		{
+			throw new Error("Error at CNatural.JS.Desktop.Native.Window.NaturalWindow: NaturalShell.NaturalStyle is undefined");
+		}
+
 		window.NaturalShell = window.NaturalShell || {};
 
 		window.NaturalShell.Native = window.NaturalShell.Native || {};
@@ -42,6 +47,7 @@ limitations under the License.
 		{
 			window.NaturalShell.Native.Window.call(this, parent, appdata);
 			this.element = element;
+			this.style = new window.NaturalShell.Native.NaturalStyle(this, appdata);
 		};
 
 		window.NaturalShell.Native.NaturalWindow.prototype =

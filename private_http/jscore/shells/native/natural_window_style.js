@@ -29,13 +29,18 @@ limitations under the License.
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.NaturalStyle: NaturalObject is undefined");
 		}
 
+		if(typeof window.NaturalShell.Native.WindowStyle === "undefined")
+		{
+			throw new Error("Error at CNatural.JS.Desktop.Native.Window.NaturalStyle: NaturalShell.WindowStyleBase is undefined");
+		}
+
 		window.NaturalShell = window.NaturalShell || {};
 
 		window.NaturalShell.Native = window.NaturalShell.Native || {};
 
-		window.NaturalShell.Native.NaturalStyle = function(window, appdata)
+		window.NaturalShell.Native.NaturalStyle = function(windowObject, appdata)
 		{
-			window.NaturalShell.Native.WindowStyle.call(this, window, appdata);
+			window.NaturalShell.Native.WindowStyle.call(this, windowObject, appdata);
 		};
 
 		window.NaturalShell.Native.NaturalStyle.prototype =
@@ -43,7 +48,7 @@ limitations under the License.
 
 		window.NaturalShell.Native.NaturalStyle.prototype.addBorders = function()
 		{
-			var win = this.getWindow();
+			var win = this.getWindow().getWMElement();
 
 			var body = win.child("*[data-widget='window-body']");
 			var menu = win.child("*[data-widget='window-menu']");
@@ -51,17 +56,27 @@ limitations under the License.
 			body.addClass("border").echo(menu).addClass("border");
 		}
 
+		window.NaturalShell.Native.NaturalStyle.prototype.removeBorders = function()
+		{
+			var win = this.getWindow().getWMElement();
+
+			var body = win.child("*[data-widget='window-body']");
+			var menu = win.child("*[data-widget='window-menu']");
+
+			body.removeClass("border").echo(menu).removeClass("border");
+		}
+
 		window.NaturalShell.Native.NaturalStyle.prototype.updateColors = function()
 		{
-			var win = this.getWindow();
+			var win = this.getWindow().getWMElement();
 
 			var titlebarColor = this.getTitlebarColor() || this.defaultPallete.titlebarColor || "color-natural-white";
 			var bodyColor = this.getBodyColor() || this.defaultPallete.bodyColor || "color-natural-white";
 			var borderColor = this.getBorderColor() || this.defaultPallete.borderColor || "color-transparent";
 
-			var titlebar = win.child("*[data-widget='window-header']").original;
-			var body = win.child("*[data-widget='window-body']").original;
-			var menu = win.child("*[data-widget='window-menu']").original;
+			var titlebar = win.child("*[data-widget='window-header']").get(0).original;
+			var body = win.child("*[data-widget='window-body']").get(0).original;
+			var menu = win.child("*[data-widget='window-menu']").get(0).original;
 
 			var i = 0;
 			var j = titlebar.classList.length;

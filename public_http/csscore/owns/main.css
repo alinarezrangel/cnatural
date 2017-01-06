@@ -28,23 +28,6 @@ html, body {
 	outline: 3px solid #FF0;
 }
 
-@keyframes animation-hide-slide-up {
-	from {
-	}
-	to {
-		display: none;
-		height: 0px;
-	}
-}
-
-.animate-hide-slide-up {
-	animation: animation-hide-slide-up 1.5s ease-in-out 0s 1 normal;
-}
-
-.animate-show-slide-down {
-	animation: animation-hide-slide-up 1.5s ease-in-out 0s 1 reverse;
-}
-
 .gui-clickeable {
 	cursor: pointer;
 }
@@ -244,11 +227,12 @@ html, body {
 .gui-widget-window-menu {
 	z-index: 4 !important;
 	position: absolute !important;
-	left: 50% !important;
-	top: 50% !important;
+	left: 50%;
+	top: 50%;
 	transform: translate(-50%, -50%) !important;
-	width: 90% !important;
-	height: 90% !important;
+	width: 100% !important;
+	height: 100% !important;
+	overflow: auto !important;
 }
 
 .gui-dock {

@@ -48,123 +48,70 @@ limitations under the License.
 
 		window.NaturalShell.Native.NaturalWindowSystem.prototype.createDefaultWindow = function(title, appdata)
 		{
-			var winel = document.createElement("div");
-			var titlebar = document.createElement("div");
-			var titlebarCloseOrBackButton = document.createElement("span");
-			var titlebarTitle = document.createElement("h2");
-			var titlebarMenuButton = document.createElement("span");
-			var body = document.createElement("div");
-			var menu = document.createElement("div");
-			var menuSideNav = document.createElement("div");
-			var menuSideNavCloseMenu = document.createElement("span");
-			var menuSideNavCloseWindow = document.createElement("span");
-			var menuSideNavMinimizeWindow = document.createElement("span");
-
-			var parentWindow = null;
-
-			var makeIcon = function(iconName)
+			var normal = function(winel, appdata)
 			{
-				var sp = document.createElement("span");
-				sp.className = "gui-font-iconset-v2";
-				sp.appendChild(document.createTextNode(iconName));
+				var titlebar = document.createElement("div");
+				var titlebarCloseOrBackButton = document.createElement("span");
+				var titlebarTitle = document.createElement("h2");
+				var titlebarMenuButton = document.createElement("span");
+				var body = document.createElement("div");
 
-				return sp;
+				var parentWindow = null;
+
+				var makeIcon = function(iconName)
+				{
+					var sp = document.createElement("span");
+					sp.className = "gui-font-iconset-v2";
+					sp.appendChild(document.createTextNode(iconName));
+
+					return sp;
+				};
+
+				titlebar.className = "gui-widget-window-header gui-flexcore-row no-margin od-1";
+				titlebar.dataset["widget"] = "window-header";
+
+				titlebarCloseOrBackButton.className = "gui-font-iconset-v2 gui-hoverable od-1 text-jumbo gui-clickeable padding-8 no-margin";
+				titlebarCloseOrBackButton.dataset["widget"] = "button";
+
+				titlebarTitle.className = "text-jumbo font-bold od-2 fx-1 margin-8";
+				titlebarTitle.dataset["widget"] = "button";
+
+				titlebarMenuButton.className = "gui-font-iconset-v2 gui-hoverable od-3 text-jumbo gui-clickeable padding-8 no-margin";
+				titlebarMenuButton.dataset["widget"] = "button";
+
+				body.className = "gui-widget-window-body container border no-padding no-margin od-2 fx-1 force-relative";
+				body.dataset["widget"] = "window-body";
+
+				if(appdata.mainWindowCreated)
+				{
+					titlebarCloseOrBackButton.appendChild(document.createTextNode("back"));
+				}
+				else
+				{
+					titlebarCloseOrBackButton.appendChild(document.createTextNode("close"));
+				}
+
+				titlebarMenuButton.appendChild(document.createTextNode("menu"));
+
+				titlebarTitle.appendChild(document.createTextNode(title));
+
+				titlebar.appendChild(titlebarCloseOrBackButton);
+				titlebar.appendChild(titlebarTitle);
+				titlebar.appendChild(titlebarMenuButton);
+
+				winel.appendChild(titlebar);
+				winel.appendChild(body);
+
+				return {
+					"titlebar": titlebar,
+					"titlebarCloseOrBackButton": titlebarCloseOrBackButton,
+					"titlebarMenuButton": titlebarMenuButton,
+					"titlebarTitle": titlebarTitle,
+					"body": body
+				};
 			};
 
-			winel.className = "gui-flexcore no-wrap gui-widget-window no-padding no-margin width-block height-block force-relative";
-			winel.dataset["widget"] = "window";
-
-			winel.dataset["name"] = appdata.applicationName;
-			winel.dataset["ns"] = appdata.namespace;
-			winel.dataset["appid"] = appdata.applicationID;
-			winel.dataset["instanceId"] = appdata.instanceID.toString();
-			winel.dataset["windowId"] = appdata.windowID.toString();
-			appdata.windowID++;
-
-			titlebar.className = "gui-widget-window-header gui-flexcore-row no-margin od-1";
-			titlebar.dataset["widget"] = "window-header";
-
-			titlebarCloseOrBackButton.className = "gui-font-iconset-v2 gui-hoverable od-1 text-jumbo gui-clickeable padding-8 no-margin";
-			titlebarCloseOrBackButton.dataset["widget"] = "button";
-
-			titlebarTitle.className = "text-jumbo font-bold od-2 fx-1 margin-8";
-			titlebarTitle.dataset["widget"] = "button";
-
-			titlebarMenuButton.className = "gui-font-iconset-v2 gui-hoverable od-3 text-jumbo gui-clickeable padding-8 no-margin";
-			titlebarMenuButton.dataset["widget"] = "button";
-
-			body.className = "gui-widget-window-body container border no-padding no-margin od-2 fx-1 force-relative";
-			body.dataset["widget"] = "window-body";
-
-			menu.className = "gui-widget-window-menu container padding-8 no-margin card gui-hidden";
-			menu.dataset["widget"] = "window-menu";
-
-			menuSideNav.className = "side-navigation border-bottom bs-2 border-color-natural-black";
-			menuSideNav.dataset["widget"] = "window-menu-native";
-
-			menuSideNavCloseMenu.className =
-				menuSideNavCloseWindow.className =
-				menuSideNavMinimizeWindow.className = "link";
-
-			if(appdata.mainWindowCreated)
-			{
-				parentWindow = appdata.mainWindow;
-				titlebarCloseOrBackButton.appendChild(document.createTextNode("back"));
-			}
-			else
-			{
-				appdata.mainWindowCreated = true;
-				titlebarCloseOrBackButton.appendChild(document.createTextNode("close"));
-			}
-
-			titlebarMenuButton.appendChild(document.createTextNode("menu"));
-
-			titlebarTitle.appendChild(document.createTextNode(title));
-
-			titlebar.appendChild(titlebarCloseOrBackButton);
-			titlebar.appendChild(titlebarTitle);
-			titlebar.appendChild(titlebarMenuButton);
-
-			menuSideNavCloseMenu.appendChild(makeIcon("back"));
-			menuSideNavCloseMenu.appendChild(document.createTextNode("Close menu"));
-			menuSideNavCloseWindow.appendChild(makeIcon("close"));
-			menuSideNavCloseWindow.appendChild(document.createTextNode("Close Window"));
-			menuSideNavMinimizeWindow.appendChild(makeIcon("minimize"));
-			menuSideNavMinimizeWindow.appendChild(document.createTextNode("Minimize window"));
-
-			menuSideNav.appendChild(menuSideNavCloseMenu);
-			menuSideNav.appendChild(menuSideNavCloseWindow);
-			menuSideNav.appendChild(menuSideNavMinimizeWindow);
-
-			menu.appendChild(menuSideNav);
-
-			winel.appendChild(titlebar);
-			winel.appendChild(body);
-			winel.appendChild(menu);
-
-			var win = new window.NaturalShell.Native.NaturalWindow(parentWindow, appdata, window.$ntc(winel));
-
-			this.initWindowEvents(
-				win,
-				winel,
-				titlebar,
-				titlebarCloseOrBackButton,
-				titlebarMenuButton,
-				body,
-				menu,
-				menuSideNavCloseMenu,
-				menuSideNavCloseWindow,
-				menuSideNavMinimizeWindow
-			);
-
-			if(parentWindow === null)
-			{
-				appdata.mainWindow = win;
-			}
-
-			this.getWindowManager().packWindowAsToplevel(win.getWMElement());
-
-			return win;
+			return this.createCustomWindow(normal, appdata);
 		};
 
 		window.NaturalShell.Native.NaturalWindowSystem.prototype.createCustomWindow = function(callback, appdata)
@@ -176,6 +123,15 @@ limitations under the License.
 			var menuSideNavCloseWindow = document.createElement("span");
 			var menuSideNavMinimizeWindow = document.createElement("span");
 
+			var resmap = {
+				titlebar: null,
+				titlebarCloseOrBackButton: null,
+				titlebarMenuButton: null,
+				titlebarTitle: null,
+				body: null,
+				result: null
+			};
+
 			var parentWindow = null;
 
 			var makeIcon = function(iconName)
@@ -207,15 +163,6 @@ limitations under the License.
 				menuSideNavCloseWindow.className =
 				menuSideNavMinimizeWindow.className = "link";
 
-			if(appdata.mainWindowCreated)
-			{
-				parentWindow = appdata.mainWindow;
-			}
-			else
-			{
-				appdata.mainWindowCreated = true;
-			}
-
 			menuSideNavCloseMenu.appendChild(makeIcon("back"));
 			menuSideNavCloseMenu.appendChild(document.createTextNode("Close menu"));
 			menuSideNavCloseWindow.appendChild(makeIcon("close"));
@@ -229,18 +176,28 @@ limitations under the License.
 
 			menu.appendChild(menuSideNav);
 
-			winel.appendChild(callback(winel, appdata));
+			resmap = callback(winel, appdata);
+
 			winel.appendChild(menu);
+
+			if(appdata.mainWindowCreated)
+			{
+				parentWindow = appdata.mainWindow;
+			}
+			else
+			{
+				appdata.mainWindowCreated = true;
+			}
 
 			var win = new window.NaturalShell.Native.NaturalWindow(parentWindow, appdata, window.$ntc(winel));
 
 			this.initWindowEvents(
 				win,
 				winel,
-				null,
-				null,
-				null,
-				null,
+				resmap.titlebar,
+				resmap.titlebarCloseOrBackButton,
+				resmap.titlebarMenuButton,
+				resmap.body,
 				menu,
 				menuSideNavCloseMenu,
 				menuSideNavCloseWindow,
@@ -258,6 +215,11 @@ limitations under the License.
 		};
 
 		window.NaturalShell.Native.NaturalWindowSystem.prototype.destroyWindow = function(windowObject)
+		{
+			return this.destroyCustomWindow(windowObject);
+		};
+
+		window.NaturalShell.Native.NaturalWindowSystem.prototype.destroyCustomWindow = function(windowObject)
 		{
 			var el = windowObject.getWMElement();
 			var params = {};
@@ -279,11 +241,6 @@ limitations under the License.
 			}
 
 			return false;
-		};
-
-		window.NaturalShell.Native.NaturalWindowSystem.prototype.destroyCustomWindow = function(windowObject)
-		{
-			return this.destroyWindow(windowObject);
 		};
 
 		window.NaturalShell.Native.NaturalWindowSystem.prototype.initWindowEvents =
@@ -319,24 +276,24 @@ limitations under the License.
 
 				titlebarMenuButton.attach(() =>
 				{
-					menu.removeClass("gui-hidden");
+					menu.animatable().showMoveFromTopToCenter();
 				}).on("click");
 			}
 
 			menuSideNavCloseMenu.attach(() =>
 			{
-				menu.addClass("gui-hidden");
+				menu.animatable().hideMoveFromCenterToTop();
 			}).on("click");
 
 			menuSideNavCloseWindow.attach(() =>
 			{
-				menu.addClass("gui-hidden");
+				menu.animatable().hideMoveFromCenterToTop();
 				this.destroyWindow(windowObject);
 			}).on("click");
 
 			menuSideNavMinimizeWindow.attach(() =>
 			{
-				menu.addClass("gui-hidden");
+				menu.animatable().hideMoveFromCenterToTop();
 				windowElement.addClass("gui-hidden");
 			}).on("click");
 		};
