@@ -197,6 +197,15 @@ html, body {
 	background-color: #2A2A2A !important;
 }
 
+.gui-desktop-bkg {
+	background-image: url('/resources/backgrounds/background-material-sheets-11.png');
+	background-position: center;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: #2A2A2A;
+}
+
 .gui-include {
 	display: none !important;
 	width: 0px !important;
@@ -237,4 +246,31 @@ html, body {
 
 .gui-dock {
 	z-index: 100 !important;
+}
+
+@media all and (max-width: 470px) {
+	/* Small */
+
+	.gui-widget-window-menu {
+		width: 100% !important;
+		height: 100% !important;
+	}
+}
+
+@media all and (min-width: 471px) and (max-width: 800px) {
+	/* Medium */
+
+	.gui-widget-window-menu {
+		width: 90% !important;
+		height: 90% !important;
+	}
+}
+
+@media all and (min-width: 801px) {
+	/* Large */
+
+	.gui-widget-window-menu {
+		width: 40% !important;
+		height: 80% !important;
+	}
 }

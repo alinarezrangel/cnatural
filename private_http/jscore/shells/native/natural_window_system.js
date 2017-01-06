@@ -156,19 +156,30 @@ limitations under the License.
 			menu.className = "gui-widget-window-menu container padding-8 no-margin card gui-hidden";
 			menu.dataset["widget"] = "window-menu";
 
-			menuSideNav.className = "side-navigation border-bottom bs-2 border-color-natural-black";
+			// menuSideNav.className = "side-navigation border-bottom bs-2 border-color-natural-black";
+			menuSideNav.className = "row wrap padding-4 border-bottom bs-2 border-color-natural-black";
 			menuSideNav.dataset["widget"] = "window-menu-native";
 
 			menuSideNavCloseMenu.className =
 				menuSideNavCloseWindow.className =
-				menuSideNavMinimizeWindow.className = "link";
+				menuSideNavMinimizeWindow.className =
+					"col text-jumbo padding-16 fx-1 text-center gui-clickeable gui-hoverable gui-button";
+
+			menuSideNavCloseMenu.dataset["widget"] =
+				menuSideNavCloseWindow.dataset["widget"] =
+				menuSideNavMinimizeWindow.dataset["widget"] =
+					"button";
+
+			menuSideNavCloseMenu.classList.add("od-1");
+			menuSideNavCloseWindow.classList.add("od-2");
+			menuSideNavMinimizeWindow.classList.add("od-3");
 
 			menuSideNavCloseMenu.appendChild(makeIcon("back"));
-			menuSideNavCloseMenu.appendChild(document.createTextNode("Close menu"));
+			// menuSideNavCloseMenu.appendChild(document.createTextNode("Close menu"));
 			menuSideNavCloseWindow.appendChild(makeIcon("close"));
-			menuSideNavCloseWindow.appendChild(document.createTextNode("Close Window"));
+			// menuSideNavCloseWindow.appendChild(document.createTextNode("Close Window"));
 			menuSideNavMinimizeWindow.appendChild(makeIcon("minimize"));
-			menuSideNavMinimizeWindow.appendChild(document.createTextNode("Minimize window"));
+			// menuSideNavMinimizeWindow.appendChild(document.createTextNode("Minimize window"));
 
 			menuSideNav.appendChild(menuSideNavCloseMenu);
 			menuSideNav.appendChild(menuSideNavCloseWindow);
@@ -276,26 +287,33 @@ limitations under the License.
 
 				titlebarMenuButton.attach(() =>
 				{
-					menu.animatable().showMoveFromTopToCenter();
+					menu.showMoveFromTopToCenter();
 				}).on("click");
 			}
 
 			menuSideNavCloseMenu.attach(() =>
 			{
-				menu.animatable().hideMoveFromCenterToTop();
+				menu.hideMoveFromCenterToTop();
 			}).on("click");
 
 			menuSideNavCloseWindow.attach(() =>
 			{
-				menu.animatable().hideMoveFromCenterToTop();
+				menu.hideMoveFromCenterToTop();
 				this.destroyWindow(windowObject);
 			}).on("click");
 
 			menuSideNavMinimizeWindow.attach(() =>
 			{
-				menu.animatable().hideMoveFromCenterToTop();
+				menu.hideMoveFromCenterToTop();
 				windowElement.addClass("gui-hidden");
 			}).on("click");
+
+			windowElement.attach((ev) =>
+			{
+				menu.showMoveFromTopToCenter();
+
+				ev.preventDefault();
+			}).on("contextmenu");
 		};
 	};
 

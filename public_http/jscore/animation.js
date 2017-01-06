@@ -34,6 +34,7 @@ limitations under the License.
 				return this;
 			this.animateEndEvent = function(){};
 			this.isAnimatable = true;
+			this.inAnimation = false;
 			this.on("animationend", (ev) =>
 			{
 				this.animateEndEvent(ev);
@@ -50,44 +51,71 @@ limitations under the License.
 			this.animatable().removeClass("gui-hidden");
 			return this;
 		};
+		window.NaturalObject.prototype.animationEndEvent = function(evt)
+		{
+			this.animateEndEvent = (ev) =>
+			{
+				this.inAnimation = false;
+				return evt(ev);
+			};
+			return this;
+		};
 		window.NaturalObject.prototype.hideSlideUp = function()
 		{
+			if(this.inAnimation)
+				return this;
+			this.inAnimation = true;
+
 			this.animatable()
-				.addClass("gui-animation-hide-slide-up")
-				.animateEndEvent = () =>
+				.animationEndEvent(() =>
 				{
 					this.hide().removeClass("gui-animation-hide-slide-up");
-				};
+				})
+				.addClass("gui-animation-hide-slide-up");
 			return this;
 		};
 		window.NaturalObject.prototype.showSlideDown = function()
 		{
+			if(this.inAnimation)
+				return this;
+			this.inAnimation = true;
+
 			this.animatable()
 				.show()
-				.addClass("gui-animation-hide-slide-down")
-				.animateEndEvent = () => {
+				.animationEndEvent(() =>
+				{
 					this.removeClass("gui-animation-hide-slide-down").removeClass("gui-hidden");
-				};
+				})
+				.addClass("gui-animation-hide-slide-down");
 			return this;
 		};
 		window.NaturalObject.prototype.hideMoveFromCenterToTop = function()
 		{
+			if(this.inAnimation)
+				return this;
+			this.inAnimation = true;
+
 			this.animatable()
-				.addClass("gui-animation-hide-move-from-center-to-top")
-				.animateEndEvent = () =>
+				.animationEndEvent(() =>
 				{
 					this.hide().removeClass("gui-animation-hide-move-from-center-to-top");
-				};
+				})
+				.addClass("gui-animation-hide-move-from-center-to-top");
 			return this;
 		};
 		window.NaturalObject.prototype.showMoveFromTopToCenter = function()
 		{
+			if(this.inAnimation)
+				return this;
+			this.inAnimation = true;
+
 			this.animatable()
 				.show()
-				.addClass("gui-animation-show-move-from-top-to-center")
-				.animateEndEvent = () => {
+				.animationEndEvent(() =>
+				{
 					this.removeClass("gui-animation-show-move-from-top-to-center").removeClass("gui-hidden");
-				};
+				})
+				.addClass("gui-animation-show-move-from-top-to-center");
 			return this;
 		};
 
