@@ -26,25 +26,25 @@ limitations under the License.
 	{
 		if(typeof window.NaturalObject === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Desktop.Native.Context: NaturalObject is undefined");
+			throw new Error("Error at CNatural.JS.Desktop.Base.Context: NaturalObject is undefined");
 		}
 
 		window.NaturalShell = window.NaturalShell || {};
 
-		window.NaturalShell.Native = window.NaturalShell.Native || {};
+		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
-		window.NaturalShell.Native.Context = function(map)
+		window.NaturalShell.Base.Context = function(map)
 		{
 			this.windowArea = map["windowArea"];
 			this.hiddenWindowsCallback = map["hiddenWindowsCallback"];
 		};
 
-		window.NaturalShell.Native.Context.prototype.getWindowArea = function()
+		window.NaturalShell.Base.Context.prototype.getWindowArea = function()
 		{
 			return this.windowArea;
 		};
 
-		window.NaturalShell.Native.Context.prototype.getHiddenWindowsCallback = function()
+		window.NaturalShell.Base.Context.prototype.getHiddenWindowsCallback = function()
 		{
 			return this.hiddenWindowsCallback;
 		};

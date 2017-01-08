@@ -26,14 +26,14 @@ limitations under the License.
 	{
 		if(typeof window.NaturalObject === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Desktop.Native.Window.StyleBase: NaturalObject is undefined");
+			throw new Error("Error at CNatural.JS.Desktop.Base.Window.StyleBase: NaturalObject is undefined");
 		}
 
 		window.NaturalShell = window.NaturalShell || {};
 
-		window.NaturalShell.Native = window.NaturalShell.Native || {};
+		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
-		window.NaturalShell.Native.WindowStyle = function(windowObject, appdata)
+		window.NaturalShell.Base.WindowStyle = function(windowObject, appdata)
 		{
 			this.window = windowObject;
 			this.appdata = appdata;
@@ -47,47 +47,47 @@ limitations under the License.
 			};
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.setTitlebarColor = function(colorname)
+		window.NaturalShell.Base.WindowStyle.prototype.setTitlebarColor = function(colorname)
 		{
 			this.titlebarColor = colorname;
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.setBodyColor = function(colorname)
+		window.NaturalShell.Base.WindowStyle.prototype.setBodyColor = function(colorname)
 		{
 			this.bodyColor = colorname;
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.setBorderColor = function(colorname)
+		window.NaturalShell.Base.WindowStyle.prototype.setBorderColor = function(colorname)
 		{
 			this.borderColor = colorname;
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.getTitlebarColor = function()
+		window.NaturalShell.Base.WindowStyle.prototype.getTitlebarColor = function()
 		{
 			return this.titlebarColor;
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.getBodyColor = function()
+		window.NaturalShell.Base.WindowStyle.prototype.getBodyColor = function()
 		{
 			return this.bodyColor;
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.getBorderColor = function()
+		window.NaturalShell.Base.WindowStyle.prototype.getBorderColor = function()
 		{
 			return this.borderColor;
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.getWindow = function()
+		window.NaturalShell.Base.WindowStyle.prototype.getWindow = function()
 		{
 			return this.window;
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.getApplicationData = function()
+		window.NaturalShell.Base.WindowStyle.prototype.getApplicationData = function()
 		{
 			return this.appdata;
 		};
 
-		window.NaturalShell.Native.WindowStyle.prototype.updateColors = function()
+		window.NaturalShell.Base.WindowStyle.prototype.updateColors = function()
 		{
 			// Abstract method!
 			/// [protected] Updates the colors of the window using the attributes

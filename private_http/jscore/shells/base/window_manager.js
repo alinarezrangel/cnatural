@@ -26,67 +26,67 @@ limitations under the License.
 	{
 		if(typeof window.NaturalObject === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Desktop.Native.Window.ManagerBase: NaturalObject is undefined");
+			throw new Error("Error at CNatural.JS.Desktop.Base.Window.ManagerBase: NaturalObject is undefined");
 		}
 
-		if(typeof window.NaturalShell.Native.Context === "undefined")
+		if(typeof window.NaturalShell.Base.Context === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Desktop.Native.Window.ManagerBase: NaturalShell.Context is undefined");
+			throw new Error("Error at CNatural.JS.Desktop.Base.Window.ManagerBase: NaturalShell.Context is undefined");
 		}
 
 		window.NaturalShell = window.NaturalShell || {};
 
-		window.NaturalShell.Native = window.NaturalShell.Native || {};
+		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
-		window.NaturalShell.Native.WindowManager = function(context)
+		window.NaturalShell.Base.WindowManager = function(context)
 		{
 			this.context = context;
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.packWindowAsToplevel = function(windowElement)
+		window.NaturalShell.Base.WindowManager.prototype.packWindowAsToplevel = function(windowElement)
 		{
 			// Abstract method!
 			/// Packs a window as toplevel window.
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.hideAllWindows = function()
+		window.NaturalShell.Base.WindowManager.prototype.hideAllWindows = function()
 		{
 			// Abstract method!
 			/// Hides all windows.
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.showToplevel = function()
+		window.NaturalShell.Base.WindowManager.prototype.showToplevel = function()
 		{
 			// Abstract method!
 			/// Shows the toplevel (most elevated, higher Z-Index) window.
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.moveToTop = function(cmpfcn)
+		window.NaturalShell.Base.WindowManager.prototype.moveToTop = function(cmpfcn)
 		{
 			// Abstract method!
 			/// Moves the window specified by the function cmpfcn to be the toplevel window.
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.isShowingWindow = function()
+		window.NaturalShell.Base.WindowManager.prototype.isShowingWindow = function()
 		{
 			// Abstract method!
 			/// Returns true if is visible any window.
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.isShowing = function(cmpfcn)
+		window.NaturalShell.Base.WindowManager.prototype.isShowing = function(cmpfcn)
 		{
 			// Abstract method!
 			/// Returns true if the cmpfcn functions returns true on any of the windows
 			/// contained in this.context.
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.unpackWindow = function(cmpfcn)
+		window.NaturalShell.Base.WindowManager.prototype.unpackWindow = function(cmpfcn)
 		{
 			// Abstract method!
 			/// Unpacks a window
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.forEach = function(callback)
+		window.NaturalShell.Base.WindowManager.prototype.forEach = function(callback)
 		{
 			this.context.getWindowArea().apply((windowEl) =>
 			{
@@ -94,7 +94,7 @@ limitations under the License.
 			}).forEach();
 		};
 
-		window.NaturalShell.Native.WindowManager.prototype.getContext = function()
+		window.NaturalShell.Base.WindowManager.prototype.getContext = function()
 		{
 			return this.context;
 		};

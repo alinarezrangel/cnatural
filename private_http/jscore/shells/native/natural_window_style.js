@@ -29,7 +29,7 @@ limitations under the License.
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.NaturalStyle: NaturalObject is undefined");
 		}
 
-		if(typeof window.NaturalShell.Native.WindowStyle === "undefined")
+		if(typeof window.NaturalShell.Base.WindowStyle === "undefined")
 		{
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.NaturalStyle: NaturalShell.WindowStyleBase is undefined");
 		}
@@ -40,11 +40,11 @@ limitations under the License.
 
 		window.NaturalShell.Native.NaturalStyle = function(windowObject, appdata)
 		{
-			window.NaturalShell.Native.WindowStyle.call(this, windowObject, appdata);
+			window.NaturalShell.Base.WindowStyle.call(this, windowObject, appdata);
 		};
 
 		window.NaturalShell.Native.NaturalStyle.prototype =
-			Object.create(window.NaturalShell.Native.WindowStyle.prototype);
+			Object.create(window.NaturalShell.Base.WindowStyle.prototype);
 
 		window.NaturalShell.Native.NaturalStyle.prototype.addBorders = function()
 		{

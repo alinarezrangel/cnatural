@@ -26,35 +26,35 @@ limitations under the License.
 	{
 		if(typeof window.NaturalObject === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Desktop.Native.Window.SystemBase: NaturalObject is undefined");
+			throw new Error("Error at CNatural.JS.Desktop.Base.Window.SystemBase: NaturalObject is undefined");
 		}
 
-		if(typeof window.NaturalShell.Native.Window === "undefined")
+		if(typeof window.NaturalShell.Base.Window === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Desktop.Native.Window.SystemBase: NaturalShell.WindowBase is undefined");
+			throw new Error("Error at CNatural.JS.Desktop.Base.Window.SystemBase: NaturalShell.WindowBase is undefined");
 		}
 
 		window.NaturalShell = window.NaturalShell || {};
 
-		window.NaturalShell.Native = window.NaturalShell.Native || {};
+		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
-		window.NaturalShell.Native.WindowSystem = function(context, manager)
+		window.NaturalShell.Base.WindowSystem = function(context, manager)
 		{
 			this.context = context;
 			this.windowManager = manager;
 		};
 
-		window.NaturalShell.Native.WindowSystem.prototype.getContext = function()
+		window.NaturalShell.Base.WindowSystem.prototype.getContext = function()
 		{
 			return this.context;
 		};
 
-		window.NaturalShell.Native.WindowSystem.prototype.getWindowManager = function()
+		window.NaturalShell.Base.WindowSystem.prototype.getWindowManager = function()
 		{
 			return this.windowManager;
 		};
 
-		window.NaturalShell.Native.WindowSystem.prototype.createDefaultWindow = function(title, appdata)
+		window.NaturalShell.Base.WindowSystem.prototype.createDefaultWindow = function(title, appdata)
 		{
 			// Abstract method!
 			/// Creates and returns a new window with a default layout and with the title "title".
@@ -65,7 +65,7 @@ limitations under the License.
 			/// createDefaultWindow ADDS the window to the window manager.
 		};
 
-		window.NaturalShell.Native.WindowSystem.prototype.createCustomWindow = function(callback, appdata)
+		window.NaturalShell.Base.WindowSystem.prototype.createCustomWindow = function(callback, appdata)
 		{
 			// Abstract method!
 			/// Creates and returns a new window with a user-provided layout defined
@@ -77,7 +77,7 @@ limitations under the License.
 			/// createDefaultWindow ADDS the window to the window manager.
 		};
 
-		window.NaturalShell.Native.WindowSystem.prototype.destroyWindow = function(windowObject)
+		window.NaturalShell.Base.WindowSystem.prototype.destroyWindow = function(windowObject)
 		{
 			// Abstract method!
 			/// Destroys a window created with createDefaultWindow.
@@ -86,7 +86,7 @@ limitations under the License.
 			/// This functions may call windowManager.unpackWindow.
 		};
 
-		window.NaturalShell.Native.WindowSystem.prototype.destroyCustomWindow = function(windowObject)
+		window.NaturalShell.Base.WindowSystem.prototype.destroyCustomWindow = function(windowObject)
 		{
 			// Abstract method!
 			/// Destroys a window created with createCustomWindow.

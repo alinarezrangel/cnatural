@@ -44,12 +44,12 @@ CNaturalGetToken((err, token) =>
 	};
 
 	importSec(
-		"jscore/shells/native/context.js",
+		"jscore/shells/base/context.js",
 		[
-			"jscore/shells/native/window_style.js",
-			"jscore/shells/native/window.js",
-			"jscore/shells/native/window_manager.js",
-			"jscore/shells/native/window_system.js",
+			"jscore/shells/base/window_style.js",
+			"jscore/shells/base/window.js",
+			"jscore/shells/base/window_manager.js",
+			"jscore/shells/base/window_system.js",
 			"jscore/shells/native/natural_window_style.js",
 			"jscore/shells/native/natural_window.js",
 			"jscore/shells/native/fixed_window_manager.js",
@@ -59,7 +59,7 @@ CNaturalGetToken((err, token) =>
 		{
 			// Now all files are loaded.
 
-			var CNaturalDefaultContext = new NaturalShell.Native.Context({
+			var CNaturalDefaultContext = new NaturalShell.Base.Context({
 				"windowArea": $ntc(".gui-widget-shell-window-area").get(0),
 				"hiddenWindowsCallback": (action, windowElement) =>
 				{

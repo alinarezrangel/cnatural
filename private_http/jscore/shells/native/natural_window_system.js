@@ -29,7 +29,7 @@ limitations under the License.
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.System: NaturalObject is undefined");
 		}
 
-		if(typeof window.NaturalShell.Native.WindowSystem === "undefined")
+		if(typeof window.NaturalShell.Base.WindowSystem === "undefined")
 		{
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.System: NaturalShell.WindowSystem is undefined");
 		}
@@ -40,11 +40,11 @@ limitations under the License.
 
 		window.NaturalShell.Native.NaturalWindowSystem = function(context, manager)
 		{
-			window.NaturalShell.Native.WindowSystem.call(this, context, manager);
+			window.NaturalShell.Base.WindowSystem.call(this, context, manager);
 		};
 
 		window.NaturalShell.Native.NaturalWindowSystem.prototype =
-			Object.create(window.NaturalShell.Native.WindowSystem.prototype);
+			Object.create(window.NaturalShell.Base.WindowSystem.prototype);
 
 		window.NaturalShell.Native.NaturalWindowSystem.prototype.createDefaultWindow = function(title, appdata)
 		{
@@ -246,7 +246,9 @@ limitations under the License.
 				this.getWindowManager().unpackWindow((windowElement) =>
 				{
 					return ((windowElement.data("instanceId") == el.data("instanceId"))
-						&& (windowElement.data("windowId") == el.data("windowId")));
+						&& (windowElement.data("windowId") == el.data("windowId"))
+						&& (windowElement.data("applicationId") == el.data("applicationId"))
+						&& (windowElement.data("namespace") == el.data("namespace")));
 				});
 				return true;
 			}

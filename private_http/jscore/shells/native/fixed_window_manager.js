@@ -29,12 +29,12 @@ limitations under the License.
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.FixedManager: NaturalObject is undefined");
 		}
 
-		if(typeof window.NaturalShell.Native.Context === "undefined")
+		if(typeof window.NaturalShell.Base.Context === "undefined")
 		{
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.FixedManager: NaturalShell.Context is undefined");
 		}
 
-		if(typeof window.NaturalShell.Native.WindowManager === "undefined")
+		if(typeof window.NaturalShell.Base.WindowManager === "undefined")
 		{
 			throw new Error("Error at CNatural.JS.Desktop.Native.Window.FixedManager: NaturalShell.WindowManager is undefined");
 		}
@@ -45,13 +45,13 @@ limitations under the License.
 
 		window.NaturalShell.Native.FixedWindowManager = function(context)
 		{
-			window.NaturalShell.Native.WindowManager.call(this, context);
+			window.NaturalShell.Base.WindowManager.call(this, context);
 
 			this.showingWindow = false;
 		};
 
 		window.NaturalShell.Native.FixedWindowManager.prototype =
-			Object.create(window.NaturalShell.Native.WindowManager.prototype);
+			Object.create(window.NaturalShell.Base.WindowManager.prototype);
 
 		window.NaturalShell.Native.FixedWindowManager.prototype.packWindowAsToplevel = function(windowElement)
 		{

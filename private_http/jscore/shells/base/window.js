@@ -26,26 +26,26 @@ limitations under the License.
 	{
 		if(typeof window.NaturalObject === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Desktop.Native.Window.WindowBase: NaturalObject is undefined");
+			throw new Error("Error at CNatural.JS.Desktop.Base.Window.WindowBase: NaturalObject is undefined");
 		}
 
-		if(typeof window.NaturalShell.Native.WindowStyle === "undefined")
+		if(typeof window.NaturalShell.Base.WindowStyle === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Desktop.Native.Window.WindowBase: NaturalShell.WindowStyleBase is undefined");
+			throw new Error("Error at CNatural.JS.Desktop.Base.Window.WindowBase: NaturalShell.WindowStyleBase is undefined");
 		}
 
 		window.NaturalShell = window.NaturalShell || {};
 
-		window.NaturalShell.Native = window.NaturalShell.Native || {};
+		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
-		window.NaturalShell.Native.Window = function(parent, appdata)
+		window.NaturalShell.Base.Window = function(parent, appdata)
 		{
 			this.parent = parent;
 			this.appdata = appdata;
-			this.style = new window.NaturalShell.Native.WindowStyle(this, appdata);
+			this.style = new window.NaturalShell.Base.WindowStyle(this, appdata);
 		};
 
-		window.NaturalShell.Native.Window.prototype.show = function()
+		window.NaturalShell.Base.Window.prototype.show = function()
 		{
 			// Abstract method!
 			/// Shows the window (if is hidden) but not as toplevel.
@@ -53,37 +53,37 @@ limitations under the License.
 			/// which should be compatible with the getWMElement method.
 		};
 
-		window.NaturalShell.Native.Window.prototype.hide = function()
+		window.NaturalShell.Base.Window.prototype.hide = function()
 		{
 			// Abstract method!
 			/// Hides the window (if is showed).
 		};
 
-		window.NaturalShell.Native.Window.prototype.getWMElement = function()
+		window.NaturalShell.Base.Window.prototype.getWMElement = function()
 		{
 			// Abstract method!
 			/// Gets the raw window element, which can be used on the window
 			/// manager and system functions.
 		};
 
-		window.NaturalShell.Native.Window.prototype.getParent = function()
+		window.NaturalShell.Base.Window.prototype.getParent = function()
 		{
 			return this.parent;
 		};
 
-		window.NaturalShell.Native.Window.prototype.getApplicationData = function()
+		window.NaturalShell.Base.Window.prototype.getApplicationData = function()
 		{
 			return this.appdata;
 		};
 
-		window.NaturalShell.Native.Window.prototype.getBody = function()
+		window.NaturalShell.Base.Window.prototype.getBody = function()
 		{
 			// Abstract method!
 			/// Gets the HTMLElement (or HTMLElement-like) object that is the
 			/// the window body.
 		};
 
-		window.NaturalShell.Native.Window.prototype.getHeaderbar = function()
+		window.NaturalShell.Base.Window.prototype.getHeaderbar = function()
 		{
 			// Abstract method!
 			/// Gets the window headerbar (if it contains any element, they should be removed)
@@ -91,14 +91,14 @@ limitations under the License.
 			/// can return null.
 		};
 
-		window.NaturalShell.Native.Window.prototype.getContextMenu = function()
+		window.NaturalShell.Base.Window.prototype.getContextMenu = function()
 		{
 			// Abstract method!
 			/// Gets the context menu for the window (right-click menu).
 			/// May be non-empty.
 		};
 
-		window.NaturalShell.Native.Window.prototype.getMenu = function()
+		window.NaturalShell.Base.Window.prototype.getMenu = function()
 		{
 			// Abstract method!
 			/// Gets the window's menu (if any) or null if no window's menu
@@ -110,33 +110,33 @@ limitations under the License.
 			/// only add (specificly, append objects to the end).
 		};
 
-		window.NaturalShell.Native.Window.prototype.setTitle = function(title)
+		window.NaturalShell.Base.Window.prototype.setTitle = function(title)
 		{
 			// Abstract method!
 			/// Sets the title of the window. If a headerbar is used, this
 			/// function is undefined.
 		};
 
-		window.NaturalShell.Native.Window.prototype.getTitle = function()
+		window.NaturalShell.Base.Window.prototype.getTitle = function()
 		{
 			// Abstract method!
 			/// Gets the title of the window. If a headerbar is used, this
 			/// function is undefined.
 		};
 
-		window.NaturalShell.Native.Window.prototype.storeData = function(key, value)
+		window.NaturalShell.Base.Window.prototype.storeData = function(key, value)
 		{
 			// Abstract method!
 			/// Stores the key "key" with the value "value" in this window.
 		};
 
-		window.NaturalShell.Native.Window.prototype.loadData = function(key)
+		window.NaturalShell.Base.Window.prototype.loadData = function(key)
 		{
 			// Abstract method!
 			/// Loads the key "key" from this window.
 		};
 
-		window.NaturalShell.Native.Window.prototype.getStyle = function()
+		window.NaturalShell.Base.Window.prototype.getStyle = function()
 		{
 			return this.style;
 		};

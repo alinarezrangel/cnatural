@@ -80,8 +80,6 @@ limitations under the License.
 		};
 		window.NaturalObject.prototype.include = function(token, src, mime, callback)
 		{
-			recursive = (typeof recursive === "boolean")? recursive : false;
-
 			this.ajax({
 				url: "/api/ajax/coreutils/import",
 				args: {},
@@ -109,14 +107,14 @@ limitations under the License.
 				callback(null, window.$ntc(dc));
 			});
 		};
-		window.NaturalObject.prototype.require = function(async, path, token, private, cll)
+		window.NaturalObject.prototype.require = function(async, path, token, isprivate, cll)
 		{
-			private = (typeof private === "undefined")? false : true;
+			isprivate = (typeof isprivate === "undefined")? false : true;
 			cll = (typeof cll === "function")? (this._callbackLastRef = cll) : this._callbackLastRef;
 
 			if((typeof token === "undefined") || (token === null))
 			{
-				if(private)
+				if(isprivate)
 				{
 					throw new Error("Error at CNatural.JS.Core.CData: require: The module is in private area but the token is undefined or null");
 				}
@@ -124,7 +122,7 @@ limitations under the License.
 				token = "";
 			}
 
-			if(private)
+			if(isprivate)
 			{
 				var sc = document.createElement("script");
 				sc.src = "/api/private/" + token + "/" + path;
