@@ -43,6 +43,20 @@ CNaturalGetToken((err, token) =>
 		}).require(false, path, token, true);
 	};
 
+	var changeDocksColors = function(manager)
+	{
+		console.log("Changing docks color? " + manager.isShowingWindow());
+
+		if(manager.isShowingWindow())
+		{
+			$ntc(".gui-shell-docks").addClass("color-natural-black").removeClass("gui-color-semitransparent");
+		}
+		else
+		{
+			$ntc(".gui-shell-docks").removeClass("color-natural-black").addClass("gui-color-semitransparent");
+		}
+	};
+
 	importSec(
 		"jscore/shells/base/context.js",
 		[
@@ -58,8 +72,12 @@ CNaturalGetToken((err, token) =>
 		() =>
 		{
 			// Now all files are loaded.
+			var
+				CNaturalDefaultContext = null,
+				CNaturalDefaultWindowManager = null,
+				CNaturalDefaultWindowSystem = null;
 
-			var CNaturalDefaultContext = new NaturalShell.Base.Context({
+			CNaturalDefaultContext = new NaturalShell.Base.Context({
 				"windowArea": $ntc(".gui-widget-shell-window-area").get(0),
 				"hiddenWindowsCallback": (action, windowElement) =>
 				{
@@ -67,19 +85,36 @@ CNaturalGetToken((err, token) =>
 					{
 						case "window.add":
 							console.log("Added window " + windowElement);
+							changeDocksColors(CNaturalDefaultWindowManager);
 							break;
 						case "window.remove":
 							console.log("Removed window " + windowElement);
+							changeDocksColors(CNaturalDefaultWindowManager);
+							break;
+						case "window.show":
+							console.log("Showed window " + windowElement);
+							changeDocksColors(CNaturalDefaultWindowManager);
+							break;
+						case "window.front":
+							console.log("Moved to front window " + windowElement);
+							break;
+						case "window.hide":
+							console.log("Hidded window " + windowElement);
+							changeDocksColors(CNaturalDefaultWindowManager);
+							break;
+						case "window.toplevel":
+							console.log("Toplevel window " + windowElement);
+							changeDocksColors(CNaturalDefaultWindowManager);
 							break;
 					}
 				}
 			});
 
-			var CNaturalDefaultWindowManager = new NaturalShell.Native.FixedWindowManager(
+			CNaturalDefaultWindowManager = new NaturalShell.Native.FixedWindowManager(
 				CNaturalDefaultContext
 			);
 
-			var CNaturalDefaultWindowSystem = new NaturalShell.Native.NaturalWindowSystem(
+			CNaturalDefaultWindowSystem = new NaturalShell.Native.NaturalWindowSystem(
 				CNaturalDefaultContext,
 				CNaturalDefaultWindowManager
 			);

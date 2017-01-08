@@ -274,3 +274,18 @@ html, body {
 		height: 80% !important;
 	}
 }
+
+/* Colors */
+
+.gui-color-semitransparent {
+	background-color: rgba(0, 0, 0, 0.4) !important;
+	color: #FFF !important;
+}
+
+.gui-text-color-semitransparent {
+	color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.gui-border-color-semitransparent {
+	border-color: rgba(0, 0, 0, 0.4) !important;
+}
