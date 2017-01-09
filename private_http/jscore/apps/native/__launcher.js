@@ -70,13 +70,31 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	{
 		var appdata = this.createInstance();
 
-		var myWindow = this.getWindowSystem().createDefaultWindow(
-			"Launcher",
+		var windowLayout = function(winel, appdata)
+		{
+			var body = document.createElement("div");
+
+			body.className = "gui-widget-window-body container overflow-auto no-padding no-margin od-1 fx-1 force-relative color-ocean";
+			body.dataset["widget"] = "window-body";
+			winel.appendChild(body);
+
+			return {
+				"titlebar": null,
+				"titlebarCloseOrBackButton": null,
+				"titlebarMenuButton": null,
+				"titlebarTitle": null,
+				"body": body
+			};
+		};
+
+		var myWindow = this.getWindowSystem().createCustomWindow(
+			windowLayout,
 			appdata
 		);
 
+		myWindow.getWMElement().child("*[data-widget='window-menu']").addClass("color-ocean");
+
 		var windowBody = myWindow.getBody();
-		var windowStyle = myWindow.getStyle();
 
 		var container = window.NaturalWidgets.Create(
 			window.NaturalWidgets.Container,
@@ -115,14 +133,6 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			text.pack("END");
 			node.pack("APPEND");
 		});
-
-		windowStyle.removeBorders();
-
-		windowStyle.setTitlebarColor("color-natural-indigo");
-		windowStyle.setBorderColor("color-ocean");
-		windowStyle.setBodyColor("color-ocean");
-
-		windowStyle.updateColors();
 
 		this.getWindowSystem().getWindowManager().showToplevel();
 
