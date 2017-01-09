@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * Native Desktop Environment (window).
+*** * Base Desktop Environment (window).
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -79,8 +79,7 @@ limitations under the License.
 		window.NaturalShell.Base.Window.prototype.getBody = function()
 		{
 			// Abstract method!
-			/// Gets the HTMLElement (or HTMLElement-like) object that is the
-			/// the window body.
+			/// Gets the $natural.wrap object that is the the window body.
 		};
 
 		window.NaturalShell.Base.Window.prototype.getHeaderbar = function()

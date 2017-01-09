@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * Native Desktop Environment (window style).
+*** * Base Desktop Environment (window style).
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel

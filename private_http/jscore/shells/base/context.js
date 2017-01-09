@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * Native Desktop Environment (context of elements).
+*** * Base Desktop Environment (context of elements).
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -37,6 +37,7 @@ limitations under the License.
 		{
 			this.windowArea = map["windowArea"];
 			this.hiddenWindowsCallback = map["hiddenWindowsCallback"];
+			this.applicationsCallback = map["applicationsCallback"];
 		};
 
 		window.NaturalShell.Base.Context.prototype.getWindowArea = function()
@@ -47,6 +48,11 @@ limitations under the License.
 		window.NaturalShell.Base.Context.prototype.getHiddenWindowsCallback = function()
 		{
 			return this.hiddenWindowsCallback;
+		};
+
+		window.NaturalShell.Base.Context.prototype.getApplicationsCallback = function()
+		{
+			return this.applicationsCallback;
 		};
 	};
 

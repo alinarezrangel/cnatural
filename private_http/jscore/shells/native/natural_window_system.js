@@ -200,7 +200,7 @@ limitations under the License.
 				appdata.mainWindowCreated = true;
 			}
 
-			var win = new window.NaturalShell.Native.NaturalWindow(parentWindow, appdata, window.$ntc(winel));
+			var win = new window.NaturalShell.Native.NaturalWindow(parentWindow, appdata, window.$natural.wrap(winel));
 
 			this.initWindowEvents(
 				win,
@@ -270,17 +270,17 @@ limitations under the License.
 				menuSideNavMinimizeWindow
 			)
 		{
-			windowElement = window.$ntc(windowElement);
-			menu = window.$ntc(menu);
-			menuSideNavCloseMenu = window.$ntc(menuSideNavCloseMenu);
-			menuSideNavCloseWindow = window.$ntc(menuSideNavCloseWindow);
-			menuSideNavMinimizeWindow = window.$ntc(menuSideNavMinimizeWindow);
+			windowElement = window.$natural.wrap(windowElement);
+			menu = window.$natural.wrap(menu);
+			menuSideNavCloseMenu = window.$natural.wrap(menuSideNavCloseMenu);
+			menuSideNavCloseWindow = window.$natural.wrap(menuSideNavCloseWindow);
+			menuSideNavMinimizeWindow = window.$natural.wrap(menuSideNavMinimizeWindow);
 
 			if(titlebar !== null)
 			{
-				titlebar = window.$ntc(titlebar);
-				titlebarCloseOrBackButton = window.$ntc(titlebarCloseOrBackButton);
-				titlebarMenuButton = window.$ntc(titlebarMenuButton);
+				titlebar = window.$natural.wrap(titlebar);
+				titlebarCloseOrBackButton = window.$natural.wrap(titlebarCloseOrBackButton);
+				titlebarMenuButton = window.$natural.wrap(titlebarMenuButton);
 
 				titlebarCloseOrBackButton.attach(() =>
 				{

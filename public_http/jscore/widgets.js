@@ -26,7 +26,7 @@ limitations under the License.
 	{
 		if(typeof window.NaturalObject === "undefined")
 		{
-			throw new Error("Error at CNatural.JS.Core.Widgets: NaturalObject is undefined");
+			throw new Error("Error at CNatural.JS.Widgets: NaturalObject is undefined");
 		}
 
 		var Extend = function(base, child)
@@ -73,13 +73,15 @@ limitations under the License.
 			return child;
 		};
 
-		window.NWClass = Class;
-		window.NWCreate = Create;
-		window.NWExtend = Extend;
+		window.NaturalWidgets = window.NaturalWidgets || {};
 
-		window.NWWidget = Class({
+		window.NaturalWidgets.Class = Class;
+		window.NaturalWidgets.Create = Create;
+		window.NaturalWidgets.Extend = Extend;
+
+		window.NaturalWidgets.Widget = Class({
 			type: "Widget",
-			path: "CNatural.JS.Core.Widgets.Widget",
+			path: "CNatural.JS.Widgets.Widget",
 			_constructor: function(args)
 			{
 				this._parent = args.parent;
@@ -116,9 +118,9 @@ limitations under the License.
 				return this._element;
 			}
 		});
-		window.NWPlainText = Extend(window.NWWidget, Class({
+		window.NaturalWidgets.PlainText = Extend(window.NaturalWidgets.Widget, Class({
 			type: "PlainText",
-			path: "CNatural.JS.Core.Widgets.PlainText",
+			path: "CNatural.JS.Widgets.PlainText",
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -127,9 +129,9 @@ limitations under the License.
 				);
 			}
 		}));
-		window.NWText = Extend(window.NWWidget, Class({
+		window.NaturalWidgets.Text = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Text",
-			path: "CNatural.JS.Core.Widgets.Text",
+			path: "CNatural.JS.Widgets.Text",
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -141,9 +143,9 @@ limitations under the License.
 					.addClass("gui-widget-text");
 			}
 		}));
-		window.NWButton = Extend(window.NWWidget, Class({
+		window.NaturalWidgets.Button = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Button",
-			path: "CNatural.JS.Core.Widgets.Button",
+			path: "CNatural.JS.Widgets.Button",
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -157,9 +159,9 @@ limitations under the License.
 					.addClass("gui-widget-button");
 			}
 		}));
-		window.NWHeader = Extend(window.NWWidget, Class({
+		window.NaturalWidgets.Header = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Header",
-			path: "CNatural.JS.Core.Widgets.Header",
+			path: "CNatural.JS.Widgets.Header",
 			levelTable: {
 				"page.title": "jumbo-4",
 				"page.subtitle": "jumbo-3",
@@ -180,9 +182,9 @@ limitations under the License.
 					.addClass("gui-widget-header");
 			}
 		}));
-		window.NWWindow = Extend(window.NWWidget, Class({
+		window.NaturalWidgets.Window = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Window",
-			path: "CNatural.JS.Core.Widgets.Window",
+			path: "CNatural.JS.Widgets.Window",
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -199,9 +201,9 @@ limitations under the License.
 					});
 			}
 		}));
-		window.NWDialog = Extend(window.NWWidget, Class({
+		window.NaturalWidgets.Dialog = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Dialog",
-			path: "CNatural.JS.Core.Widgets.Window.Dialog",
+			path: "CNatural.JS.Widgets.Window.Dialog",
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -220,17 +222,17 @@ limitations under the License.
 			}
 		}));
 
-		window.NWCreateTextDialog = function(parent, level, text, oncreated)
+		window.NaturalWidgets.CreateTextDialog = function(parent, level, text, oncreated)
 		{
-			var win = NWCreate(NWDialog, {
+			var win = window.NaturalWidgets.Create(window.NaturalWidgets.Dialog, {
 				parent: parent
 			});
-			var message = NWCreate(NWHeader, {
+			var message = window.NaturalWidgets.Create(window.NaturalWidgets.Header, {
 				parent: win.getElement(),
 				level: level,
 				size: "content.title"
 			});
-			var text = NWCreate(NWPlainText, {
+			var text = window.NaturalWidgets.Create(window.NaturalWidgets.PlainText, {
 				parent: message.getElement(),
 				text: text
 			});

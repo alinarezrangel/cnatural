@@ -20,7 +20,77 @@ limitations under the License.
 **********************
 ************************************************/
 
-function CNaturalGetToken(cll)
+window.NaturalClient = window.NaturalClient || {};
+
+// Metadata:
+
+// Name of the client
+window.NaturalClient.Name = "CNatural Client (Araguaney v0.0.1)";
+
+// Version of the client
+window.NaturalClient.Version = "0.0.1";
+
+// Codename of the client
+window.NaturalClient.Codename = "Araguaney";
+
+// JavaScript reserved name (non-exaustive list)
+window.NaturalClient.ReservedNames = [
+	"$ntc",
+	"$natural",
+	"NaturalObject",
+	"NaturalShell",
+	"NaturalStorage",
+	"NaturalWidgets",
+	"NaturalClient"
+];
+
+window.NaturalClient.Generation = window.NaturalClient.Generation || {};
+
+// Minimal Generation Version supported
+window.NaturalClient.Generation.MinVersion = "1.1";
+
+// Generation Object
+window.NaturalClient.Generation.Object = window.Generation || null;
+
+// Generation Palletes
+window.NaturalClient.Generation.Palletes = [
+	"default",
+	"basics",
+	"natural",
+	"gui"
+];
+
+window.NaturalClient.HTML = window.NaturalClient.HTML || {};
+
+// Minimal HTML Version supported
+window.NaturalClient.HTML.MinVersion = "5";
+
+// If the CustomElement API is available
+window.NaturalClient.HTML.CustomElementsAPI = false;
+
+// If you can use custom elements forcing a CSS and ignoring warnings
+window.NaturalClient.HTML.ForceCustomElements = true;
+
+window.NaturalClient.JavaScript = window.NaturalClient.JavaScript || {};
+
+// Minimal JavaScript Version supported
+window.NaturalClient.JavaScript.MinVersion = "5";
+
+// If is running on a browser
+window.NaturalClient.JavaScript.BrowserMode = true;
+
+window.NaturalClient.Protocol = window.NaturalClient.Protocol || {};
+
+// CNatural AJAX Protocol Version
+window.NaturalClient.Protocol.Version = "0.0.1";
+
+// CNatural AJAX Protocol Type
+window.NaturalClient.Protocol.Type = "AJAX-based";
+
+// CNatural AJAX Protocol CSP enabled
+window.NaturalClient.Protocol.CSPEnabled = true;
+
+window.NaturalClient.GetToken = function(cll)
 {
 	var st = $natural.getStorage();
 
@@ -49,9 +119,22 @@ function CNaturalGetToken(cll)
 			});
 		});
 	});
-}
+};
 
-function _attach_shell_events(token)
+window.NaturalClient.APIRequest = function(method, arguments, cll)
+{
+	$natural.ajax({
+		url: "/api/ajax/" + method.replace(".", "/"),
+		args: {},
+		pdata: arguments,
+		async: true
+	}, function(err, res)
+	{
+		return cll(err, res);
+	});
+};
+
+window.NaturalClient._attach_shell_events = function(token)
 {
 	var start_native_shell = $ntc("#_start_native_shell");
 
@@ -65,7 +148,7 @@ function _attach_shell_events(token)
 			if(err)
 			{
 				console.error(err);
-				NWCreateTextDialog($ntc("#_mainscreen"), 2, "Error: " + res, function(win, msg, txt)
+				NaturalWidgets.CreateTextDialog($ntc("#_mainscreen"), 2, "Error: " + res, function(win, msg, txt)
 				{
 					win.getElement().addClass("text-natural-darkred");
 				});
@@ -80,7 +163,7 @@ function _attach_shell_events(token)
 			});
 		}, true);
 	}).on("click");
-}
+};
 
 $ntc(window).on("load", function()
 {
@@ -103,7 +186,7 @@ $ntc(window).on("load", function()
 		if(res === "Hello World")
 			return;
 
-		NWCreateTextDialog($ntc("#_bootscreen"), 2, "Error: " + res, function(win, msg, txt)
+		NaturalWidgets.CreateTextDialog($ntc("#_bootscreen"), 2, "Error: " + res, function(win, msg, txt)
 		{
 			win.getElement().addClass("text-natural-darkred");
 		});
@@ -119,7 +202,7 @@ $ntc(window).on("load", function()
 
 	$ntc("#login_button").attach(function(ev)
 	{
-		var win = NWCreateTextDialog(
+		var win = NaturalWidgets.CreateTextDialog(
 			$ntc("#_loginscreen"),
 			2,
 			"Iniciando sesión, por favor espere...",
@@ -148,7 +231,7 @@ $ntc(window).on("load", function()
 
 			if(res === "enopass")
 			{
-				var err = NWCreateTextDialog(
+				var err = NaturalWidgets.CreateTextDialog(
 					$ntc("#_loginscreen"),
 					2,
 					"Error fatal: " + res,
@@ -190,22 +273,11 @@ $ntc(window).on("load", function()
 
 						$natural.includeScripts(document, res, function(sc)
 						{
-							_attach_shell_events(res);
+							NaturalClient._attach_shell_events(res);
 						}, true);
 					});
 				});
 			});
 		});
 	}).on("click");
-
-	/*
-	window.setInterval(function()
-	{
-		if(NaturalToken == "")
-			return;
-		$natural.includeScripts(document, NaturalToken, function(sc)
-		{
-		}, true);
-	}, 2500);
-	*/
 });

@@ -20,7 +20,37 @@ limitations under the License.
 **********************
 ************************************************/
 
-CNaturalGetToken((err, token) =>
+// Metadata:
+
+window.NaturalShell = window.NaturalShell || {};
+window.NaturalShell.Native = window.NaturalShell.Native || {};
+window.NaturalShell.Native.Metadata = window.NaturalShell.Native.Metadata || {};
+
+// Name of the current shell
+window.NaturalShell.Native.Metadata.Name = "Native";
+
+// Version of the current shell
+window.NaturalShell.Native.Metadata.Version = "0.0.1";
+
+// Type of the current shell
+window.NaturalShell.Native.Metadata.Type = "tilling/uniwindow";
+
+// Support for the current shell
+window.NaturalShell.Native.Metadata.Supports = "CNatural; Mozilla.Firefox:Gecko";
+
+// Used Window
+window.NaturalShell.Native.Metadata.UsedWindow = "Natural Window";
+
+// Used Window Manager
+window.NaturalShell.Native.Metadata.UsedWindowManager = "Fixed Window Manager";
+
+// Used Window System
+window.NaturalShell.Native.Metadata.UsedWindowSystem = "Natural Window System";
+
+// Used Window Style
+window.NaturalShell.Native.Metadata.UsedWindowStyle = "Natural Window Style";
+
+window.NaturalClient.GetToken((err, token) =>
 {
 	if(err)
 	{
@@ -57,6 +87,18 @@ CNaturalGetToken((err, token) =>
 		}
 	};
 
+	var importApps = function(ondone)
+	{
+		importSec(
+			"jscore/apps/native/example.js",
+			[],
+			() =>
+			{
+				ondone();
+			}
+		);
+	};
+
 	importSec(
 		"jscore/shells/base/context.js",
 		[
@@ -64,6 +106,7 @@ CNaturalGetToken((err, token) =>
 			"jscore/shells/base/window.js",
 			"jscore/shells/base/window_manager.js",
 			"jscore/shells/base/window_system.js",
+			"jscore/shells/base/application.js",
 			"jscore/shells/native/natural_window_style.js",
 			"jscore/shells/native/natural_window.js",
 			"jscore/shells/native/fixed_window_manager.js",
@@ -107,6 +150,17 @@ CNaturalGetToken((err, token) =>
 							changeDocksColors(CNaturalDefaultWindowManager);
 							break;
 					}
+				},
+				"applicationsCallback": (action, application) =>
+				{
+					switch(action)
+					{
+						case "application.register":
+							console.log("Added app " + application);
+
+							application.run([]);
+							break;
+					}
 				}
 			});
 
@@ -119,42 +173,22 @@ CNaturalGetToken((err, token) =>
 				CNaturalDefaultWindowManager
 			);
 
-			// Example:
+			window.NaturalShell.Native.RegisterApplication = function(fcn)
+			{
+				var appT = fcn(window, document);
 
-			var example_appdata = {
-				"applicationName": "Example Application",
-				"applicationID": "example_app",
-				"namespace": "org.cnatural.examples.application",
-				"instanceID": 0,
-				"windowID": 0,
-				"mainWindowCreated": false,
-				"mainWindow": null
+				var x = new appT(CNaturalDefaultContext, CNaturalDefaultWindowSystem);
+				x.registerApplication();
 			};
-			var example = CNaturalDefaultWindowSystem.createDefaultWindow(
-				"Example Window",
-				example_appdata
-			);
-			var example_sub = CNaturalDefaultWindowSystem.createDefaultWindow(
-				"Example Sub Window",
-				example_appdata
-			);
-			var example_style = example.getStyle();
-			var example_sub_style = example_sub.getStyle();
 
-			example_style.removeBorders();
-			example_sub_style.removeBorders();
+			importApps(() =>
+			{
+				CNaturalDefaultWindowManager.showToplevel();
 
-			example_style.setTitlebarColor("color-ocean");
-			example_sub_style.setTitlebarColor("color-natural-deeporange");
-			example_style.setBodyColor("color-water");
-			example_sub_style.setBodyColor("color-natural-redgrey");
-
-			example_style.updateColors();
-			example_sub_style.updateColors();
-
-			CNaturalDefaultWindowManager.showToplevel();
-
-			document.body.dispatchEvent(new CustomEvent("shellLoaded", {}));
+				document.body.dispatchEvent(new CustomEvent("shellLoaded", {}));
+			});
 		}
 	);
 });
+
+window.NaturalShell.CurrentShell = window.NaturalShell.Native;
