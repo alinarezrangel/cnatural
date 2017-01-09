@@ -32,10 +32,13 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				document.createElement("div")
 			);
 			this._element
-				.addClass("box")
+				.addClass("container")
+				.addClass("padding-16")
+				.addClass("margin-8")
+				.addClass("color-natural-bluegrey")
+				.addClass("float-left")
 				.addClass("gui-hoverable")
 				.addClass("gui-clickeable")
-				.addClass("float-left")
 				.addClass("gui-widget")
 				.addClass("gui-widget-application-button");
 		}
@@ -104,8 +107,9 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 			node.getElement().on("click", () =>
 			{
+				this.getWindowSystem().destroyWindow(myWindow.getWMElement());
+
 				value.run([]);
-				this.getWindowSystem().destroyWindow(myWindow);
 			});
 
 			text.pack("END");

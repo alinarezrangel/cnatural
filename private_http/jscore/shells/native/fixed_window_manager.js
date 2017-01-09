@@ -97,7 +97,7 @@ limitations under the License.
 		{
 			var maxIndex = 0, element = null;
 
-			this.showingWindow = false;
+			this.hideAllWindows();
 
 			this.context.getWindowArea().child("*[data-widget='window']").apply((windowEl) =>
 			{

@@ -121,12 +121,12 @@ window.NaturalClient.GetToken = function(cll)
 	});
 };
 
-window.NaturalClient.APIRequest = function(method, arguments, cll)
+window.NaturalClient.APIRequest = function(method, args, cll)
 {
 	$natural.ajax({
 		url: "/api/ajax/" + method.replace(".", "/"),
 		args: {},
-		pdata: arguments,
+		pdata: args,
 		async: true
 	}, function(err, res)
 	{

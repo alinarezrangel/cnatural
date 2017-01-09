@@ -232,23 +232,22 @@ limitations under the License.
 
 		window.NaturalShell.Native.NaturalWindowSystem.prototype.destroyCustomWindow = function(windowObject)
 		{
-			var el = windowObject.getWMElement();
 			var params = {};
 			var canBeRemoved = true;
 
-			el.apply((el) =>
+			windowObject.apply((windowObject) =>
 			{
-				canBeRemoved = canBeRemoved && el.original.dispatchEvent(new CustomEvent("close", params));
+				canBeRemoved = canBeRemoved && windowObject.original.dispatchEvent(new CustomEvent("close", params));
 			}).forEach();
 
 			if(canBeRemoved)
 			{
 				this.getWindowManager().unpackWindow((windowElement) =>
 				{
-					return ((windowElement.data("instanceId") == el.data("instanceId"))
-						&& (windowElement.data("windowId") == el.data("windowId"))
-						&& (windowElement.data("applicationId") == el.data("applicationId"))
-						&& (windowElement.data("namespace") == el.data("namespace")));
+					return ((windowElement.data("instanceId") == windowObject.data("instanceId"))
+						&& (windowElement.data("windowId") == windowObject.data("windowId"))
+						&& (windowElement.data("applicationId") == windowObject.data("applicationId"))
+						&& (windowElement.data("namespace") == windowObject.data("namespace")));
 				});
 				return true;
 			}
@@ -284,7 +283,7 @@ limitations under the License.
 
 				titlebarCloseOrBackButton.attach(() =>
 				{
-					this.destroyWindow(windowObject);
+					this.destroyWindow(windowElement);
 				}).on("click");
 
 				titlebarMenuButton.attach(() =>
@@ -301,7 +300,7 @@ limitations under the License.
 			menuSideNavCloseWindow.attach(() =>
 			{
 				menu.hideMoveFromCenterToTop();
-				this.destroyWindow(windowObject);
+				this.destroyWindow(windowElement);
 			}).on("click");
 
 			menuSideNavMinimizeWindow.attach(() =>
