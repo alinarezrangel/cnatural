@@ -90,8 +90,10 @@ window.NaturalClient.GetToken((err, token) =>
 	var importApps = function(ondone)
 	{
 		importSec(
-			"jscore/apps/native/example.js",
-			[],
+			"jscore/apps/native/__launcher.js",
+			[
+				"jscore/apps/native/example.js"
+			],
 			() =>
 			{
 				ondone();
@@ -118,7 +120,8 @@ window.NaturalClient.GetToken((err, token) =>
 			var
 				CNaturalDefaultContext = null,
 				CNaturalDefaultWindowManager = null,
-				CNaturalDefaultWindowSystem = null;
+				CNaturalDefaultWindowSystem = null,
+				CNaturalApplicationList = [];
 
 			CNaturalDefaultContext = new NaturalShell.Base.Context({
 				"windowArea": $ntc(".gui-widget-shell-window-area").get(0),
@@ -158,7 +161,7 @@ window.NaturalClient.GetToken((err, token) =>
 						case "application.register":
 							console.log("Added app " + application);
 
-							application.run([]);
+							CNaturalApplicationList.push(application);
 							break;
 					}
 				}
@@ -181,9 +184,48 @@ window.NaturalClient.GetToken((err, token) =>
 				x.registerApplication();
 			};
 
+			window.NaturalShell.Native.GetApplication = function(id)
+			{
+				var i = 0, j = CNaturalApplicationList.length;
+
+				for(i = 0; i < j; i++)
+				{
+					var c = CNaturalApplicationList[i];
+
+					if(c.getID() == id)
+					{
+						return c;
+					}
+				}
+
+				return null;
+			};
+
+			window.NaturalShell.Native.LaunchApplication = function(id, args)
+			{
+				var c = window.NaturalShell.Native.GetApplication(id);
+
+				if(c === null)
+				{
+					return null;
+				}
+
+				return c.run(args);
+			};
+
+			window.NaturalShell.Native.GetAllApplications = function()
+			{
+				return CNaturalApplicationList;
+			};
+
 			importApps(() =>
 			{
 				CNaturalDefaultWindowManager.showToplevel();
+
+				$ntc("#_shellscreen__apps").on("click", () =>
+				{
+					window.NaturalShell.Native.LaunchApplication("__launcher");
+				});
 
 				document.body.dispatchEvent(new CustomEvent("shellLoaded", {}));
 			});

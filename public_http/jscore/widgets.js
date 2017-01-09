@@ -143,6 +143,21 @@ limitations under the License.
 					.addClass("gui-widget-text");
 			}
 		}));
+		window.NaturalWidgets.Container = Extend(window.NaturalWidgets.Widget, Class({
+			type: "Container",
+			path: "CNatural.JS.Widgets.Container",
+			_constructor: function(args)
+			{
+				this._super._constructor.call(this, args);
+				this._element = window.$natural.wrap(
+					document.createElement("div")
+				);
+				this._element
+					.addClass("container")
+					.addClass("gui-widget")
+					.addClass("gui-widget-container");
+			}
+		}));
 		window.NaturalWidgets.Button = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Button",
 			path: "CNatural.JS.Widgets.Button",
