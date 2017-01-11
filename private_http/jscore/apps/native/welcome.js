@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * Example app for Native.
+*** * Welcome app for Native.
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -22,6 +22,25 @@ limitations under the License.
 
 window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 {
+	var POMap = {
+		"es_VEN": {
+			"title": "Bienvenido",
+			"subtitle": "CNatural Araguaney",
+			"message_p1": "",
+			"message_p2": "",
+			"message_p3": "",
+			"button_done": ""
+		},
+		"en_US": {
+			"title": "",
+			"subtitle": "",
+			"message_p1": "",
+			"message_p2": "",
+			"message_p3": "",
+			"button_done": ""
+		}
+	};
+
 	function PackWidgetPlainText(parentWidget, text)
 	{
 		window.NaturalWidgets.Create(
@@ -33,23 +52,23 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		).pack("APPEND");
 	}
 
-	function ExampleApplication(context, window_system)
+	function WelcomeApplication(context, window_system)
 	{
 		window.NaturalShell.Base.Application.call(this, context, window_system);
 
-		this.setName("Example Application");
-		this.setID("example_application");
-		this.setNamespace("org.cnatural.applications.example");
+		this.setName("Welcome Application");
+		this.setID("welcome_application");
+		this.setNamespace("org.cnatural.applications.welcome");
 	}
 
-	ExampleApplication.prototype = Object.create(window.NaturalShell.Base.Application.prototype);
+	WelcomeApplication.prototype = Object.create(window.NaturalShell.Base.Application.prototype);
 
-	ExampleApplication.prototype.run = function(args)
+	WelcomeApplication.prototype.run = function(args)
 	{
 		var appdata = this.createInstance();
 
 		var myWindow = this.getWindowSystem().createDefaultWindow(
-			"Example Application",
+			"Welcome",
 			appdata
 		);
 
@@ -61,7 +80,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			{
 				parent: windowBody,
 				level: 6,
-				size: "page.title"
+				size: "section.title"
 			}
 		);
 
@@ -71,6 +90,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				parent: windowBody
 			}
 		);
+
+		header.getElement()
+			.addClass("text-center")
+			.addClass("padding-8")
+			.addClass("margin-8");
 
 		PackWidgetPlainText(header, "Native");
 
@@ -92,5 +116,5 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		return 0;
 	};
 
-	return ExampleApplication;
+	return WelcomeApplication;
 });

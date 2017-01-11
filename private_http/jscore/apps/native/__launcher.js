@@ -35,7 +35,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				.addClass("container")
 				.addClass("padding-16")
 				.addClass("margin-8")
-				.addClass("color-natural-bluegrey")
+				.addClass("color-gui-button")
 				.addClass("float-left")
 				.addClass("gui-hoverable")
 				.addClass("gui-clickeable")
@@ -70,29 +70,12 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	{
 		var appdata = this.createInstance();
 
-		var windowLayout = function(winel, appdata)
-		{
-			var body = document.createElement("div");
-
-			body.className = "gui-widget-window-body container overflow-auto no-padding no-margin od-1 fx-1 force-relative color-ocean";
-			body.dataset["widget"] = "window-body";
-			winel.appendChild(body);
-
-			return {
-				"titlebar": null,
-				"titlebarCloseOrBackButton": null,
-				"titlebarMenuButton": null,
-				"titlebarTitle": null,
-				"body": body
-			};
-		};
-
-		var myWindow = this.getWindowSystem().createCustomWindow(
-			windowLayout,
+		var myWindow = this.getWindowSystem().createDefaultWindow(
+			"Launcher",
 			appdata
 		);
 
-		myWindow.getWMElement().child("*[data-widget='window-menu']").addClass("color-ocean");
+		var winstyle = myWindow.getStyle();
 
 		var windowBody = myWindow.getBody();
 
@@ -102,6 +85,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				parent: windowBody
 			}
 		);
+
+		container.getElement().addClass("color-transparent");
 
 		container.pack("APPEND");
 
@@ -133,6 +118,13 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			text.pack("END");
 			node.pack("APPEND");
 		});
+
+		winstyle.removeBorders();
+
+		winstyle.setTitlebarColor("color-gui-header");
+		winstyle.setBodyColor("color-gui-body");
+
+		winstyle.updateColors();
 
 		this.getWindowSystem().getWindowManager().showToplevel();
 

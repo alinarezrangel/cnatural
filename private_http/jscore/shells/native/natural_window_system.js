@@ -70,13 +70,13 @@ limitations under the License.
 				titlebar.className = "gui-widget-window-header gui-flexcore-row no-margin od-1";
 				titlebar.dataset["widget"] = "window-header";
 
-				titlebarCloseOrBackButton.className = "gui-font-iconset-v2 gui-hoverable od-1 text-jumbo gui-clickeable padding-8 no-margin";
+				titlebarCloseOrBackButton.className = "gui-font-iconset-v2 gui-hoverable od-1 text-jumbo gui-clickeable padding-8 no-margin color-transparent";
 				titlebarCloseOrBackButton.dataset["widget"] = "button";
 
-				titlebarTitle.className = "text-jumbo font-bold od-2 fx-1 margin-8";
+				titlebarTitle.className = "text-jumbo font-bold od-2 fx-1 margin-8 color-transparent";
 				titlebarTitle.dataset["widget"] = "button";
 
-				titlebarMenuButton.className = "gui-font-iconset-v2 gui-hoverable od-3 text-jumbo gui-clickeable padding-8 no-margin";
+				titlebarMenuButton.className = "gui-font-iconset-v2 gui-hoverable od-3 text-jumbo gui-clickeable padding-8 no-margin color-transparent";
 				titlebarMenuButton.dataset["widget"] = "button";
 
 				body.className = "gui-widget-window-body container overflow-auto border no-padding no-margin od-2 fx-1 force-relative";
@@ -143,7 +143,7 @@ limitations under the License.
 				return sp;
 			};
 
-			winel.className = "gui-flexcore no-wrap gui-widget-window no-padding no-margin width-block height-block force-relative";
+			winel.className = "gui-widget-window no-padding no-margin force-relative";
 			winel.dataset["widget"] = "window";
 
 			winel.dataset["name"] = appdata.applicationName;
@@ -157,7 +157,7 @@ limitations under the License.
 			menu.dataset["widget"] = "window-menu";
 
 			// menuSideNav.className = "side-navigation border-bottom bs-2 border-color-natural-black";
-			menuSideNav.className = "row wrap padding-4 border-bottom bs-2 border-color-natural-black";
+			menuSideNav.className = "row wrap padding-4 border-bottom bs-2 border-color-natural-black color-transparent";
 			menuSideNav.dataset["widget"] = "window-menu-native";
 
 			menuSideNavCloseMenu.className =
