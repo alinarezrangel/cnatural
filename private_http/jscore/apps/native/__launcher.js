@@ -43,20 +43,10 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				.addClass("gui-hoverable")
 				.addClass("gui-clickeable")
 				.addClass("gui-widget")
-				.addClass("gui-widget-application-button");
+				.addClass("gui-widget-application-button")
+				.data("widget", "application-button");
 		}
 	}));
-
-	function PackWidgetPlainText(parentWidget, text)
-	{
-		window.NaturalWidgets.Create(
-			window.NaturalWidgets.PlainText,
-			{
-				parent: parentWidget.getElement(),
-				text: text
-			}
-		).pack("APPEND");
-	}
 
 	function Launcher(context, window_system)
 	{
@@ -92,6 +82,9 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		);
 
 		var winstyle = myWindow.getStyle();
+
+		winstyle.removeBorders();
+		winstyle.updateColors();
 
 		var windowBody = myWindow.getBody();
 
@@ -133,11 +126,10 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			var text = window.NaturalWidgets.Create(
 				window.NaturalWidgets.Text,
 				{
-					parent: node.getElement()
+					parent: node.getElement(),
+					text: value.getName()
 				}
 			);
-
-			PackWidgetPlainText(text, value.getName());
 
 			node.getElement().on("click", () =>
 			{
@@ -150,9 +142,6 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			text.pack("END");
 			node.pack("APPEND");
 		});
-
-		winstyle.removeBorders();
-		winstyle.updateColors();
 
 		myWindow.addEventListener("close", () =>
 		{

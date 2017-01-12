@@ -140,7 +140,15 @@ limitations under the License.
 				);
 				this._element
 					.addClass("gui-widget")
-					.addClass("gui-widget-text");
+					.addClass("gui-widget-text")
+					.data("widget", "text");
+
+				if(typeof args.text !== "undefined")
+				{
+					this._element.appendChild(window.$natural.wrap(
+						document.createTextNode(args.text)
+					));
+				}
 			}
 		}));
 		window.NaturalWidgets.Container = Extend(window.NaturalWidgets.Widget, Class({
@@ -155,7 +163,27 @@ limitations under the License.
 				this._element
 					.addClass("container")
 					.addClass("gui-widget")
-					.addClass("gui-widget-container");
+					.addClass("gui-widget-container")
+					.data("widget", "container");
+			}
+		}));
+		window.NaturalWidgets.MainContainer = Extend(window.NaturalWidgets.Widget, Class({
+			type: "MainContainer",
+			path: "CNatural.JS.Widgets.MainContainer",
+			_constructor: function(args)
+			{
+				this._super._constructor.call(this, args);
+				this._element = window.$natural.wrap(
+					document.createElement("div")
+				);
+				this._element
+					.addClass("container")
+					.addClass("color-transparent")
+					.addClass("width-block")
+					.addClass("height-block")
+					.addClass("gui-widget")
+					.addClass("gui-widget-main-container")
+					.data("widget", "main-container");
 			}
 		}));
 		window.NaturalWidgets.Button = Extend(window.NaturalWidgets.Widget, Class({
@@ -171,7 +199,15 @@ limitations under the License.
 				this._element
 					.addClass("button")
 					.addClass("gui-widget")
-					.addClass("gui-widget-button");
+					.addClass("gui-widget-button")
+					.data("widget", "button");
+
+				if(typeof args.text !== "undefined")
+				{
+					this._element.appendChild(window.$natural.wrap(
+						document.createTextNode(args.text)
+					));
+				}
 			}
 		}));
 		window.NaturalWidgets.Header = Extend(window.NaturalWidgets.Widget, Class({
@@ -194,11 +230,19 @@ limitations under the License.
 				this._element
 					.addClass("text-" + this.levelTable[args.size])
 					.addClass("gui-widget")
-					.addClass("gui-widget-header");
+					.addClass("gui-widget-header")
+					.data("widget", "title-header");
+
+				if(typeof args.text !== "undefined")
+				{
+					this._element.appendChild(window.$natural.wrap(
+						document.createTextNode(args.text)
+					));
+				}
 			}
 		}));
 		window.NaturalWidgets.Image = Extend(window.NaturalWidgets.Widget, Class({
-			type: "Header",
+			type: "Image",
 			path: "CNatural.JS.Widgets.Image",
 			_constructor: function(args)
 			{
@@ -208,7 +252,8 @@ limitations under the License.
 				);
 				this._element
 					.addClass("gui-widget")
-					.addClass("gui-widget-image");
+					.addClass("gui-widget-image")
+					.data("widget", "image");
 				this._element.original.src = args.src;
 				this._element.original.width = args.width;
 				this._element.original.height = args.height;
@@ -231,7 +276,12 @@ limitations under the License.
 					.addClass("gui-widget-window")
 					.style({
 						position: "absolute"
-					});
+					})
+					.data("widget", "window");
+			},
+			getBody: function()
+			{
+				return this._element;
 			}
 		}));
 		window.NaturalWidgets.Dialog = Extend(window.NaturalWidgets.Widget, Class({
@@ -251,7 +301,161 @@ limitations under the License.
 					.addClass("gui-widget-window-dialog")
 					.style({
 						position: "absolute"
+					})
+					.data("widget", "dialog");
+			},
+			getBody: function()
+			{
+				return this._element;
+			}
+		}));
+		window.NaturalWidgets.AcceptDenyDialog = Extend(window.NaturalWidgets.Widget, Class({
+			type: "AcceptDenyDialog",
+			path: "CNatural.JS.Widgets.Window.AcceptDenyDialog",
+			_constructor: function(args)
+			{
+				this._super._constructor.call(this, args);
+
+				this.onready = function(event, choice) {};
+
+				this._element = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("modal")
+					.addClass("gui-widget")
+					.addClass("gui-widget-window")
+					// .addClass("gui-widget-window-dialog")
+					.addClass("gui-widget-window-accept-deny-dialog")
+					.addClass("gui-modal")
+					.addClass("gui-hidden")
+					.data("widget", "accept-deny-dialog");
+				this._innerModal = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("modal-content")
+					.addClass("box")
+					.addClass("color-gui-body")
+					.addClass("no-padding")
+					.addClass("no-margin")
+					.addClass("no-border");
+				this._innerHeader = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("container")
+					.addClass("color-gui-header")
+					.addClass("padding-8")
+					.addClass("no-margin")
+					.addClass("no-border");
+				this._innerBody = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("container")
+					.addClass("color-transparent")
+					.addClass("padding-8")
+					.addClass("no-margin")
+					.addClass("border-bottom")
+					.addClass("bs-1")
+					.addClass("border-color-dark-grey");
+				this._innerBottom = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("row")
+					.addClass("wrap")
+					.addClass("right")
+					.addClass("color-transparent")
+					.addClass("no-padding")
+					.addClass("no-margin")
+					.addClass("no-border");
+
+				this._element
+					.appendChild(this._innerModal)
+					.echo(this._innerModal)
+					.appendChild(this._innerHeader)
+					.appendChild(this._innerBody)
+					.appendChild(this._innerBottom);
+
+				this._innerTitle = window.NaturalWidgets.Create(
+					window.NaturalWidgets.Header,
+					{
+						parent: this._innerHeader,
+						level: 6,
+						size: "content.title",
+						text: args.title
+					}
+				);
+				this._innerTitle.getElement()
+					.addClass("text-center")
+					.addClass("color-transparent")
+					.addClass("no-padding")
+					.addClass("no-margin")
+					.addClass("no-border")
+					.addClass("width-block");
+
+				this._acceptButton = window.NaturalWidgets.Create(
+					window.NaturalWidgets.Button,
+					{
+						parent: this._innerBottom,
+						text: args.acceptText
+					}
+				);
+				this._acceptButton.getElement()
+					.addClass("fx-1")
+					.addClass("od-1")
+					.addClass("padding-8")
+					.addClass("margin-16")
+					.addClass("color-gui-button")
+					.on("click", (ev) =>
+					{
+						this._element.addClass("gui-hidden");
+						this._lastChoice = "accept";
+						this.onready(ev, this._lastChoice);
 					});
+
+				this._denyButton = window.NaturalWidgets.Create(
+					window.NaturalWidgets.Button,
+					{
+						parent: this._innerBottom,
+						text: args.denyText
+					}
+				);
+				this._denyButton.getElement()
+					.addClass("fx-1")
+					.addClass("od-2")
+					.addClass("padding-8")
+					.addClass("margin-16")
+					.addClass("color-gui-button")
+					.on("click", (ev) =>
+					{
+						this._element.addClass("gui-hidden");
+						this._lastChoice = "deny";
+						this.onready(ev, this._lastChoice);
+					});
+
+				this._acceptButton.pack("APPEND");
+				this._denyButton.pack("APPEND");
+				this._innerTitle.pack("APPEND");
+
+				if(typeof args.text !== "undefined")
+				{
+					this._innerBody.appendChild(window.$natural.wrap(
+						document.createTextNode(args.text)
+					));
+				}
+			},
+			getBody: function()
+			{
+				return this._innerBody;
+			},
+			show: function()
+			{
+				this._element.removeClass("gui-hidden");
+			},
+			hide: function()
+			{
+				this._element.addClass("gui-hidden");
+			},
+			getLastChoice: function()
+			{
+				return this._lastChoice;
+			},
+			onSelected: function(callback)
+			{
+				this.onready = callback || function(event, choice) {};
 			}
 		}));
 

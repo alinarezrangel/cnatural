@@ -92,7 +92,7 @@ window.NaturalClient.GetToken((err, token) =>
 		importSec(
 			"jscore/apps/native/__launcher.js",
 			[
-				"jscore/apps/native/example.js"
+				"jscore/apps/native/welcome.js"
 			],
 			() =>
 			{
