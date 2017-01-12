@@ -62,12 +62,20 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		this.setName("Launcher");
 		this.setID("__launcher");
 		this.setNamespace("org.cnatural.applications.native.launcher");
+
+		this.isOpenALauncher = false;
 	}
 
 	Launcher.prototype = Object.create(window.NaturalShell.Base.Application.prototype);
 
 	Launcher.prototype.run = function(args)
 	{
+		if(this.isOpenALauncher)
+		{
+			return;
+		}
+
+		this.isOpenALauncher = true;
 		var appdata = this.createInstance();
 
 		var myWindow = this.getWindowSystem().createDefaultWindow(
@@ -125,6 +133,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		winstyle.setBodyColor("color-gui-body");
 
 		winstyle.updateColors();
+
+		myWindow.addEventListener("close", () =>
+		{
+			this.isOpenALauncher = false;
+		});
 
 		this.getWindowSystem().getWindowManager().showToplevel();
 

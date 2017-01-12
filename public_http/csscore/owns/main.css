@@ -281,6 +281,15 @@ html, body {
 	z-index: 100 !important;
 }
 
+.gui-shape-circle {
+	border-radius: 50% !important;
+}
+
+.gui-circular-button-50 {
+	width: 50px !important;
+	height: 50px !important;
+}
+
 @media all and (max-width: 470px) {
 	/* Small */
 

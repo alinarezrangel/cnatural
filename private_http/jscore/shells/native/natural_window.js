@@ -140,6 +140,14 @@ limitations under the License.
 		{
 			return this.element.data(key);
 		};
+
+		window.NaturalShell.Native.NaturalWindow.prototype.addEventListener = function(event_name, event_listener)
+		{
+			this.element.on(event_name, function(event)
+			{
+				event_listener(event);
+			});
+		};
 	};
 
 	if(typeof module !== "undefined")

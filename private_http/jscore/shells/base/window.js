@@ -135,6 +135,12 @@ limitations under the License.
 			/// Loads the key "key" from this window.
 		};
 
+		window.NaturalShell.Base.Window.prototype.addEventListener = function(event_name, event_listener)
+		{
+			// Abstract method!
+			/// Adds an event listener for event_name which is the callback event_listener
+		};
+
 		window.NaturalShell.Base.Window.prototype.getStyle = function()
 		{
 			return this.style;
