@@ -32,11 +32,14 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				document.createElement("div")
 			);
 			this._element
-				.addClass("container")
+				.addClass("fcontainer")
+				.addClass("center")
+				.addClass("no-wrap")
+				.addClass("text-center")
 				.addClass("padding-16")
 				.addClass("margin-8")
 				.addClass("color-gui-button")
-				.addClass("float-left")
+				.addClass("fx-1")
 				.addClass("gui-hoverable")
 				.addClass("gui-clickeable")
 				.addClass("gui-widget")
@@ -62,6 +65,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		this.setName("Launcher");
 		this.setID("__launcher");
 		this.setNamespace("org.cnatural.applications.native.launcher");
+
+		this.setMetadataIcon("/resources/syslog.svg");
+		this.setMetadataCategory("System");
+		this.setMetadataGenericName("Launcher");
+		this.setMetadataComment("Launch applications from a simple interface");
 
 		this.isOpenALauncher = false;
 	}
@@ -94,7 +102,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			}
 		);
 
-		container.getElement().addClass("color-transparent");
+		container.getElement()
+			.addClass("color-transparent")
+			.addClass("row")
+			.addClass("wrap")
+			.removeClass("container");
 
 		container.pack("APPEND");
 
@@ -104,6 +116,17 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				AppButton,
 				{
 					parent: container.getElement()
+				}
+			);
+
+			var logo = window.NaturalWidgets.Create(
+				window.NaturalWidgets.Image,
+				{
+					parent: node.getElement(),
+					src: value.getMetadata().icon,
+					width: 64,
+					height: 64,
+					alt: value.getMetadata().genericName
 				}
 			);
 
@@ -123,6 +146,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				value.run([]);
 			});
 
+			logo.pack("BEGIN");
 			text.pack("END");
 			node.pack("APPEND");
 		});

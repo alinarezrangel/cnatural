@@ -37,6 +37,9 @@ limitations under the License.
 
 #define PORT 8888
 
+#define FILE_TYPE_ANY 0
+#define FILE_TYPE_SVG 1
+
 static cnatural_system_data_t dt;
 
 int request_handler(
@@ -49,7 +52,7 @@ int request_handler(
 	long unsigned int* upload_data_size,
 	void** conn_klass
 );
-void set_response_headers(struct MHD_Response** res);
+void set_response_headers(struct MHD_Response** res, int type);
 
 int main(int argc, char** argv)
 {
@@ -101,7 +104,8 @@ int request_handler(
 		ret = 0,
 		urlsize = 0,
 		use_ajax = -1,
-		filedesc = 0;
+		filedesc = 0,
+		filetype = FILE_TYPE_ANY;
 	const char* pfx_public = "public_http/";
 	const char* pfx_private = "private_http/";
 	const char* prefix = pfx_public;
@@ -216,7 +220,7 @@ int request_handler(
 			return MHD_NO;
 		}
 
-		set_response_headers(&res);
+		set_response_headers(&res, FILE_TYPE_ANY);
 		MHD_add_response_header(res, "Content-type", arg.output_mimetype);
 
 		ret = MHD_queue_response(conn, MHD_HTTP_OK, res);
@@ -412,8 +416,6 @@ int request_handler(
 		return MHD_NO;
 	}
 
-	set_response_headers(&res);
-
 	ext = strrchr(final_file_name, '.');
 
 	printf("Detected MIME type is %s\n", ext);
@@ -436,6 +438,7 @@ int request_handler(
 	else if(strcoll(ext, ".svg") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "image/svg+xml");
+		filetype = FILE_TYPE_SVG;
 		printf("Scalable Vector Graphics\n");
 	}
 	else if(strcoll(ext, ".png") == 0)
@@ -449,6 +452,8 @@ int request_handler(
 		printf("Plain Text\n");
 	}
 
+	set_response_headers(&res, filetype);
+
 	ret = MHD_queue_response(conn, MHD_HTTP_OK, res);
 	MHD_destroy_response(res);
 
@@ -458,12 +463,21 @@ int request_handler(
 	return ret;
 }
 
-void set_response_headers(struct MHD_Response** res)
+void set_response_headers(struct MHD_Response** res, int type)
 {
-	MHD_add_response_header(*res, "Content-Security-Policy", "default-src 'self'");
-	MHD_add_response_header(*res, "X-Frame-Options", "SAMEORIGIN");
-	MHD_add_response_header(*res, "X-XSS-Protection", "0");
+	const char* csp = "default-src 'self'; script-src 'self'; connect-src 'self'; child-src: 'self'; img-src: 'self'; style-src: 'self' 'unsafe-inline'";
+
+	if(type == FILE_TYPE_SVG)
+	{
+		csp = "default-src 'none'; frame-ancestors 'none'; style-src 'self' 'unsafe-inline'";
+	}
+
 	MHD_add_response_header(*res, "X-Content-Type-Options", "nosniff");
 	MHD_add_response_header(*res, "X-Permitted-Cross-Domain-Policies", "none");
+	MHD_add_response_header(*res, "X-Frame-Options", "SAMEORIGIN");
+	MHD_add_response_header(*res, "X-XSS-Protection", "0");
 	MHD_add_response_header(*res, "Strict-Transport-Security", "max-age=31536000 ; includeSubDomains");
+	MHD_add_response_header(*res, "Content-Security-Policy", csp);
+	MHD_add_response_header(*res, "X-Content-Security-Policy", csp);
+	MHD_add_response_header(*res, "X-Webkit-CSP", csp);
 }

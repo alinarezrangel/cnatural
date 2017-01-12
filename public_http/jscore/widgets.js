@@ -197,6 +197,24 @@ limitations under the License.
 					.addClass("gui-widget-header");
 			}
 		}));
+		window.NaturalWidgets.Image = Extend(window.NaturalWidgets.Widget, Class({
+			type: "Header",
+			path: "CNatural.JS.Widgets.Image",
+			_constructor: function(args)
+			{
+				this._super._constructor.call(this, args);
+				this._element = window.$natural.wrap(
+					document.createElement("img")
+				);
+				this._element
+					.addClass("gui-widget")
+					.addClass("gui-widget-image");
+				this._element.original.src = args.src;
+				this._element.original.width = args.width;
+				this._element.original.height = args.height;
+				this._element.original.alt = args.alt;
+			}
+		}));
 		window.NaturalWidgets.Window = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Window",
 			path: "CNatural.JS.Widgets.Window",

@@ -48,6 +48,39 @@ limitations under the License.
 			};
 			this.windowSystem = ws;
 			this.context = ctx;
+
+			this.metadata = {
+				"icon": "/resources/images/icons/executable-icon.svg",
+				"category": "X-Any",
+				"genericName": "(null)",
+				"onlyShowIn": "CNatural Client (Araguaney v0.0.1)",
+				"comment": "(null)"
+			};
+		};
+
+		window.NaturalShell.Base.Application.prototype.setMetadataIcon = function(x)
+		{
+			this.metadata.icon = x.toString();
+		};
+
+		window.NaturalShell.Base.Application.prototype.setMetadataCategory = function(x)
+		{
+			this.metadata.category = x.toString();
+		};
+
+		window.NaturalShell.Base.Application.prototype.setMetadataGenericName = function(x)
+		{
+			this.metadata.genericName = x.toString();
+		};
+
+		window.NaturalShell.Base.Application.prototype.setMetadataComment = function(x)
+		{
+			this.metadata.comment = x.toString();
+		};
+
+		window.NaturalShell.Base.Application.prototype.getMetadata = function(x)
+		{
+			return this.metadata;
 		};
 
 		window.NaturalShell.Base.Application.prototype.setName = function(name)

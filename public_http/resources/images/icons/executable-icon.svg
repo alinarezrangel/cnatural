@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   viewBox="0 0 63.999999 63.999999"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="executable-icon.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="7.9195959"
+     inkscape:cx="38.395007"
+     inkscape:cy="22.361569"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1600"
+     inkscape:window-height="848"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-988.3622)">
+    <g
+       id="g4148"
+       transform="matrix(0.05876221,0,0,0.05876221,10.137682,989.44264)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path4144"
+         d="m -100.90091,1032.3849 c -16.15,-8.0478 -30.7585,-24.2847 -36.6229,-40.70516 -3.0331,-8.4926 -3.7735,-97.6092 -3.875,-466.36635 l -0.1254,-455.867578 7.365,-14.77964 c 8.3463,-16.74874 19.6583,-27.39138 38.349304,-36.07993 l 12.8572,-5.97668 455.714256,0 455.71429,0 13.48765,6.70384 c 15.34457,7.6268 31.9846,24.74014 38.93283,40.04026 4.32874,9.53195 4.72237,48.504808 4.72237,467.541608 l 0,457.14287 -7.59071,14.2857 c -9.38543,17.66326 -19.99714,27.92456 -36.695,35.48306 -12.7612,5.7765 -16.26963,5.8204 -470.15332,5.8827 l -457.296166,0.063 -14.784404,-7.3674 z m 905.7166,-35.61536 c 14.21277,-3.9473 27.60326,-15.665 34.00397,-29.7561 5.00443,-11.0172 5.24783,-29.2059 5.30772,-396.63851 0.0518,-317.94877 -0.6134,-386.70997 -3.81517,-394.37289 -4.90835,-11.74732 -19.07663,-25.22017 -31.11363,-29.58641 -6.97866,-2.53141 -116.06657,-3.40985 -437.8656,-3.52595 -409.875086,-0.14787 -429.075186,0.0742 -440.118186,5.09036 -14.0911,6.40069 -25.8088,19.79119 -29.7561,34.00397 -4.176304,15.03753 -4.081104,763.69833 0.099,778.75243 3.998,14.398 18.3557,29.676 32.6324,34.7241 9.6493,3.4119 77.4839,4.0581 435.714316,4.1505 283.42388,0.073 427.81337,-0.8702 434.91128,-2.8415 z"
+         style="opacity:1;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:104.09999847;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         transform="translate(1356.3299,259.53318)"
+         inkscape:transform-center-x="-84.288741"
+         d="m -731.41644,266.64792 -505.73246,291.98477 0,-583.969539 z"
+         inkscape:randomized="2.56739e-16"
+         inkscape:rounded="7.28584e-17"
+         inkscape:flatsided="true"
+         sodipodi:arg2="1.0471976"
+         sodipodi:arg1="0"
+         sodipodi:r2="168.57748"
+         sodipodi:r1="337.15497"
+         sodipodi:cy="266.64792"
+         sodipodi:cx="-1068.5714"
+         sodipodi:sides="3"
+         id="path4146"
+         style="opacity:1;fill:#4d4d4d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:104.09999847;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:type="star" />
+    </g>
+  </g>
+</svg>
