@@ -291,7 +291,7 @@ html, body {
 }
 
 .gui-widget-application-button {
-	min-width: 33.333333333%;
+	min-width: 25%;
 }
 
 @media all and (max-width: 470px) {

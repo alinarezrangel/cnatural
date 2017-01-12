@@ -124,8 +124,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				{
 					parent: node.getElement(),
 					src: value.getMetadata().icon,
-					width: 64,
-					height: 64,
+					width: 128,
+					height: 128,
 					alt: value.getMetadata().genericName
 				}
 			);
@@ -152,10 +152,6 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		});
 
 		winstyle.removeBorders();
-
-		winstyle.setTitlebarColor("color-gui-header");
-		winstyle.setBodyColor("color-gui-body");
-
 		winstyle.updateColors();
 
 		myWindow.addEventListener("close", () =>

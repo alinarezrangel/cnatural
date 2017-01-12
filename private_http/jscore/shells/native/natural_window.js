@@ -48,6 +48,7 @@ limitations under the License.
 			window.NaturalShell.Base.Window.call(this, parent, appdata);
 			this.element = element;
 			this.style = new window.NaturalShell.Native.NaturalStyle(this, appdata);
+			this.style.updateColors();
 		};
 
 		window.NaturalShell.Native.NaturalWindow.prototype =

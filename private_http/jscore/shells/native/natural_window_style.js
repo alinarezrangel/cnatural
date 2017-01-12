@@ -70,9 +70,28 @@ limitations under the License.
 		{
 			var win = this.getWindow().getWMElement();
 
-			var titlebarColor = this.getTitlebarColor() || this.defaultPallete.titlebarColor || "color-natural-white";
-			var bodyColor = this.getBodyColor() || this.defaultPallete.bodyColor || "color-natural-white";
-			var borderColor = this.getBorderColor() || this.defaultPallete.borderColor || "color-transparent";
+			var selectOf = function(x, y, z)
+			{
+				if(x === null)
+				{
+					if(y === null)
+					{
+						return z;
+					}
+					else
+					{
+						return y;
+					}
+				}
+				else
+				{
+					return x;
+				}
+			};
+
+			var titlebarColor = selectOf(this.getTitlebarColor(), this.defaultPallete.titlebarColor, "color-gui-header");
+			var bodyColor = selectOf(this.getBodyColor(), this.defaultPallete.bodyColor, "color-gui-body");
+			var borderColor = selectOf(this.getBorderColor(), this.defaultPallete.borderColor, "color-transparent");
 
 			var titlebar = win.child("*[data-widget='window-header']").get(0).original;
 			var body = win.child("*[data-widget='window-body']").get(0).original;
@@ -94,15 +113,20 @@ limitations under the License.
 
 			for(i = 0; i < j; i++)
 			{
-				if(body.classList[i].startsWith("color-"))
+				var cl = body.classList[i];
+
+				if(typeof cl === "undefined")
+					break;
+
+				if(cl.startsWith("color-"))
 				{
-					window.$ntc(body).removeClass(body.classList[i]);
+					window.$ntc(body).removeClass(cl);
 				}
-				if(body.classList[i].startsWith("border-color-"))
+				if(cl.startsWith("border-color-"))
 				{
-					window.$ntc(body).removeClass(body.classList[i]);
+					window.$ntc(body).removeClass(cl);
 				}
-				if(body.classList[i] == "border")
+				if(cl == "border")
 				{
 					bodyContainsBorder = true;
 				}
@@ -112,15 +136,20 @@ limitations under the License.
 
 			for(i = 0; i < j; i++)
 			{
-				if(menu.classList[i].startsWith("color-"))
+				var cl = body.classList[i];
+
+				if(typeof cl === "undefined")
+					break;
+
+				if(cl.startsWith("color-"))
 				{
-					window.$ntc(menu).removeClass(menu.classList[i]);
+					window.$ntc(menu).removeClass(cl);
 				}
-				if(menu.classList[i].startsWith("border-color-"))
+				if(cl.startsWith("border-color-"))
 				{
-					window.$ntc(menu).removeClass(menu.classList[i]);
+					window.$ntc(menu).removeClass(cl);
 				}
-				if(menu.classList[i] == "border")
+				if(cl == "border")
 				{
 					menuContainsBorder = true;
 				}

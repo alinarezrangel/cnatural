@@ -43,6 +43,7 @@ limitations under the License.
 			this.parent = parent;
 			this.appdata = appdata;
 			this.style = new window.NaturalShell.Base.WindowStyle(this, appdata);
+			this.style.updateColors();
 		};
 
 		window.NaturalShell.Base.Window.prototype.show = function()
