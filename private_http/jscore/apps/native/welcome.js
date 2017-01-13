@@ -46,13 +46,15 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		window.NaturalShell.Base.Application.call(this, context, window_system);
 
 		this.setName("Welcome Application");
-		this.setID("welcome_application");
-		this.setNamespace("org.cnatural.applications.welcome");
+		this.setID("org.cnatural.applications.welcome");
+		this.setNamespace("CNatural:Software:Desktop:Native:Applications:Builtins");
 
 		this.setMetadataIcon("/resources/images/icons/help-icon.svg");
 		this.setMetadataCategory("System");
 		this.setMetadataGenericName("Welcome");
 		this.setMetadataComment("A welcome app for new users");
+		this.setMetadataGraphical(true);
+		this.setMetadataShowInShell(true);
 	}
 
 	WelcomeApplication.prototype = Object.create(window.NaturalShell.Base.Application.prototype);
@@ -86,7 +88,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			window.NaturalWidgets.Header,
 			{
 				parent: mainContainer.getElement(),
-				level: 6,
+				level: 3,
 				size: "section.title",
 				text: LangMap.subtitle
 			}

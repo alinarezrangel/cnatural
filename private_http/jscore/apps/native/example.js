@@ -38,8 +38,10 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		window.NaturalShell.Base.Application.call(this, context, window_system);
 
 		this.setName("Example Application");
-		this.setID("example_application");
-		this.setNamespace("org.cnatural.applications.example");
+		this.setID("org.cnatural.applications.example");
+		this.setNamespace("CNatural:Software:Desktop:Native:Applications:Builtins");
+		this.setMetadataGraphical(true);
+		this.setMetadataShowInShell(true);
 	}
 
 	ExampleApplication.prototype = Object.create(window.NaturalShell.Base.Application.prototype);

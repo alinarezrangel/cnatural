@@ -178,6 +178,7 @@ limitations under the License.
 				);
 				this._element
 					.addClass("container")
+					.addClass("overflow-auto")
 					.addClass("color-transparent")
 					.addClass("width-block")
 					.addClass("height-block")
@@ -260,6 +261,60 @@ limitations under the License.
 				this._element.original.alt = args.alt;
 			}
 		}));
+		window.NaturalWidgets.ContainerWithHeader = Extend(window.NaturalWidgets.Widget, Class({
+			type: "ContainerWithHeader",
+			path: "CNatural.JS.Widgets.ContainerWithHeader",
+			_constructor: function(args)
+			{
+				this._super._constructor.call(this, args);
+				this._element = window.$natural.wrap(
+					document.createElement("div")
+				);
+				this._element
+					.addClass("container")
+					.addClass("no-padding")
+					.addClass("margin-16")
+					.addClass("gui-widget")
+					.addClass("gui-widget-container")
+					.addClass("gui-widget-container-with-header")
+					.addClass("border-round")
+					.data("widget", "container-with-header");
+				this._innerHeader = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("container")
+					.addClass("padding-8")
+					.addClass("no-margin")
+					.addClass("no-border")
+					.addClass(args.color);
+				this._innerBody = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("container")
+					.addClass("padding-8")
+					.addClass("no-margin")
+					.addClass("border")
+					.addClass("border-" + args.color);
+				this._innerTitle = window.NaturalWidgets.Create(
+					window.NaturalWidgets.Header,
+					{
+						parent: this._innerHeader,
+						level: args.level,
+						size: args.size,
+						text: args.title
+					}
+				);
+				this._innerTitle.pack("BEGIN");
+				this._element.appendChild(this._innerHeader);
+				this._element.appendChild(this._innerBody);
+			},
+			getHeader: function()
+			{
+				return this._innerHeader;
+			},
+			getBody: function()
+			{
+				return this._innerBody;
+			}
+		}));
 		window.NaturalWidgets.Window = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Window",
 			path: "CNatural.JS.Widgets.Window",
@@ -311,7 +366,7 @@ limitations under the License.
 		}));
 		window.NaturalWidgets.AcceptDenyDialog = Extend(window.NaturalWidgets.Widget, Class({
 			type: "AcceptDenyDialog",
-			path: "CNatural.JS.Widgets.Window.AcceptDenyDialog",
+			path: "CNatural.JS.Widgets.Window.Dialog.AcceptDenyDialog",
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);

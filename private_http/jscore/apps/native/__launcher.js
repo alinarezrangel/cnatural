@@ -53,13 +53,15 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		window.NaturalShell.Base.Application.call(this, context, window_system);
 
 		this.setName("Launcher");
-		this.setID("__launcher");
-		this.setNamespace("org.cnatural.applications.native.launcher");
+		this.setID("org.cnatural.applications.native.launcher");
+		this.setNamespace("CNatural:Software:Desktop:Native:Applications:Builtins");
 
 		this.setMetadataIcon("/resources/syslog.svg");
 		this.setMetadataCategory("System");
 		this.setMetadataGenericName("Launcher");
 		this.setMetadataComment("Launch applications from a simple interface");
+		this.setMetadataGraphical(true);
+		this.setMetadataShowInShell(true);
 
 		this.isOpenALauncher = false;
 	}
@@ -105,6 +107,9 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		window.NaturalShell.CurrentShell.GetAllApplications().forEach((value, index, array) =>
 		{
+			if(!value.getMetadata().showInShell)
+				return;
+
 			var node = window.NaturalWidgets.Create(
 				AppButton,
 				{

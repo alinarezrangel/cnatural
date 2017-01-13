@@ -54,7 +54,9 @@ limitations under the License.
 				"category": "X-Any",
 				"genericName": "(null)",
 				"onlyShowIn": "CNatural Client (Araguaney v0.0.1)",
-				"comment": "(null)"
+				"comment": "(null)",
+				"graphical": true,
+				"showInShell": true
 			};
 		};
 
@@ -76,6 +78,16 @@ limitations under the License.
 		window.NaturalShell.Base.Application.prototype.setMetadataComment = function(x)
 		{
 			this.metadata.comment = x.toString();
+		};
+
+		window.NaturalShell.Base.Application.prototype.setMetadataGraphical = function(x)
+		{
+			this.metadata.graphical = x === true;
+		};
+
+		window.NaturalShell.Base.Application.prototype.setMetadataShowInShell = function(x)
+		{
+			this.metadata.showInShell = x === true;
 		};
 
 		window.NaturalShell.Base.Application.prototype.getMetadata = function(x)
@@ -143,25 +155,24 @@ limitations under the License.
 		window.NaturalShell.Base.Application.prototype.validateID = function(id)
 		{
 			// Format:
-			/// _*[a-z][a-zA-Z0-9_]*
-			/// strlen(id) > 4
-			/// The reserved IDs are:
-			/// - All that begins with "__"
-			/// - _example
-			/// - _system
-			/// - _shell
-			/// - _man
+			/// [a-z]+(\.[a-zA-Z0-9_]+){2,}
 
-			return /^_*[a-z][a-zA-Z0-9_]*$/.test(id);
+			return /^[a-z]+(\.[a-zA-Z0-9_]+){2,}$/.test(id);
 		};
 
 		window.NaturalShell.Base.Application.prototype.validateNamespace = function(ns)
 		{
 			// Format:
-			/// [a-z]+(\.[a-zA-Z0-9_]+){2,}
-			/// The sys.* is reserved for Natural/CNatural/NodeNatural pruposes.
+			/// _*[a-z][a-zA-Z0-9_:]*
+			/// strlen(id) > 4
+			/// The reserved NSs are:
+			/// - All that begins with ":"
+			/// - :Example:
+			/// - :System:
+			/// - :Shell:
+			/// - :Manual:
 
-			return /^[a-z]+(\.[a-zA-Z0-9_]+){2,}$/.test(ns);
+			return /^\:?[a-zA-Z0-9_]+\:[a-zA-Z0-9_:]*$/.test(ns);
 		};
 
 		window.NaturalShell.Base.Application.prototype.createInstance = function()
