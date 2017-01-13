@@ -185,6 +185,8 @@ limitations under the License.
 					.addClass("gui-widget")
 					.addClass("gui-widget-main-container")
 					.data("widget", "main-container");
+				if(args.noPadding === true)
+					this._element.addClass("no-padding");
 			}
 		}));
 		window.NaturalWidgets.Button = Extend(window.NaturalWidgets.Widget, Class({
@@ -272,12 +274,11 @@ limitations under the License.
 				);
 				this._element
 					.addClass("container")
-					.addClass("no-padding")
-					.addClass("margin-16")
+					.addClass("padding-16")
+					.addClass("no-margin")
 					.addClass("gui-widget")
 					.addClass("gui-widget-container")
 					.addClass("gui-widget-container-with-header")
-					.addClass("border-round")
 					.data("widget", "container-with-header");
 				this._innerHeader = window.$natural.wrap(
 					document.createElement("div")

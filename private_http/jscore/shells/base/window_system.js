@@ -94,6 +94,14 @@ limitations under the License.
 			/// Returns true if the window was deinitialized and removed from the DOM.
 			/// This functions may call windowManager.unpackWindow.
 		};
+
+		window.NaturalShell.Base.WindowSystem.prototype.getEqualsCallback = function(windowObject)
+		{
+			// Abstract method!
+			/// Returns the callback that determines if a window A the same window that the window B.
+			///
+			/// (returned value)(X) == true if and only if windowObject is equal to X.
+		};
 	};
 
 	if(typeof module !== "undefined")

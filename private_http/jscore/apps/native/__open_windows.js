@@ -47,12 +47,21 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		this.setMetadataComment("See all opened windows");
 		this.setMetadataGraphical(true);
 		this.setMetadataShowInShell(true);
+
+		this.isOpenALauncher = false;
 	}
 
 	OpenWindowsApplication.prototype = Object.create(window.NaturalShell.Base.Application.prototype);
 
 	OpenWindowsApplication.prototype.run = function(args)
 	{
+		if(this.isOpenALauncher)
+		{
+			return;
+		}
+
+		this.isOpenALauncher = true;
+
 		var appdata = this.createInstance();
 		// Lang here
 		var LangMap = POMap["en_US"];
@@ -71,13 +80,14 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		var mainContainer = window.NaturalWidgets.Create(
 			window.NaturalWidgets.MainContainer,
 			{
-				parent: windowBody
+				parent: windowBody,
+				noPadding: true
 			}
 		);
 
 		mainContainer.pack("BEGIN");
 
-		var packWindowsOfOn = function(parent, appname, appid)
+		var packWindowsOfOn = (parent, appname, appid, win) =>
 		{
 			var ct = window.NaturalWidgets.Create(
 				window.NaturalWidgets.ContainerWithHeader,
@@ -100,12 +110,29 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 			txt.pack("APPEND");
 			ct.pack("APPEND");
+
+			ct.getElement()
+				.addClass("gui-clickeable")
+				.on("click", () =>
+				{
+					win.removeClass("gui-hidden");
+					this.getWindowSystem().getWindowManager().moveToTop(
+						this.getWindowSystem().getEqualsCallback(win)
+					);
+					this.getWindowSystem().getWindowManager().showToplevel();
+					this.getWindowSystem().destroyWindow(myWindow.getWMElement());
+				});
 		};
 
-		packWindowsOfOn(mainContainer.getElement(), "Launcher", "rocket");
-		packWindowsOfOn(mainContainer.getElement(), "Open Windows", "windows.opened");
-		packWindowsOfOn(mainContainer.getElement(), "Example?", "org.example.www");
-		packWindowsOfOn(mainContainer.getElement(), "Bug", "bug");
+		this.getWindowSystem().getWindowManager().forEachWindow((winEl) =>
+		{
+			packWindowsOfOn(mainContainer.getElement(), winEl.data("name"), winEl.data("appid"), winEl);
+		});
+
+		myWindow.addEventListener("close", () =>
+		{
+			this.isOpenALauncher = false;
+		});
 
 		this.getWindowSystem().getWindowManager().showToplevel();
 

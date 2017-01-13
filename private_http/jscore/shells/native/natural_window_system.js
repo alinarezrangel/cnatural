@@ -242,17 +242,22 @@ limitations under the License.
 
 			if(canBeRemoved)
 			{
-				this.getWindowManager().unpackWindow((windowElement) =>
-				{
-					return ((windowElement.data("instanceId") == windowObject.data("instanceId"))
-						&& (windowElement.data("windowId") == windowObject.data("windowId"))
-						&& (windowElement.data("applicationId") == windowObject.data("applicationId"))
-						&& (windowElement.data("namespace") == windowObject.data("namespace")));
-				});
+				this.getWindowManager().unpackWindow(this.getEqualsCallback(windowObject));
 				return true;
 			}
 
 			return false;
+		};
+
+		window.NaturalShell.Native.NaturalWindowSystem.prototype.getEqualsCallback = function(windowObject)
+		{
+			return (windowElement) =>
+			{
+				return ((windowElement.data("instanceId") == windowObject.data("instanceId"))
+					&& (windowElement.data("windowId") == windowObject.data("windowId"))
+					&& (windowElement.data("applicationId") == windowObject.data("applicationId"))
+					&& (windowElement.data("namespace") == windowObject.data("namespace")));
+			};
 		};
 
 		window.NaturalShell.Native.NaturalWindowSystem.prototype.initWindowEvents =

@@ -159,9 +159,17 @@ limitations under the License.
 				{
 					rt = windowEl;
 				}
-			}).forEachChild();
+			}).forEach();
 
 			return !rt.hasClass("gui-hidden");
+		};
+
+		window.NaturalShell.Native.FixedWindowManager.prototype.forEachWindow = function(cll)
+		{
+			this.context.getWindowArea().child("*[data-widget='window']").apply((windowEl) =>
+			{
+				cll(windowEl);
+			}).forEach();
 		};
 
 		window.NaturalShell.Native.FixedWindowManager.prototype.unpackWindow = function(cmpfcn)
