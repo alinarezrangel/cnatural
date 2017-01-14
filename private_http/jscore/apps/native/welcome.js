@@ -78,7 +78,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		var mainContainer = window.NaturalWidgets.Create(
 			window.NaturalWidgets.MainContainer,
 			{
-				parent: windowBody
+				parent: windowBody,
+				noPadding: false
 			}
 		);
 

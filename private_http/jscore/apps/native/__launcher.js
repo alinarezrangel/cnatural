@@ -90,10 +90,18 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		var windowBody = myWindow.getBody();
 
+		var mcontainer = window.NaturalWidgets.Create(
+			window.NaturalWidgets.MainContainer,
+			{
+				parent: windowBody,
+				noPadding: false
+			}
+		);
+
 		var container = window.NaturalWidgets.Create(
 			window.NaturalWidgets.Container,
 			{
-				parent: windowBody
+				parent: mcontainer.getElement()
 			}
 		);
 
@@ -103,6 +111,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			.addClass("wrap")
 			.removeClass("container");
 
+		mcontainer.pack("APPEND");
 		container.pack("APPEND");
 
 		window.NaturalShell.CurrentShell.GetAllApplications().forEach((value, index, array) =>

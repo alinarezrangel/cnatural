@@ -116,30 +116,38 @@ limitations under the License.
 				(this.context.getHiddenWindowsCallback())("window.show", element);
 			}
 
-			(this.context.getHiddenWindowsCallback())("window.toplevel", null);
+			(this.context.getHiddenWindowsCallback())("window.toplevel", element);
 		};
 
 		window.NaturalShell.Native.FixedWindowManager.prototype.moveToTop = function(cmpfcn)
 		{
-			var maxIndex = 0;
+			var index = 0, maxIndex = 0, winEl = null;
 			var windows = this.context.getWindowArea().child("*[data-widget='window']");
 
 			windows.apply((windowEl) =>
 			{
 				if(parseInt(windowEl.data("zIndex")) > maxIndex)
 				{
-					maxIndex = parseInt(windowEl.data("zIndex"));
+					maxIndex = windowEl.data("zIndex");
+				}
+
+				if(cmpfcn(windowEl))
+				{
+					winEl = windowEl;
+					index = parseInt(windowEl.data("zIndex"));
+
+					(this.context.getHiddenWindowsCallback())("window.front", windowEl);
 				}
 			}).forEach();
 
+			if(winEl !== null)
+				winEl.data("zIndex", maxIndex);
+
 			windows.apply((windowEl) =>
 			{
-				windowEl.data("zIndex", parseInt(windowEl.data("zIndex")) - 1)
-				if(cmpfcn(windowEl))
+				if(parseInt(windowEl.data("zIndex")) > index)
 				{
-					windowEl.data("zIndex", maxIndex);
-
-					(this.context.getHiddenWindowsCallback())("window.front", windowEl);
+					windowEl.data("zIndex", (parseInt(windowEl.data("zIndex")) - 1).toString());
 				}
 			}).forEach();
 		};

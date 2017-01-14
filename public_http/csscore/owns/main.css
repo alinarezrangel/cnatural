@@ -293,7 +293,7 @@ html, body {
 }
 
 .gui-widget-application-button {
-	min-width: 25%;
+	min-width: 142px !important;
 }
 
 .gui-widget-main-container {

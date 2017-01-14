@@ -255,8 +255,8 @@ limitations under the License.
 			{
 				return ((windowElement.data("instanceId") == windowObject.data("instanceId"))
 					&& (windowElement.data("windowId") == windowObject.data("windowId"))
-					&& (windowElement.data("applicationId") == windowObject.data("applicationId"))
-					&& (windowElement.data("namespace") == windowObject.data("namespace")));
+					&& (windowElement.data("appid") == windowObject.data("appid"))
+					&& (windowElement.data("ns") == windowObject.data("ns")));
 			};
 		};
 

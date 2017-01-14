@@ -185,7 +185,8 @@ limitations under the License.
 					.addClass("gui-widget")
 					.addClass("gui-widget-main-container")
 					.data("widget", "main-container");
-				if(args.noPadding === true)
+
+				if((typeof args.noPadding === "boolean") && (args.noPadding))
 					this._element.addClass("no-padding");
 			}
 		}));
