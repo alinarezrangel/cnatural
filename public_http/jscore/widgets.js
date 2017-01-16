@@ -149,6 +149,15 @@ limitations under the License.
 						document.createTextNode(args.text)
 					));
 				}
+			},
+			changeText: function(new_text)
+			{
+				var node = this._element.original;
+
+				while(node.firstChild)
+					node.removeChild(node.firstChild);
+
+				node.appendChild(document.createTextNode(new_text));
 			}
 		}));
 		window.NaturalWidgets.Container = Extend(window.NaturalWidgets.Widget, Class({
@@ -167,9 +176,26 @@ limitations under the License.
 					.data("widget", "container");
 			}
 		}));
+		window.NaturalWidgets.RowContainer = Extend(window.NaturalWidgets.Widget, Class({
+			type: "RowContainer",
+			path: "CNatural.JS.Widgets.Container.RowContainer",
+			_constructor: function(args)
+			{
+				this._super._constructor.call(this, args);
+				this._element = window.$natural.wrap(
+					document.createElement("div")
+				);
+				this._element
+					.addClass("row")
+					.addClass("wrap")
+					.addClass("gui-widget")
+					.addClass("gui-widget-row-container")
+					.data("widget", "row-container");
+			}
+		}));
 		window.NaturalWidgets.MainContainer = Extend(window.NaturalWidgets.Widget, Class({
 			type: "MainContainer",
-			path: "CNatural.JS.Widgets.MainContainer",
+			path: "CNatural.JS.Widgets.Container.MainContainer",
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);

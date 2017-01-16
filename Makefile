@@ -1,7 +1,7 @@
 TARGET=cnatural.out
 SRC=src
 INC=include
-OBJC=main.o ajaxcore.o ajaxtypes.o coreutils_import.o list.o tokens.o coreutils_login.o
+OBJC=main.o ajaxcore.o ajaxtypes.o coreutils_import.o list.o tokens.o coreutils_login.o coreutils_time.o
 LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil
 INCLUDES=-I$PATH_TO_LIBMHD_INCLUDES -I$(INC)
 WARN=-Wall
@@ -35,6 +35,9 @@ coreutils_import.o: $(SRC)/coreutils/import.c $(INC)/coreutils/import.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 coreutils_login.o: $(SRC)/coreutils/login.c $(INC)/coreutils/login.h
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+coreutils_time.o: $(SRC)/coreutils/time.c $(INC)/coreutils/time.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:

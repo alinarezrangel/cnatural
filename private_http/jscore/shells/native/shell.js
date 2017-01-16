@@ -93,7 +93,8 @@ window.NaturalClient.GetToken((err, token) =>
 			"jscore/apps/native/__launcher.js",
 			[
 				"jscore/apps/native/__open_windows.js",
-				"jscore/apps/native/welcome.js"
+				"jscore/apps/native/welcome.js",
+				"jscore/apps/native/clock.js"
 			],
 			() =>
 			{
@@ -217,6 +218,46 @@ window.NaturalClient.GetToken((err, token) =>
 			window.NaturalShell.Native.GetAllApplications = function()
 			{
 				return CNaturalApplicationList;
+			};
+
+			window.NaturalShell.Native.GetShortNameArgument = function(args, argname)
+			{
+				for(var i = 0; i < args.length; i++)
+				{
+					if(args[i] == argname)
+					{
+						return args[i + 1] || null;
+					}
+				}
+
+				return null;
+			};
+
+			window.NaturalShell.Native.GetLongNameArgument = function(args, argname)
+			{
+				for(var i = 0; i < args.length; i++)
+				{
+					if(args[i].startsWith(argname + "="))
+					{
+						return args[i].split("=").slice(1).join("=");
+					}
+				}
+
+				return null;
+			};
+
+			window.NaturalShell.Native.GetLongNameFlagArgument =
+				window.NaturalShell.Native.GetShortNameFlagArgument = function(args, argname)
+			{
+				for(var i = 0; i < args.length; i++)
+				{
+					if(args[i] == argname)
+					{
+						return true;
+					}
+				}
+
+				return false;
 			};
 
 			importApps(() =>

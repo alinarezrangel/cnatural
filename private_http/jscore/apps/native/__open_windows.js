@@ -64,7 +64,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		var appdata = this.createInstance();
 		// Lang here
-		var LangMap = POMap["en_US"];
+		var LangMap = POMap[
+			window.NaturalShell.Native.GetShortNameArgument("-l") ||
+			window.NaturalShell.Native.GetLongNameArgument("--lang") ||
+			"en_US"
+		];
 
 		var myWindow = this.getWindowSystem().createDefaultWindow(
 			LangMap.title,

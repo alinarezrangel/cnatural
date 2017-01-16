@@ -62,7 +62,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	WelcomeApplication.prototype.run = function(args)
 	{
 		var appdata = this.createInstance();
-		var LangMap = POMap["en_US"];
+		var LangMap = POMap[
+			window.NaturalShell.Native.GetShortNameArgument("-l") ||
+			window.NaturalShell.Native.GetLongNameArgument("--lang") ||
+			"en_US"
+		];
 
 		var myWindow = this.getWindowSystem().createDefaultWindow(
 			LangMap.title,
