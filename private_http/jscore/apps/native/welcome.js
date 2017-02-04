@@ -63,8 +63,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	{
 		var appdata = this.createInstance();
 		var LangMap = POMap[
-			window.NaturalShell.Native.GetShortNameArgument("-l") ||
-			window.NaturalShell.Native.GetLongNameArgument("--lang") ||
+			window.NaturalShell.Native.GetShortNameArgument(args, "-l") ||
+			window.NaturalShell.Native.GetLongNameArgument(args, "--lang") ||
 			"en_US"
 		];
 

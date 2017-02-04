@@ -267,13 +267,13 @@ window.NaturalClient.GetToken((err, token) =>
 				$ntc("#_shellscreen__apps").on("click", () =>
 				{
 					console.log("Opening <launcher>");
-					window.NaturalShell.Native.LaunchApplication("org.cnatural.applications.native.launcher");
+					window.NaturalShell.Native.LaunchApplication("org.cnatural.applications.native.launcher", []);
 				});
 
 				$ntc("#_shellscreen__menu").on("click", () =>
 				{
 					console.log("Opening <open windows>");
-					window.NaturalShell.Native.LaunchApplication("org.cnatural.applications.open_windows");
+					window.NaturalShell.Native.LaunchApplication("org.cnatural.applications.open_windows", []);
 				});
 
 				document.body.dispatchEvent(new CustomEvent("shellLoaded", {}));
