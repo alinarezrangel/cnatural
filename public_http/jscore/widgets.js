@@ -240,6 +240,36 @@ limitations under the License.
 				}
 			}
 		}));
+		window.NaturalWidgets.Input = Extend(window.NaturalWidgets.Widget, Class({
+			type: "Input",
+			path: "CNatural.JS.Widgets.Input",
+			_constructor: function(args)
+			{
+				this._super._constructor.call(this, args);
+				this._element = window.$natural.wrap(
+					document.createElement("input")
+				);
+				this._element.attr("type", args.type);
+				this._element
+					.addClass("input")
+					.addClass("gui-widget")
+					.addClass("gui-widget-input")
+					.data("widget", "input");
+
+				if(typeof args.value !== "undefined")
+				{
+					this._element.attr("value", args.value);
+				}
+				if(typeof args.placeholder !== "undefined")
+				{
+					this._element.attr("placeholder", args.placeholder);
+				}
+				if(typeof args.name !== "undefined")
+				{
+					this._element.attr("name", args.name);
+				}
+			}
+		}));
 		window.NaturalWidgets.Header = Extend(window.NaturalWidgets.Widget, Class({
 			type: "Header",
 			path: "CNatural.JS.Widgets.Header",

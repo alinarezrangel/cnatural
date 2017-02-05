@@ -96,6 +96,8 @@ limitations under the License.
 			// Abstract method!
 			/// Gets the context menu for the window (right-click menu).
 			/// May be non-empty.
+			///
+			/// Can return null if no context menu is supported.
 		};
 
 		window.NaturalShell.Base.Window.prototype.getMenu = function()

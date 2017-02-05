@@ -221,6 +221,10 @@ html, body {
 	color: #000 !important;
 }
 
+.gui-margin-left {
+	margin-left: 32px;
+}
+
 .gui-widget-window {
 	display: -moz-flex;
 	display: -webkit-flex;
@@ -306,6 +310,14 @@ html, body {
 .gui-widget-shell-window-area {
 	max-height: calc(100% - 45px) !important;
 	max-width: 100% !important;
+}
+
+.gui-widget-input[type="text"], .gui-widget-input[type="password"] {
+	padding: 16px 8px !important;
+	border: 2px solid #999 !important;
+	border-radius: 4px !important;
+	color: #000;
+	background-color: #FFF;
 }
 
 @media all and (max-width: 470px) {

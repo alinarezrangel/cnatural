@@ -88,6 +88,83 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		winstyle.removeBorders();
 		winstyle.updateColors();
 
+		var windowMenu = myWindow.getMenu();
+
+		var applicationList = [];
+
+		var searchInput = window.NaturalWidgets.Create(
+			window.NaturalWidgets.Input,
+			{
+				parent: windowMenu,
+				type: "text",
+				placeholder: "Enter application to search..."
+			}
+		);
+
+		var searchResults = window.NaturalWidgets.Create(
+			window.NaturalWidgets.Container,
+			{
+				parent: windowMenu
+			}
+		);
+
+		searchInput.pack("APPEND");
+		searchResults.pack("APPEND");
+
+		searchInput.getElement().attach((event) =>
+		{
+			var isearchResults = searchResults.getElement().original;
+			var searching = searchInput.getElement().value();
+
+			while(isearchResults.firstChild)
+				isearchResults.removeChild(isearchResults.firstChild);
+
+			applicationList.forEach((value, index, array) =>
+			{
+				if(value.getName().indexOf(searching) >= 0)
+				{
+					var node = window.NaturalWidgets.Create(
+						window.NaturalWidgets.Button,
+						{
+							parent: searchResults.getElement(),
+							text: value.getName()
+						}
+					);
+
+					var logo = window.NaturalWidgets.Create(
+						window.NaturalWidgets.Image,
+						{
+							parent: node.getElement(),
+							src: value.getMetadata().icon,
+							width: 32,
+							height: 32,
+							alt: value.getMetadata().genericName
+						}
+					);
+
+					logo.getElement().addClass([
+						"gui-margin-left"
+					]);
+
+					node.pack("APPEND");
+					logo.pack("APPEND");
+
+					node.getElement().attach((event) =>
+					{
+						this.getWindowSystem().destroyWindow(myWindow.getWMElement());
+
+						value.run([]);
+					}).on("click").addClass([
+						"color-gui-button",
+						"gui-clickeable",
+						"width-block",
+						"margin-4",
+						"padding-16"
+					]);
+				}
+			});
+		}).on("keypress");
+
 		var windowBody = myWindow.getBody();
 
 		var mcontainer = window.NaturalWidgets.Create(
@@ -118,6 +195,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		{
 			if(!value.getMetadata().showInShell)
 				return;
+
+			applicationList.push(value);
 
 			var node = window.NaturalWidgets.Create(
 				AppButton,

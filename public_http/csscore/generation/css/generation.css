@@ -321,7 +321,7 @@ html, body {
 }
 
 .table th, .table td {
-	border:  1px solid #ccc;
+	border:  1px solid #ccc;;
 	padding: 8px;
 }
 
