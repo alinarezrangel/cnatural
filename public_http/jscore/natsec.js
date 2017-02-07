@@ -419,15 +419,15 @@ limitations under the License.
 			{
 				win = window;
 			}
-			window.NaturalObject = window.NaturalObject || NaturalObject;
-			window.$natural = new window.NaturalObject(document);
-			window.$ntc = function(obj)
+			win.NaturalObject = win.NaturalObject || NaturalObject;
+			win.$natural = new win.NaturalObject(document);
+			win.$ntc = function(obj)
 			{
 				if(typeof obj === "string")
 				{
-					return window.$natural.child(obj);
+					return win.$natural.child(obj);
 				}
-				return window.$natural.wrap(obj);
+				return win.$natural.wrap(obj);
 			};
 		};
 

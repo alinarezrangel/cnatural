@@ -70,13 +70,13 @@ limitations under the License.
 				titlebar.className = "gui-widget-window-header gui-flexcore-row no-margin od-1";
 				titlebar.dataset["widget"] = "window-header";
 
-				titlebarCloseOrBackButton.className = "gui-font-iconset-v2 gui-hoverable od-1 text-jumbo gui-clickeable padding-2 margin-8 color-transparent gui-shape-circle gui-circular-button-50";
+				titlebarCloseOrBackButton.className = "gui-font-iconset-v2 color-gui-window-close-button flat-button od-1 text-jumbo gui-clickeable padding-2 margin-8 color-transparent gui-shape-circle gui-circular-button-50";
 				titlebarCloseOrBackButton.dataset["widget"] = "button";
 
 				titlebarTitle.className = "text-jumbo font-bold od-2 fx-1 margin-8 color-transparent";
 				titlebarTitle.dataset["widget"] = "text";
 
-				titlebarMenuButton.className = "gui-font-iconset-v2 gui-hoverable od-3 text-jumbo gui-clickeable padding-2 margin-8 color-transparent gui-shape-circle gui-circular-button-50";
+				titlebarMenuButton.className = "gui-font-iconset-v2 color-gui-window-menu-button flat-button od-3 text-jumbo gui-clickeable padding-2 margin-8 color-transparent gui-shape-circle gui-circular-button-50";
 				titlebarMenuButton.dataset["widget"] = "button";
 
 				body.className = "gui-widget-window-body container overflow-auto border no-padding no-margin od-2 fx-1 force-relative";

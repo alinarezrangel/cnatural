@@ -189,6 +189,7 @@ limitations under the License.
 					.addClass("row")
 					.addClass("wrap")
 					.addClass("gui-widget")
+					.addClass("gui-widget-container")
 					.addClass("gui-widget-row-container")
 					.data("widget", "row-container");
 			}
@@ -209,6 +210,7 @@ limitations under the License.
 					.addClass("width-block")
 					.addClass("height-block")
 					.addClass("gui-widget")
+					.addClass("gui-widget-container")
 					.addClass("gui-widget-main-container")
 					.data("widget", "main-container");
 

@@ -99,6 +99,27 @@ limitations under the License.
 	}
 }
 
+@keyframes gui-animation-alert-move {
+	0% {
+		transform: rotate(0deg);
+	}
+	12.5% {
+		transform: rotate(22.5deg);
+	}
+	37.2% {
+		transform: rotate(-22.5deg);
+	}
+	50% {
+		transform: rotate(5deg);
+	}
+	62.5% {
+		transform: rotate(-5deg);
+	}
+	87.2% {
+		transform: rotate(0deg);
+	}
+}
+
 .gui-animation-loadbar-dot-s1 { animation: gui-animation-loadbar-dot-s1-anim 2.5s linear 0.00s infinite normal; }
 .gui-animation-loadbar-dot-s2 { animation: gui-animation-loadbar-dot-s2-anim 2.5s linear 0.25s infinite normal; }
 .gui-animation-loadbar-dot-s3 { animation: gui-animation-loadbar-dot-s3-anim 2.5s linear 0.50s infinite normal; }
@@ -127,4 +148,8 @@ limitations under the License.
 
 .gui-animation-hide-move-from-center-to-top {
 	animation: gui-animation-move-from-top-to-center 1.5s ease-in 0s 1 reverse;
+}
+
+.gui-animation-alert {
+	animation: gui-animation-alert-move 0.7s linear 0s infinite normal;
 }

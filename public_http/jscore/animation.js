@@ -128,6 +128,25 @@ limitations under the License.
 				.addClass("gui-animation-show-move-from-top-to-center");
 			return this;
 		};
+		window.NaturalObject.prototype.alertMoveForever = function()
+		{
+			this.animatable();
+
+			if(this.inAnimation)
+				return this;
+			this.inAnimation = true;
+
+			this.animatable()
+				.show()
+				.animationEndEvent(() =>
+				{
+					this
+						/*.removeClass("gui-animation-alert")*/
+						.removeClass("gui-hidden");
+				})
+				.addClass("gui-animation-alert");
+			return this;
+		};
 
 		(new window.NaturalObject(document)).reloadGlobals(window);
 	};

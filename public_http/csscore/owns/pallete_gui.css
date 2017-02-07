@@ -43,3 +43,19 @@ limitations under the License.
 	background-image: url('/resources/images/themed-10x10-d1.png');
 	background-repeat: repeat;
 }
+
+.color-gui-window-close-button {
+	transition: background-color 0.2s ease 0s;
+}
+
+.color-gui-window-close-button:hover, .color-gui-window-close-button:active {
+	background-color: #F31212 !important;
+}
+
+.color-gui-window-menu-button {
+	transition: background-color 0.2s ease 0s;
+}
+
+.color-gui-window-menu-button:hover, .color-gui-window-menu-button:active {
+	background-color: #729FCF !important;
+}
