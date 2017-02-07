@@ -40,9 +40,9 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				.addClass("margin-8")
 				.addClass("color-gui-button")
 				.addClass("fx-1")
-				.addClass("gui-hoverable")
-				.addClass("gui-clickeable")
+				.addClass("flat-button")
 				.addClass("gui-widget")
+				.addClass("gui-widget-button")
 				.addClass("gui-widget-application-button")
 				.data("widget", "application-button");
 		}
@@ -121,7 +121,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 			applicationList.forEach((value, index, array) =>
 			{
-				if(value.getName().indexOf(searching) >= 0)
+				if(value.getName().toLowerCase().indexOf(searching.toLowerCase()) >= 0)
 				{
 					var node = window.NaturalWidgets.Create(
 						window.NaturalWidgets.Button,
@@ -130,6 +130,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 							text: value.getName()
 						}
 					);
+					node.getElement().addClass("gui-margin-bottom");
 
 					var logo = window.NaturalWidgets.Create(
 						window.NaturalWidgets.Image,

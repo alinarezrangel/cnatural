@@ -143,11 +143,11 @@ limitations under the License.
 }
 
 .gui-animation-show-move-from-top-to-center {
-	animation: gui-animation-move-from-top-to-center 1.5s ease-out 0s 1 normal;
+	animation: gui-animation-move-from-top-to-center 0.5s ease-out 0s 1 normal;
 }
 
 .gui-animation-hide-move-from-center-to-top {
-	animation: gui-animation-move-from-top-to-center 1.5s ease-in 0s 1 reverse;
+	animation: gui-animation-move-from-top-to-center 0.5s ease-in 0s 1 reverse;
 }
 
 .gui-animation-alert {

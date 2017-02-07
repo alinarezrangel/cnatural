@@ -225,6 +225,10 @@ html, body {
 	margin-left: 32px;
 }
 
+.gui-margin-bottom {
+	margin-bottom: 64px;
+}
+
 .gui-widget-window {
 	display: -moz-flex;
 	display: -webkit-flex;

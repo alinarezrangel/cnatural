@@ -163,7 +163,7 @@ limitations under the License.
 			menuSideNavCloseMenu.className =
 				menuSideNavCloseWindow.className =
 				menuSideNavMinimizeWindow.className =
-					"col text-jumbo padding-16 fx-1 text-center gui-clickeable gui-hoverable gui-button";
+					"col flat-button text-jumbo padding-16 fx-1";
 
 			menuSideNavCloseMenu.dataset["widget"] =
 				menuSideNavCloseWindow.dataset["widget"] =

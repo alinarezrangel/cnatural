@@ -240,6 +240,16 @@ limitations under the License.
 						document.createTextNode(args.text)
 					));
 				}
+
+				if(typeof args.type !== "undefined")
+				{
+					if(args.type == "flat-button")
+					{
+						this.element
+							.removeClass("button")
+							.addClass("flat-button");
+					}
+				}
 			}
 		}));
 		window.NaturalWidgets.Input = Extend(window.NaturalWidgets.Widget, Class({
