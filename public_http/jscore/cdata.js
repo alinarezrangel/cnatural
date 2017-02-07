@@ -71,6 +71,7 @@ limitations under the License.
 			"swap": "x",
 			"exchange": "x",
 			"papers": "x",
+			"windows": "x",
 			"stack": "x",
 			"minus": "y",
 			"by": "z",

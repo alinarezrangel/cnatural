@@ -305,6 +305,7 @@ html, body {
 }
 
 .gui-widget-main-container {
+	display: inline-block !important;
 	max-width: 100% !important;
 	max-height: 100% !important;
 	margin: 0 !important;
@@ -312,16 +313,17 @@ html, body {
 }
 
 .gui-widget-shell-window-area {
-	max-height: 100% !important;
+	max-height: calc(100vh - 48px) !important;
 	max-width: 100% !important;
 }
 
-.gui-widget-input[type="text"], .gui-widget-input[type="password"] {
+.gui-widget-input[type="email"], .gui-widget-input[type="number"],
+.gui-widget-input[type="search"], .gui-widget-input[type="url"],
+.gui-widget-input[type="tel"], .gui-widget-input[type="text"],
+.gui-widget-input[type="password"], .gui-widget-select,
+.gui-widget-textarea, .gui-widget-inputtext,
+textarea.gui-widget-input, select.gui-widget-input {
 	padding: 16px 8px !important;
-	border: 2px solid #999 !important;
-	border-radius: 4px !important;
-	color: #000;
-	background-color: #FFF;
 }
 
 @media all and (max-width: 470px) {
