@@ -79,7 +79,7 @@ limitations under the License.
 				titlebarMenuButton.className = "gui-font-iconset-v2 color-gui-window-menu-button flat-button od-3 text-jumbo gui-clickeable padding-2 margin-8 color-transparent gui-shape-circle gui-circular-button-50";
 				titlebarMenuButton.dataset["widget"] = "button";
 
-				body.className = "gui-widget-window-body container overflow-auto border no-padding no-margin od-2 fx-1 force-relative";
+				body.className = "gui-widget-window-body container overflow-hide border no-padding no-margin od-2 fx-1 force-relative";
 				body.dataset["widget"] = "window-body";
 
 				if(appdata.mainWindowCreated)
