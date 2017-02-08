@@ -448,7 +448,7 @@ limitations under the License.
 				).addClass("modal")
 					.addClass("gui-widget")
 					.addClass("gui-widget-window")
-					// .addClass("gui-widget-window-dialog")
+					.addClass("gui-widget-window-dialog")
 					.addClass("gui-widget-window-accept-deny-dialog")
 					.addClass("gui-modal")
 					.addClass("gui-hidden")
@@ -583,44 +583,134 @@ limitations under the License.
 				this.onready = callback || function(event, choice) {};
 			}
 		}));
+		window.NaturalWidgets.TextDialog = Extend(window.NaturalWidgets.Widget, Class({
+			type: "TextDialog",
+			path: "CNatural.JS.Widgets.Window.Dialog.TextDialog",
+			_constructor: function(args)
+			{
+				this._super._constructor.call(this, args);
 
-		window.NaturalWidgets.CreateTextDialog = function(parent, level, text, oncreated)
-		{
-			var win = window.NaturalWidgets.Create(window.NaturalWidgets.Dialog, {
-				parent: parent
-			});
-			var message = window.NaturalWidgets.Create(window.NaturalWidgets.Header, {
-				parent: win.getElement(),
-				level: level,
-				size: "content.title"
-			});
-			var text = window.NaturalWidgets.Create(window.NaturalWidgets.PlainText, {
-				parent: message.getElement(),
-				text: text
-			});
-			win.getElement()
-				.show()
-				.removeClass("gui-hidden")
-				.style({
-					top: "50%",
-					left: "50%",
-					maxWidth: "50%",
-					maxHeight: "50%",
-					transform: "translateX(-50%)"
-				})
-				.addClass("padding-16")
-				.addClass("overflow-hidden")
-				.attach(function(ev)
+				this._element = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("modal")
+					.addClass("gui-widget")
+					.addClass("gui-widget-window")
+					.addClass("gui-widget-window-dialog")
+					.addClass("gui-widget-window-text-dialog")
+					.addClass("gui-modal")
+					.addClass("gui-hidden")
+					.data("widget", "text-dialog");
+				this._innerModal = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("modal-content")
+					.addClass("box")
+					.addClass("color-gui-body")
+					.addClass("no-padding")
+					.addClass("no-margin")
+					.addClass("no-border");
+				this._innerHeader = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("container")
+					.addClass("color-gui-header")
+					.addClass("padding-8")
+					.addClass("no-margin")
+					.addClass("no-border");
+				this._innerHeaderCloseButton = window.$natural.wrap(
+					document.createElement("span")
+				).addClass("close-button")
+					.addClass("gui-font-iconset-v1")
+					.addClass("no-padding")
+					.addClass("no-margin")
+					.addClass("no-border")
+					.addClass("gui-clickeable")
+					.addClass("font-bold")
+					.addClass("text-big")
+					.addClass("color-transparent");
+				this._innerHeaderCloseButton.appendChild(window.$natural.wrap(
+					document.createTextNode(window.$natural.NaturalIconSetMap["close"])
+				));
+				this._innerBody = window.$natural.wrap(
+					document.createElement("div")
+				).addClass("container")
+					.addClass("color-transparent")
+					.addClass("padding-8")
+					.addClass("no-margin")
+					.addClass("border-bottom")
+					.addClass("bs-1")
+					.addClass("border-color-dark-grey");
+
+				this._element
+					.appendChild(this._innerModal)
+					.echo(this._innerModal)
+					.appendChild(this._innerHeader)
+					.appendChild(this._innerBody)
+					.echo(this._innerHeader)
+					.appendChild(this._innerHeaderCloseButton);
+
+				this._innerTitle = window.NaturalWidgets.Create(
+					window.NaturalWidgets.Header,
+					{
+						parent: this._innerHeader,
+						level: 6,
+						size: "content.title",
+						text: args.title
+					}
+				);
+				this._innerTitle.getElement()
+					.addClass("text-center")
+					.addClass("color-transparent")
+					.addClass("no-padding")
+					.addClass("no-margin")
+					.addClass("no-border")
+					.addClass("width-block");
+				this._innerTitle.pack("APPEND");
+
+				if(typeof args.text !== "undefined")
 				{
-					win.getElement().hide();
-					ev.preventDefault();
-					return false;
-				})
-				.on("click", true);
-			text.pack("APPEND");
-			message.pack("BEGIN");
+					this._innerBody.appendChild(window.$natural.wrap(
+						document.createTextNode(args.text)
+					));
+				}
+
+				if(args.can_be_closed || true)
+				{
+					this._innerHeaderCloseButton.attach(() =>
+					{
+						this.hide();
+
+						if(args.destroy_on_close || false)
+						{
+							this.getElement().remove();
+						}
+					}).on("click");
+				}
+			},
+			getBody: function()
+			{
+				return this._innerBody;
+			},
+			show: function()
+			{
+				this._element.removeClass("gui-hidden");
+			},
+			hide: function()
+			{
+				this._element.addClass("gui-hidden");
+			}
+		}));
+
+		window.NaturalWidgets.CreateTextDialog = function(parent, title, text, oncreated)
+		{
+			var win = window.NaturalWidgets.Create(window.NaturalWidgets.TextDialog, {
+				parent: parent,
+				title: title,
+				text: text,
+				can_be_closed: true,
+				destroy_on_close: true
+			});
 			win.pack("APPEND");
-			oncreated(win, message, text);
+			win.show();
+			oncreated(win);
 			return win;
 		};
 	};

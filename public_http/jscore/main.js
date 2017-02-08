@@ -204,12 +204,9 @@ $ntc(window).on("load", function()
 	{
 		var win = NaturalWidgets.CreateTextDialog(
 			$ntc("#_loginscreen"),
-			2,
+			"Iniciando sesión",
 			"Iniciando sesión, por favor espere...",
-			function(win, msg, txt)
-			{
-				win.getElement().addClass("color-natural-grey");
-			}
+			(win) => {}
 		);
 		$natural.ajax({
 			url: "/api/ajax/coreutils/login",
@@ -233,12 +230,9 @@ $ntc(window).on("load", function()
 			{
 				var err = NaturalWidgets.CreateTextDialog(
 					$ntc("#_loginscreen"),
-					2,
+					"Error iniciando sesión",
 					"Error fatal: " + res,
-					function(win, msg, txt)
-					{
-						win.getElement().addClass("color-natural-deepred");
-					}
+					(win) => {}
 				);
 				return;
 			}

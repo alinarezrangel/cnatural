@@ -152,16 +152,6 @@ html, body {
 	margin: 8px;
 }
 
-.gui-widget-window {
-	padding: 0px;
-	margin: 0px;
-	box-shadow: 3px 22px 60px -9px rgba(0, 0, 0, 0.49);
-}
-
-.gui-widget-window-dialog {
-	cursor: pointer;
-}
-
 .gui-no-select {
 	-moz-user-select: none !important;
 	-webkit-user-select: none !important;
@@ -230,6 +220,10 @@ html, body {
 }
 
 .gui-widget-window {
+	padding: 0px;
+	margin: 0px;
+	box-shadow: 3px 22px 60px -9px rgba(0, 0, 0, 0.49);
+
 	display: -moz-flex;
 	display: -webkit-flex;
 	display: -ms-flex;
