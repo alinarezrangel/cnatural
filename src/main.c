@@ -61,6 +61,7 @@ int main(int argc, char** argv)
 	dt.username = "hola";
 	dt.password = "mundo";
 	dt.secret = "fewnfieufonfewFWEQBEWIFNGrng";
+	dt.random = "dSADdasjddwqQWDdjdqwQWDndwwq";
 
 	setlocale(LC_ALL, "");
 

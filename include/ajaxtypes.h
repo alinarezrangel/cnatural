@@ -95,6 +95,7 @@ typedef struct cnatural_system_data
 	char* username;
 	char* password;
 	char* secret;
+	char* random;
 } cnatural_system_data_t;
 
 /**

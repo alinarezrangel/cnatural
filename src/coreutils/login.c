@@ -34,7 +34,7 @@ int cnatural_ajax_coreutils_login(
 	char* sr = "";
 	jwt_t* jwt = NULL;
 	cnatural_natural_timestamp_t tms;
-	const char* rd = "WFEWfefweJFEwFEWJFEjewffJWE";
+	const char* rd = args->systdt->random;
 
 	tms.bdata = time(NULL);
 

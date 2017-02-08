@@ -104,6 +104,14 @@ int cnatural_ajax_coreutils_import(
 
 	printf("Loaded the token: %s <%s>\n", uname, rdbytes);
 
+	if((strcmp(uname, args->systdt->username) != 0) || (strcmp(rdbytes, args->systdt->random) != 0))
+	{
+		printf("Error: the token is not the current systdt\n");
+		free(args->output_mimetype);
+		cnatural_natural_token_destroy(&tkobj);
+		return -1;
+	}
+
 	realpath = malloc(strlen(fname) + strlen(privatepath) + 1);
 	if(realpath == NULL)
 	{
