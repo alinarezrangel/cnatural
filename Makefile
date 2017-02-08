@@ -19,7 +19,7 @@ SRC=src
 # Directory with the server include headers
 INC=include
 # All objects files (starting with main.o)
-OBJC=main.o ajaxcore.o ajaxtypes.o coreutils_import.o list.o tokens.o coreutils_login.o coreutils_time.o
+OBJC=main.o ajaxcore.o ajaxtypes.o coreutils_import.o list.o tokens.o configfile.o coreutils_login.o coreutils_time.o
 # All compilation libraries
 LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil
 # All compilation include paths
@@ -53,6 +53,9 @@ ajaxcore.o: $(SRC)/ajaxcore.c $(INC)/ajaxcore.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 ajaxtypes.o: $(SRC)/ajaxtypes.c $(INC)/ajaxtypes.h
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+configfile.o: $(SRC)/configfile.c $(INC)/configfile.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 list.o: $(SRC)/list.c $(INC)/list.h

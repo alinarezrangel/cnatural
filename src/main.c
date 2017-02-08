@@ -34,6 +34,7 @@ limitations under the License.
 
 #include "tokens.h"
 #include "ajaxcore.h"
+#include "configfile.h"
 
 #define PORT 8888
 
@@ -58,12 +59,60 @@ int main(int argc, char** argv)
 {
 	struct MHD_Daemon* daemon;
 
-	dt.username = "hola";
-	dt.password = "mundo";
-	dt.secret = "fewnfieufonfewFWEQBEWIFNGrng";
-	dt.random = "dSADdasjddwqQWDdjdqwQWDndwwq";
+	FILE* configfile = NULL;
 
 	setlocale(LC_ALL, "");
+
+	configfile = fopen("cnatural.conf", "r");
+
+	if(configfile == NULL)
+	{
+		perror("Error opening the configuration file");
+		exit(EXIT_FAILURE);
+	}
+
+	dt.username = NULL;
+	dt.password = NULL;
+	dt.random = NULL;
+	dt.secret = NULL;
+
+	if(cnatural_configfile_read_systdt_from_file(configfile, &dt) != 0)
+	{
+		printf("Error reading the configuration file\n");
+		fclose(configfile);
+		exit(EXIT_FAILURE);
+	}
+
+	if(fclose(configfile) != 0)
+	{
+		perror("Error closing the configuration file\n");
+		free(dt.username);
+		free(dt.password);
+		free(dt.random);
+		free(dt.secret);
+		exit(EXIT_FAILURE);
+	}
+
+	if(dt.username == NULL)
+	{
+		dt.username = cnatural_strdup("cnatural");
+		fprintf(stderr, "Warning: The configuration file does not have a username field, setting to it's default: cnatural\n");
+	}
+	if(dt.password == NULL)
+	{
+		dt.password = cnatural_strdup("a123b456");
+		fprintf(stderr, "Warning: The configuration file does not have a password field, setting to it's default: a123b456\n");
+	}
+	if(dt.random == NULL)
+	{
+		dt.random = cnatural_strdup("djSjecmmfRkdfmeeekcmeekrr");
+		fprintf(stderr, "Warning: The configuration file does not have a username field, setting to it's default: djSjecmmfRkdfmeeekcmeekrr\n");
+	}
+	if(dt.secret == NULL)
+	{
+		dt.secret = cnatural_strdup("not secret");
+		fprintf(stderr, "Warning: The configuration file does not have a username field, setting to it's default: not secret\n");
+	}
 
 	daemon = MHD_start_daemon(
 		MHD_USE_SELECT_INTERNALLY,
@@ -86,6 +135,11 @@ int main(int argc, char** argv)
 	getchar();
 
 	MHD_stop_daemon(daemon);
+
+	free(dt.username);
+	free(dt.password);
+	free(dt.random);
+	free(dt.secret);
 
 	exit(EXIT_SUCCESS);
 }
