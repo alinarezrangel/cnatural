@@ -70,6 +70,10 @@ int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t
 				{
 					systdt->random = cnatural_strdup(value);
 				}
+				if(strcmp(name, "port") == 0)
+				{
+					systdt->port = strtol(value, NULL, 10);
+				}
 
 				name_it = 0;
 				value_it = 0;

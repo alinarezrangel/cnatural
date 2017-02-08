@@ -36,8 +36,6 @@ limitations under the License.
 #include "ajaxcore.h"
 #include "configfile.h"
 
-#define PORT 8888
-
 #define FILE_TYPE_ANY 0
 #define FILE_TYPE_SVG 1
 
@@ -58,12 +56,21 @@ void set_response_headers(struct MHD_Response** res, int type);
 int main(int argc, char** argv)
 {
 	struct MHD_Daemon* daemon;
-
 	FILE* configfile = NULL;
+	char* configfile_name = "cnatural.conf";
 
 	setlocale(LC_ALL, "");
 
-	configfile = fopen("cnatural.conf", "r");
+	if(argc > 1)
+	{
+		configfile_name = argv[1];
+	}
+
+	printf("CNatural Server version %s\n", CNATURAL_SERVER_VERSION);
+	printf("Starting...\n");
+	printf("Reading configuration file (%s)\n\n", configfile_name);
+
+	configfile = fopen(configfile_name, "r");
 
 	if(configfile == NULL)
 	{
@@ -75,6 +82,7 @@ int main(int argc, char** argv)
 	dt.password = NULL;
 	dt.random = NULL;
 	dt.secret = NULL;
+	dt.port = 0;
 
 	if(cnatural_configfile_read_systdt_from_file(configfile, &dt) != 0)
 	{
@@ -93,6 +101,8 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
+	printf("Scaning for NULL data...\n");
+
 	if(dt.username == NULL)
 	{
 		dt.username = cnatural_strdup("cnatural");
@@ -105,18 +115,25 @@ int main(int argc, char** argv)
 	}
 	if(dt.random == NULL)
 	{
-		dt.random = cnatural_strdup("djSjecmmfRkdfmeeekcmeekrr");
-		fprintf(stderr, "Warning: The configuration file does not have a username field, setting to it's default: djSjecmmfRkdfmeeekcmeekrr\n");
+		dt.random = cnatural_strdup("not random");
+		fprintf(stderr, "Warning: The configuration file does not have a random field, setting to it's default: not random\n");
 	}
 	if(dt.secret == NULL)
 	{
 		dt.secret = cnatural_strdup("not secret");
-		fprintf(stderr, "Warning: The configuration file does not have a username field, setting to it's default: not secret\n");
+		fprintf(stderr, "Warning: The configuration file does not have a secret field, setting to it's default: not secret\n");
 	}
+	if(dt.port == 0)
+	{
+		dt.port = 8888;
+		fprintf(stderr, "Warning: The configuration file does not have a port field, setting to it's default: 8888\n");
+	}
+
+	printf("Starting the HTTP daemon...\n");
 
 	daemon = MHD_start_daemon(
 		MHD_USE_SELECT_INTERNALLY,
-		PORT,
+		dt.port,
 		NULL,
 		NULL,
 		&request_handler,
@@ -128,18 +145,30 @@ int main(int argc, char** argv)
 	);
 	if(daemon == NULL)
 	{
-		perror("Error getting the daemon");
+		perror("Error getting the HTTP daemon");
+		free(dt.username);
+		free(dt.password);
+		free(dt.random);
+		free(dt.secret);
 		exit(EXIT_FAILURE);
 	}
 
+	printf("HTTP daemon started at port %d, press any key to stop the server\n", dt.port);
+
 	getchar();
 
+	printf("Stopping HTTP daemon...\n");
+
 	MHD_stop_daemon(daemon);
+
+	printf("Freeing the configurartion members...\n");
 
 	free(dt.username);
 	free(dt.password);
 	free(dt.random);
 	free(dt.secret);
+
+	printf("All done, exiting\n");
 
 	exit(EXIT_SUCCESS);
 }

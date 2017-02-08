@@ -58,6 +58,13 @@ limitations under the License.
 #define CNATURAL_POST_TYPE_POST 1
 
 /**
+* @brief Is the CNatural Server version in a string macro.
+*
+* It's something like "1.0.2", for example.
+*/
+#define CNATURAL_SERVER_VERSION "1.0.0"
+
+/**
 * @brief (alias cnatural_post_processor_node_T) Node of data of a POST request.
 * The key attribute is a NULL terminated string containig the key of the
 * POST parameter and the value is also a NULL terminated string with the value:
@@ -96,6 +103,7 @@ typedef struct cnatural_system_data
 	char* password;
 	char* secret;
 	char* random;
+	int port;
 } cnatural_system_data_t;
 
 /**
