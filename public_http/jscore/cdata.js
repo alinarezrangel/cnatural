@@ -77,7 +77,14 @@ limitations under the License.
 			"by": "z",
 			"percent": "A",
 			"permil": "B",
-			"text": "C"
+			"text": "C",
+			"notify": "D",
+			"power": "E",
+			"alert": "F",
+			"fullscreen": "G",
+			"user": "H",
+			"tools": "I",
+			"connection": "J"
 		};
 		window.NaturalObject.prototype.include = function(token, src, mime, callback)
 		{

@@ -371,7 +371,7 @@ int request_handler(
 
 		printf("Length of token/path/url: %lu/%lu/%d\n", length_http_api_token, length_http_api_path, urlsize);
 
-		http_api_token = malloc(sizeof(char) * (length_http_api_token + 1));
+		http_api_token = malloc(sizeof(char) * (length_http_api_token + 2));
 
 		if(http_api_token == NULL)
 		{
@@ -380,7 +380,7 @@ int request_handler(
 			return MHD_NO;
 		}
 
-		memset(http_api_token, '\0', length_http_api_token);
+		memset(http_api_token, '\0', length_http_api_token + 1);
 
 		for(i = 0; i < length_http_api_token; i++)
 		{
