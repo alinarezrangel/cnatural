@@ -47,27 +47,22 @@
 	<body>
 		<section data-widget="screen-container" data-action="app.show_login" id="_bootscreen" class="gui-screen gui-clickeable gui-boot-screen gui-flexcore color-ocean">
 			<div data-widget="header-container" class="col od-1 padding-8">
-				<h1 class="text-jumbo-4 margin-8">Bienvenido a CNatural</h1>
+				<h1 class="text-jumbo-4 margin-8" data-pomap-message="welcomettl">CNatural</h1>
 			</div>
 			<div data-widget="body-container" class="col od-2 padding-8">
-				<p class="text-ultra-big">
-					Clickea en cualquier lugar o presiona cualquier tecla
-					para iniciar sesión.
+				<p class="text-ultra-big" data-pomap-message="click2use">
+					Welcome! click anything to login
 				</p>
 			</div>
 			<noscript data-widget="noscript-container" class="col od-3 padding-8 text-ultra-big text-color-red font-bold">
 				<p>
-					Lamentablemente es necesario activar JavaScript
-					para poder utilizar este modo de CNatural.
-					Si no hay forma de activar JavaScript en su navegador,
-					utilize <a href="htcore/nojs/index.html">
-					esta interfaz</a>
+					It's required Javascript to use CNatural, sorry.
 				</p>
 			</noscript>
 		</section>
 		<section data-widget="screen-container" id="_loginscreen" class="gui-screen gui-login-screen gui-flexcore color-ocean">
 			<div data-widget="header-container" class="col od-1 padding-8">
-				<h1 class="text-jumbo-4 margin-8" data-widget="header">Iniciar sesión</h1>
+				<h1 class="text-jumbo-4 margin-8" data-widget="header" data-pomap-message="login">Login</h1>
 			</div>
 			<div data-widget="body-container" class="col od-2 padding-8">
 				<input
@@ -75,7 +70,7 @@
 					name="username"
 					id="login_username"
 					type="text"
-					placeholder="Tu nombre de usuario"
+					placeholder="Username"
 					value=""
 					data-widget="input"
 					required="required" />
@@ -84,7 +79,7 @@
 					name="password"
 					id="login_password"
 					type="password"
-					placeholder="Tu contraseña"
+					placeholder="Password"
 					data-widget="input"
 					value="" />
 				<button
@@ -92,8 +87,9 @@
 					type="button"
 					data-widget="button"
 					data-action="app.login"
-					id="login_button">
-					Iniciar Sesión
+					id="login_button"
+					data-pomap-message="loginbtn">
+					Login!
 				</button>
 			</div>
 		</section>

@@ -86,35 +86,33 @@ limitations under the License.
 			"tools": "I",
 			"connection": "J"
 		};
-		window.NaturalObject.prototype.include = function(token, src, mime, callback)
+		window.NaturalObject.prototype.Localization =
+			window.navigator.userLanguage || window.navigator.language || "en-all";
+		window.NaturalObject.prototype.GlobalPOMap =
 		{
-			this.ajax({
-				url: "/api/ajax/coreutils/import",
-				args: {},
-				pdata: {
-					file: src,
-					type: "include",
-					expected: mime,
-					token: token
-				},
-				async: true
-			}, (err, res) =>
-			{
-				if(err)
-				{
-					callback(new Event("scriptLoadError"));
-					return;
+			// NOTE: Basic CNatural builtins GUI localization:
+			"es": {
+				"all": {
+					"welcomettl": "CNatural",
+					"click2use": "Bienvenido! clickea cualquier parte para iniciar sesión",
+					"login": "Iniciar sesión",
+					"loginbtn": "Iniciar sesión!",
+					"nativedtkdsc": "Un escritorio simple y responsable diseñado para todos",
+					"click2usedtk": "Clickea para usar"
 				}
-
-				var dm = new DOMParser();
-				var dc = dm.parseFromString(res, "text/html");
-				window.$ntc(dc.body.childNodes).apply((node) =>
-				{
-					this.appendChild(node);
-				}).forEach();
-				callback(null, window.$ntc(dc));
-			});
+			},
+			"en": {
+				"all": {
+					"welcomettl": "CNatural",
+					"click2use": "Welcome! click in any place to login",
+					"login": "Login",
+					"loginbtn": "Login!",
+					"nativedtkdsc": "A simple and responsive desktop maded for everybody",
+					"click2usedtk": "Click to use"
+				}
+			}
 		};
+
 		window.NaturalObject.prototype.require = function(async, path, token, isprivate, cll)
 		{
 			isprivate = (typeof isprivate === "undefined")? false : true;
@@ -124,7 +122,9 @@ limitations under the License.
 			{
 				if(isprivate)
 				{
-					throw new Error("Error at CNatural.JS.Core.CData: require: The module is in private area but the token is undefined or null");
+					throw new Error(
+						"Error at CNatural.JS.Core.CData: require: The module is in private area but the token is undefined or null"
+					);
 				}
 
 				token = "";
@@ -184,6 +184,97 @@ limitations under the License.
 
 				ondone(tag);
 			}).forEach();
+		};
+		window.NaturalObject.prototype.parsePOMaps = function(doc)
+		{
+			if(typeof doc === "undefined")
+			{
+				doc = document;
+			}
+
+			var lang = this.Localization.toLowerCase();
+			var pomap = this.GlobalPOMap;
+
+			var lg = lang.split("-")[0];
+			var sg = lang.split("-")[1];
+
+			var localmap = {};
+			var sgmap = {};
+
+			if(typeof pomap[lg] === "undefined")
+			{
+				// No language is available, keep default messages
+				return;
+			}
+
+			localmap = pomap[lg];
+
+			if(typeof localmap[sg] === "undefined")
+			{
+				// No sublanguage is available, use default language msgs
+				sgmap = localmap["all"];
+			}
+			else
+			{
+				sgmap = localmap[sg];
+			}
+
+			var tags = window.$ntc("*[data-pomap-message]");
+			tags.apply((tag) =>
+			{
+				var msname = tag.data("pomapMessage");
+				var o = tag.original;
+				var vl = sgmap[msname];
+
+				if(typeof vl === "undefined")
+				{
+					// Message not fount: switching!
+					vl = localmap["all"][msname];
+
+					if(typeof vl === "undefined")
+					{
+						// No available in allmap? keep default
+						return;
+					}
+				}
+
+				while(o.firstChild)
+					o.removeChild(o.firstChild);
+
+				o.appendChild(document.createTextNode(vl));
+			}).forEach();
+		};
+		window.NaturalObject.prototype.include = function(token, src, mime, callback)
+		{
+			this.ajax({
+				url: "/api/ajax/coreutils/import",
+				args: {},
+				pdata: {
+					file: src,
+					type: "include",
+					expected: mime,
+					token: token
+				},
+				async: true
+			}, (err, res) =>
+			{
+				if(err)
+				{
+					callback(new Event("scriptLoadError"));
+					return;
+				}
+
+				var dm = new DOMParser();
+				var dc = dm.parseFromString(res, "text/html");
+				window.$ntc(dc.body.childNodes).apply((node) =>
+				{
+					this.appendChild(node);
+				}).forEach();
+				callback(null, window.$ntc(dc));
+			});
+
+			this.parseSemanticIconsetTags(doc, function(s) {});
+			this.parsePOMaps(doc);
 		};
 		window.NaturalObject.prototype.includeScripts = function(doc, token, ondone)
 		{
@@ -252,6 +343,9 @@ limitations under the License.
 						ax = true;
 					}
 					script.remove();
+
+					this.parseSemanticIconsetTags(doc, function(s) {});
+					this.parsePOMaps(doc);
 				});
 			}).forEach();
 
@@ -261,6 +355,7 @@ limitations under the License.
 			}
 
 			this.parseSemanticIconsetTags(doc, function(s) {});
+			this.parsePOMaps(doc);
 		};
 
 		(new window.NaturalObject(document)).reloadGlobals(window);

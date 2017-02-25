@@ -193,6 +193,7 @@ $ntc(window).on("load", function()
 	});
 
 	$natural.parseSemanticIconsetTags(document, (s) => {});
+	$natural.parsePOMaps(document);
 
 	$ntc("#_bootscreen").attach(function(ev)
 	{
