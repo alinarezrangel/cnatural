@@ -98,7 +98,12 @@ limitations under the License.
 					"login": "Iniciar sesión",
 					"loginbtn": "Iniciar sesión!",
 					"nativedtkdsc": "Un escritorio simple y responsable diseñado para todos",
-					"click2usedtk": "Clickea para usar"
+					"click2usedtk": "Clickea para usar",
+					"loginwindow_ttl": "Iniciando sesión...",
+					"loginwindow_desc": "CNatural está iniciando sesión, por favor espere...",
+					"errorwindow_ttl": "Esto es malo!",
+					"errorwindow_desc": "Hubo un error iniciando sesión, intente con"
+						+ "verificar la contraseña o el nombre de usuario"
 				}
 			},
 			"en": {
@@ -108,7 +113,12 @@ limitations under the License.
 					"login": "Login",
 					"loginbtn": "Login!",
 					"nativedtkdsc": "A simple and responsive desktop maded for everybody",
-					"click2usedtk": "Click to use"
+					"click2usedtk": "Click to use",
+					"loginwindow_ttl": "Login...",
+					"loginwindow_desc": "CNatural is login you, please wait...",
+					"errorwindow_ttl": "This is bad!",
+					"errorwindow_desc": "There was an error login you, try"
+						+ "checking the password or username"
 				}
 			}
 		};
@@ -184,6 +194,51 @@ limitations under the License.
 
 				ondone(tag);
 			}).forEach();
+		};
+		window.NaturalObject.prototype.getPOMessage = function(msg)
+		{
+			var lang = this.Localization.toLowerCase();
+			var pomap = this.GlobalPOMap;
+
+			var lg = lang.split("-")[0];
+			var sg = lang.split("-")[1];
+
+			var localmap = {};
+			var sgmap = {};
+
+			if(typeof pomap[lg] === "undefined")
+			{
+				// No language is available, keep default messages
+				return null;
+			}
+
+			localmap = pomap[lg];
+
+			if(typeof localmap[sg] === "undefined")
+			{
+				// No sublanguage is available, use default language msgs
+				sgmap = localmap["all"];
+			}
+			else
+			{
+				sgmap = localmap[sg];
+			}
+
+			var vl = sgmap[msg];
+
+			if(typeof vl === "undefined")
+			{
+				// Message not fount: switching!
+				vl = localmap["all"][msg];
+
+				if(typeof vl === "undefined")
+				{
+					// No available in allmap? keep default
+					return null;
+				}
+			}
+
+			return vl;
 		};
 		window.NaturalObject.prototype.parsePOMaps = function(doc)
 		{

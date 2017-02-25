@@ -205,8 +205,8 @@ $ntc(window).on("load", function()
 	{
 		var win = NaturalWidgets.CreateTextDialog(
 			$ntc("#_loginscreen"),
-			"Iniciando sesión",
-			"Iniciando sesión, por favor espere...",
+			$natural.getPOMessage("loginwindow_ttl"),
+			$natural.getPOMessage("loginwindow_desc"),
 			(win) => {}
 		);
 		$natural.ajax({
@@ -231,8 +231,8 @@ $ntc(window).on("load", function()
 			{
 				var err = NaturalWidgets.CreateTextDialog(
 					$ntc("#_loginscreen"),
-					"Error iniciando sesión",
-					"Error fatal: " + res,
+					$natural.getPOMessage("errorwindow_ttl"),
+					$natural.getPOMessage("errorwindow_desc"),
 					(win) => {}
 				);
 				return;
