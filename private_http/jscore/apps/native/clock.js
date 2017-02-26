@@ -24,17 +24,21 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 {
 	// POMap: at least es_VEN and en_US
 	var POMap = {
-		"es_VEN": {
-			"title": "Reloj",
-			"timeDifference": "Diferencia de tiempo",
-			"serverTime": "Tiempo en el servidor (convertido)",
-			"clientTime": "Tiempo en el cliente (local)"
+		"es": {
+			"all": {
+				"title": "Reloj",
+				"timeDifference": "Diferencia de tiempo",
+				"serverTime": "Tiempo en el servidor (convertido)",
+				"clientTime": "Tiempo en el cliente (local)"
+			}
 		},
-		"en_US": {
-			"title": "Clock",
-			"timeDifference": "Time difference",
-			"serverTime": "Time on the server (converted)",
-			"clientTime": "Time on the client (local)"
+		"en": {
+			"all": {
+				"title": "Clock",
+				"timeDifference": "Time difference",
+				"serverTime": "Time on the server (converted)",
+				"clientTime": "Time on the client (local)"
+			}
 		}
 	};
 
@@ -61,11 +65,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	{
 		var appdata = this.createInstance();
 		// Lang here
-		var LangMap = POMap[
+		var LangMap = window.$natural.selectPOMapIn(POMap,
 			window.NaturalShell.Native.GetShortNameArgument(args, "-l") ||
 			window.NaturalShell.Native.GetLongNameArgument(args, "--lang") ||
-			"en_US"
-		];
+			window.$natural.Localization
+		);
 
 		var myWindow = this.getWindowSystem().createDefaultWindow(
 			LangMap.title,

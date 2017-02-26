@@ -127,6 +127,54 @@ limitations under the License.
 			}
 		};
 
+		window.NaturalObject.prototype.selectPOMapIn = function(pomap, lang)
+		{
+			var lg = lang.split("-")[0];
+			var sg = lang.split("-")[1];
+
+			var localmap = {};
+			var sgmap = {};
+
+			if(typeof pomap[lg] === "undefined")
+			{
+				// No language is available, keep default messages
+				return null;
+			}
+
+			localmap = pomap[lg];
+
+			if(typeof localmap[sg] === "undefined")
+			{
+				// No sublanguage is available, use default language msgs
+				sgmap = localmap["all"];
+			}
+			else
+			{
+				sgmap = localmap[sg];
+			}
+
+			return sgmap;
+		};
+		window.NaturalObject.prototype.selectMessagePOMapIn = function(msg, pomap, lang)
+		{
+			var sgmap = this.selectPOMapIn(pomap, lang);
+
+			var vl = sgmap[msg];
+
+			if(typeof vl === "undefined")
+			{
+				// Message not fount: switching!
+				vl = localmap["all"][msg];
+
+				if(typeof vl === "undefined")
+				{
+					// No available in allmap? keep default
+					return null;
+				}
+			}
+
+			return vl;
+		};
 		window.NaturalObject.prototype.require = function(async, path, token, isprivate, cll)
 		{
 			isprivate = (typeof isprivate === "undefined")? false : true;
@@ -201,48 +249,7 @@ limitations under the License.
 		};
 		window.NaturalObject.prototype.getPOMessage = function(msg)
 		{
-			var lang = this.Localization.toLowerCase();
-			var pomap = this.GlobalPOMap;
-
-			var lg = lang.split("-")[0];
-			var sg = lang.split("-")[1];
-
-			var localmap = {};
-			var sgmap = {};
-
-			if(typeof pomap[lg] === "undefined")
-			{
-				// No language is available, keep default messages
-				return null;
-			}
-
-			localmap = pomap[lg];
-
-			if(typeof localmap[sg] === "undefined")
-			{
-				// No sublanguage is available, use default language msgs
-				sgmap = localmap["all"];
-			}
-			else
-			{
-				sgmap = localmap[sg];
-			}
-
-			var vl = sgmap[msg];
-
-			if(typeof vl === "undefined")
-			{
-				// Message not fount: switching!
-				vl = localmap["all"][msg];
-
-				if(typeof vl === "undefined")
-				{
-					// No available in allmap? keep default
-					return null;
-				}
-			}
-
-			return vl;
+			return this.selectMessagePOMapIn(msg, this.GlobalPOMap, this.Localization);
 		};
 		window.NaturalObject.prototype.parsePOMaps = function(doc)
 		{
@@ -251,32 +258,7 @@ limitations under the License.
 				doc = document;
 			}
 
-			var lang = this.Localization.toLowerCase();
-			var pomap = this.GlobalPOMap;
-
-			var lg = lang.split("-")[0];
-			var sg = lang.split("-")[1];
-
-			var localmap = {};
-			var sgmap = {};
-
-			if(typeof pomap[lg] === "undefined")
-			{
-				// No language is available, keep default messages
-				return;
-			}
-
-			localmap = pomap[lg];
-
-			if(typeof localmap[sg] === "undefined")
-			{
-				// No sublanguage is available, use default language msgs
-				sgmap = localmap["all"];
-			}
-			else
-			{
-				sgmap = localmap[sg];
-			}
+			var sgmap = this.selectPOMapIn(this.GlobalPOMap, this.Localization);
 
 			var tags = window.$ntc("*[data-pomap-message]");
 			tags.apply((tag) =>
@@ -332,8 +314,8 @@ limitations under the License.
 				callback(null, window.$ntc(dc));
 			});
 
-			this.parseSemanticIconsetTags(doc, function(s) {});
-			this.parsePOMaps(doc);
+			this.parseSemanticIconsetTags(document, function(s) {});
+			this.parsePOMaps(document);
 		};
 		window.NaturalObject.prototype.includeScripts = function(doc, token, ondone)
 		{

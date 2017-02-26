@@ -23,21 +23,25 @@ limitations under the License.
 window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 {
 	var POMap = {
-		"es_VEN": {
-			"title": "Bienvenido",
-			"subtitle": "CNatural Araguaney",
-			"message_p1": "CNatural es una implementación parecida a NodeNatural pero en C11 (en vez de NodeJS).",
-			"message_p2": "Este es CNatural, puedes ver la ayuda utilizando la aplicación <Ayuda> en el launcher (barra superior izquerda).",
-			"message_p3": "Gracias por usar CNatural!",
-			"button_done": "Aceptar"
+		"es": {
+			"all": {
+				"title": "Bienvenido",
+				"subtitle": "CNatural Araguaney",
+				"message_p1": "CNatural es una implementación parecida a NodeNatural pero en C11 (en vez de NodeJS).",
+				"message_p2": "Este es CNatural, puedes ver la ayuda utilizando la aplicación <Ayuda> en el launcher (barra superior izquerda).",
+				"message_p3": "Gracias por usar CNatural!",
+				"button_done": "Aceptar"
+			}
 		},
-		"en_US": {
-			"title": "Welcome",
-			"subtitle": "CNatural Araguaney",
-			"message_p1": "CNatural is an implementation NodeNatural-like but in C11 instead of NodeJS.",
-			"message_p2": "This is CNatural, you can see the system help using the application <Help> in the launcher (top bar, left button).",
-			"message_p3": "Thanks for using CNatural!",
-			"button_done": "Accept"
+		"en": {
+			"all": {
+				"title": "Welcome",
+				"subtitle": "CNatural Araguaney",
+				"message_p1": "CNatural is an implementation NodeNatural-like but in C11 instead of NodeJS.",
+				"message_p2": "This is CNatural, you can see the system help using the application <Help> in the launcher (top bar, left button).",
+				"message_p3": "Thanks for using CNatural!",
+				"button_done": "Accept"
+			}
 		}
 	};
 
@@ -62,11 +66,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	WelcomeApplication.prototype.run = function(args)
 	{
 		var appdata = this.createInstance();
-		var LangMap = POMap[
+		var LangMap = window.$natural.selectPOMapIn(POMap,
 			window.NaturalShell.Native.GetShortNameArgument(args, "-l") ||
 			window.NaturalShell.Native.GetLongNameArgument(args, "--lang") ||
-			"en_US"
-		];
+			window.$natural.Localization
+		);
 
 		var myWindow = this.getWindowSystem().createDefaultWindow(
 			LangMap.title,

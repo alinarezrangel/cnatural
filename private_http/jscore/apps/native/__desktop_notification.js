@@ -24,11 +24,15 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 {
 	// POMap: at least es_VEN and en_US
 	var POMap = {
-		"es_VEN": {
-			"title": "Notificaciones"
+		"es": {
+			"all": {
+				"title": "Notificaciones"
+			}
 		},
-		"en_US": {
-			"title": "Notifications"
+		"en": {
+			"all": {
+				"title": "Notifications"
+			}
 		}
 	};
 
@@ -64,11 +68,11 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		var appdata = this.createInstance();
 		// Lang here
-		var LangMap = POMap[
+		var LangMap = window.$natural.selectPOMapIn(POMap,
 			window.NaturalShell.Native.GetShortNameArgument(args, "-l") ||
 			window.NaturalShell.Native.GetLongNameArgument(args, "--lang") ||
-			"en_US"
-		];
+			window.$natural.Localization
+		);
 
 		var myWindow = this.getWindowSystem().createDefaultWindow(
 			LangMap.title,
