@@ -93,6 +93,7 @@ window.NaturalClient.GetToken((err, token) =>
 			"jscore/apps/native/__launcher.js",
 			[
 				"jscore/apps/native/__open_windows.js",
+				"jscore/apps/native/__desktop_notification.js",
 				"jscore/apps/native/welcome.js",
 				"jscore/apps/native/clock.js"
 			],
@@ -260,6 +261,44 @@ window.NaturalClient.GetToken((err, token) =>
 				return false;
 			};
 
+			window.NaturalShell.Native.__DesktopNotifications = [];
+
+			window.NaturalShell.Native.ShowDesktopNotification =
+				function(title, message, event_activated)
+			{
+				window.NaturalShell.Native.__DesktopNotifications.push(
+					{
+						title: title,
+						description: message,
+						event_activated: event_activated
+					}
+				);
+
+				var nt = window.$ntc("#_shellscreen__alert");
+
+				nt.alertMoveForever();
+			};
+
+			window.NaturalShell.Native.GetDesktopNotifications =
+				function()
+			{
+				return window.NaturalShell.Native.__DesktopNotifications;
+			};
+
+			window.NaturalShell.Native.AllNotificationsViewed = function()
+			{
+				var nt = window.$ntc("#_shellscreen__alert");
+
+				nt.removeClass("gui-animation-alert");
+			};
+
+			window.NaturalShell.Native.RemoveDesktopNotification = function(at)
+			{
+				window.NaturalShell.Native.__DesktopNotifications.splice(at, 1);
+			};
+
+			window.NaturalShell.CurrentShell = window.NaturalShell.Native;
+
 			importApps(() =>
 			{
 				CNaturalDefaultWindowManager.showToplevel();
@@ -276,10 +315,26 @@ window.NaturalClient.GetToken((err, token) =>
 					window.NaturalShell.Native.LaunchApplication("org.cnatural.applications.open_windows", []);
 				});
 
+				$ntc("#_shellscreen__alert").on("click", () =>
+				{
+					console.log("Opening <desktop notifications>");
+					window.NaturalShell.Native.LaunchApplication("org.cnatural.applications.native.desktop_notification", []);
+				});
+
+				$ntc("#_shellscreen__notify").on("click", () =>
+				{
+					console.log("Opening <desktop notifications>");
+					window.NaturalShell.Native.LaunchApplication("org.cnatural.applications.native.desktop_notification", []);
+				});
+
 				document.body.dispatchEvent(new CustomEvent("shellLoaded", {}));
+
+				window.NaturalShell.Native.ShowDesktopNotification(
+					window.$natural.getPOMessage("welcome_ttl"),
+					window.$natural.getPOMessage("welcome_desc"),
+					() => {}
+				);
 			});
 		}
 	);
 });
-
-window.NaturalShell.CurrentShell = window.NaturalShell.Native;

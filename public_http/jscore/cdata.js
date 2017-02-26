@@ -103,7 +103,9 @@ limitations under the License.
 					"loginwindow_desc": "CNatural está iniciando sesión, por favor espere...",
 					"errorwindow_ttl": "Esto es malo!",
 					"errorwindow_desc": "Hubo un error iniciando sesión, intente con"
-						+ "verificar la contraseña o el nombre de usuario"
+						+ "verificar la contraseña o el nombre de usuario",
+					"welcome_ttl": "Bienvenido a CNatural",
+					"welcome_desc": "Puedes obtener ayuda en cnatural.sourceforge.io"
 				}
 			},
 			"en": {
@@ -118,7 +120,9 @@ limitations under the License.
 					"loginwindow_desc": "CNatural is login you, please wait...",
 					"errorwindow_ttl": "This is bad!",
 					"errorwindow_desc": "There was an error login you, try"
-						+ "checking the password or username"
+						+ "checking the password or username",
+					"welcome_ttl": "Welcome to CNatural",
+					"welcome_desc": "You can get help on cnatural.sourceforge.io"
 				}
 			}
 		};
