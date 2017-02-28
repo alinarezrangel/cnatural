@@ -134,7 +134,19 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		this.getWindowSystem().getWindowManager().forEachWindow((winEl) =>
 		{
-			packWindowsOfOn(mainContainer.getElement(), winEl.data("name"), winEl.data("appid"), winEl);
+			var winttl = winEl.child("*[data-widget=\"window-header\"] > *[data-widget=\"text\"]");
+
+			if(winttl.original.length == 0)
+			{
+				// Use application name
+				winttl = winEl.data("name");
+			}
+			else
+			{
+				winttl = winttl.original[0].innerHTML;
+			}
+
+			packWindowsOfOn(mainContainer.getElement(), winttl, winEl.data("appid"), winEl);
 		});
 
 		myWindow.addEventListener("close", () =>

@@ -251,6 +251,11 @@ $ntc(window).on("load", function()
 {
 	// Init all front-end and start the client
 
+	$ntc(document.body).on("contextmenu", (ev) =>
+	{
+		ev.preventDefault();
+	}, false);
+
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},
