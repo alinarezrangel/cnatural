@@ -43,6 +43,10 @@ html, body {
 	margin: 0px;
 }
 
+.gui-width-auto {
+	width: auto !important;
+}
+
 /* flexcore is a contraction of:
  * * flexible center justify-center direction-column align-center content-center
  * * wrap wrap-center
@@ -263,15 +267,15 @@ html, body {
 }
 
 .gui-widget-window-header {
-	z-index: 2 !important;
+	z-index: 70 !important;
 }
 
 .gui-widget-window-body {
-	z-index: 3 !important;
+	z-index: 2 !important;
 }
 
 .gui-widget-window-menu {
-	z-index: 4 !important;
+	z-index: 100 !important;
 	position: absolute !important;
 	left: 50%;
 	top: 50%;
@@ -282,7 +286,7 @@ html, body {
 }
 
 .gui-dock {
-	z-index: 100 !important;
+	z-index: 1000 !important;
 }
 
 .gui-shape-circle {

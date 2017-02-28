@@ -264,13 +264,14 @@ window.NaturalClient.GetToken((err, token) =>
 			window.NaturalShell.Native.__DesktopNotifications = [];
 
 			window.NaturalShell.Native.ShowDesktopNotification =
-				function(title, message, event_activated)
+				function(title, message, event_activated, opt_image_url)
 			{
 				window.NaturalShell.Native.__DesktopNotifications.push(
 					{
 						title: title,
 						description: message,
-						event_activated: event_activated
+						event_activated: event_activated,
+						image_url: opt_image_url
 					}
 				);
 

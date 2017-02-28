@@ -95,34 +95,87 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		mainContainer.pack("BEGIN");
 
-		var packNotification = (parent, i, title, description, event_activate) =>
+		var packNotification = (parent, i, imgurl, title, description, event_activate) =>
 		{
 			var ct = window.NaturalWidgets.Create(
-				window.NaturalWidgets.ContainerWithHeader,
+				window.NaturalWidgets.Container,
 				{
-					parent: parent,
-					level: 3,
+					parent: parent
+				}
+			);
+
+			var rw = window.NaturalWidgets.Create(
+				window.NaturalWidgets.RowContainer,
+				{
+					parent: ct.getElement()
+				}
+			);
+
+			var img = window.NaturalWidgets.Create(
+				window.NaturalWidgets.Image,
+				{
+					parent: rw.getElement(),
+					src: "/resources/images/" + imgurl,
+					width: 64,
+					height: 64,
+					alt: "[Notification Image Here]"
+				}
+			)
+
+			var ttl = window.NaturalWidgets.Create(
+				window.NaturalWidgets.Header,
+				{
+					parent: rw.getElement(),
+					text: title,
 					size: "content.title",
-					color: "color-ocean",
-					title: title
+					level: 5
 				}
 			);
 
 			var txt = window.NaturalWidgets.Create(
 				window.NaturalWidgets.Text,
 				{
-					parent: ct.getBody(),
+					parent: ct.getElement(),
 					text: description
 				}
 			);
 
 			ct.getElement()
-				.addClass("gui-clickeable");
+				.addClass("card")
+				.addClass("sw-2")
+				.addClass("border")
+				.addClass("bs-2")
+				.addClass("border-color-grey")
+				.addClass("padding-16")
+				.addClass("margin-4")
+				.addClass("color-white")
+				.addClass("gui-clickeable")
+				.addClass("gui-width-auto");
 
+			rw.getElement()
+				.addClass("padding-8")
+				.addClass("no-margin");
+
+			ttl.getElement()
+				.addClass("fx-1")
+				.addClass("od-2");
+
+			img.getElement()
+				.addClass("od-1")
+				.addClass("border-jumbo-round")
+				.addClass("border")
+				.addClass("bs-2")
+				.addClass("border-color-grey")
+				.addClass("no-padding")
+				.addClass("margin-4");
+
+			rw.pack("BEGIN");
+			img.pack("APPEND");
+			ttl.pack("APPEND");
 			txt.pack("APPEND");
 			ct.pack("APPEND");
 
-			ct.getBody()
+			ct.getElement()
 				.on("click", () =>
 				{
 					ct.getElement().remove();
@@ -130,7 +183,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 					return event_activate();
 				});
 
-			ct.getHeader()
+			ttl.getElement()
 				.on("click", () =>
 				{
 					ct.getElement().remove();
@@ -143,6 +196,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			packNotification(
 				mainContainer.getElement(),
 				i,
+				notification.image_url || "user.svg",
 				notification.title,
 				notification.description,
 				notification.event_activate

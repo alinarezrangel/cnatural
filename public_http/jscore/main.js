@@ -270,7 +270,7 @@ $ntc(window).on("load", function()
 		if(res === "Hello World")
 			return;
 
-		NaturalWidgets.CreateTextDialog($ntc("#_bootscreen"), 2, "Error: " + res, function(win, msg, txt)
+		NaturalWidgets.CreateTextDialog($ntc("#_bootscreen"), "Fatal error", "Error: " + res, function(win, msg, txt)
 		{
 			win.getElement().addClass("text-natural-darkred");
 		});

@@ -251,9 +251,15 @@ limitations under the License.
 		{
 			return this.attach(handler);
 		};
-		NaturalObject.prototype.on = function(evt, cll)
+		NaturalObject.prototype.on = function(evt, cll, bbl)
 		{
 			var bubbles = (cll === true);
+
+			if(typeof bbl !== "undefined")
+			{
+				bubble = (bbl === true);
+			}
+
 			if(typeof cll === "function")
 			{
 				this._callbackLastRef = cll;

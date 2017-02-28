@@ -67,7 +67,7 @@ limitations under the License.
 					return sp;
 				};
 
-				titlebar.className = "gui-widget-window-header gui-flexcore-row no-margin od-1";
+				titlebar.className = "gui-widget-window-header gui-flexcore-row no-margin od-1 sw-c";
 				titlebar.dataset["widget"] = "window-header";
 
 				titlebarCloseOrBackButton.className = "gui-font-iconset-v2 color-gui-window-close-button flat-button od-1 text-jumbo gui-clickeable padding-2 margin-8 color-transparent gui-shape-circle gui-circular-button-50";
