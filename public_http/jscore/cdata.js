@@ -88,6 +88,14 @@ limitations under the License.
 		};
 		window.NaturalObject.prototype.Localization =
 			window.navigator.userLanguage || window.navigator.language || "en-all";
+		window.NaturalObject.prototype.GlobalPOMapSupportedLangs =
+		[
+			// NOTE: Basic CNatural builtins GUI localization:
+			"en",
+			"en-all",
+			"es",
+			"es-all"
+		];
 		window.NaturalObject.prototype.GlobalPOMap =
 		{
 			// NOTE: Basic CNatural builtins GUI localization:

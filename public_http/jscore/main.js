@@ -165,8 +165,92 @@ window.NaturalClient._attach_shell_events = function(token)
 	}).on("click");
 };
 
+(function()
+{
+	// Search for the GET parameter `client_language` and override the
+	// browser's window.navigator.language with these
+
+	// CNatural Client's Language ID Spec:
+	//
+	// ~  <base-name> ::= "es" | "en"
+	// ~  <sub-language> ::= "all"
+	// ~  <language-id> ::= <base-name> "-" <sub-language>
+	//
+	// For example: "en-US" is english from United States,
+	// "es-VEN" is spanish from Venezuela and
+	// "en" only specifies english (equal to "en-all")
+	//
+	// If the language not exists, it's replaced by "en-all".
+
+	window.location.search
+	.substr(1)
+	.split("&")
+	.forEach((value) =>
+	{
+		var t = value.split("=").map((value) => decodeURIComponent(value));
+		var name = t[0];
+		var value = t[1];
+
+		switch(name)
+		{
+			case "client_language":
+				// Special values:
+				switch(value)
+				{
+					case "auto":
+					case "client":
+						// * "auto" it's like not set the flag:
+						return;
+					case "server":
+						// * "server" uses the server language:
+						// TODO
+						break;
+				}
+
+				if(value.split("-".length <= 1))
+				{
+					value += "-all";
+				}
+
+				if(!$natural.GlobalPOMapSupportedLangs.indexOf(value))
+				{
+					value = value.split("-")[0];
+
+					if(!$natural.GlobalPOMapSupportedLangs.indexOf(value))
+					{
+						// Language s is not supported:
+						value = "en-all";
+					}
+					else
+					{
+						// Sublanguage invalid:
+						value += "-all";
+					}
+				}
+
+				window.NaturalObject.prototype.Localization = value;
+
+				(new window.NaturalObject(document)).reloadGlobals(window);
+				break;
+		}
+	});
+
+	if($natural.selectMessagePOMapIn(
+			"welcomettl",
+			$natural.GlobalPOMap,
+			$natural.Localization
+		) === null)
+	{
+		// Bad or crafted localization: use "en-all"
+		window.NaturalObject.prototype.Localization = "en-all";
+		(new window.NaturalObject(document)).reloadGlobals(window);
+	}
+}());
+
 $ntc(window).on("load", function()
 {
+	// Init all front-end and start the client
+
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},
