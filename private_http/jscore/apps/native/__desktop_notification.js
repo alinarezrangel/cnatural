@@ -26,12 +26,14 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	var POMap = {
 		"es": {
 			"all": {
-				"title": "Notificaciones"
+				"title": "Notificaciones",
+				"throwtestbtn": "Lanzar notificacion de prueba"
 			}
 		},
 		"en": {
 			"all": {
-				"title": "Notifications"
+				"title": "Notifications",
+				"throwtestbtn": "Raises a test notification"
 			}
 		}
 	};
@@ -82,6 +84,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		var windowBody = myWindow.getBody();
 		var windowStyle = myWindow.getStyle();
 
+		var windowMenu = myWindow.getMenu();
+
 		windowStyle.removeBorders();
 		windowStyle.updateColors();
 
@@ -94,6 +98,34 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		);
 
 		mainContainer.pack("BEGIN");
+
+		var throwtestbtn = window.NaturalWidgets.Create(
+			window.NaturalWidgets.Button,
+			{
+				parent: windowMenu,
+				text: LangMap.throwtestbtn
+			}
+		);
+
+		throwtestbtn.pack("APPEND");
+
+		throwtestbtn.getElement()
+			.addClass([
+				"color-gui-button",
+				"gui-clickeable",
+				"width-block",
+				"margin-4",
+				"padding-16"
+			])
+			.on("click", () =>
+			{
+				window.NaturalShell.CurrentShell.ShowDesktopNotification(
+					"Test",
+					"CNatural",
+					() => {},
+					"/cards/system-card.svg"
+				);
+			});
 
 		var packNotification = (parent, i, imgurl, title, description, event_activate) =>
 		{
@@ -196,7 +228,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			packNotification(
 				mainContainer.getElement(),
 				i,
-				notification.image_url || "user.svg",
+				notification.image_url || "cards/syslog-card.svg",
 				notification.title,
 				notification.description,
 				notification.event_activate
