@@ -202,6 +202,9 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				.addClass("no-padding")
 				.addClass("margin-4");
 
+			txt.getElement()
+				.addClass("gui-select");
+
 			rw.pack("BEGIN");
 			img.pack("APPEND");
 			ttl.pack("APPEND");

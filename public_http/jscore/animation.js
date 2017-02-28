@@ -147,6 +147,25 @@ limitations under the License.
 				.addClass("gui-animation-alert");
 			return this;
 		};
+		window.NaturalObject.prototype.expandElement = function()
+		{
+			this.animatable();
+
+			if(this.inAnimation)
+				return this;
+			this.inAnimation = true;
+
+			this.animatable()
+				.show()
+				.animationEndEvent(() =>
+				{
+					this
+						/*.removeClass("gui-animation-alert")*/
+						.removeClass("gui-animation-expand");
+				})
+				.addClass("gui-animation-expand");
+			return this;
+		};
 
 		(new window.NaturalObject(document)).reloadGlobals(window);
 	};

@@ -120,6 +120,18 @@ limitations under the License.
 	}
 }
 
+@keyframes gui-animation-expand {
+	from {
+		width: 0px !important;
+		height: 0px !important;
+	}
+
+	to {
+		width: 100% !important;
+		height: 100% !important;
+	}
+}
+
 .gui-animation-loadbar-dot-s1 { animation: gui-animation-loadbar-dot-s1-anim 2.5s linear 0.00s infinite normal; }
 .gui-animation-loadbar-dot-s2 { animation: gui-animation-loadbar-dot-s2-anim 2.5s linear 0.25s infinite normal; }
 .gui-animation-loadbar-dot-s3 { animation: gui-animation-loadbar-dot-s3-anim 2.5s linear 0.50s infinite normal; }
@@ -152,4 +164,8 @@ limitations under the License.
 
 .gui-animation-alert {
 	animation: gui-animation-alert-move 0.7s linear 0s infinite normal;
+}
+
+.gui-animation-expand {
+	animation: gui-animation-expand 0.7s ease-out 0s 1 normal;
 }
