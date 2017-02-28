@@ -47,7 +47,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		this.setID("org.cnatural.applications.native.desktop_notification");
 		this.setNamespace("CNatural:Software:Desktop:Native:Applications:Builtins");
 
-		this.setMetadataIcon("/resources/images/icons/executable-icon.svg");
+		this.setMetadataIcon("/resources/images/icons/desktop-notification-icon.svg");
 		this.setMetadataCategory("System");
 		this.setMetadataGenericName("Desktop Notification");
 		this.setMetadataComment("Look at your notifications");
@@ -216,15 +216,13 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				{
 					ct.getElement().remove();
 					window.NaturalShell.CurrentShell.RemoveDesktopNotification(i);
-					if(typeof event_activate === "function")
-						return event_activate();
 				});
 
 			ttl.getElement()
 				.on("click", () =>
 				{
-					ct.getElement().remove();
-					window.NaturalShell.CurrentShell.RemoveDesktopNotification(i);
+					if(typeof event_activate === "function")
+						return event_activate();
 				});
 		};
 
