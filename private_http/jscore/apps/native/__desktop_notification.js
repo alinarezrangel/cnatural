@@ -182,7 +182,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				.addClass("margin-4")
 				.addClass("color-white")
 				.addClass("gui-clickeable")
-				.addClass("gui-width-auto");
+				.addClass("gui-width-auto")
+				.addClass("gui-margin-bottom");
 
 			rw.getElement()
 				.addClass("padding-8")
@@ -212,7 +213,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				{
 					ct.getElement().remove();
 					window.NaturalShell.CurrentShell.RemoveDesktopNotification(i);
-					return event_activate();
+					if(typeof event_activate === "function")
+						return event_activate();
 				});
 
 			ttl.getElement()
@@ -223,23 +225,33 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				});
 		};
 
-		window.NaturalShell.CurrentShell.GetDesktopNotifications().forEach((notification, i) =>
+		var interval = window.setInterval(function()
 		{
-			packNotification(
-				mainContainer.getElement(),
-				i,
-				notification.image_url || "cards/syslog-card.svg",
-				notification.title,
-				notification.description,
-				notification.event_activate
-			);
-		});
+			var pg = mainContainer.getElement();
 
-		window.NaturalShell.CurrentShell.AllNotificationsViewed();
+			while(pg.original.firstChild)
+				pg.original.removeChild(pg.original.firstChild);
+
+			window.NaturalShell.CurrentShell.GetDesktopNotifications().forEach((notification, i) =>
+			{
+				packNotification(
+					pg,
+					i,
+					notification.image_url || "cards/syslog-card.svg",
+					notification.title,
+					notification.description,
+					notification.event_activate
+				);
+			});
+
+			window.NaturalShell.CurrentShell.AllNotificationsViewed();
+		}, 1000);
+
 
 		myWindow.addEventListener("close", () =>
 		{
 			this.isOpenALauncher = false;
+			window.clearInterval(interval);
 		});
 
 		this.getWindowSystem().getWindowManager().showToplevel();

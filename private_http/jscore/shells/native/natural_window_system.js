@@ -157,7 +157,7 @@ limitations under the License.
 			menu.dataset["widget"] = "window-menu";
 
 			// menuSideNav.className = "side-navigation border-bottom bs-2 border-color-natural-black";
-			menuSideNav.className = "row wrap padding-4 border-bottom bs-2 border-color-natural-black color-transparent";
+			menuSideNav.className = "row wrap padding-4 border-vertical bs-2 border-color-natural-black color-transparent";
 			menuSideNav.dataset["widget"] = "window-menu-native";
 
 			menuSideNavCloseMenu.className =
