@@ -90,6 +90,21 @@ window.NaturalClient.Protocol.Type = "AJAX-based";
 // CNatural AJAX Protocol CSP enabled
 window.NaturalClient.Protocol.CSPEnabled = true;
 
+/**
+ * Gets the current user auth token.
+ *
+ * This token may be used for API calls purposes.
+ *
+ * NOTE: The callback ({function} cll) should have a syntax like:
+ *
+```javascript
+// Where error is always defined (or null) and token is a string
+// (or undefined)
+function my_example_callback(Error error, String token?)
+```
+ *
+ * @param {function} cll - Callback to be called when the token is getted
+ */
 window.NaturalClient.GetToken = function(cll)
 {
 	var st = $natural.getStorage();
@@ -121,6 +136,24 @@ window.NaturalClient.GetToken = function(cll)
 	});
 };
 
+/**
+ * Makes an API request to the server.
+ *
+ * Generally, it's required in some argument the user auth token. You can
+ * get it using {@link window.NaturalClient.GetToken}.
+ *
+ * NOTE: the callback ({function} cll) should have a syntax like:
+ *
+```javascript
+// where error is always defined (or null) and result is the
+// method returned string (of undefined)
+function my_example_callback(Error error, String result)
+```
+ *
+ * @param {string} method - Method to be called (for example, `coreutils.time.get`).
+ * @param {map|object} args - Map with all arguments to be passed to the method.
+ * @param {function} cll - Callback to be called with the method result.
+ */
 window.NaturalClient.APIRequest = function(method, args, cll)
 {
 	$natural.ajax({
@@ -134,6 +167,15 @@ window.NaturalClient.APIRequest = function(method, args, cll)
 	});
 };
 
+/* * [NOT PUBLISH THIS]
+ * Attaches the events to the clients front-end.
+ *
+ * The the user logins and opens the select-DE-screen, this function is
+ * called to attach the events to each card and start the corresponding
+ * DE.
+ *
+ * @param {string} token - The user auth token tu use in API calls.
+*/
 window.NaturalClient._attach_shell_events = function(token)
 {
 	var start_native_shell = $ntc("#_start_native_shell");
@@ -235,6 +277,7 @@ window.NaturalClient._attach_shell_events = function(token)
 		}
 	});
 
+	// Verify that the language exist globally
 	if($natural.selectMessagePOMapIn(
 			"welcomettl",
 			$natural.GlobalPOMap,
@@ -251,11 +294,15 @@ $ntc(window).on("load", function()
 {
 	// Init all front-end and start the client
 
+	// Prevent the browser's contextmenu from appear in any place when
+	// the users right-clicks anything
 	$ntc(document.body).on("contextmenu", (ev) =>
 	{
 		ev.preventDefault();
 	}, false);
 
+	// We should test that the server is accesible via the coreutils.test
+	// method, this will return "Hello World" on success
 	$natural.ajax({
 		url: "/api/ajax/coreutils/test",
 		args: {},
@@ -281,23 +328,37 @@ $ntc(window).on("load", function()
 		});
 	});
 
+	// Replace the semantic iconset tags (like "home") with it's
+	// FontSet value (like "h"), this is NOT DONE automaticlly
+	// until we call NaturalObject.include or
+	// NaturalObject.includeScripts which will not work until
+	// we have a token
 	$natural.parseSemanticIconsetTags(document, (s) => {});
 	$natural.parsePOMaps(document);
 
+	// "Click anything to continue" on the start screen
 	$ntc("#_bootscreen").attach(function(ev)
 	{
 		$ntc("#_bootscreen").hideSlideUp();
 		$ntc("#_loginscreen").removeClass("gui-hidden");
 	}).on("click");
 
-	$ntc("#login_button").attach(function(ev)
+	// When the users tries to login:
+	$ntc("#login_button").attach(function(ev) // attach() .. on("click")
 	{
+		$ntc("#login_button").original.disabled = true;
+
+		// Show a dialog saying that the login is in process
+		// (if something go wrong like connection failed, the user
+		// can know that using the long-delay of login)
 		var win = NaturalWidgets.CreateTextDialog(
 			$ntc("#_loginscreen"),
 			$natural.getPOMessage("loginwindow_ttl"),
 			$natural.getPOMessage("loginwindow_desc"),
 			(win) => {}
 		);
+
+		// Now try to login and get the token:
 		$natural.ajax({
 			url: "/api/ajax/coreutils/login",
 			args: {},
@@ -318,6 +379,9 @@ $ntc(window).on("load", function()
 
 			if(res === "enopass")
 			{
+				$ntc("#login_button").original.disabled = false;
+
+				// Bad username or password
 				var err = NaturalWidgets.CreateTextDialog(
 					$ntc("#_loginscreen"),
 					$natural.getPOMessage("errorwindow_ttl"),
@@ -326,6 +390,8 @@ $ntc(window).on("load", function()
 				);
 				return;
 			}
+
+			// Correctly logged user, save the token:
 
 			var st = $natural.getStorage();
 			st.open("CNatural.JS.Storage.Core", function(error)
@@ -354,6 +420,9 @@ $ntc(window).on("load", function()
 
 						$ntc("#_loginscreen").hideSlideUp();
 						$ntc("#_mainscreen").removeClass("gui-hidden");
+
+						// Now the token was saved, the user will select a
+						// DE and the DE will execute.
 
 						$natural.includeScripts(document, res, function(sc)
 						{

@@ -334,6 +334,18 @@ textarea.gui-widget-input, select.gui-widget-input {
 	padding: 16px 8px !important;
 }
 
+.gui-widget-button:disabled, .gui-widget-button.gui-disabled {
+	background-color: #AAA !important;
+	color: #000 !important;
+	cursor: not-allowed !important;
+}
+
+.gui-widget-input:disabled, .gui-widget-input.gui-disabled {
+	background-color: #AAA !important;
+	color: #000 !important;
+	cursor: not-allowed !important;
+}
+
 @media all and (max-width: 470px) {
 	/* Small */
 

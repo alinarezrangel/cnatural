@@ -75,6 +75,22 @@ Running the server is easy:
 
 All configuration data will be readed from `cnatural.conf`
 
+## Documentation ##
+
+For generate the C documentation CNatural uses Doxygen and for the JavaScript
+documentation uses JsDoc 3. All docs will be placed on the `docs/` subfolder,
+it's structure will be like:
+
+```
+docs/
+	js/
+		(all JS docs)
+	c/
+		(all C docs)
+```
+
+Note that the documentation generation is in development.
+
 ## Authors ##
 
 * Alejandro Linarez Rangel @alinarezrangel (GitHub)
