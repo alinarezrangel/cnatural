@@ -28,23 +28,108 @@ limitations under the License.
 		{
 			throw new Error("Error at CNatural.JS.Core.Storage: NaturalObject is undefined");
 		}
+
+		/**
+		 * Represents and manages a persistent storage (if any) on the browser.
+		 *
+		 * This API is so flexible that enables a combination of synchronus and
+		 * asynchronus client's API:
+		 *
+		 * This constructor is for internal use only.
+		 *
+		 * @example
+		 * // Uses sync API (if any)
+		 * var st = $natural.getStorage(window);
+		 * st.open("Who.Am.I");
+		 * st.set("hello", "world");
+		 * st.close()
+		 * // Uses async API (works on any system)
+		 * var st = $natural.getStorage(window);
+		 * st.open("Who.Am.I", (err) =>
+		 * {
+		 *   if(err) throw err;
+		 *
+		 *   st.set("hello", "world", (err) =>
+		 *   {
+		 *     if(err) throw err;
+		 *
+		 *     st.close((err) => {if(err) throw err;});
+		 *   });
+		 * });
+		 * @class
+		 */
 		window.NaturalStorage = function(ls)
 		{
 			this.storage = ls || window.localStorage || null;
 			this.owner = "";
 			this.haveSync = true;
 		};
+
+		/**
+		 * Opens the storage system.
+		 *
+		 * If the storage system is not opened BEFORE doing any operation,
+		 * the storage system might fail.
+		 *
+		 * The callback syntax should look like: `(Error error) => {...}`.
+		 *
+		 * The callback can be omited ONLY the the storage system is synchronus.
+		 *
+		 * If no error occours, the error parameter will be null.
+		 *
+		 * @param {string} by - The owner of the session.
+		 * @param {function} [callback] - The callback to be called.
+		 *
+		 * @returns {*} Value returned by the callback.
+		 */
 		window.NaturalStorage.prototype.open = function(by, callback)
 		{
 			callback = this._syncCallback(callback, (_1) => _1);
 			this.owner = by;
 			return callback(null);
 		};
+
+		/**
+		 * Closes the storage system.
+		 *
+		 * If the storage system is not opened BEFORE doing any this operation,
+		 * the storage system might fail.
+		 *
+		 * The callback syntax should look like: `(Error error) => {...}`.
+		 *
+		 * The callback can be omited ONLY the the storage system is synchronus.
+		 *
+		 * If no error occours, the error parameter will be null.
+		 *
+		 * @param {function} [callback] - The callback to be called.
+		 *
+		 * @returns {*} Value returned by the callback.
+		 */
 		window.NaturalStorage.prototype.close = function(callback)
 		{
 			callback = this._syncCallback(callback, (_1) => _1);
 			return callback(null);
 		};
+
+		/**
+		 * Gets a value from the specified key.
+		 *
+		 * If the storage system is not opened BEFORE doing any operation,
+		 * the storage system might fail.
+		 *
+		 * The callback syntax should look like: `(Error error, string value) => {...}`.
+		 *
+		 * The callback can be omited ONLY the the storage system is synchronus.
+		 *
+		 * In sync mode, the value is returned instead of passing it to a callback.
+		 *
+		 * If no error occours, the error parameter will be null.
+		 *
+		 * @param {string} name - Name of the key to get.
+		 * @param {function} [callback] - The callback to be called.
+		 *
+		 * @returns {*} Value returned by the callback.
+		 */
 		window.NaturalStorage.prototype.get = function(name, callback)
 		{
 			callback = this._syncCallback(callback, (_1) => _1);
@@ -61,6 +146,25 @@ limitations under the License.
 
 			return callback(null, this.storage.getItem(name).toString());
 		};
+
+		/**
+		 * Sets the value of a key.
+		 *
+		 * If the storage system is not opened BEFORE doing any operation,
+		 * the storage system might fail.
+		 *
+		 * The callback syntax should look like: `(Error error) => {...}`.
+		 *
+		 * The callback can be omited ONLY the the storage system is synchronus.
+		 *
+		 * If no error occours, the error parameter will be null.
+		 *
+		 * @param {string} name - Name of the key.
+		 * @param {string} value - New value of the key.
+		 * @param {function} [callback] - The callback to be called.
+		 *
+		 * @returns {*} Value returned by the callback.
+		 */
 		window.NaturalStorage.prototype.set = function(name, value, callback)
 		{
 			callback = this._syncCallback(callback, (_1) => _1);
@@ -79,6 +183,19 @@ limitations under the License.
 			this.storage.setItem(name, value);
 			return callback(null);
 		};
+
+		/**
+		 * Normalizes a callback.
+		 *
+		 * If the API is in sync mode, makes a minimalist fake callback.
+		 *
+		 * @param {function|object|undefined} callback - Param passed to the function.
+		 * @param {function} fc - the default value of the callback on sync mode.
+		 *
+		 * @return {function} A callback.
+		 *
+		 * @private
+		 */
 		window.NaturalStorage.prototype._syncCallback = function(callback, fc)
 		{
 			if(typeof callback === "undefined")
@@ -98,6 +215,20 @@ limitations under the License.
 			}
 		};
 
+
+		/**
+		 * @name NaturalStorage.prototype.getStorage
+		 * @function
+		 * @global
+		 *
+		 * Gets the available storage.
+		 *
+		 * May return null if no storage is available.
+		 *
+		 * @param {window} win - Window where the storage is defined.
+		 *
+		 * @return {window.NaturalStorage} The storage system wrapped.
+		 */
 		window.NaturalObject.prototype.getStorage = function(win)
 		{
 			if(typeof win === "undefined")
