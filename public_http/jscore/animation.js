@@ -30,6 +30,14 @@ limitations under the License.
 		}
 
 		/**
+		 * Fake namespace used to document extensions from the module animation.
+		 *
+		 * All functions in this namespace are methods of {@link NaturalObject}.
+		 *
+		 * @namespace Animations
+		 */
+
+		/**
 		 * Makes a node (or nodes) animatables. Note that
 		 * the animatable feature is not embed in the node
 		 * or nodes itself, it's embed on the NaturalObject
@@ -58,6 +66,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function animatable
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.animatable = function()
 		{
@@ -84,6 +95,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function hide
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.hide = function()
 		{
@@ -97,6 +111,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function show
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.show = function()
 		{
@@ -114,6 +131,9 @@ b.isAnimatable; // This is false
 		 * @param {function} evt - Callback to be called on the animation_end_event.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function animationEndEvent
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.animationEndEvent = function(evt)
 		{
@@ -135,6 +155,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function hideSlideUp
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.hideSlideUp = function()
 		{
@@ -164,6 +187,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function showSlideDown
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.showSlideDown = function()
 		{
@@ -194,6 +220,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function hideMoveFromCenterToTop
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.hideMoveFromCenterToTop = function()
 		{
@@ -223,6 +252,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function showMoveFromTopToCenter
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.showMoveFromTopToCenter = function()
 		{
@@ -254,6 +286,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function alertMoveForever
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.alertMoveForever = function()
 		{
@@ -286,6 +321,9 @@ b.isAnimatable; // This is false
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @function expandElement
+		 * @memberof Animations
 		 */
 		window.NaturalObject.prototype.expandElement = function()
 		{

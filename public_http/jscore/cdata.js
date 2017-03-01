@@ -28,6 +28,21 @@ limitations under the License.
 		{
 			throw new Error("Error at CNatural.JS.Core.CData: NaturalObject is undefined");
 		}
+
+		/**
+		 * Fake namespace used to document the cdata module.
+		 *
+		 * All functions in this namespace are methods of {@link NaturalObject}.
+		 *
+		 * @namespace CData
+		 */
+
+		/**
+		 * Maps a semantic icon name to a real icon set character.
+		 *
+		 * @type {object.<string, string>|map}
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.NaturalIconSetMap = {
 			"times": "a",
 			"close": "a",
@@ -86,8 +101,22 @@ limitations under the License.
 			"tools": "I",
 			"connection": "J"
 		};
+
+		/**
+		 * Contains the current language as string.
+		 *
+		 * @type {string}
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.Localization =
 			window.navigator.userLanguage || window.navigator.language || "en-all";
+
+		/**
+		 * Contains the currently supported languages.
+		 *
+		 * @type {Array|string[]}
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.GlobalPOMapSupportedLangs =
 		[
 			// NOTE: Basic CNatural builtins GUI localization:
@@ -96,6 +125,15 @@ limitations under the License.
 			"es",
 			"es-all"
 		];
+
+		/**
+		 * Contains the current global POMap.
+		 *
+		 * A POMap maps a universal message to a locale-specific message.
+		 *
+		 * @type {object|POMapSubLG}
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.GlobalPOMap =
 		{
 			// NOTE: Basic CNatural builtins GUI localization:
@@ -135,6 +173,19 @@ limitations under the License.
 			}
 		};
 
+		/**
+		 * Selects a POMap using a language.
+		 *
+		 * The POMap is selected from a POMapSubLG list.
+		 *
+		 * @param {POMapSubLG} pomap - Sublanguage list to search.
+		 * @param {string} lang - Language code to use.
+		 *
+		 * @return {POMap} A POMap that uses lang as language.
+		 *
+		 * @function selectPOMapIn
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.selectPOMapIn = function(pomap, lang)
 		{
 			var lg = lang.split("-")[0];
@@ -163,6 +214,19 @@ limitations under the License.
 
 			return sgmap;
 		};
+
+		/**
+		 * Selects a message from a POMapSubLG.
+		 *
+		 * @param {string} msg - Message to search.
+		 * @param {POMapSubLG} pomap - POMapSubLG where search.
+		 * @param {string} lang - Language to use.
+		 *
+		 * @return {string} Message msg in the language.
+		 *
+		 * @function selectMessagePOMapIn
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.selectMessagePOMapIn = function(msg, pomap, lang)
 		{
 			var sgmap = this.selectPOMapIn(pomap, lang);
@@ -183,9 +247,30 @@ limitations under the License.
 
 			return vl;
 		};
+
+		/**
+		 * Imports a JavaScript code.
+		 *
+		 * Note that not specifing a token (token = null) but setting the path as
+		 * private (isprivate = true) is illegal and will throw an exception.
+		 *
+		 * If no callback is provided, the last event handler will be used (setted
+		 * using {@link NaturalObject.attach} or similar).
+		 *
+		 * If `isprivate` is not specified it's defaults to false.
+		 *
+		 * @param {boolean} async - If the JavaScript code should load asynchronus.
+		 * @param {string} path - Path to the JavaScript resource.
+		 * @param {string} token - User auth token (or null).
+		 * @param {boolean} [isprivate=false] - If the resource is in private path.
+		 * @param {function} [cll] - Callback called when the code is ready.
+		 *
+		 * @function require
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.require = function(async, path, token, isprivate, cll)
 		{
-			isprivate = (typeof isprivate === "undefined")? false : true;
+			isprivate = (typeof isprivate === "boolean")? isprivate : false;
 			cll = (typeof cll === "function")? (this._callbackLastRef = cll) : this._callbackLastRef;
 
 			if((typeof token === "undefined") || (token === null))
@@ -229,6 +314,20 @@ limitations under the License.
 				window.$ntc(document.body).appendChild(window.$ntc(sc));
 			}
 		};
+
+		/**
+		 * Translates all semantic icons to it's mapped equivalents.
+		 *
+		 * A semantic icon like `tools` need to be translated to a
+		 * single-char value like `I`. This translates all tags marked with
+		 * `gui-font-iconset-v2`.
+		 *
+		 * @param {document} [doc=document] - Document to translate
+		 * @param {function} [ondone] - Callback when all tags was translated.
+		 *
+		 * @function parseSemanticIconsetTags
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.parseSemanticIconsetTags = function(doc, ondone)
 		{
 			ondone = ondone || function(x) {};
@@ -255,10 +354,32 @@ limitations under the License.
 				ondone(tag);
 			}).forEach();
 		};
+
+		/**
+		 * Gets a PO message from the current language and Global POMap.
+		 *
+		 * @param {string} msg - Message to translate.
+		 *
+		 * @return {string} Message translated.
+		 *
+		 * @function getPOMessage
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.getPOMessage = function(msg)
 		{
 			return this.selectMessagePOMapIn(msg, this.GlobalPOMap, this.Localization);
 		};
+
+		/**
+		 * Translates all client's GUI.
+		 *
+		 * Uses the global POMap.
+		 *
+		 * @param {document} [doc=document] - Document to translate.
+		 *
+		 * @function parsePOMaps
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.parsePOMaps = function(doc)
 		{
 			if(typeof doc === "undefined")
@@ -293,6 +414,15 @@ limitations under the License.
 				o.appendChild(document.createTextNode(vl));
 			}).forEach();
 		};
+
+		/**
+		 * Includes a fragment of HTML from a private resource.
+		 *
+		 * @param {string} token - Token to use.
+		 * @param {string} src - Private path to the resource.
+		 * @param {string} mime - Expected MIME-type of the resource.
+		 * @param {function} callback - Callback to be called when the import is done.
+		 */
 		window.NaturalObject.prototype.include = function(token, src, mime, callback)
 		{
 			this.ajax({
@@ -325,6 +455,19 @@ limitations under the License.
 			this.parseSemanticIconsetTags(document, function(s) {});
 			this.parsePOMaps(document);
 		};
+
+		/**
+		 * Includes all scripts embed on `div[data-widget="include"]` tags.
+		 *
+		 * More, calls some utility functions.
+		 *
+		 * @param {document} [doc=document] - Document to parse.
+		 * @param {string} token - The user auth token.
+		 * @param {function} [ondone] - Callback called when the parsing is finished.
+		 *
+		 * @function includeScripts
+		 * @memberof CData
+		 */
 		window.NaturalObject.prototype.includeScripts = function(doc, token, ondone)
 		{
 			ondone = ondone || function(x) {};
