@@ -9,3 +9,5 @@ log.*
 *.so
 
 core
+
+out/

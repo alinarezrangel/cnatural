@@ -20,6 +20,22 @@ limitations under the License.
 **********************
 ************************************************/
 
+/**
+ * Contains all things related to the client of CNatural.
+ *
+ * @see NaturalObject
+ * @see NaturalWidgets
+ * @see NaturalStorage
+ * @see NaturalShell
+ *
+ * @namespace NaturalClient
+ *
+ * @property {string} Name - Name of the client
+ * @property {string} Version - The version of the client in the form X.Y.Z.
+ * @property {string} Codename - Codename of the version.
+ * @property {Array} ReservedNames - An array of strings containing all global reserved names.
+ */
+
 window.NaturalClient = window.NaturalClient || {};
 
 // Metadata:
@@ -44,6 +60,17 @@ window.NaturalClient.ReservedNames = [
 	"NaturalClient"
 ];
 
+/**
+ * Contains the metadata about the Generation CSS Framework used.
+ *
+ * @property {string} MinVersion - Minimal version guarranty to be used.
+ * @property {object} Object - The Generation Framework object (`window.Generation`).
+ * @property {Array} Palletes - A stringlist with all color palletes used.
+ *
+ * @memberof NaturalClient
+ * @namespace Generation
+ */
+
 window.NaturalClient.Generation = window.NaturalClient.Generation || {};
 
 // Minimal Generation Version supported
@@ -60,6 +87,17 @@ window.NaturalClient.Generation.Palletes = [
 	"gui"
 ];
 
+/**
+ * Contains all metadata related to the current HTML engine.
+ *
+ * @property {string} MinVersion - The minimal version of HTML supported.
+ * @property {boolean} CustomElementAPI - If the custom elements API is available.
+ * @property {boolean} ForceCustomElements - If you can emulate CustomElement by CSS and ignoring warnings.
+ *
+ * @memberof NaturalClient
+ * @namespace HTML
+ */
+
 window.NaturalClient.HTML = window.NaturalClient.HTML || {};
 
 // Minimal HTML Version supported
@@ -71,6 +109,16 @@ window.NaturalClient.HTML.CustomElementsAPI = false;
 // If you can use custom elements forcing a CSS and ignoring warnings
 window.NaturalClient.HTML.ForceCustomElements = true;
 
+/**
+ * Contains all thing about the JavaScript engine.
+ *
+ * @property {string} MinVersion - Minimal version supported.
+ * @property {boolean} BrowserMode - If is running on a browser.
+ *
+ * @memberof NaturalClient
+ * @namespace JavaScript
+ */
+
 window.NaturalClient.JavaScript = window.NaturalClient.JavaScript || {};
 
 // Minimal JavaScript Version supported
@@ -78,6 +126,17 @@ window.NaturalClient.JavaScript.MinVersion = "5";
 
 // If is running on a browser
 window.NaturalClient.JavaScript.BrowserMode = true;
+
+/**
+ * Contains all things related to the API protocol.
+ *
+ * @property {string} Version - Version of the protocol in X.Y.Z form.
+ * @property {string} Type - Type of the protocol, by default "AJAX-based".
+ * @property {boolean} CSPEnabled - If the CSP is enabled.
+ *
+ * @memberof NaturalClient
+ * @namespace Protocol
+ */
 
 window.NaturalClient.Protocol = window.NaturalClient.Protocol || {};
 
@@ -104,6 +163,9 @@ function my_example_callback(Error error, String token?)
 ```
  *
  * @param {function} cll - Callback to be called when the token is getted
+ *
+ * @function GetToken
+ * @memberof NaturalClient
  */
 window.NaturalClient.GetToken = function(cll)
 {
@@ -153,6 +215,9 @@ function my_example_callback(Error error, String result)
  * @param {string} method - Method to be called (for example, `coreutils.time.get`).
  * @param {map|object} args - Map with all arguments to be passed to the method.
  * @param {function} cll - Callback to be called with the method result.
+
+ * @function APIRequest
+ * @memberof NaturalClient
  */
 window.NaturalClient.APIRequest = function(method, args, cll)
 {

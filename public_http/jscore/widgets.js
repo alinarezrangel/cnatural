@@ -29,6 +29,17 @@ limitations under the License.
 			throw new Error("Error at CNatural.JS.Widgets: NaturalObject is undefined");
 		}
 
+		/**
+		 * @name NaturalWidgets.Extend
+		 * @function
+		 * @global
+		 *
+		 * Extends a plain class.
+		 *
+		 * In the process, the child class will inherit the base class.
+		 *
+		 * //
+		 */
 		var Extend = function(base, child)
 		{
 			"use strict";
