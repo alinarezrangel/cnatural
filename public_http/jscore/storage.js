@@ -56,6 +56,9 @@ limitations under the License.
 		 *     st.close((err) => {if(err) throw err;});
 		 *   });
 		 * });
+		 *
+		 * @param {StorageSystem} ls - Storage System to use.
+		 *
 		 * @class
 		 */
 		window.NaturalStorage = function(ls)

@@ -51,6 +51,8 @@ JSDOC_TEMPLATE=$(NPM_PREFIX)/ink-docstrap/template
 # Argument passed to JSDoc3 for set a template
 # Leave it blank for NOT use a template
 JSDOC_TEMPLATE_ARG=-t $(JSDOC_TEMPLATE)
+# JavaScript files to document
+JSFILES_TO_DOC=public_http/jscore/* private_http/jscore/shells/*
 
 $(TARGET): $(OBJC)
 	$(LD) $(OBJC) -o $(TARGET) $(LDFLAGS)
@@ -108,4 +110,4 @@ minimal: $(TARGET)
 # Documentation of javascript
 # Needs JSDoc3
 docsjs:
-	jsdoc public_http/jscore/* --readme docs/js/home.md -c docs/js/conf.json $(JSDOC_TEMPLATE_ARG)
+	jsdoc $(JSFILES_TO_DOC) --readme docs/js/home.md -c docs/js/conf.json $(JSDOC_TEMPLATE_ARG)

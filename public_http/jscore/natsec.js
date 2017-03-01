@@ -38,6 +38,8 @@ limitations under the License.
 		/**
 		 * The NaturalObject provides wrappers to DOM functions
 		 *
+		 * @param {DOMResult|HTMLElement|Node|NodeList|HTMLCollection} dom - DOM element/s to wrap.
+		 *
 		 * @class
 		 */
 		var NaturalObject = function(dom)

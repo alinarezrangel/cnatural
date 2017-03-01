@@ -34,12 +34,44 @@ limitations under the License.
 			throw new Error("Error at CNatural.JS.Desktop.Base.ApplicationBase: NaturalShell.Context is undefined");
 		}
 
+		/**
+		 * Main namespace for all shell realted things.
+		 *
+		 * @namespace NaturalShell
+		 */
 		window.NaturalShell = window.NaturalShell || {};
 
+		/**
+		 * The core shell. Is for API definition only.
+		 *
+		 * @namespace Base
+		 * @memberof NaturalShell
+		 */
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
+		/**
+		 * Abstraction of an application.
+		 *
+		 * @param {NaturalShell.Base.Context} ctx - Context to use.
+		 * @param {NaturalShell.Base.WindowSystem} ws - Window System to use.
+		 *
+		 * @class Application
+		 * @memberof NaturalShell.Base
+		 */
 		window.NaturalShell.Base.Application = function(ctx, ws)
 		{
+			/**
+			 * Contains the application data.
+			 *
+			 * @property {string} applicationName - The name of the application (without translate).
+			 * @property {string} applicationID - The ID of the application.
+			 * @property {string} namespace - The namespace of the application.
+			 * @property {number} instanceID - ID of one instance of the application.
+			 *
+			 * @member {object|ApplicationData}
+			 * @protected
+			 * @readonly
+			 */
 			this.appdata = {
 				"applicationName": "(null)",
 				"applicationID": "(null)",
@@ -49,6 +81,43 @@ limitations under the License.
 			this.windowSystem = ws;
 			this.context = ctx;
 
+			/**
+			 * Contains the application metadata.
+			 *
+			 * | Category (string)   | Category         |
+			 * | ------------------- | ---------------- |
+			 * | "X-Any"             | Any              |
+			 * | "System"            | System           |
+			 * | "Accesories"        | Accesories       |
+			 * | "Utilities"         | Utilities        |
+			 * | "Math"              | Mathematics      |
+			 * | "Sound"             | Sound            |
+			 * | "Video"             | Video            |
+			 * | "SoundVideo"        | Sound and Video  |
+			 * | "Science"           | Science          |
+			 * | "Education"         | Education        |
+			 * | "UniversalAccs"     | Universal access |
+			 * | "Electronics"       | Electronics      |
+			 * | "Graphics"          | Graphics         |
+			 * | "Design"            | Design           |
+			 * | "Internet"          | Internet         |
+			 * | "Games"             | Games            |
+			 * | "Office"            | Office           |
+			 * | "Programation"      | Programation     |
+			 * | "Misc"              | Others           |
+			 *
+			 * @property {string} icon - Path to the icon of the application.
+			 * @property {string} category - Category of the application (see table).
+			 * @property {string} genericName - Application Name (can be translated).
+			 * @property {string} onlyShowIn - Name off the client that this application supports.
+			 * @property {string} comment - Short description of the application.
+			 * @property {boolean} graphical - If the application is graphical.
+			 * @property {boolean} showInShell - If the application should be listed in the launcher.
+			 *
+			 * @member {object|ApplicationMetadata}
+			 * @protected
+			 * @readonly
+			 */
 			this.metadata = {
 				"icon": "/resources/images/icons/executable-icon.svg",
 				"category": "X-Any",
@@ -60,41 +129,149 @@ limitations under the License.
 			};
 		};
 
+		/**
+		 * Sets the icon of the application.
+		 *
+		 * By convension, all application icons are stored in
+		 * `/resources/images/icons/` and have the name `[application name]-icon.svg`.
+		 *
+		 * @param {string|URLPath} x - Path to the icon.
+		 *
+		 * @method setMetadataIcon
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setMetadataIcon = function(x)
 		{
 			this.metadata.icon = x.toString();
 		};
 
+		/**
+		 * Sets the category of the application.
+		 *
+		 * | Category (string)   | Category         |
+		 * | ------------------- | ---------------- |
+		 * | "X-Any"             | Any              |
+		 * | "System"            | System           |
+		 * | "Accesories"        | Accesories       |
+		 * | "Utilities"         | Utilities        |
+		 * | "Math"              | Mathematics      |
+		 * | "Sound"             | Sound            |
+		 * | "Video"             | Video            |
+		 * | "SoundVideo"        | Sound and Video  |
+		 * | "Science"           | Science          |
+		 * | "Education"         | Education        |
+		 * | "UniversalAccs"     | Universal access |
+		 * | "Electronics"       | Electronics      |
+		 * | "Graphics"          | Graphics         |
+		 * | "Design"            | Design           |
+		 * | "Internet"          | Internet         |
+		 * | "Games"             | Games            |
+		 * | "Office"            | Office           |
+		 * | "Programation"      | Programation     |
+		 * | "Misc"              | Others           |
+		 *
+		 * @param {string|AppCategory} x - Category.
+		 *
+		 * @method setMetadataCategory
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setMetadataCategory = function(x)
 		{
 			this.metadata.category = x.toString();
 		};
 
+		/**
+		 * Sets the generic name of the application.
+		 *
+		 * The generic name is generally a translated-version of the appname.
+		 *
+		 * @param {string} x - Generic name.
+		 *
+		 * @method setMetadataGenericName
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setMetadataGenericName = function(x)
 		{
 			this.metadata.genericName = x.toString();
 		};
 
+		/**
+		 * Sets the comment.
+		 *
+		 * The comment is a short description of the application. May be
+		 * translated.
+		 *
+		 * @param {string} x - Comment.
+		 *
+		 * @method setMetadataComment
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setMetadataComment = function(x)
 		{
 			this.metadata.comment = x.toString();
 		};
 
+		/**
+		 * Sets if the application is graphical.
+		 *
+		 * Any application that shows data on the screen is graphical.
+		 *
+		 * @param {boolean} x - If the app is graphical.
+		 *
+		 * @method setMetadataGraphical
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setMetadataGraphical = function(x)
 		{
 			this.metadata.graphical = x === true;
 		};
 
+		/**
+		 * Sets if the application should be listed in the launcher.
+		 *
+		 * If is false, when the users opens a launcher to see all applications
+		 * this application will not be listed.
+		 *
+		 * The launcher is responsive to follow or not this flag, some launchers
+		 * may ignore this.
+		 *
+		 * @param {boolean} x - If the app should be listed in the shell.
+		 *
+		 * @method setMetadataShowInShell
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setMetadataShowInShell = function(x)
 		{
 			this.metadata.showInShell = x === true;
 		};
 
-		window.NaturalShell.Base.Application.prototype.getMetadata = function(x)
+		/**
+		 * Gets the metdata.
+		 *
+		 * It's readonly, for change the metadata use any of the setters methods.
+		 *
+		 * @return {object|ApplicationMetadata} Application metadata.
+		 *
+		 * @method getMetadata
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
+		window.NaturalShell.Base.Application.prototype.getMetadata = function()
 		{
 			return this.metadata;
 		};
 
+		/**
+		 * Sets the application name.
+		 *
+		 * Should be a string without any specific format.
+		 *
+		 * @param {string|ApplicationName} name - New appname.
+		 *
+		 * @throws {Error} If the name is invalid, throws an error (not used).
+		 *
+		 * @method setName
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setName = function(name)
 		{
 			if(this.validateName(name))
@@ -107,6 +284,26 @@ limitations under the License.
 			}
 		};
 
+		/**
+		 * Sets the application ID.
+		 *
+		 * The application ID should be a string of the form:
+		 *
+```
+(org|com|net|...)\....
+For example:
+org.cnatural.applications.native.launcher
+com.google.daemons.keep_drive_updated
+net.sourceforge.applications.client
+```
+		 *
+		 * @param {string|ApplicationID} id - New appid.
+		 *
+		 * @throws {Error} If the ID is invalid, throws an error.
+		 *
+		 * @method setID
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setID = function(id)
 		{
 			if(this.validateID(id))
@@ -119,6 +316,30 @@ limitations under the License.
 			}
 		};
 
+		/**
+		 * Sets the application namespace.
+		 *
+		 * 
+		 * The namespace should be a string of the form:
+		 *
+```
+\:?...
+For example:
+CNatural:Software:Applications:Desktop:Native:Builtins
+Intel:Hardware:Galileo:Gen1:Viewer
+Google:Software:Applications
+```
+		 *
+		 * The namespace will be used to classify the application, and
+		 * should not contain the application name.
+		 *
+		 * @param {string|ApplicationNS} ns - New appns.
+		 *
+		 * @throws {Error} If the namespace is invalid, throws an error.
+		 *
+		 * @method setNamespace
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.setNamespace = function(ns)
 		{
 			if(this.validateNamespace(ns))
@@ -131,27 +352,71 @@ limitations under the License.
 			}
 		};
 
+		/**
+		 * Gets the application name.
+		 *
+		 * @return {string|ApplicationName} The application name.
+		 *
+		 * @method getName
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.getName = function()
 		{
 			return this.appdata.applicationName;
 		};
 
+		/**
+		 * Gets the application ID.
+		 *
+		 * @return {string|ApplicationID} The application ID.
+		 *
+		 * @method getID
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.getID = function()
 		{
 			return this.appdata.applicationID;
 		};
 
+		/**
+		 * Gets the application namespace.
+		 *
+		 * @return {string|ApplicationNS} The application namespace.
+		 *
+		 * @method getNamespace
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.getNamespace = function()
 		{
 			return this.appdata.namespace;
 		};
 
+		/**
+		 * Validates a name.
+		 *
+		 * @param {string} name - The name to validate.
+		 *
+		 * @return {boolean} true if the name is valid, false otherwise.
+		 *
+		 * @method validateName
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.validateName = function(name)
 		{
 			// Names are always valid.
 			return true;
 		};
 
+		/**
+		 * Validates an ID.
+		 *
+		 * @param {string} id - The id to validate.
+		 *
+		 * @return {boolean} true if the ID is valid and false otherwise.
+		 *
+		 * @method validateID
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.validateID = function(id)
 		{
 			// Format:
@@ -160,6 +425,16 @@ limitations under the License.
 			return /^[a-z]+(\.[a-zA-Z0-9_]+){2,}$/.test(id);
 		};
 
+		/**
+		 * Validates a namespace.
+		 *
+		 * @param {string} ns - The namespace to validate.
+		 *
+		 * @return {boolean} true if the namespace if valid, false otherwise.
+		 *
+		 * @method validateNamespace
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.validateNamespace = function(ns)
 		{
 			// Format:
@@ -175,6 +450,16 @@ limitations under the License.
 			return /^\:?[a-zA-Z0-9_]+\:[a-zA-Z0-9_:]*$/.test(ns);
 		};
 
+		/**
+		 * Creates an instance of this application.
+		 *
+		 * The returned AppInstanceData is required by other classes to work.
+		 *
+		 * @return {object|AppInstanceData} An instance data.
+		 *
+		 * @method createInstance
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.createInstance = function()
 		{
 			var cp = {
@@ -190,48 +475,92 @@ limitations under the License.
 			return cp;
 		};
 
+		/**
+		 * Registers this application.
+		 *
+		 * It's called by the shell automaticly, so you never will need this function.
+		 *
+		 * @method registerApplication
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.registerApplication = function()
 		{
 			(this.context.getApplicationsCallback())("application.register", this);
 		};
 
+		/**
+		 * Gets the window context.
+		 *
+		 * @return {NaturalShell.Base.Context} Window's context.
+		 *
+		 * @method getContext
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.getContext = function()
 		{
 			return this.context;
 		};
 
+		/**
+		 * Gets the window system.
+		 *
+		 * From the window system you can get the window manager.
+		 *
+		 * @return {NaturalShell.Base.WindowSystem} The window's window system.
+		 *
+		 * @method getWindowSystem
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.getWindowSystem = function()
 		{
 			return this.windowSystem;
 		};
 
+		/**
+		 * Runs the application.
+		 *
+		 * Each time that the shells needs to run the application calls this method.
+		 *
+		 * Note that only **one** application **instance** will be created at time,
+		 * so you should not put all the app code in the constructor.
+		 * 
+		 * Runs the current application. For get an usable appdata,
+		 * use the this.createInstance method. args is an array of
+		 * objects containing the arguments passed to this app.
+		 * Generally, args only have strings but some apps support other
+		 * types: NFiles support the `["--call-on-open", <function>]`
+		 * but if you don't specify any other arg type, the standard says
+		 * that args will be an array of only strings.
+		 *
+		 * The returned object of this function (undefined will be converted
+		 * to null) will be passed to the caller, this function may return
+		 * simple objects (integers (standard), reals, functions, etc) or
+		 * objects (only maps (JSON-like objects) are supported).
+		 *
+		 * In Brief: args = `array<string (recommended)|function|JSONLikeObject|number>`
+		 * return value = `<integer (recommended)|number|function|JSONLikeObject>`
+		 *
+		 * You can return or accept in args complex objects (like Windows or other)
+		 * but this is not standard.
+		 *
+		 * Return values (standard):
+		 *
+		 * - 0: Successful return case.
+		 * - 1: An error occurs.
+		 * - 2: An interrupt/signal/unhandled exception occurs.
+		 * - (3, 255): User-defined.
+		 *
+		 * @param {string[]|Array.<string>|Array} args - Argument list.
+		 *
+		 * @return {number.integer|number} The return value.
+		 *
+		 * @abstract
+		 * @method run
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
 		window.NaturalShell.Base.Application.prototype.run = function(args)
 		{
-			// Abstract method!
-			/// Runs the current application. For get an usable appdata,
-			/// use the this.createInstance method. args is an array of
-			/// objects containing the arguments passed to this app.
-			/// Generally, args only have strings but some apps support other
-			/// types: NFiles support the ["--call-on-open", <function>]
-			/// but if you don't specify any other arg type, the standard says
-			/// that args will be an array of only strings.
-			///
-			/// The returned object of this function (undefined will be converted
-			/// to null) will be passed to the caller, this function may return
-			/// simple objects (integers (standard), reals, functions, etc) or
-			/// objects (only maps (JSON-like objects) are supported).
-			///
-			/// In Brief: args = array<string (recommended)|function|JSONLikeObject|number>
-			/// return value = <integer (recommended)|number|function|JSONLikeObject>
-			///
-			/// You can return or accept in args complex objects (like Windows or other)
-			/// but this is not standard.
-			///
-			/// Return values (standard):
-			/// - 0: Successful return case.
-			/// - 1: An error occurs.
-			/// - 2: An interrupt/signal/unhandled exception occurs.
-			/// - (3, 255): User-defined.
+			return 0;
 		};
 	};
 
