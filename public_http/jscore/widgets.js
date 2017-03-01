@@ -30,15 +30,23 @@ limitations under the License.
 		}
 
 		/**
-		 * @name NaturalWidgets.Extend
-		 * @function
-		 * @global
+		 * Contains the Natural Widgets API.
 		 *
+		 * @namespace NaturalWidgets
+		 */
+
+		/**
 		 * Extends a plain class.
 		 *
 		 * In the process, the child class will inherit the base class.
 		 *
-		 * //
+		 * @param {PlainClass} base - Base class.
+		 * @param {PlainClass} child - Child class.
+		 *
+		 * @return {PlainClass} The new class that is a copy of child but inherits base.
+		 *
+		 * @function Extend
+		 * @memberof NaturalWidgets
 		 */
 		var Extend = function(base, child)
 		{
@@ -72,6 +80,18 @@ limitations under the License.
 			}
 			return child;
 		};
+
+		/**
+		 * Instanciates a PlainClass.
+		 *
+		 * @param {PlainClass} klass - Class to instanciate.
+		 * @param {object} args - Arguments passed to the class constructor.
+		 *
+		 * @return {object} Instance of klass.
+		 *
+		 * @function Create
+		 * @memberof NaturalWidgets
+		 */
 		var Create = function(klass, args)
 		{
 			"use strict";
@@ -79,6 +99,17 @@ limitations under the License.
 			obj._constructor.call(obj, args);
 			return obj;
 		};
+		
+		/**
+		 * Converts an object to a PlainClass.
+		 *
+		 * @param {object} child - Object to convert.
+		 *
+		 * @return {PlainClass} Class copy of object.
+		 *
+		 * @function Class
+		 * @memberof NaturalWidgets
+		 */
 		var Class = function(child) // Semantic only
 		{
 			return child;
@@ -90,15 +121,52 @@ limitations under the License.
 		window.NaturalWidgets.Create = Create;
 		window.NaturalWidgets.Extend = Extend;
 
-		window.NaturalWidgets.Widget = Class({
+		/**
+		 * Base widget class.
+		 *
+		 * Create with `var instance = NaturalWidgets.Create(NaturalWidgets.Widget, ...)`
+		 *
+		 * @type {PlainClass}
+		 * @class Widget
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Widget = Class(
+			/** @lends NaturalWidgets.Widget */
+			{
+			/**
+			 * The type of the widget (will inherit).
+			 */
 			type: "Widget",
+
+			/**
+			 * The path of the widget (will inherit).
+			 */
 			path: "CNatural.JS.Widgets.Widget",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 */
 			_constructor: function(args)
 			{
 				this._parent = args.parent;
 				this._element = null;
 				this._packed = false;
 			},
+
+			/**
+			 * Packs the widget on it's parent.
+			 *
+			 * | Side String | Packing result |
+			 * | ----------- | -------------- |
+			 * | APPEND      | The widget will be appended to the end of the container |
+			 * | BEGIN       | The widget will be packed to the start of the container |
+			 * | END         | The widget will be packed to the end of the container   |
+			 *
+			 * @param {string} side - One of the specified sides.
+			 */
 			pack: function(side)
 			{
 				if(this._packed)
@@ -106,6 +174,12 @@ limitations under the License.
 				this._packed = true;
 				this._parent.appendChild(this._element);
 			},
+
+			/**
+			 * Unpacks the widget from it's container.
+			 *
+			 * Once unpacked, it can be reparent and packed again.
+			 */
 			unpack: function()
 			{
 				if(!this._packed)
@@ -113,6 +187,14 @@ limitations under the License.
 				this._packed = false;
 				this._element.remove();
 			},
+
+			/**
+			 * Changes the parent (container) of a widget.
+			 *
+			 * If the widget it's packed, it will be unpacked before changing the parent.
+			 *
+			 * @param {NaturalObject} np - New Parent.
+			 */
 			reparent: function(np)
 			{
 				if(this._parent === np)
@@ -120,18 +202,48 @@ limitations under the License.
 				this.unpack();
 				this._parent = np;
 			},
+
+			/**
+			 * Gets the parent (container) or the widget.
+			 *
+			 * @return {NaturalObject} Parent (Container) Node/s.
+			 */
 			getParent: function()
 			{
 				return this._parent;
 			},
+
+			/**
+			 * Gets the widget internal element.
+			 *
+			 * @return {NaturalObject} Internal Element.
+			 */
 			getElement: function()
 			{
 				return this._element;
 			}
 		});
-		window.NaturalWidgets.PlainText = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * Plain Text node (no general usability).
+		 *
+		 * @extends NaturalWidgets.Widget
+		 * @class PlainText
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.PlainText = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.PlainText */
+			{
 			type: "PlainText",
 			path: "CNatural.JS.Widgets.PlainText",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {string} args.text - Inner text.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -140,9 +252,27 @@ limitations under the License.
 				);
 			}
 		}));
-		window.NaturalWidgets.Text = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * Text element, for amouts on read-only text.
+		 *
+		 * @extends NaturalWidgets.Widget
+		 * @class Text
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Text = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.Text */
+			{
 			type: "Text",
 			path: "CNatural.JS.Widgets.Text",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {string} [args.text] - Inner text.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -161,6 +291,13 @@ limitations under the License.
 					));
 				}
 			},
+			/**
+			 * Changes the current text.
+			 *
+			 * This will delete ALL childs of this widget.
+			 *
+			 * @param {string} new_text - New text to display.
+			 */
 			changeText: function(new_text)
 			{
 				var node = this._element.original;
@@ -171,9 +308,26 @@ limitations under the License.
 				node.appendChild(document.createTextNode(new_text));
 			}
 		}));
-		window.NaturalWidgets.Container = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * container element, a general reusable container.
+		 *
+		 * @extends NaturalWidgets.Widget
+		 * @class Container
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Container = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.Container */
+			{
 			type: "Container",
 			path: "CNatural.JS.Widgets.Container",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -187,9 +341,26 @@ limitations under the License.
 					.data("widget", "container");
 			}
 		}));
-		window.NaturalWidgets.RowContainer = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * A container that aligns it's childrens in a row.
+		 *
+		 * @extends NaturalWidgets.Container
+		 * @class RowContainer
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.RowContainer = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.RowContainer */
+			{
 			type: "RowContainer",
 			path: "CNatural.JS.Widgets.Container.RowContainer",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -205,9 +376,28 @@ limitations under the License.
 					.data("widget", "row-container");
 			}
 		}));
-		window.NaturalWidgets.MainContainer = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * The main container of any window, provides a viewport with scrollbars and
+		 * management of layout.
+		 *
+		 * @extends NaturalWidgets.Container
+		 * @class MainContainer
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.MainContainer = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.MainContainer */
+			{
 			type: "MainContainer",
 			path: "CNatural.JS.Widgets.Container.MainContainer",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {boolean} [args.noPadding] - If the container should NOT have padding.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -229,9 +419,36 @@ limitations under the License.
 					this._element.addClass("no-padding");
 			}
 		}));
-		window.NaturalWidgets.Button = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * A general button.
+		 *
+		 * Note that the button not inherits container but can contains more
+		 * that text (a partial container).
+		 *
+		 * @extends NaturalWidgets.Widget
+		 * @class Button
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Button = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.Button */
+			{
 			type: "Button",
 			path: "CNatural.JS.Widgets.Button",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * | Button type (string) | Result               |
+			 * | -------------------- | -------------------- |
+			 * | "normal-button"      | A normal shadowed button. |
+			 * | "flat-button"        | A button that not haves shadow until it's hovered. |
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {string} [args.text] - The inner text of the button.
+			 * @param {string} [args.type] - The type of the button (see type table).
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -263,9 +480,29 @@ limitations under the License.
 				}
 			}
 		}));
-		window.NaturalWidgets.Input = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * An Input, like LineEntries, TextAreas and others.
+		 *
+		 * @extends NaturalWidgets.Widget
+		 * @class Input
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Input = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.Input */
+			{
 			type: "Input",
 			path: "CNatural.JS.Widgets.Input",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {string|DOMString} [args.value] - Input value.
+			 * @param {string|DOMString} [args.placeholder] - Input placeholder.
+			 * @param {string|DOMString} [args.name] - Input name (only for forms).
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -293,9 +530,27 @@ limitations under the License.
 				}
 			}
 		}));
-		window.NaturalWidgets.Header = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * A header. Provides semantic difference of text. Comes with sizes.
+		 *
+		 * @extends NaturalWidgets.Widget
+		 * @class Header
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Header = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.Header */
+			{
 			type: "Header",
 			path: "CNatural.JS.Widgets.Header",
+
+			/**
+			 * Basic size table.
+			 *
+			 * The key is a valid size and the value is a CSS class.
+			 *
+			 * @type {object.<string, string>|map}
+			 */
 			levelTable: {
 				"page.title": "jumbo-4",
 				"page.subtitle": "jumbo-3",
@@ -304,6 +559,27 @@ limitations under the License.
 				"content.title": "ultra-big",
 				"content.subtitle": "big"
 			},
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * Use the header sizes semanticly:
+			 *
+			 * | Size                | Result (Generation) |
+			 * | ------------------- | ------------------- |
+			 * | "page.title"        | "jumbo-4"           |
+			 * | "page.subtitle"     | "jumbo-3"           |
+			 * | "section.title"     | "jumbo-2"           |
+			 * | "section.subtitle"  | "jumbo"             |
+			 * | "content.title"     | "ultra-big"         |
+			 * | "content.subtitle"  | "big"               |
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {number} args.level - Level of the header (1-6).
+			 * @param {string} args.size - Header size (see table).
+			 * @param {string|DOMString} [args.text] - Header text.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -324,9 +600,30 @@ limitations under the License.
 				}
 			}
 		}));
-		window.NaturalWidgets.Image = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * Displays an Image of specified width and height.
+		 *
+		 * @extends NaturalWidgets.Widget
+		 * @class Image
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Image = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.Image */
+			{
 			type: "Image",
 			path: "CNatural.JS.Widgets.Image",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {string|DOMString} args.src - Image source path.
+			 * @param {string|DOMString} args.width - Image width (in pixels).
+			 * @param {string|DOMString} args.height - Image height (in pixels).
+			 * @param {string|DOMString} args.alt - Image alternative text.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -343,9 +640,33 @@ limitations under the License.
 				this._element.original.alt = args.alt;
 			}
 		}));
-		window.NaturalWidgets.ContainerWithHeader = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * Is a container with a colored header and a border body.
+		 *
+		 * Instead of using it directly, use the {@link NaturalWidgets.ContainerWithHeader.getHeader}
+		 * and the {@link NaturalWidgets.ContainerWithHeader.getBody} methods as parents.
+		 *
+		 * @extends NaturalWidgets.Container
+		 * @class ContainerWithHeader
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.ContainerWithHeader = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.ContainerWithHeader */
+			{
 			type: "ContainerWithHeader",
-			path: "CNatural.JS.Widgets.ContainerWithHeader",
+			path: "CNatural.JS.Widgets.Container.ContainerWithHeader",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {string|DOMString} args.color - Color class that is the color of the container.
+			 * @param {number} args.level - A level of {@link NaturalWidgets.Header}.
+			 * @param {string} args.size - A size of {@link NaturalWidgets.Header}.
+			 * @param {string} args.title - The title of the container.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -387,18 +708,53 @@ limitations under the License.
 				this._element.appendChild(this._innerHeader);
 				this._element.appendChild(this._innerBody);
 			},
+
+			/**
+			 * Gets the header of the container.
+			 *
+			 * Use it for pack elements on the header.
+			 *
+			 * @return {NaturalObject} Header container.
+			 */
 			getHeader: function()
 			{
 				return this._innerHeader;
 			},
+
+			/**
+			 * Gets the inner body of the container.
+			 *
+			 * Use it for pack elements on this container.
+			 *
+			 * @return {NaturalObject} Body container.
+			 */
 			getBody: function()
 			{
 				return this._innerBody;
 			}
 		}));
-		window.NaturalWidgets.Window = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * A basic window.
+		 *
+		 * @abstract
+		 *
+		 * @extends NaturalWidgets.Widget
+		 * @class Window
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Window = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.Window */
+			{
 			type: "Window",
 			path: "CNatural.JS.Widgets.Window",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -420,9 +776,26 @@ limitations under the License.
 				return this._element;
 			}
 		}));
-		window.NaturalWidgets.Dialog = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * A modal Dialog.
+		 *
+		 * @extends NaturalWidgets.Window
+		 * @class Dialog
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.Dialog = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.Dialog */
+			{
 			type: "Dialog",
 			path: "CNatural.JS.Widgets.Window.Dialog",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -440,14 +813,45 @@ limitations under the License.
 					})
 					.data("widget", "dialog");
 			},
+
+			/**
+			 * Gets the dialog body.
+			 *
+			 * Put here all dialog content.
+			 *
+			 * @return {NaturalObject} Dialog's body.
+			 */
 			getBody: function()
 			{
 				return this._element;
 			}
 		}));
-		window.NaturalWidgets.AcceptDenyDialog = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * Represents a Accept/Deny dialog.
+		 *
+		 * This modal dialog have a message (or content) and two buttons.
+		 *
+		 * @extends NaturalWidgets.Dialog
+		 * @class AcceptDenyDialog
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.AcceptDenyDialog = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.AcceptDenyDialog */
+			{
 			type: "AcceptDenyDialog",
 			path: "CNatural.JS.Widgets.Window.Dialog.AcceptDenyDialog",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {string} args.title - Dialog's title.
+			 * @param {string} args.acceptText - Text of the accept button.
+			 * @param {string} args.denytext - Text of the deny button.
+			 * @param {string} [args.text] - Dialog's inner text.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -573,30 +977,84 @@ limitations under the License.
 					));
 				}
 			},
+
+			/**
+			 * Gets the dialog body.
+			 *
+			 * Useful when the dialog displays other than text.
+			 *
+			 * @return {NaturalObject} Dialog's inner body.
+			 */
 			getBody: function()
 			{
 				return this._innerBody;
 			},
+
+			/**
+			 * Shows the dialog.
+			 *
+			 * Is modal, so will block the window until the user selects an action.
+			 */
 			show: function()
 			{
 				this._element.removeClass("gui-hidden");
 			},
+
+			/**
+			 * Hides the dialog.
+			 */
 			hide: function()
 			{
 				this._element.addClass("gui-hidden");
 			},
+
+			/**
+			 * Gets the last choice maded.
+			 *
+			 * @return {string} "accept" if the user clicked the accept button or "deny" otherwise.
+			 */
 			getLastChoice: function()
 			{
 				return this._lastChoice;
 			},
+
+			/**
+			 * Sets the callback of the selected_event.
+			 *
+			 * This will be called when the dialog is displayed and the user selects
+			 * a button or action.
+			 *
+			 * @param {function(Event, string)} Callback for the event.
+			 */
 			onSelected: function(callback)
 			{
 				this.onready = callback || function(event, choice) {};
 			}
 		}));
-		window.NaturalWidgets.TextDialog = Extend(window.NaturalWidgets.Widget, Class({
+
+		/**
+		 * A text dialog only displays a text and it's non-modal.
+		 *
+		 * @extends NaturalWidgets.Dialog
+		 * @class TextDialog
+		 * @memberof NaturalWidgets
+		 */
+		window.NaturalWidgets.TextDialog = Extend(window.NaturalWidgets.Widget, Class(
+			/** @lends NaturalWidgets.TextDialog */
+			{
 			type: "TextDialog",
 			path: "CNatural.JS.Widgets.Window.Dialog.TextDialog",
+
+			/**
+			 * Contructs the new widget.
+			 *
+			 * @param {object} args - Arguments.
+			 * @param {NaturalObject} args.parent - Parent node.
+			 * @param {string} args.title - The dialog's title.
+			 * @param {string} [args.text] - The dialog's text to display (if any).
+			 * @param {boolean} args.can_be_closed - true if the dialog can be closed by the user (non-modal) false otherwise.
+			 * @param {boolean} args.destroy_on_close - If true, when the dialog is closed will be destroyed too.
+			 */
 			_constructor: function(args)
 			{
 				this._super._constructor.call(this, args);
@@ -696,20 +1154,53 @@ limitations under the License.
 					}).on("click");
 				}
 			},
+
+			/**
+			 * Gets the Dialog's body.
+			 *
+			 * In the body you can put content to show on the dialog.
+			 *
+			 * @return {NaturalObject} Dialog's inner body.
+			 */
 			getBody: function()
 			{
 				return this._innerBody;
 			},
+
+			/**
+			 * Shows the dialog.
+			 *
+			 * Will be modal if in the construction the flag `args.can_be_closed` is false.
+			 */
 			show: function()
 			{
 				this._element.removeClass("gui-hidden");
 			},
+
+			/**
+			 * Hides the dialog.
+			 */
 			hide: function()
 			{
 				this._element.addClass("gui-hidden");
 			}
 		}));
 
+		/**
+		 * Creates a basic text dialog.
+		 *
+		 * It's a wrapper for {@link NaturalWidgets.TextDialog}.
+		 *
+		 * @param {NaturalObject} parent - Parent of the dialog.
+		 * @param {string} title - Title of the dialog.
+		 * @param {string} text - Inner text of the dialog.
+		 * @param {function} oncreated - Event called when the dialog is packed and created.
+		 *
+		 * @return {NaturalWidgets.TextDialog} The created dialog.
+		 *
+		 * @function CreateTextDialog
+		 * @memberof NaturalWidgets
+		 */
 		window.NaturalWidgets.CreateTextDialog = function(parent, title, text, oncreated)
 		{
 			var win = window.NaturalWidgets.Create(window.NaturalWidgets.TextDialog, {

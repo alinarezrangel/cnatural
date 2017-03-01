@@ -215,7 +215,7 @@ function my_example_callback(Error error, String result)
  * @param {string} method - Method to be called (for example, `coreutils.time.get`).
  * @param {map|object} args - Map with all arguments to be passed to the method.
  * @param {function} cll - Callback to be called with the method result.
-
+ *
  * @function APIRequest
  * @memberof NaturalClient
  */
