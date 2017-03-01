@@ -30,10 +30,6 @@ limitations under the License.
 		}
 
 		/**
-		 * @name NaturalObject.prototype.animatable
-		 * @function
-		 * @global
-		 *
 		 * Makes a node (or nodes) animatables. Note that
 		 * the animatable feature is not embed in the node
 		 * or nodes itself, it's embed on the NaturalObject

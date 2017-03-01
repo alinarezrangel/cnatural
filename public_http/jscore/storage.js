@@ -217,10 +217,6 @@ limitations under the License.
 
 
 		/**
-		 * @name NaturalStorage.prototype.getStorage
-		 * @function
-		 * @global
-		 *
 		 * Gets the available storage.
 		 *
 		 * May return null if no storage is available.
@@ -228,6 +224,8 @@ limitations under the License.
 		 * @param {window} win - Window where the storage is defined.
 		 *
 		 * @return {window.NaturalStorage} The storage system wrapped.
+		 *
+		 * @method NaturalStorage.getStorage
 		 */
 		window.NaturalObject.prototype.getStorage = function(win)
 		{
