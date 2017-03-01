@@ -1,0 +1,41 @@
+{
+	"plugins": ["plugins/markdown"],
+	"tags":
+	{
+		"allowUnknownTags": true,
+		"dictionaries": ["jsdoc", "closure"]
+	},
+	"source":
+	{
+		"includePattern": ".+\\.js(doc|x)?$",
+		"excludePattern": "(^|\\/|\\\\)_"
+	},
+	"templates":
+	{
+		"cleverLinks": false,
+		"monospaceLinks": false,
+
+		"systemName" : "CNatural Client API",
+		"footer" : "CNatural Public Documentation of the Client API",
+		"copyright" : "<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-sa/4.0/\"><img alt=\"Creative Commons License\" style=\"border-width:0\" src=\"https://i.creativecommons.org/l/by-sa/4.0/88x31.png\" /></a><br />This work is licensed under a <a rel=\"license\" href=\"http://creativecommons.org/licenses/by-sa/4.0/\">Creative Commons Attribution-ShareAlike 4.0 International License</a>.",
+		"includeDate" : true,
+		"navType" : "vertical",
+		"theme" : "paper",
+		"linenums" : true,
+		"collapseSymbols" : true,
+		"analytics": false,
+		"inverseNav" : true,
+		"outputSourceFiles" : true,
+		"outputSourcePath" : false,
+		"dateFormat" : "MMMM Do dddd Y",
+		"syntaxTheme" : "default",
+		"sort" : true,
+		"search" : true
+	},
+	"opts": {
+		"encoding": "utf8",
+		"destination": "docs/js/out/",
+		"recurse": true,
+		"tutorials": "docs/js/tutorials/"
+	}
+}

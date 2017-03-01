@@ -10,4 +10,5 @@ log.*
 
 core
 
-out/
+docs/js/out/
+docs/c/out/

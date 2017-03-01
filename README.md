@@ -6,6 +6,23 @@ standard web technologies like LocalStorage, HTML5, CSS3 and JavaScript.
 CNatural provides a simple way for monitoring, manage and use a embed
 system or remote server via web, with a simple and useful interface.
 
+## Dependencies ##
+
+* Standard library for C99 (or C version used).
+* [GNU libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/).
+* POSIX APIs (like `unistd.h` and others).
+
+If you want to generate a documentation, you will need too:
+
+* [JsDoc 3](http://usejsdoc.org) (lastest is better).
+* [DocStrap Theme](http://docstrap.github.io/docstrap/) (optional, but if not,
+you should change the Makefile's theme used).
+* [Doxygen](http://www.stack.nl/~dimitri/doxygen/).
+* Any Doxygen theme that you want.
+
+If you do not want to install DocStrap Theme, you will need to edit the
+Makefile: see `NPM_PREFIX`, `JSDOC_TEMPLATE` and `JSDOC_TEMPLATE_ARG`.
+
 ## Features ##
 
 * Not overloads the server (see below)

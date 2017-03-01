@@ -42,6 +42,15 @@ CC=gcc
 LD=gcc
 # Path where the server will be installed
 INSTALLPATH=/opt/cnatural-server
+# Prefix of NPM when installs a module
+NPM_PREFIX=/usr/local/lib/node_modules
+# Template used to the JSDoc3 output
+# By default uses ink-docstar (npm install --global ink-docstrap)
+# but you can change it
+JSDOC_TEMPLATE=$(NPM_PREFIX)/ink-docstrap/template
+# Argument passed to JSDoc3 for set a template
+# Leave it blank for NOT use a template
+JSDOC_TEMPLATE_ARG=-t $(JSDOC_TEMPLATE)
 
 $(TARGET): $(OBJC)
 	$(LD) $(OBJC) -o $(TARGET) $(LDFLAGS)
@@ -95,3 +104,8 @@ minimal: $(TARGET)
 	echo "You can remove the " $(SRC) " folder for free up space."
 	echo "Optionally, if you will not compile apps in C, you can remove"
 	echo "the " $(INC) " folder, but this is not recommended"
+
+# Documentation of javascript
+# Needs JSDoc3
+docsjs:
+	jsdoc public_http/jscore/* --readme docs/js/home.md -c docs/js/conf.json $(JSDOC_TEMPLATE_ARG)
