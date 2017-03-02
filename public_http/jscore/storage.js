@@ -76,7 +76,7 @@ limitations under the License.
 		 *
 		 * @param {StorageSystem} ls - Storage System to use.
 		 *
-		 * @class
+		 * @class NaturalStorage
 		 */
 		window.NaturalStorage = function(ls)
 		{
@@ -101,6 +101,8 @@ limitations under the License.
 		 * @param {NaturalStorage~nonReturningCallback} [callback] - The callback to be called.
 		 *
 		 * @returns {*} Value returned by the callback.
+		 *
+		 * @method NaturalStorage.prototype.open
 		 */
 		window.NaturalStorage.prototype.open = function(by, callback)
 		{
@@ -124,6 +126,8 @@ limitations under the License.
 		 * @param {NaturalStorage~nonReturningCallback} [callback] - The callback to be called.
 		 *
 		 * @returns {*} Value returned by the callback.
+		 *
+		 * @method NaturalStorage.prototype.close
 		 */
 		window.NaturalStorage.prototype.close = function(callback)
 		{
@@ -149,6 +153,8 @@ limitations under the License.
 		 * @param {NaturalStorage~returningCallback} [callback] - The callback to be called.
 		 *
 		 * @returns {*} Value returned by the callback.
+		 *
+		 * @method NaturalStorage.prototype.get
 		 */
 		window.NaturalStorage.prototype.get = function(name, callback)
 		{
@@ -184,6 +190,8 @@ limitations under the License.
 		 * @param {NaturalStorage~nonReturningCallback} [callback] - The callback to be called.
 		 *
 		 * @returns {*} Value returned by the callback.
+		 *
+		 * @method NaturalStorage.prototype.set
 		 */
 		window.NaturalStorage.prototype.set = function(name, value, callback)
 		{
@@ -215,6 +223,8 @@ limitations under the License.
 		 * @return {function} A callback.
 		 *
 		 * @private
+		 *
+		 * @method NaturalStorage.prototype._syncCallback
 		 */
 		window.NaturalStorage.prototype._syncCallback = function(callback, fc)
 		{
@@ -243,9 +253,9 @@ limitations under the License.
 		 *
 		 * @param {window} win - Window where the storage is defined.
 		 *
-		 * @return {window.NaturalStorage} The storage system wrapped.
+		 * @return {NaturalStorage} The storage system wrapped.
 		 *
-		 * @method NaturalStorage.getStorage
+		 * @method NaturalObject.prototype.getStorage
 		 */
 		window.NaturalObject.prototype.getStorage = function(win)
 		{
