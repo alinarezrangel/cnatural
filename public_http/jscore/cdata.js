@@ -30,18 +30,44 @@ limitations under the License.
 		}
 
 		/**
-		 * Fake namespace used to document the cdata module.
+		 * Callback for {@link NaturalObject~require}.
 		 *
-		 * All functions in this namespace are methods of {@link NaturalObject}.
+		 * @callback NaturalObject~requireCallback
 		 *
-		 * @namespace CData
+		 * @param {NaturalObject} nc - `<script>` element containing the URL pointer to the required code.
+		 */
+
+		/**
+		 * Callback for {@link NaturalObject~parseSemanticIconsetTags}.
+		 *
+		 * @callback NaturalObject~parseSemanticIconsetTagsCallback
+		 *
+		 * @param {NaturalObject} tag - Tag that recently was translated.
+		 */
+
+		/**
+		 * Callback for {@link NaturalObject~include}.
+		 *
+		 * @callback NaturalObject~includeCallback
+		 *
+		 * @param {Error} err - Import error (may be null).
+		 * @param {NaturalObject} node - HTML Root node of the inserted fragment (or undefined).
+		 */
+
+		/**
+		 * Callback for {@link NaturalObject~includeScripts}.
+		 *
+		 * @callback NaturalObject~includeScriptsCallback
+		 *
+		 * @param {NaturalObject} tag - HTML includetag that was finished to include.
 		 */
 
 		/**
 		 * Maps a semantic icon name to a real icon set character.
 		 *
 		 * @type {object.<string, string>|map}
-		 * @memberof CData
+		 *
+		 * @member NaturalObject.prototype.NaturalIconSetMap
 		 */
 		window.NaturalObject.prototype.NaturalIconSetMap = {
 			"times": "a",
@@ -106,7 +132,8 @@ limitations under the License.
 		 * Contains the current language as string.
 		 *
 		 * @type {string}
-		 * @memberof CData
+		 *
+		 * @member NaturalObject.prototype.Localization
 		 */
 		window.NaturalObject.prototype.Localization =
 			window.navigator.userLanguage || window.navigator.language || "en-all";
@@ -115,7 +142,8 @@ limitations under the License.
 		 * Contains the currently supported languages.
 		 *
 		 * @type {Array|string[]}
-		 * @memberof CData
+		 *
+		 * @member NaturalObject.prototype.GlobalPOMapSupportedLangs
 		 */
 		window.NaturalObject.prototype.GlobalPOMapSupportedLangs =
 		[
@@ -132,7 +160,8 @@ limitations under the License.
 		 * A POMap maps a universal message to a locale-specific message.
 		 *
 		 * @type {object|POMapSubLG}
-		 * @memberof CData
+		 *
+		 * @member NaturalObject.prototype.GlobalPOMap
 		 */
 		window.NaturalObject.prototype.GlobalPOMap =
 		{
@@ -183,8 +212,7 @@ limitations under the License.
 		 *
 		 * @return {POMap} A POMap that uses lang as language.
 		 *
-		 * @function selectPOMapIn
-		 * @memberof CData
+		 * @method NaturalObject.prototype.selectPOMapIn
 		 */
 		window.NaturalObject.prototype.selectPOMapIn = function(pomap, lang)
 		{
@@ -224,8 +252,8 @@ limitations under the License.
 		 *
 		 * @return {string} Message msg in the language.
 		 *
-		 * @function selectMessagePOMapIn
-		 * @memberof CData
+		 *
+		 * @method NaturalObject.prototype.selectMessagePOMapIn
 		 */
 		window.NaturalObject.prototype.selectMessagePOMapIn = function(msg, pomap, lang)
 		{
@@ -249,14 +277,6 @@ limitations under the License.
 		};
 
 		/**
-		 * Callback for {@link CData~require}.
-		 *
-		 * @callback CData~requireCallback
-		 *
-		 * @param {NaturalObject} nc - `<script>` element containing the URL pointer to the required code.
-		 */
-
-		/**
 		 * Imports a JavaScript code.
 		 *
 		 * Note that not specifing a token (token = null) but setting the path as
@@ -271,10 +291,9 @@ limitations under the License.
 		 * @param {string} path - Path to the JavaScript resource.
 		 * @param {string} token - User auth token (or null).
 		 * @param {boolean} [isprivate=false] - If the resource is in private path.
-		 * @param {CData~requireCallback} [cll] - Callback called when the code is ready.
+		 * @param {NaturalObject~requireCallback} [cll] - Callback called when the code is ready.
 		 *
-		 * @function require
-		 * @memberof CData
+		 * @method NaturalObject.prototype.require
 		 */
 		window.NaturalObject.prototype.require = function(async, path, token, isprivate, cll)
 		{
@@ -324,14 +343,6 @@ limitations under the License.
 		};
 
 		/**
-		 * Callback for {@link CData~parseSemanticIconsetTags}.
-		 *
-		 * @callback CData~parseSemanticIconsetTagsCallback
-		 *
-		 * @param {NaturalObject} tag - Tag that recently was translated.
-		 */
-
-		/**
 		 * Translates all semantic icons to it's mapped equivalents.
 		 *
 		 * A semantic icon like `tools` need to be translated to a
@@ -339,10 +350,9 @@ limitations under the License.
 		 * `gui-font-iconset-v2`.
 		 *
 		 * @param {document} [doc=document] - Document to translate
-		 * @param {CData~parseSemanticIconsetTagsCallback} [ondone] - Callback when all tags was translated.
+		 * @param {NaturalObject~parseSemanticIconsetTagsCallback} [ondone] - Callback when all tags was translated.
 		 *
-		 * @function parseSemanticIconsetTags
-		 * @memberof CData
+		 * @method NaturalObject.prototype.parseSemanticIconsetTags
 		 */
 		window.NaturalObject.prototype.parseSemanticIconsetTags = function(doc, ondone)
 		{
@@ -378,8 +388,7 @@ limitations under the License.
 		 *
 		 * @return {string} Message translated.
 		 *
-		 * @function getPOMessage
-		 * @memberof CData
+		 * @method NaturalObject.prototype.getPOMessage
 		 */
 		window.NaturalObject.prototype.getPOMessage = function(msg)
 		{
@@ -393,8 +402,7 @@ limitations under the License.
 		 *
 		 * @param {document} [doc=document] - Document to translate.
 		 *
-		 * @function parsePOMaps
-		 * @memberof CData
+		 * @method NaturalObject.prototype.parsePOMaps
 		 */
 		window.NaturalObject.prototype.parsePOMaps = function(doc)
 		{
@@ -432,21 +440,14 @@ limitations under the License.
 		};
 
 		/**
-		 * Callback for {@link CData~include}.
-		 *
-		 * @callback CData~includeCallback
-		 *
-		 * @param {Error} err - Import error (may be null).
-		 * @param {NaturalObject} node - HTML Root node of the inserted fragment (or undefined).
-		 */
-
-		/**
 		 * Includes a fragment of HTML from a private resource.
 		 *
 		 * @param {string} token - Token to use.
 		 * @param {string} src - Private path to the resource.
 		 * @param {string} mime - Expected MIME-type of the resource.
-		 * @param {CData~includeCallback} callback - Callback to be called when the import is done.
+		 * @param {NaturalObject~includeCallback} callback - Callback to be called when the import is done.
+		 *
+		 * @method NaturalObject.prototype.include
 		 */
 		window.NaturalObject.prototype.include = function(token, src, mime, callback)
 		{
@@ -482,24 +483,15 @@ limitations under the License.
 		};
 
 		/**
-		 * Callback for {@link CData~includeScripts}.
-		 *
-		 * @callback CData~includeScriptsCallback
-		 *
-		 * @param {NaturalObject} tag - HTML includetag that was finished to include.
-		 */
-
-		/**
 		 * Includes all scripts embed on `div[data-widget="include"]` tags.
 		 *
 		 * More, calls some utility functions.
 		 *
 		 * @param {document} [doc=document] - Document to parse.
 		 * @param {string} token - The user auth token.
-		 * @param {CData~includeScriptsCallback} [ondone] - Callback called when the parsing is finished.
+		 * @param {NaturalObject~includeScriptsCallback} [ondone] - Callback called when the parsing is finished.
 		 *
-		 * @function includeScripts
-		 * @memberof CData
+		 * @method NaturalObject.prototype.includeScripts
 		 */
 		window.NaturalObject.prototype.includeScripts = function(doc, token, ondone)
 		{

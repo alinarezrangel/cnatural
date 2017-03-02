@@ -30,14 +30,6 @@ limitations under the License.
 		}
 
 		/**
-		 * Fake namespace used to document extensions from the module animation.
-		 *
-		 * All functions in this namespace are methods of {@link NaturalObject}.
-		 *
-		 * @namespace Animations
-		 */
-
-		/**
 		 * Makes a node (or nodes) animatables. Note that
 		 * the animatable feature is not embed in the node
 		 * or nodes itself, it's embed on the NaturalObject
@@ -67,8 +59,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function animatable
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.animatable
 		 */
 		window.NaturalObject.prototype.animatable = function()
 		{
@@ -96,8 +87,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function hide
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.hide
 		 */
 		window.NaturalObject.prototype.hide = function()
 		{
@@ -112,8 +102,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function show
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.show
 		 */
 		window.NaturalObject.prototype.show = function()
 		{
@@ -128,12 +117,11 @@ limitations under the License.
 		 *
 		 * It's chainable.
 		 *
-		 * @param {function} evt - Callback to be called on the animation_end_event.
+		 * @param {NaturalObject~onCallback|function} evt - Callback to be called on the animation_end_event.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function animationEndEvent
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.animateEndEvent
 		 */
 		window.NaturalObject.prototype.animationEndEvent = function(evt)
 		{
@@ -156,8 +144,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function hideSlideUp
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.hideSlideUp
 		 */
 		window.NaturalObject.prototype.hideSlideUp = function()
 		{
@@ -188,8 +175,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function showSlideDown
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.showSlideDown
 		 */
 		window.NaturalObject.prototype.showSlideDown = function()
 		{
@@ -221,8 +207,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function hideMoveFromCenterToTop
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.hideMoveFromCenterToTop
 		 */
 		window.NaturalObject.prototype.hideMoveFromCenterToTop = function()
 		{
@@ -253,8 +238,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function showMoveFromTopToCenter
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.showMoveFromTopToCenter
 		 */
 		window.NaturalObject.prototype.showMoveFromTopToCenter = function()
 		{
@@ -287,8 +271,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function alertMoveForever
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.alertMoveForever
 		 */
 		window.NaturalObject.prototype.alertMoveForever = function()
 		{
@@ -322,8 +305,7 @@ limitations under the License.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 *
-		 * @function expandElement
-		 * @memberof Animations
+		 * @method NaturalObject.prototype.expandElement
 		 */
 		window.NaturalObject.prototype.expandElement = function()
 		{

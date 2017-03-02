@@ -36,11 +36,40 @@ limitations under the License.
 		};
 
 		/**
-		 * The NaturalObject provides wrappers to DOM functions
+		 * Callback for {@link NaturalObject~on}.
+		 *
+		 * @callback NaturalObject~onCallback
+		 *
+		 * @param {Event} ev - Event.
+		 *
+		 * @return {boolean} If the event can propagated (**obsolete**).
+		 */
+
+		/**
+		 * Callback for {@link NaturalObject~ajax}.
+		 *
+		 * @callback NaturalObject~ajaxCallback
+		 *
+		 * @param {Error} err - Error on the AJAX (or null).
+		 * @param {string|AJAXResponseText} res - AJAX response text (or undefined).
+		 */
+
+		/**
+		 * Callback for {@link NaturalObject~each}.
+		 *
+		 * @callback NaturalObject~eachCallback
+		 *
+		 * @param {HTMLElement|Node|DOMObject|DOMResult} node - Node resulting from some DOM operation.
+		 */
+
+		/**
+		 * The NaturalObject provides wrappers to DOM functions.
+		 *
+		 * In the modules and applications this class is `window.NaturalObject`.
 		 *
 		 * @param {DOMResult|HTMLElement|Node|NodeList|HTMLCollection} dom - DOM element/s to wrap.
 		 *
-		 * @class
+		 * @class NaturalObject
 		 */
 		var NaturalObject = function(dom)
 		{
@@ -55,6 +84,8 @@ limitations under the License.
 		 * operations maded on a simple Node.
 		 *
 		 * @return {boolean} true is the object is a NodeList, false otherwise.
+		 *
+		 * @method NaturalObject.prototype.isNodeList
 		 */
 		NaturalObject.prototype.isNodeList = function()
 		{
@@ -75,6 +106,8 @@ limitations under the License.
 		 * @param {number} [i] - The index of the object to be accesed.
 		 *
 		 * @return {NaturalObject} The wrapped element.
+		 *
+		 * @method NaturalObject.prototype.get
 		 */
 		NaturalObject.prototype.get = function(i)
 		{
@@ -101,6 +134,8 @@ limitations under the License.
 		 * @param {string} sq - Expression to search (CSS expression).
 		 *
 		 * @return {NaturalObject} The child that matches the expression.
+		 *
+		 * @method NaturalObject.prototype.child
 		 */
 		NaturalObject.prototype.child = function(sq)
 		{
@@ -122,6 +157,8 @@ limitations under the License.
 		 * @param {Node|NodeList|HTMLElement|HTMLCollection} obj - Object to wrap.
 		 *
 		 * @return {NaturalObject} NaturalObject wrapping that object.
+		 *
+		 * @method NaturalObject.prototype.wrap
 		 */
 		NaturalObject.prototype.wrap = function(obj)
 		{
@@ -134,6 +171,8 @@ limitations under the License.
 		 * @param {*} obj - The object to echo.
 		 *
 		 * @return {*} Returns the object without any changes.
+		 *
+		 * @method NaturalObject.prototype.echo
 		 */
 		NaturalObject.prototype.echo = function(obj)
 		{
@@ -150,6 +189,8 @@ limitations under the License.
 		 * @return {*} The value returned by func in a list, or this.
 		 *
 		 * @private
+		 *
+		 * @method NaturalObject.prototype._forAll
 		 */
 		NaturalObject.prototype._forAll = function(func)
 		{
@@ -209,6 +250,8 @@ limitations under the License.
 		 * @param {string|DOMString} [value] - Value of the attribute.
 		 *
 		 * @return {string|DOMString|Array|NaturalObject} The value of the attribute, or this.
+		 *
+		 * @method NaturalObject.prototype.attr
 		 */
 		NaturalObject.prototype.attr = function(name, value)
 		{
@@ -247,6 +290,8 @@ limitations under the License.
 		 * @param {string|DOMString} [value] - Value of the data.
 		 *
 		 * @return {string|DOMString|Array|NaturalObject} The value of the data, or this.
+		 *
+		 * @method NaturalObject.prototype.data
 		 */
 		NaturalObject.prototype.data = function(name, value)
 		{
@@ -287,6 +332,8 @@ limitations under the License.
 		 * @param {string|DOMString} [value] - Value of the datalink.
 		 *
 		 * @return {string|DOMString|Array|NaturalObject} The value of the data, or this.
+		 *
+		 * @method NaturalObject.prototype.value
 		 */
 		NaturalObject.prototype.value = function(value)
 		{
@@ -324,6 +371,8 @@ limitations under the License.
 		 * @param {string|DOMString|map|object} obj - Style value.
 		 *
 		 * @return {string|DOMString|Array|NaturalObject} The value of the style, or this.
+		 *
+		 * @method NaturalObject.prototype.style
 		 */
 		NaturalObject.prototype.style = function(obj)
 		{
@@ -359,6 +408,8 @@ limitations under the License.
 		 * @param {string|DOMString|Array} newremove - Class/es to add.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.addClass
 		 */
 		NaturalObject.prototype.addClass = function(newremove)
 		{
@@ -390,6 +441,8 @@ limitations under the License.
 		 * @param {string|DOMString|Array} newremove - Class/es to remove.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.removeClass
 		 */
 		NaturalObject.prototype.removeClass = function(newremove)
 		{
@@ -418,6 +471,8 @@ limitations under the License.
 		 * @param {string|DOMString|Array} className - The class name/es to verify.
 		 *
 		 * @return {boolean} If the elements have all specified classes.
+		 *
+		 * @method NaturalObject.prototype.hasClass
 		 */
 		NaturalObject.prototype.hasClass = function(className)
 		{
@@ -448,6 +503,8 @@ limitations under the License.
 		 * @param {NaturalObject~onCallback|function} handler - Next event handler.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.attach
 		 */
 		NaturalObject.prototype.attach = function(handler)
 		{
@@ -464,6 +521,8 @@ limitations under the License.
 		 * @param {NaturalObject~onCallback|function} handler - Next event handler.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.apply
 		 */
 		NaturalObject.prototype.apply = function(handler)
 		{
@@ -478,21 +537,13 @@ limitations under the License.
 		 * @param {NaturalObject~onCallback|function} handler - Next event handler.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.call
 		 */
 		NaturalObject.prototype.call = function(handler)
 		{
 			return this.attach(handler);
 		};
-
-		/**
-		 * Callback for {@link NaturalObject~on}.
-		 *
-		 * @callback NaturalObject~onCallback
-		 *
-		 * @param {Event} ev - Event.
-		 *
-		 * @return {boolean} If the event can propagated (**obsolete**).
-		 */
 
 		/**
 		 * Attaches an event handler.
@@ -522,6 +573,8 @@ limitations under the License.
 		 * @param {boolean} [bbl] - If bubbles are used or not.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.on
 		 */
 		NaturalObject.prototype.on = function(evt, cll, bbl)
 		{
@@ -553,15 +606,6 @@ limitations under the License.
 		};
 
 		/**
-		 * Callback for {@link NaturalObject~ajax}.
-		 *
-		 * @callback NaturalObject~ajaxCallback
-		 *
-		 * @param {Error} err - Error on the AJAX (or null).
-		 * @param {string|AJAXResponseText} res - AJAX response text (or undefined).
-		 */
-
-		/**
 		 * Makes an AJAX call.
 		 *
 		 * The options object have the attributes:
@@ -583,6 +627,8 @@ limitations under the License.
 		 * @param {NaturalObject~ajaxCallback} callback - Callback.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.ajax
 		 */
 		NaturalObject.prototype.ajax = function(options, callback)
 		{
@@ -643,6 +689,8 @@ limitations under the License.
 		 * @param {NaturalObject} child - Node to be appended.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.appendChild
 		 */
 		NaturalObject.prototype.appendChild = function(child)
 		{
@@ -662,6 +710,8 @@ limitations under the License.
 		 * It's chainable.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.remove
 		 */
 		NaturalObject.prototype.remove = function()
 		{
@@ -686,6 +736,8 @@ limitations under the License.
 		 * @param {NaturalObject} child - Node to be removed.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.removeChild
 		 */
 		NaturalObject.prototype.removeChild = function(child)
 		{
@@ -698,14 +750,6 @@ limitations under the License.
 		};
 
 		/**
-		 * Callback for {@link NaturalObject~each}.
-		 *
-		 * @callback NaturalObject~eachCallback
-		 *
-		 * @param {HTMLElement|Node|DOMObject|DOMResult} node - Node resulting from some DOM operation.
-		 */
-
-		/**
 		 * Applies a function to all contained nodes.
 		 *
 		 * If is NOT a NodeList, the function will called with the contained
@@ -716,6 +760,8 @@ limitations under the License.
 		 * @param {NaturalObject~eachCallback} cll - Callback to be called on all contained nodes.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.each
 		 */
 		NaturalObject.prototype.each = function(cll)
 		{
@@ -756,6 +802,8 @@ limitations under the License.
 		 * @param {NaturalObject~eachCallback} cll - Callback to be called on all contained nodes.
 		 *
 		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.forEach
 		 */
 		NaturalObject.prototype.forEach = function(cll)
 		{
@@ -770,6 +818,8 @@ limitations under the License.
 		 * that.
 		 *
 		 * @param {window} [win] - window where the globals will be reloaded.
+		 *
+		 * @method NaturalObject.prototype.reloadGlobals
 		 */
 		NaturalObject.prototype.reloadGlobals = function(win)
 		{
