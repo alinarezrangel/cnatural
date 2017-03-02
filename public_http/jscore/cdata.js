@@ -30,6 +30,18 @@ limitations under the License.
 		}
 
 		/**
+		 * A map that maps sublanguages to {@link NaturalObject~POMap}
+		 *
+		 * @typedef {object.<string, POMap>|map} NaturalObject~POMapSubLG
+		 */
+
+		/**
+		 * A map that maps messages to localized (language-dependend) messages.
+		 *
+		 * @typedef {object.<string, string>|map} NaturalObject~POMap
+		 */
+
+		/**
 		 * Callback for {@link NaturalObject~require}.
 		 *
 		 * @callback NaturalObject~requireCallback
@@ -157,9 +169,9 @@ limitations under the License.
 		/**
 		 * Contains the current global POMap.
 		 *
-		 * A POMap maps a universal message to a locale-specific message.
+		 * A {@link NaturalObject~POMap} maps a universal message to a locale-specific message.
 		 *
-		 * @type {object|POMapSubLG}
+		 * @type {NaturalObject~POMapSubLG}
 		 *
 		 * @member NaturalObject.prototype.GlobalPOMap
 		 */
@@ -203,14 +215,14 @@ limitations under the License.
 		};
 
 		/**
-		 * Selects a POMap using a language.
+		 * Selects a {@link NaturalObject~POMap} using a language.
 		 *
-		 * The POMap is selected from a POMapSubLG list.
+		 * The {@link NaturalObject~POMap} is selected from a {@link NaturalObject~POMapSubLG} list.
 		 *
-		 * @param {POMapSubLG} pomap - Sublanguage list to search.
+		 * @param {NaturalObject~POMapSubLG} pomap - Sublanguage list to search.
 		 * @param {string} lang - Language code to use.
 		 *
-		 * @return {POMap} A POMap that uses lang as language.
+		 * @return {NaturalObject~POMap} A POMap that uses lang as language.
 		 *
 		 * @method NaturalObject.prototype.selectPOMapIn
 		 */
@@ -244,10 +256,10 @@ limitations under the License.
 		};
 
 		/**
-		 * Selects a message from a POMapSubLG.
+		 * Selects a message from a {@link NaturalObject~POMapSubLG}.
 		 *
 		 * @param {string} msg - Message to search.
-		 * @param {POMapSubLG} pomap - POMapSubLG where search.
+		 * @param {NaturalObject~POMapSubLG} pomap - POMapSubLG where search.
 		 * @param {string} lang - Language to use.
 		 *
 		 * @return {string} Message msg in the language.

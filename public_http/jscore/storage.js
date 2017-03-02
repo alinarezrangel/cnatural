@@ -30,6 +30,15 @@ limitations under the License.
 		}
 
 		/**
+		 * A Storage System (persistent between browser sessions).
+		 *
+		 * @typedef {object} NaturalStorage~StorageSystem
+		 *
+		 * @property {function} getItem - Gets a named item from the storage.
+		 * @property {function} setItem - Sets a named itom to the storage.
+		 */
+
+		/**
 		 * Callback for all storage non-returning async calls.
 		 *
 		 * @callback NaturalStorage~nonReturningCallback
@@ -76,7 +85,7 @@ limitations under the License.
 		 *   });
 		 * });
 		 *
-		 * @param {StorageSystem} ls - Storage System to use.
+		 * @param {NaturalStorage~StorageSystem} ls - Storage System to use.
 		 *
 		 * @class NaturalStorage
 		 */

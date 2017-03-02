@@ -36,6 +36,20 @@ limitations under the License.
 		};
 
 		/**
+		 * Any object/s returner by a valid DOM operation (or null/undefined).
+		 *
+		 * Generally, have all operations on a DOM Node or a NodeList.
+		 *
+		 * @typedef {object} NaturalObject~DOMObject
+		 */
+
+		/**
+		 * A text returned by an AJAX request (or null/undefined).
+		 *
+		 * @typedef {string} NaturalObject~AJAXResponseText
+		 */
+
+		/**
 		 * Callback for {@link NaturalObject~on}.
 		 *
 		 * @callback NaturalObject~onCallback
@@ -51,7 +65,7 @@ limitations under the License.
 		 * @callback NaturalObject~ajaxCallback
 		 *
 		 * @param {Error} err - Error on the AJAX (or null).
-		 * @param {string|AJAXResponseText} res - AJAX response text (or undefined).
+		 * @param {NaturalObject~AJAXResponseText} res - AJAX response text (or undefined).
 		 */
 
 		/**
@@ -59,7 +73,7 @@ limitations under the License.
 		 *
 		 * @callback NaturalObject~eachCallback
 		 *
-		 * @param {HTMLElement|Node|DOMObject|DOMResult} node - Node resulting from some DOM operation.
+		 * @param {NaturalObject~DOMObject} node - Node resulting from some DOM operation.
 		 */
 
 		/**
@@ -67,7 +81,7 @@ limitations under the License.
 		 *
 		 * In the modules and applications this class is `window.NaturalObject`.
 		 *
-		 * @param {DOMResult|HTMLElement|Node|NodeList|HTMLCollection} dom - DOM element/s to wrap.
+		 * @param {NaturalObject~DOMObject} dom - DOM element/s to wrap.
 		 *
 		 * @class NaturalObject
 		 */
@@ -154,7 +168,7 @@ limitations under the License.
 		 *
 		 * Passing a non-DOM object is undefined.
 		 *
-		 * @param {Node|NodeList|HTMLElement|HTMLCollection} obj - Object to wrap.
+		 * @param {NaturalObject~DOMObject} obj - Object to wrap.
 		 *
 		 * @return {NaturalObject} NaturalObject wrapping that object.
 		 *

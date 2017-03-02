@@ -51,7 +51,7 @@ limitations under the License.
 		 * @callback NaturalShell.Base.Context~hiddenWindowsCallback
 		 *
 		 * @param {string} action - Action to do (see table).
-		 * @param {NaturalShell.Base.Window} window - Window where the action was executed (may be null).
+		 * @param {NaturalShell.Base.WindowElement} window - Window where the action was executed (may be null).
 		 */
 
 		/**

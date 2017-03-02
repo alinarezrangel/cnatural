@@ -38,11 +38,38 @@ limitations under the License.
 
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
+		/**
+		 * Represents a window manager.
+		 *
+		 * The window manager "manages" the windows, packing (adding), showing,
+		 * hidding and doing other operations on the windows packed **on his area**.
+		 *
+		 * The Windowed Interface need almost one window manager and one window system.
+		 * But remember that this is the lower limit, you can have multiples window
+		 * systems and managers on the **same shell** or **windowed interface**.
+		 *
+		 * Remember that the window manager **can not create windows**, only manages
+		 * the existing ones.
+		 *
+		 * @param {NaturalShell.Base.Context} context - Context to use.
+		 *
+		 * @class WindowManager
+		 * @memberof NaturalShell.Base
+		 */
 		window.NaturalShell.Base.WindowManager = function(context)
 		{
 			this.context = context;
 		};
 
+		/**
+		 * Packs a windows as toplevel.
+		 *
+		 * The toplevel window is the window with the higher Z-index currently
+		 * visible. This method will add the window to this manager **and** will
+		 * convert it to the toplevel window.
+		 *
+		 * @param {NaturalShell.Base.WindowElement}
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.packWindowAsToplevel = function(windowElement)
 		{
 			// Abstract method!
