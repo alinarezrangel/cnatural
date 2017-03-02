@@ -226,6 +226,8 @@ limitations under the License.
 		 * map. But the map can contain null values and in that case, you
 		 * may use your own colors.
 		 *
+		 * @abstract
+		 *
 		 * @method NaturalShell.Base.WindowStyle.prototype.updateColors
 		 */
 		window.NaturalShell.Base.WindowStyle.prototype.updateColors = function()
