@@ -39,6 +39,17 @@ limitations under the License.
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
 		/**
+		 * It's any object that represents a window.
+		 *
+		 * It's implementation-defined, so you never should use it directly if
+		 * you don't know what windowed interface are you using.
+		 *
+		 * @typedef {opaque_type|object} WindowElement
+		 *
+		 * @memberof NaturalShell.Base
+		 */
+
+		/**
 		 * Represents a window manager.
 		 *
 		 * The window manager "manages" the windows, packing (adding), showing,
@@ -68,9 +79,11 @@ limitations under the License.
 		 * visible. This method will add the window to this manager **and** will
 		 * convert it to the toplevel window.
 		 *
-		 * @param {NaturalShell.Base.WindowElement}
+		 * @param {NaturalShell.Base.WindowElement} windowElement - Window Element to pack.
 		 *
-		 * @method NaturalShell.Base.WindowElement.prototype.packWindowAsToplevel
+		 * @abstract
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.packWindowAsToplevel
 		 */
 		window.NaturalShell.Base.WindowManager.prototype.packWindowAsToplevel = function(windowElement)
 		{
@@ -79,44 +92,114 @@ limitations under the License.
 
 		/**
 		 * Hides all **visible** windows.
+		 *
+		 * @abstract
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.hideAllWindows
 		 */
 		window.NaturalShell.Base.WindowManager.prototype.hideAllWindows = function()
 		{
-			// Abstract method!
-			/// Hides all windows.
+			return;
 		};
 
+		/**
+		 * Shows the toplevel window.
+		 *
+		 * If you call {@link NaturalShell.Base.WindowManager~hideAllWindows} then
+		 * the toplevel window will be hidden. Call this method to show the window
+		 * with the higher Z-index.
+		 *
+		 * @abstract
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.showToplevel
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.showToplevel = function()
 		{
-			// Abstract method!
-			/// Shows the toplevel (most elevated, higher Z-Index) window.
+			return;
 		};
 
+		/**
+		 * Makes a window the new toplevel.
+		 *
+		 * Calling this method will be change the current toplevel window.
+		 *
+		 * The callback is implementation dependend, but you can use the
+		 * {@link NaturalShell.Base.WindowSystem~getEqualsCallback} method for
+		 * get this callback in a implementation-independend manner.
+		 *
+		 * @param {function} cmpfcn - Callback to determine where two windows are equals.
+		 *
+		 * @abstract
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.moveToTop
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.moveToTop = function(cmpfcn)
 		{
-			// Abstract method!
-			/// Moves the window specified by the function cmpfcn to be the toplevel window.
+			return;
 		};
 
+		/**
+		 * Determines if **any** window is visible.
+		 *
+		 * This method returns true if at least **one** window is visible.
+		 *
+		 * @return {boolean} true if at least one window is visible, false otherwise.
+		 *
+		 * @abstract
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.isShowingWindow
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.isShowingWindow = function()
 		{
-			// Abstract method!
-			/// Returns true if is visible any window.
+			return false;
 		};
 
+		/**
+		 * Determines is a specified window is visible.
+		 *
+		 * The callback is in an implementation-defined format, but you can get in
+		 * a implementation-independend manner a callback using the
+		 * {@link NaturalShell.Base.WindowSystem~getEqualsCallback} method.
+		 *
+		 * @param {function} cmpfcn - Function used to determine where two are equals.
+		 *
+		 * @return {boolean} true if the specified window is visible, false otherwise.
+		 *
+		 * @abstract
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.isShowing
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.isShowing = function(cmpfcn)
 		{
-			// Abstract method!
-			/// Returns true if the cmpfcn functions returns true on any of the windows
-			/// contained in this.context.
+			return false;
 		};
 
+		/**
+		 * Unpacks a window.
+		 *
+		 * After a window is unpacked, this window manager does **not** have more
+		 * control over it.
+		 *
+		 * @param {function} cmpfcn - Function used to determine where two windows are equals.
+		 *
+		 * @abstract
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.unpackWindow
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.unpackWindow = function(cmpfcn)
 		{
-			// Abstract method!
-			/// Unpacks a window
+			return;
 		};
 
+		/**
+		 * Applies a function to all windows in this window manager.
+		 *
+		 * It's not abtract, but should be overrided.
+		 *
+		 * @param {function} callback - Function to apply (only have one argument: the {@link NaturalShell.Base.WindowElement}).
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.forEach
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.forEach = function(callback)
 		{
 			this.context.getWindowArea().apply((windowEl) =>
@@ -125,6 +208,13 @@ limitations under the License.
 			}).forEach();
 		};
 
+		/**
+		 * Gets the context of this window manager.
+		 *
+		 * @return {NaturalShell.Base.Context} Context passed on the creation.
+		 *
+		 * @method NaturalShell.Base.WindowManager.prototype.getContext
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.getContext = function()
 		{
 			return this.context;
