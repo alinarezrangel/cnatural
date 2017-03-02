@@ -44,24 +44,24 @@ limitations under the License.
 		 * that called this method, because this, the next code
 		 * will not work as espected:
 		 *
-```javascript
-var a = window.$ntc("#object_a");
-var b = window.$ntc("#object_a");
-
-a.animatable();
-
-// b.isAnimatable is false, note that a and b are the same NODE but not the
-// same OBJECT.
-
-a.alertMoveForever();
-
-// This animates the node, so b have the animation class now.
-
-// Note that b is NOT animatable at this point but have the animation classes:
-
-b.haveClass("gui-animation-alert"); // This is true
-b.isAnimatable; // This is false
-```
+		 * ```javascript
+		 * var a = window.$ntc("#object_a");
+		 * var b = window.$ntc("#object_a");
+		 *
+		 * a.animatable();
+		 *
+		 * // b.isAnimatable is false, note that a and b are the same NODE but not the
+		 * // same OBJECT.
+		 *
+		 * a.alertMoveForever();
+		 *
+		 * // This animates the node, so b have the animation class now.
+		 *
+		 * // Note that b is NOT animatable at this point but have the animation classes:
+		 *
+		 * b.haveClass("gui-animation-alert"); // This is true
+		 * b.isAnimatable; // This is false
+		 * ```
 		 *
 		 * It's chainable.
 		 *

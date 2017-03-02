@@ -93,7 +93,7 @@ limitations under the License.
 		 * on a NaturalObject.
 		 *
 		 * The usage of this function for wraps a Node or HTMLElement is
-		 * discouraged and should be avoided (see {@link NaturalObject.wrap}.
+		 * discouraged and should be avoided (see {@link NaturalObject~wrap}.
 		 *
 		 * If no child matches that expression, the returned NaturalObject
 		 * will be void (zero child or objects).
@@ -228,7 +228,7 @@ limitations under the License.
 		};
 
 		/**
-		 * Like {@link NaturalObject.attr} but access to the dataset.
+		 * Like {@link NaturalObject~attr} but access to the dataset.
 		 *
 		 * Can be called on NodeList for modify ALL nodes in the list.
 		 *
@@ -266,7 +266,7 @@ limitations under the License.
 		};
 
 		/**
-		 * Like {@link NaturalObject.attr} but access to the values.
+		 * Like {@link NaturalObject~attr} but access to the values.
 		 *
 		 * Can be called on NodeList for modify ALL nodes in the list.
 		 *
@@ -284,7 +284,7 @@ limitations under the License.
 		 * On NodeList, returns an array (without specifing order) or all
 		 * values of the contained objects (on get).
 		 *
-		 * @param {string|DOMString} [value] - Value of the data.
+		 * @param {string|DOMString} [value] - Value of the datalink.
 		 *
 		 * @return {string|DOMString|Array|NaturalObject} The value of the data, or this.
 		 */
@@ -445,7 +445,7 @@ limitations under the License.
 		 *
 		 * It's chainable.
 		 *
-		 * @param {function} handler - Next event handler.
+		 * @param {NaturalObject~onCallback|function} handler - Next event handler.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 */
@@ -457,11 +457,11 @@ limitations under the License.
 		};
 
 		/**
-		 * Alias of {@link NaturalObject.attach}.
+		 * Alias of {@link NaturalObject~attach}.
 		 *
 		 * It's chainable.
 		 *
-		 * @param {function} handler - Next event handler.
+		 * @param {NaturalObject~onCallback|function} handler - Next event handler.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 */
@@ -475,7 +475,7 @@ limitations under the License.
 		 *
 		 * It's chainable.
 		 *
-		 * @param {function} handler - Next event handler.
+		 * @param {NaturalObject~onCallback|function} handler - Next event handler.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 */
@@ -485,30 +485,40 @@ limitations under the License.
 		};
 
 		/**
+		 * Callback for {@link NaturalObject~on}.
+		 *
+		 * @callback NaturalObject~onCallback
+		 *
+		 * @param {Event} ev - Event.
+		 *
+		 * @return {boolean} If the event can propagated (**obsolete**).
+		 */
+
+		/**
 		 * Attaches an event handler.
 		 *
 		 * If only an event name is specified, the setted event
-		 * handler (setted with {@link NaturalObject.attach} like functions)
+		 * handler (setted with {@link NaturalObject~attach} like functions)
 		 * will be used.
 		 *
 		 * If an event name AND a boolean are provided, the setted event
-		 * handler (setted with {@link NaturalObject.attach} like functions)
+		 * handler (setted with {@link NaturalObject~attach} like functions)
 		 * will be used and the boolean determines if the event is bubbled or
 		 * not.
 		 *
 		 * If an event name AND a callback are specified, the callback will
 		 * be used AND will be setted as next event handler (like calling
-		 * {@link NaturalObject.attach} on them before calling this).
+		 * {@link NaturalObject~attach} on them before calling this).
 		 *
 		 * If and event name AND a callback AND a boolean are provided,
 		 * the callback will be used AND will be setted as next event handler
-		 * (like calling {@link NaturalObject.attach} on them before calling
+		 * (like calling {@link NaturalObject~attach} on them before calling
 		 * this) and the boolean will determine if the event is bubbled or not.
 		 *
 		 * It's chanined.
 		 *
 		 * @param {string|DOMString} evt - Event name.
-		 * @param {function|boolean} [cll] - Callback or boolean.
+		 * @param {NaturalObject~onCallback|boolean} [cll] - Callback or boolean.
 		 * @param {boolean} [bbl] - If bubbles are used or not.
 		 *
 		 * @return {NaturalObject} Always returns this object.
@@ -543,33 +553,34 @@ limitations under the License.
 		};
 
 		/**
+		 * Callback for {@link NaturalObject~ajax}.
+		 *
+		 * @callback NaturalObject~ajaxCallback
+		 *
+		 * @param {Error} err - Error on the AJAX (or null).
+		 * @param {string|AJAXResponseText} res - AJAX response text (or undefined).
+		 */
+
+		/**
 		 * Makes an AJAX call.
 		 *
 		 * The options object have the attributes:
 		 *
-```javascript
-{
-	"args": {Array} // Arguments to be passed as HTTP GET
-	"pdata": {Array} // Arguments to be passed as HTTP POST
-	"url": {string} // URL where the AJAX will be sended
-	"async": {boolean} // If the ajax is executed asyncronusly
-}
-```
-		 *
-		 * The callback should have a syntax like:
-		 *
-```javascript
-// Where error is always defined (or null) and result
-// is the returned string (or undefined)
-function my_example_callback(Error error, string result)
-```
+		 * ```javascript
+		 * {
+		 * 	"args": {Array} // Arguments to be passed as HTTP GET
+		 * 	"pdata": {Array} // Arguments to be passed as HTTP POST
+		 * 	"url": {string} // URL where the AJAX will be sended
+		 * 	"async": {boolean} // If the ajax is executed asyncronusly
+		 * }
+		 * ```
 		 *
 		 * The HTTP method used is ALWAYS POST.
 		 *
 		 * It's chainable.
 		 *
 		 * @param {object|map} options - Options to the call.
-		 * @param {function} callback - Callback.
+		 * @param {NaturalObject~ajaxCallback} callback - Callback.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 */
@@ -687,24 +698,22 @@ function my_example_callback(Error error, string result)
 		};
 
 		/**
+		 * Callback for {@link NaturalObject~each}.
+		 *
+		 * @callback NaturalObject~eachCallback
+		 *
+		 * @param {HTMLElement|Node|DOMObject|DOMResult} node - Node resulting from some DOM operation.
+		 */
+
+		/**
 		 * Applies a function to all contained nodes.
 		 *
 		 * If is NOT a NodeList, the function will called with the contained
 		 * object instead.
 		 *
-		 * The callback syntax should look like:
-		 *
-```javascript
-// node is a DOM operation result.
-function my_example_callback(
-	HTMLElement | Node | DOMObject
-	node
-)
-```
-		 *
 		 * It's chainable.
 		 *
-		 * @param {function} cll - Callback to be called on all contained nodes.
+		 * @param {NaturalObject~eachCallback} cll - Callback to be called on all contained nodes.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 */
@@ -744,7 +753,7 @@ function my_example_callback(
 		 *
 		 * It's chainable.
 		 *
-		 * @param {function} cll - Callback to be called on all contained nodes.
+		 * @param {NaturalObject~eachCallback} cll - Callback to be called on all contained nodes.
 		 *
 		 * @return {NaturalObject} Always returns this object.
 		 */

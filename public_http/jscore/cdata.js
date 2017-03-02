@@ -249,13 +249,21 @@ limitations under the License.
 		};
 
 		/**
+		 * Callback for {@link CData~require}.
+		 *
+		 * @callback CData~requireCallback
+		 *
+		 * @param {NaturalObject} nc - `<script>` element containing the URL pointer to the required code.
+		 */
+
+		/**
 		 * Imports a JavaScript code.
 		 *
 		 * Note that not specifing a token (token = null) but setting the path as
 		 * private (isprivate = true) is illegal and will throw an exception.
 		 *
 		 * If no callback is provided, the last event handler will be used (setted
-		 * using {@link NaturalObject.attach} or similar).
+		 * using {@link NaturalObject~attach} or similar).
 		 *
 		 * If `isprivate` is not specified it's defaults to false.
 		 *
@@ -263,7 +271,7 @@ limitations under the License.
 		 * @param {string} path - Path to the JavaScript resource.
 		 * @param {string} token - User auth token (or null).
 		 * @param {boolean} [isprivate=false] - If the resource is in private path.
-		 * @param {function} [cll] - Callback called when the code is ready.
+		 * @param {CData~requireCallback} [cll] - Callback called when the code is ready.
 		 *
 		 * @function require
 		 * @memberof CData
@@ -316,6 +324,14 @@ limitations under the License.
 		};
 
 		/**
+		 * Callback for {@link CData~parseSemanticIconsetTags}.
+		 *
+		 * @callback CData~parseSemanticIconsetTagsCallback
+		 *
+		 * @param {NaturalObject} tag - Tag that recently was translated.
+		 */
+
+		/**
 		 * Translates all semantic icons to it's mapped equivalents.
 		 *
 		 * A semantic icon like `tools` need to be translated to a
@@ -323,7 +339,7 @@ limitations under the License.
 		 * `gui-font-iconset-v2`.
 		 *
 		 * @param {document} [doc=document] - Document to translate
-		 * @param {function} [ondone] - Callback when all tags was translated.
+		 * @param {CData~parseSemanticIconsetTagsCallback} [ondone] - Callback when all tags was translated.
 		 *
 		 * @function parseSemanticIconsetTags
 		 * @memberof CData
@@ -416,12 +432,21 @@ limitations under the License.
 		};
 
 		/**
+		 * Callback for {@link CData~include}.
+		 *
+		 * @callback CData~includeCallback
+		 *
+		 * @param {Error} err - Import error (may be null).
+		 * @param {NaturalObject} node - HTML Root node of the inserted fragment (or undefined).
+		 */
+
+		/**
 		 * Includes a fragment of HTML from a private resource.
 		 *
 		 * @param {string} token - Token to use.
 		 * @param {string} src - Private path to the resource.
 		 * @param {string} mime - Expected MIME-type of the resource.
-		 * @param {function} callback - Callback to be called when the import is done.
+		 * @param {CData~includeCallback} callback - Callback to be called when the import is done.
 		 */
 		window.NaturalObject.prototype.include = function(token, src, mime, callback)
 		{
@@ -457,13 +482,21 @@ limitations under the License.
 		};
 
 		/**
+		 * Callback for {@link CData~includeScripts}.
+		 *
+		 * @callback CData~includeScriptsCallback
+		 *
+		 * @param {NaturalObject} tag - HTML includetag that was finished to include.
+		 */
+
+		/**
 		 * Includes all scripts embed on `div[data-widget="include"]` tags.
 		 *
 		 * More, calls some utility functions.
 		 *
 		 * @param {document} [doc=document] - Document to parse.
 		 * @param {string} token - The user auth token.
-		 * @param {function} [ondone] - Callback called when the parsing is finished.
+		 * @param {CData~includeScriptsCallback} [ondone] - Callback called when the parsing is finished.
 		 *
 		 * @function includeScripts
 		 * @memberof CData

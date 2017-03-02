@@ -30,6 +30,23 @@ limitations under the License.
 		}
 
 		/**
+		 * Callback for all storage non-returning async calls.
+		 *
+		 * @callback NaturalStorage~nonReturningCallback
+		 *
+		 * @param {Error} err - Error (or null).
+		 */
+
+		/**
+		 * Callback for all storage returning async calls.
+		 *
+		 * @callback NaturalStorage~returningCallback
+		 *
+		 * @param {Error} err - Error (or null).
+		 * @param {*} res - Operation result (generally a string).
+		 */
+
+		/**
 		 * Represents and manages a persistent storage (if any) on the browser.
 		 *
 		 * This API is so flexible that enables a combination of synchronus and
@@ -81,7 +98,7 @@ limitations under the License.
 		 * If no error occours, the error parameter will be null.
 		 *
 		 * @param {string} by - The owner of the session.
-		 * @param {function} [callback] - The callback to be called.
+		 * @param {NaturalStorage~nonReturningCallback} [callback] - The callback to be called.
 		 *
 		 * @returns {*} Value returned by the callback.
 		 */
@@ -104,7 +121,7 @@ limitations under the License.
 		 *
 		 * If no error occours, the error parameter will be null.
 		 *
-		 * @param {function} [callback] - The callback to be called.
+		 * @param {NaturalStorage~nonReturningCallback} [callback] - The callback to be called.
 		 *
 		 * @returns {*} Value returned by the callback.
 		 */
@@ -129,7 +146,7 @@ limitations under the License.
 		 * If no error occours, the error parameter will be null.
 		 *
 		 * @param {string} name - Name of the key to get.
-		 * @param {function} [callback] - The callback to be called.
+		 * @param {NaturalStorage~returningCallback} [callback] - The callback to be called.
 		 *
 		 * @returns {*} Value returned by the callback.
 		 */
@@ -164,7 +181,7 @@ limitations under the License.
 		 *
 		 * @param {string} name - Name of the key.
 		 * @param {string} value - New value of the key.
-		 * @param {function} [callback] - The callback to be called.
+		 * @param {NaturalStorage~nonReturningCallback} [callback] - The callback to be called.
 		 *
 		 * @returns {*} Value returned by the callback.
 		 */

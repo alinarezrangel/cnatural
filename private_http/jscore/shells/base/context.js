@@ -33,6 +33,16 @@ limitations under the License.
 
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
+		/**
+		 * It's a context for windows, window systems and window managers.
+		 *
+		 * The context manager callback to the shells, in this form it's like
+		 * a bridge between the front-end (windows/winsystems/winmanagers) and
+		 * the back-end (shell's core).
+		 *
+		 * @param {object.<string, function>|map} map - Map with the callbacks.
+		 * @param {function}
+		 */
 		window.NaturalShell.Base.Context = function(map)
 		{
 			this.windowArea = map["windowArea"];

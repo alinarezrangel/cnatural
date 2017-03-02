@@ -150,19 +150,20 @@ window.NaturalClient.Protocol.Type = "AJAX-based";
 window.NaturalClient.Protocol.CSPEnabled = true;
 
 /**
+ * Callback for {@link NaturalClient.GetToken}.
+ *
+ * @callback NaturalClient~GetTokenCallback
+ *
+ * @param {Error} err - Error getting the token (or null).
+ * @param {string} token - User token (or undefined).
+ */
+
+/**
  * Gets the current user auth token.
  *
  * This token may be used for API calls purposes.
  *
- * NOTE: The callback ({function} cll) should have a syntax like:
- *
-```javascript
-// Where error is always defined (or null) and token is a string
-// (or undefined)
-function my_example_callback(Error error, String token?)
-```
- *
- * @param {function} cll - Callback to be called when the token is getted
+ * @param {NaturalClient~GetTokenCallback} cll - Callback to be called when the token is getted
  *
  * @function GetToken
  * @memberof NaturalClient
@@ -199,22 +200,23 @@ window.NaturalClient.GetToken = function(cll)
 };
 
 /**
+ * Callback for {@link NaturalClient.APIRequest}.
+ *
+ * @callback NaturalClient~APIRequestCallback
+ *
+ * @param {Error} err - The API Request error (or null).
+ * @param {string|AJAXResponseText} res - The API response text (or undefined).
+ */
+
+/**
  * Makes an API request to the server.
  *
  * Generally, it's required in some argument the user auth token. You can
- * get it using {@link window.NaturalClient.GetToken}.
- *
- * NOTE: the callback ({function} cll) should have a syntax like:
- *
-```javascript
-// where error is always defined (or null) and result is the
-// method returned string (of undefined)
-function my_example_callback(Error error, String result)
-```
+ * get it using {@link NaturalClient.GetToken}.
  *
  * @param {string} method - Method to be called (for example, `coreutils.time.get`).
  * @param {map|object} args - Map with all arguments to be passed to the method.
- * @param {function} cll - Callback to be called with the method result.
+ * @param {NaturalClient~APIRequestCallback} cll - Callback to be called with the method result.
  *
  * @function APIRequest
  * @memberof NaturalClient
@@ -232,7 +234,7 @@ window.NaturalClient.APIRequest = function(method, args, cll)
 	});
 };
 
-/* * [NOT PUBLISH THIS]
+/**
  * Attaches the events to the clients front-end.
  *
  * The the user logins and opens the select-DE-screen, this function is
@@ -240,6 +242,8 @@ window.NaturalClient.APIRequest = function(method, args, cll)
  * DE.
  *
  * @param {string} token - The user auth token tu use in API calls.
+ *
+ * @private
 */
 window.NaturalClient._attach_shell_events = function(token)
 {
