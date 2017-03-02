@@ -133,7 +133,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Widget = Class(
-			/** @lends NaturalWidgets.Widget */
+			/** @lends NaturalWidgets.Widget.prototype */
 			{
 			/**
 			 * The type of the widget (will inherit).
@@ -234,7 +234,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.PlainText = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.PlainText */
+			/** @lends NaturalWidgets.PlainText.prototype */
 			{
 			type: "PlainText",
 			path: "CNatural.JS.Widgets.PlainText",
@@ -263,7 +263,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Text = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.Text */
+			/** @lends NaturalWidgets.Text.prototype */
 			{
 			type: "Text",
 			path: "CNatural.JS.Widgets.Text",
@@ -319,7 +319,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Container = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.Container */
+			/** @lends NaturalWidgets.Container.prototype */
 			{
 			type: "Container",
 			path: "CNatural.JS.Widgets.Container",
@@ -352,7 +352,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.RowContainer = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.RowContainer */
+			/** @lends NaturalWidgets.RowContainer.prototype */
 			{
 			type: "RowContainer",
 			path: "CNatural.JS.Widgets.Container.RowContainer",
@@ -388,7 +388,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.MainContainer = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.MainContainer */
+			/** @lends NaturalWidgets.MainContainer.prototype */
 			{
 			type: "MainContainer",
 			path: "CNatural.JS.Widgets.Container.MainContainer",
@@ -433,7 +433,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Button = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.Button */
+			/** @lends NaturalWidgets.Button.prototype */
 			{
 			type: "Button",
 			path: "CNatural.JS.Widgets.Button",
@@ -491,7 +491,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Input = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.Input */
+			/** @lends NaturalWidgets.Input.prototype */
 			{
 			type: "Input",
 			path: "CNatural.JS.Widgets.Input",
@@ -541,7 +541,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Header = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.Header */
+			/** @lends NaturalWidgets.Header.prototype */
 			{
 			type: "Header",
 			path: "CNatural.JS.Widgets.Header",
@@ -611,7 +611,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Image = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.Image */
+			/** @lends NaturalWidgets.Image.prototype */
 			{
 			type: "Image",
 			path: "CNatural.JS.Widgets.Image",
@@ -654,7 +654,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.ContainerWithHeader = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.ContainerWithHeader */
+			/** @lends NaturalWidgets.ContainerWithHeader.prototype */
 			{
 			type: "ContainerWithHeader",
 			path: "CNatural.JS.Widgets.Container.ContainerWithHeader",
@@ -746,7 +746,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Window = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.Window */
+			/** @lends NaturalWidgets.Window.prototype */
 			{
 			type: "Window",
 			path: "CNatural.JS.Widgets.Window",
@@ -787,7 +787,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.Dialog = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.Dialog */
+			/** @lends NaturalWidgets.Dialog.prototype */
 			{
 			type: "Dialog",
 			path: "CNatural.JS.Widgets.Window.Dialog",
@@ -839,7 +839,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.AcceptDenyDialog = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.AcceptDenyDialog */
+			/** @lends NaturalWidgets.AcceptDenyDialog.prototype */
 			{
 			type: "AcceptDenyDialog",
 			path: "CNatural.JS.Widgets.Window.Dialog.AcceptDenyDialog",
@@ -1042,7 +1042,7 @@ limitations under the License.
 		 * @memberof NaturalWidgets
 		 */
 		window.NaturalWidgets.TextDialog = Extend(window.NaturalWidgets.Widget, Class(
-			/** @lends NaturalWidgets.TextDialog */
+			/** @lends NaturalWidgets.TextDialog.prototype */
 			{
 			type: "TextDialog",
 			path: "CNatural.JS.Widgets.Window.Dialog.TextDialog",
