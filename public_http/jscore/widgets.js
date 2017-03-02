@@ -32,6 +32,8 @@ limitations under the License.
 		/**
 		 * Contains the Natural Widgets API.
 		 *
+		 * In modules and applications, is named `window.NaturalWidgets` instead.
+		 *
 		 * @namespace NaturalWidgets
 		 */
 

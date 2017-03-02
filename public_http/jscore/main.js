@@ -23,6 +23,8 @@ limitations under the License.
 /**
  * Contains all things related to the client of CNatural.
  *
+ * In modules and applications is named `window.NaturalClient` instead.
+ *
  * @see NaturalObject
  * @see NaturalWidgets
  * @see NaturalStorage

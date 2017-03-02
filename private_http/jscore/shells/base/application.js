@@ -35,7 +35,9 @@ limitations under the License.
 		}
 
 		/**
-		 * Main namespace for all shell realted things.
+		 * Main namespace for all shell related things.
+		 *
+		 * In modules and applications is named `window.NaturalShell` instead.
 		 *
 		 * @namespace NaturalShell
 		 */

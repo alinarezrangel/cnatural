@@ -49,6 +49,8 @@ limitations under the License.
 		/**
 		 * Represents and manages a persistent storage (if any) on the browser.
 		 *
+		 * In modules and applications is named `window.NaturalStorage` instead.
+		 *
 		 * This API is so flexible that enables a combination of synchronus and
 		 * asynchronus client's API:
 		 *
