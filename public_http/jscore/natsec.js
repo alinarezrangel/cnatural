@@ -113,9 +113,9 @@ limitations under the License.
 		 * If the object is a NodeList and the index is a number, returns
 		 * the nth-node contained in this NodeList wrapped using NaturalObject.
 		 *
-		 * If the object is NOT a node list, only returns the current contained
+		 * If the object is **not** a node list, only returns the current contained
 		 * object wrapped using OTHER NaturalObject (like a copy in NaturalObject
-		 * but NOT in DOM).
+		 * but **not** in DOM).
 		 *
 		 * @param {number} [i] - The index of the object to be accesed.
 		 *
@@ -479,7 +479,7 @@ limitations under the License.
 		 * Determines if the object have a specified class.
 		 *
 		 * When an array is used instead of a string, it's
-		 * equal to apply AND operations to calling hasclass
+		 * equal to apply **and** operations to calling `hasClass`
 		 * on all items of the array.
 		 *
 		 * @param {string|DOMString|Array} className - The class name/es to verify.
@@ -566,17 +566,17 @@ limitations under the License.
 		 * handler (setted with {@link NaturalObject~attach} like functions)
 		 * will be used.
 		 *
-		 * If an event name AND a boolean are provided, the setted event
+		 * If an event name **and** a boolean are provided, the setted event
 		 * handler (setted with {@link NaturalObject~attach} like functions)
 		 * will be used and the boolean determines if the event is bubbled or
 		 * not.
 		 *
-		 * If an event name AND a callback are specified, the callback will
-		 * be used AND will be setted as next event handler (like calling
+		 * If an event name **and** a callback are specified, the callback will
+		 * be used **and** will be setted as next event handler (like calling
 		 * {@link NaturalObject~attach} on them before calling this).
 		 *
-		 * If and event name AND a callback AND a boolean are provided,
-		 * the callback will be used AND will be setted as next event handler
+		 * If and event name **and** a callback **and** a boolean are provided,
+		 * the callback will be used **and** will be setted as next event handler
 		 * (like calling {@link NaturalObject~attach} on them before calling
 		 * this) and the boolean will determine if the event is bubbled or not.
 		 *
@@ -633,7 +633,7 @@ limitations under the License.
 		 * }
 		 * ```
 		 *
-		 * The HTTP method used is ALWAYS POST.
+		 * The HTTP method used is **always POST**.
 		 *
 		 * It's chainable.
 		 *
@@ -766,7 +766,7 @@ limitations under the License.
 		/**
 		 * Applies a function to all contained nodes.
 		 *
-		 * If is NOT a NodeList, the function will called with the contained
+		 * If is **not** a NodeList, the function will called with the contained
 		 * object instead.
 		 *
 		 * It's chainable.

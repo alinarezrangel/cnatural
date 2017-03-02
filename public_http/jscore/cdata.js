@@ -291,8 +291,8 @@ limitations under the License.
 		/**
 		 * Imports a JavaScript code.
 		 *
-		 * Note that not specifing a token (token = null) but setting the path as
-		 * private (isprivate = true) is illegal and will throw an exception.
+		 * Note that not specifing a token (`token = null`) but setting the path as
+		 * private (`isprivate = true`) is illegal and will throw an exception.
 		 *
 		 * If no callback is provided, the last event handler will be used (setted
 		 * using {@link NaturalObject~attach} or similar).

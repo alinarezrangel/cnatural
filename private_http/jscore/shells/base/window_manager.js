@@ -69,13 +69,17 @@ limitations under the License.
 		 * convert it to the toplevel window.
 		 *
 		 * @param {NaturalShell.Base.WindowElement}
+		 *
+		 * @method NaturalShell.Base.WindowElement.prototype.packWindowAsToplevel
 		 */
 		window.NaturalShell.Base.WindowManager.prototype.packWindowAsToplevel = function(windowElement)
 		{
-			// Abstract method!
-			/// Packs a window as toplevel window.
+			return;
 		};
 
+		/**
+		 * Hides all **visible** windows.
+		 */
 		window.NaturalShell.Base.WindowManager.prototype.hideAllWindows = function()
 		{
 			// Abstract method!

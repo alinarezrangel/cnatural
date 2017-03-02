@@ -99,12 +99,10 @@ limitations under the License.
 		/**
 		 * Opens the storage system.
 		 *
-		 * If the storage system is not opened BEFORE doing any operation,
+		 * If the storage system is not opened **before** doing any operation,
 		 * the storage system might fail.
 		 *
-		 * The callback syntax should look like: `(Error error) => {...}`.
-		 *
-		 * The callback can be omited ONLY the the storage system is synchronus.
+		 * The callback can be omited **only** the the storage system is synchronus.
 		 *
 		 * If no error occours, the error parameter will be null.
 		 *
@@ -125,12 +123,10 @@ limitations under the License.
 		/**
 		 * Closes the storage system.
 		 *
-		 * If the storage system is not opened BEFORE doing any this operation,
+		 * If the storage system is not opened **before** doing any this operation,
 		 * the storage system might fail.
 		 *
-		 * The callback syntax should look like: `(Error error) => {...}`.
-		 *
-		 * The callback can be omited ONLY the the storage system is synchronus.
+		 * The callback can be omited **only** the the storage system is synchronus.
 		 *
 		 * If no error occours, the error parameter will be null.
 		 *
@@ -149,12 +145,10 @@ limitations under the License.
 		/**
 		 * Gets a value from the specified key.
 		 *
-		 * If the storage system is not opened BEFORE doing any operation,
+		 * If the storage system is not opened **before** doing any operation,
 		 * the storage system might fail.
 		 *
-		 * The callback syntax should look like: `(Error error, string value) => {...}`.
-		 *
-		 * The callback can be omited ONLY the the storage system is synchronus.
+		 * The callback can be omited **only** the the storage system is synchronus.
 		 *
 		 * In sync mode, the value is returned instead of passing it to a callback.
 		 *
@@ -187,12 +181,10 @@ limitations under the License.
 		/**
 		 * Sets the value of a key.
 		 *
-		 * If the storage system is not opened BEFORE doing any operation,
+		 * If the storage system is not opened **before** doing any operation,
 		 * the storage system might fail.
 		 *
-		 * The callback syntax should look like: `(Error error) => {...}`.
-		 *
-		 * The callback can be omited ONLY the the storage system is synchronus.
+		 * The callback can be omited **only** the the storage system is synchronus.
 		 *
 		 * If no error occours, the error parameter will be null.
 		 *

@@ -30,10 +30,9 @@ limitations under the License.
 		}
 
 		/**
-		 * Makes a node (or nodes) animatables. Note that
-		 * the animatable feature is not embed in the node
-		 * or nodes itself, it's embed on the NaturalObject
-		 * that called this method, because this, the next code
+		 * Makes a node (or nodes) animatables. Note that the animatable feature
+		 * is not embed in the node or nodes itself, it's embed on the
+		 * NaturalObject that called this method, because this, the next code
 		 * will not work as espected:
 		 *
 		 * ```javascript
