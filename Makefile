@@ -53,6 +53,10 @@ JSDOC_TEMPLATE=$(NPM_PREFIX)/ink-docstrap/template
 JSDOC_TEMPLATE_ARG=-t $(JSDOC_TEMPLATE)
 # JavaScript files to document
 JSFILES_TO_DOC=public_http/jscore/* private_http/jscore/shells/*
+# Index page for the JavaScript documentation
+JSDOC_INDEX=docs/js/home.md
+# Configuration file of the JavaScript documentation
+JSDOC_CONF=docs/js/conf.json
 
 $(TARGET): $(OBJC)
 	$(LD) $(OBJC) -o $(TARGET) $(LDFLAGS)
@@ -110,4 +114,4 @@ minimal: $(TARGET)
 # Documentation of javascript
 # Needs JSDoc3
 docsjs:
-	jsdoc $(JSFILES_TO_DOC) --readme docs/js/home.md -c docs/js/conf.json $(JSDOC_TEMPLATE_ARG)
+	jsdoc $(JSFILES_TO_DOC) --readme $(JSDOC_INDEX) -c $(JSDOC_CONF) $(JSDOC_TEMPLATE_ARG) --access all

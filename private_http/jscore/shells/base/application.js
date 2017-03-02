@@ -52,103 +52,58 @@ limitations under the License.
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
 		/**
-		 * Abstraction of an application.
+		 * Is the data specific to any application.
 		 *
-		 * @param {NaturalShell.Base.Context} ctx - Context to use.
-		 * @param {NaturalShell.Base.WindowSystem} ws - Window System to use.
+		 * Minimal metadata used by all the windowed system.
 		 *
-		 * @class Application
+		 * @typedef {object} ApplicationData
+		 *
+		 * @property {string} applicationName - The name of the application (without translate).
+		 * @property {string} applicationID - The ID of the application.
+		 * @property {string} namespace - The namespace of the application.
+		 * @property {number} instanceID - ID of one instance of the application.
+		 *
 		 * @memberof NaturalShell.Base
 		 */
-		window.NaturalShell.Base.Application = function(ctx, ws)
-		{
-			/**
-			 * Contains the application data.
-			 *
-			 * @property {string} applicationName - The name of the application (without translate).
-			 * @property {string} applicationID - The ID of the application.
-			 * @property {string} namespace - The namespace of the application.
-			 * @property {number} instanceID - ID of one instance of the application.
-			 *
-			 * @member {object|ApplicationData}
-			 * @protected
-			 * @readonly
-			 */
-			this.appdata = {
-				"applicationName": "(null)",
-				"applicationID": "(null)",
-				"namespace": "(null)",
-				"instanceID": 0
-			};
-			this.windowSystem = ws;
-			this.context = ctx;
-
-			/**
-			 * Contains the application metadata.
-			 *
-			 * | Category (string)   | Category         |
-			 * | ------------------- | ---------------- |
-			 * | "X-Any"             | Any              |
-			 * | "System"            | System           |
-			 * | "Accesories"        | Accesories       |
-			 * | "Utilities"         | Utilities        |
-			 * | "Math"              | Mathematics      |
-			 * | "Sound"             | Sound            |
-			 * | "Video"             | Video            |
-			 * | "SoundVideo"        | Sound and Video  |
-			 * | "Science"           | Science          |
-			 * | "Education"         | Education        |
-			 * | "UniversalAccs"     | Universal access |
-			 * | "Electronics"       | Electronics      |
-			 * | "Graphics"          | Graphics         |
-			 * | "Design"            | Design           |
-			 * | "Internet"          | Internet         |
-			 * | "Games"             | Games            |
-			 * | "Office"            | Office           |
-			 * | "Programation"      | Programation     |
-			 * | "Misc"              | Others           |
-			 *
-			 * @property {string} icon - Path to the icon of the application.
-			 * @property {string} category - Category of the application (see table).
-			 * @property {string} genericName - Application Name (can be translated).
-			 * @property {string} onlyShowIn - Name off the client that this application supports.
-			 * @property {string} comment - Short description of the application.
-			 * @property {boolean} graphical - If the application is graphical.
-			 * @property {boolean} showInShell - If the application should be listed in the launcher.
-			 *
-			 * @member {object|ApplicationMetadata}
-			 * @protected
-			 * @readonly
-			 */
-			this.metadata = {
-				"icon": "/resources/images/icons/executable-icon.svg",
-				"category": "X-Any",
-				"genericName": "(null)",
-				"onlyShowIn": "CNatural Client (Araguaney v0.0.1)",
-				"comment": "(null)",
-				"graphical": true,
-				"showInShell": true
-			};
-		};
 
 		/**
-		 * Sets the icon of the application.
+		 * Is a metadata specific to any application.
 		 *
-		 * By convension, all application icons are stored in
-		 * `/resources/images/icons/` and have the name `[application name]-icon.svg`.
+		 * This is generally not used too much by the windowed system, except for the shell.
 		 *
-		 * @param {string|URLPath} x - Path to the icon.
+		 * @typedef {object} ApplicationMetadata
 		 *
-		 * @method setMetadataIcon
-		 * @memberof NaturalShell.Base.Application.prototype
+		 * @property {string} icon - Path to the icon of the application.
+		 * @property {NaturalShell.Base.AppCategory} category - Category of the application (see table).
+		 * @property {string} genericName - Application Name (can be translated).
+		 * @property {string} onlyShowIn - Name off the client that this application supports.
+		 * @property {string} comment - Short description of the application.
+		 * @property {boolean} graphical - If the application is graphical.
+		 * @property {boolean} showInShell - If the application should be listed in the launcher.
+		 *
+		 * @memberof NaturalShell.Base
 		 */
-		window.NaturalShell.Base.Application.prototype.setMetadataIcon = function(x)
-		{
-			this.metadata.icon = x.toString();
-		};
 
 		/**
-		 * Sets the category of the application.
+		 * It's a valid URL path.
+		 *
+		 * The valid URL paths for icons are of the form:
+		 *
+		 * ```
+		 * /resources/images/icons/...
+		 * ```
+		 *
+		 * All non-preinstalled applications should have it's own folders.
+		 *
+		 * @typedef {string} URLPath
+		 *
+		 * @memberof NaturalShell.Base
+		 */
+
+		/**
+		 * It's the category of an application.
+		 *
+		 * The valid categories are:
 		 *
 		 * | Category (string)   | Category         |
 		 * | ------------------- | ---------------- |
@@ -172,7 +127,147 @@ limitations under the License.
 		 * | "Programation"      | Programation     |
 		 * | "Misc"              | Others           |
 		 *
-		 * @param {string|AppCategory} x - Category.
+		 * @typedef {string} AppCategory
+		 *
+		 * @memberof NaturalShell.Base
+		 */
+
+		/**
+		 * The name of an application.
+		 *
+		 * Generally, the application names does not have any specific format.
+		 *
+		 * @typedef {string} ApplicationName
+		 *
+		 * @memberof NaturalShell.Base
+		 */
+
+		/**
+		 * The ID of an application.
+		 *
+		 * The application ID should be a string of the form:
+		 *
+		 * ```
+		 * (org|com|net|...)\....
+		 * For example:
+		 * org.cnatural.applications.native.launcher
+		 * com.google.daemons.keep_drive_updated
+		 * net.sourceforge.applications.client
+		 * ```
+		 *
+		 * @typedef {string} ApplicationID
+		 *
+		 * @memberof NaturalShell.Base
+		 */
+
+		/**
+		 * The namespace (NS) of an application.
+		 *
+		 * The namespace should be a string of the form:
+		 *
+		 * ```
+		 * \:?...
+		 * For example:
+		 * CNatural:Software:Applications:Desktop:Native:Builtins
+		 * Intel:Hardware:Galileo:Gen1:Viewer
+		 * Google:Software:Applications
+		 * ```
+		 *
+		 * @typedef {string} ApplicationNS
+		 *
+		 * @memberof NaturalShell.Base
+		 */
+
+		/**
+		 * The AppInstanceData (a.k.a. "appdata") is a set of data fields that
+		 * uniquely identifies an instance of one application.
+		 *
+		 * This not only differentiates the instance from other instances of the
+		 * same application, also can be used to see what application an instance
+		 * is.
+		 *
+		 * Note that the `instanceID` only differs between instance of the **same**
+		 * application, but `application*` and `namespace` are application
+		 * dependend.
+		 *
+		 * @typedef {object} AppInstanceData
+		 *
+		 * @property {NaturalShell.Base.ApplicationName} applicationName - The name of the application that this instance is.
+		 * @property {NaturalShell.Base.ApplicationID} applicationID - The ID of the application that this instance is.
+		 * @property {NaturalShell.Base.ApplicationNS} namespace - The namespace of the application that this instance is.
+		 * @property {number.integer|number} instanceID - The ID (numeric) of **this** instance in particular.
+		 * @property {number.integer|number} windowID - The ID of the next created window.
+		 * @property {boolean} mainWindowCreated - If a main window was created and associated with this instance.
+		 * @property {NaturalShell.Base.Window} mainWindow - The main window associated with this instance (or null).
+		 *
+		 * @memberof NaturalShell.Base
+		 */
+
+		/**
+		 * Abstraction of an application.
+		 *
+		 * @param {NaturalShell.Base.Context} ctx - Context to use.
+		 * @param {NaturalShell.Base.WindowSystem} ws - Window System to use.
+		 *
+		 * @class Application
+		 * @memberof NaturalShell.Base
+		 */
+		window.NaturalShell.Base.Application = function(ctx, ws)
+		{
+			/**
+			 * Contains the application data.
+			 *
+			 * @member {NaturalShell.Base.ApplicationData} NaturalShell.Base.Application~appdata
+			 * @protected
+			 * @readonly
+			 */
+			this.appdata = {
+				"applicationName": "(null)",
+				"applicationID": "(null)",
+				"namespace": "(null)",
+				"instanceID": 0
+			};
+			this.windowSystem = ws;
+			this.context = ctx;
+
+			/**
+			 * Contains the application metadata.
+			 *
+			 * @member {NaturalShell.Base.ApplicationMetadata} NaturalShell.Base.Application~metadata
+			 * @protected
+			 * @readonly
+			 */
+			this.metadata = {
+				"icon": "/resources/images/icons/executable-icon.svg",
+				"category": "X-Any",
+				"genericName": "(null)",
+				"onlyShowIn": "CNatural Client (Araguaney v0.0.1)",
+				"comment": "(null)",
+				"graphical": true,
+				"showInShell": true
+			};
+		};
+
+		/**
+		 * Sets the icon of the application.
+		 *
+		 * By convension, all application icons are stored in
+		 * `/resources/images/icons/` and have the name `[application name]-icon.svg`.
+		 *
+		 * @param {NaturalShell.Base.URLPath} x - Path to the icon.
+		 *
+		 * @method setMetadataIcon
+		 * @memberof NaturalShell.Base.Application.prototype
+		 */
+		window.NaturalShell.Base.Application.prototype.setMetadataIcon = function(x)
+		{
+			this.metadata.icon = x.toString();
+		};
+
+		/**
+		 * Sets the category of the application.
+		 *
+		 * @param {NaturalShell.Base.AppCategory} x - Category.
 		 *
 		 * @method setMetadataCategory
 		 * @memberof NaturalShell.Base.Application.prototype
@@ -252,7 +347,7 @@ limitations under the License.
 		 *
 		 * It's readonly, for change the metadata use any of the setters methods.
 		 *
-		 * @return {object|ApplicationMetadata} Application metadata.
+		 * @return {NaturalShell.Base.ApplicationMetadata} Application metadata.
 		 *
 		 * @method getMetadata
 		 * @memberof NaturalShell.Base.Application.prototype
@@ -267,7 +362,7 @@ limitations under the License.
 		 *
 		 * Should be a string without any specific format.
 		 *
-		 * @param {string|ApplicationName} name - New appname.
+		 * @param {NaturalShell.Base.ApplicationName} name - New appname.
 		 *
 		 * @throws {Error} If the name is invalid, throws an error (not used).
 		 *
@@ -289,17 +384,7 @@ limitations under the License.
 		/**
 		 * Sets the application ID.
 		 *
-		 * The application ID should be a string of the form:
-		 *
-```
-(org|com|net|...)\....
-For example:
-org.cnatural.applications.native.launcher
-com.google.daemons.keep_drive_updated
-net.sourceforge.applications.client
-```
-		 *
-		 * @param {string|ApplicationID} id - New appid.
+		 * @param {NaturalShell.Base.ApplicationID} id - New appid.
 		 *
 		 * @throws {Error} If the ID is invalid, throws an error.
 		 *
@@ -321,21 +406,10 @@ net.sourceforge.applications.client
 		/**
 		 * Sets the application namespace.
 		 *
-		 * 
-		 * The namespace should be a string of the form:
-		 *
-```
-\:?...
-For example:
-CNatural:Software:Applications:Desktop:Native:Builtins
-Intel:Hardware:Galileo:Gen1:Viewer
-Google:Software:Applications
-```
-		 *
 		 * The namespace will be used to classify the application, and
 		 * should not contain the application name.
 		 *
-		 * @param {string|ApplicationNS} ns - New appns.
+		 * @param {NaturalShell.Base.ApplicationNS} ns - New appns.
 		 *
 		 * @throws {Error} If the namespace is invalid, throws an error.
 		 *
@@ -357,7 +431,7 @@ Google:Software:Applications
 		/**
 		 * Gets the application name.
 		 *
-		 * @return {string|ApplicationName} The application name.
+		 * @return {NaturalShell.Base.ApplicationName} The application name.
 		 *
 		 * @method getName
 		 * @memberof NaturalShell.Base.Application.prototype
@@ -370,7 +444,7 @@ Google:Software:Applications
 		/**
 		 * Gets the application ID.
 		 *
-		 * @return {string|ApplicationID} The application ID.
+		 * @return {NaturalShell.Base.ApplicationID} The application ID.
 		 *
 		 * @method getID
 		 * @memberof NaturalShell.Base.Application.prototype
@@ -383,7 +457,7 @@ Google:Software:Applications
 		/**
 		 * Gets the application namespace.
 		 *
-		 * @return {string|ApplicationNS} The application namespace.
+		 * @return {NaturalShell.Base.ApplicationNS} The application namespace.
 		 *
 		 * @method getNamespace
 		 * @memberof NaturalShell.Base.Application.prototype
@@ -457,7 +531,7 @@ Google:Software:Applications
 		 *
 		 * The returned AppInstanceData is required by other classes to work.
 		 *
-		 * @return {object|AppInstanceData} An instance data.
+		 * @return {NaturalShell.Base.AppInstanceData} An instance data.
 		 *
 		 * @method createInstance
 		 * @memberof NaturalShell.Base.Application.prototype

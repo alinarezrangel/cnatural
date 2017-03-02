@@ -33,6 +33,15 @@ limitations under the License.
 
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
+		/**
+		 * Controls the look of a window.
+		 *
+		 * Not all window styles works on all windows, specific windows
+		 * uses specific window styles.
+		 *
+		 * @param {NaturalShell.Base.Window} windowObject - Window to style.
+		 * @param {}
+		 */
 		window.NaturalShell.Base.WindowStyle = function(windowObject, appdata)
 		{
 			this.window = windowObject;
