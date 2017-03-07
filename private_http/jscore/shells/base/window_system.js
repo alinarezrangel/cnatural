@@ -38,69 +38,167 @@ limitations under the License.
 
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
+		/**
+		 * Maps a layout.
+		 *
+		 * @typedef {object} NaturalShell.Base.ResMap
+		 *
+		 * @property {opaque_type|object} titlebar - The titlebar to use (or null).
+		 * @property {opaque_type|object} titlebarCloseOrBackbutton - The titlebar close button (null only if titlebar is null).
+		 * @property {opaque_type|object} titlebarMenuButton - The titlebar menu button (null only if titlebar is null).
+		 * @property {opaque_type|object} body - The window body.
+		 */
+
+		/**
+		 * A callback that can be used to layout a window.
+		 *
+		 * @callback NaturalShell.Base.WindowSystem~CreateCustomWindowCallback
+		 *
+		 * @param {NaturalShell.Base.WindowElement} winel - The window element.
+		 * @param {NaturalShell.Base.AppInstanceData} appdata - The application instance data.
+		 *
+		 * @return {NaturalShell.Base.ResMap} A ResMap.
+		 */
+
+		/**
+		 * Represents a window system.
+		 *
+		 * The window system can create windows, and the window manager manages them.
+		 *
+		 * @param {NaturalShell.Base.Context} context - Context to use.
+		 * @param {NaturalShell.Base.WindowManager} manager - Window manager to use.
+		 *
+		 * @class WindowSystem
+		 * @memberof NaturalShell.Base
+		 */
 		window.NaturalShell.Base.WindowSystem = function(context, manager)
 		{
 			this.context = context;
 			this.windowManager = manager;
 		};
 
+		/**
+		 * Gets the current context used.
+		 *
+		 * @return {NaturalShell.Base.Context} Context used.
+		 *
+		 * @method NaturalShell.Base.WindowSystem.prototype.getContext
+		 */
 		window.NaturalShell.Base.WindowSystem.prototype.getContext = function()
 		{
 			return this.context;
 		};
 
+		/**
+		 * Gets the used window manager.
+		 *
+		 * @return {NaturalShell.Base.WindowManager} The used window manager.
+		 *
+		 * @method NaturalShell.Base.WindowSystem.prototype.getWindowManager
+		 */
 		window.NaturalShell.Base.WindowSystem.prototype.getWindowManager = function()
 		{
 			return this.windowManager;
 		};
 
+		/**
+		 * Creates a default window.
+		 *
+		 * The default window have a default layout with a titlebar, a body and a menu.
+		 *
+		 * After creating the window, it's packed on the used window manager.
+		 *
+		 * Note that you can create multiples windows using the same AppInstanceData.
+		 *
+		 * @param {string} title - Title of the new window.
+		 * @param {NaturalShell.Base.AppInstanceData} appdata - The instance data of the application creating the window.
+		 *
+		 * @return {NaturalShell.Base.Window} The created window.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.WindowSystem.prototype.createDefaultWindow
+		 */
 		window.NaturalShell.Base.WindowSystem.prototype.createDefaultWindow = function(title, appdata)
 		{
-			// Abstract method!
-			/// Creates and returns a new window with a default layout and with the title "title".
-			/// appdata is a object map with all application data.
-			///
-			/// Note that destroyWindow and destroyCustomWindow removes the window from the
-			/// window manager using the unpackWindow method, but this function and
-			/// createDefaultWindow ADDS the window to the window manager.
+			return null;
 		};
 
+		/**
+		 * Creates a custom window.
+		 *
+		 * This window only haves a body and a menu, all layout is defined in the callback.
+		 *
+		 * After creating the window, it's packed on the used window manager.
+		 *
+		 * @param {NaturalShell.Base.WindowSystem~CreateCustomWindowCallback} callback - Callback to layout the window.
+		 * @param {NaturalShell.Base.AppInstanceData} appdata - AppInstanceData to use to create the window.
+		 *
+		 * @return {NaturalShell.Base.Window} The created window.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.WindowSystem.prototype.createCustomWindow
+		 */
 		window.NaturalShell.Base.WindowSystem.prototype.createCustomWindow = function(callback, appdata)
 		{
-			// Abstract method!
-			/// Creates and returns a new window with a user-provided layout defined
-			/// by callback(window).
-			/// appdata is a object map with all application data.
-			///
-			/// Note that destroyWindow and destroyCustomWindow removes the window from the
-			/// window manager using the unpackWindow method, but this function and
-			/// createDefaultWindow ADDS the window to the window manager.
+			return null;
 		};
 
+		/**
+		 * Destroys a window.
+		 *
+		 * The window should be created with {@link NaturalShell.Base.WindowSystem~createDefaultWindow}
+		 * or this method will fail.
+		 *
+		 * Calls {@link NaturalShell.Base.WindowManager~unpackWindow}.
+		 *
+		 * @param {NaturalShell.Base.Window} windowObject - The window to destroy.
+		 *
+		 * @return {boolean} true if the window was removed successfuly, false otherwise.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.WindowSystem.prototype.destroyWindow
+		 */
 		window.NaturalShell.Base.WindowSystem.prototype.destroyWindow = function(windowObject)
 		{
-			// Abstract method!
-			/// Destroys a window created with createDefaultWindow.
-			///
-			/// Returns true if the window was deinitialized and removed from the DOM.
-			/// This functions may call windowManager.unpackWindow.
+			return false;
 		};
 
+		/**
+		 * Destroys a window.
+		 *
+		 * The window should be created with {@link NaturalShell.Base.WindowSystem~createCustomWindow}
+		 * or this method will fail.
+		 *
+		 * Calls {@link NaturalShell.Base.WindowManager~unpackWindow}.
+		 *
+		 * @param {NaturalShell.Base.Window} windowObject - The window to destroy.
+		 *
+		 * @return {boolean} true if the window was removed successfuly, false otherwise.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.WindowSystem.prototype.destroyCustomWindow
+		 */
 		window.NaturalShell.Base.WindowSystem.prototype.destroyCustomWindow = function(windowObject)
 		{
-			// Abstract method!
-			/// Destroys a window created with createCustomWindow.
-			///
-			/// Returns true if the window was deinitialized and removed from the DOM.
-			/// This functions may call windowManager.unpackWindow.
+			return false;
 		};
 
+		/**
+		 * Gets the callback that determines if two windows are equal.
+		 *
+		 * Generally, the callback is of the form `callback(windowElement) => true if otherWindow == windowObject`
+		 * but not uses the `==` operator, instead compares the window data.
+		 *
+		 * @param {NaturalShell.Base.Window} windowObject - The window to determine if is equal.
+		 *
+		 * @return {function} A valid callback to determine when two windows are equal.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.WindowSystem.prototype.getEqualsCallback
+		 */
 		window.NaturalShell.Base.WindowSystem.prototype.getEqualsCallback = function(windowObject)
 		{
-			// Abstract method!
-			/// Returns the callback that determines if a window A the same window that the window B.
-			///
-			/// (returned value)(X) == true if and only if windowObject is equal to X.
+			return null;
 		};
 	};
 
