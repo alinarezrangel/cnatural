@@ -38,6 +38,15 @@ limitations under the License.
 
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
+		/**
+		 * Represents a window.
+		 *
+		 * @param {NaturalShell.Base.Window} parent - The parent window (or null).
+		 * @param {NaturalShell.Base.AppInstanceData} appdata - The AppInstanceData to use.
+		 *
+		 * @class Window
+		 * @memberof NaturalShell.Base
+		 */
 		window.NaturalShell.Base.Window = function(parent, appdata)
 		{
 			this.parent = parent;
@@ -46,104 +55,239 @@ limitations under the License.
 			this.style.updateColors();
 		};
 
+		/**
+		 * Shows the window.
+		 *
+		 * There is not warranty that the window will be visible to the user,
+		 * for that use {@link NaturalShell.Base.WindowManager~moveToTop}.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.show
+		 */
 		window.NaturalShell.Base.Window.prototype.show = function()
 		{
-			// Abstract method!
-			/// Shows the window (if is hidden) but not as toplevel.
-			/// For a toplevel show, use WindowManager.moveToTop
-			/// which should be compatible with the getWMElement method.
+			return;
 		};
 
+		/**
+		 * Hides the window.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.hide
+		 */
 		window.NaturalShell.Base.Window.prototype.hide = function()
 		{
-			// Abstract method!
-			/// Hides the window (if is showed).
+			return;
 		};
 
+		/**
+		 * Gets the {@link NaturalShell.Base.WindowElement} associated with this window.
+		 *
+		 * @return {NaturalShell.Base.WindowElement} The WindowElement associated with this window.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.getWMElement
+		 */
 		window.NaturalShell.Base.Window.prototype.getWMElement = function()
 		{
-			// Abstract method!
-			/// Gets the raw window element, which can be used on the window
-			/// manager and system functions.
+			return null;
 		};
 
+		/**
+		 * Gets the window parent.
+		 *
+		 * @return {NaturalShell.Base.Window} Parent window (or null).
+		 *
+		 * @method NaturalShell.Base.Window.prototype.getParent
+		 */
 		window.NaturalShell.Base.Window.prototype.getParent = function()
 		{
 			return this.parent;
 		};
 
+		/**
+		 * Gets the {@link NaturalShell.Base.AppInstanceData} of this window.
+		 *
+		 * @return {NaturalShell.Base.AppInstanceData} appdata of this window.
+		 *
+		 * @method NaturalShell.Base.Window.prototype.getApplicationData
+		 */
 		window.NaturalShell.Base.Window.prototype.getApplicationData = function()
 		{
 			return this.appdata;
 		};
 
+		/**
+		 * Gets the winddow body.
+		 *
+		 * In this body you can put the window content.
+		 *
+		 * @return {NaturalObject} Window body.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.getBody
+		 */
 		window.NaturalShell.Base.Window.prototype.getBody = function()
 		{
-			// Abstract method!
-			/// Gets the $natural.wrap object that is the the window body.
+			return null;
 		};
 
+		/**
+		 * Gets the window's headerbar.
+		 *
+		 * If the window does not have a headerbar, it removes the titlebar and adds
+		 * a headerbar. Note that using a headerbar will disable the methods:
+		 *
+		 * * {@link NaturalShell.Base.Window~setTitle}.
+		 * * {@link NaturalShell.Base.Window~getTitle}.
+		 *
+		 * The headerbar is a container, so you can put content inside it.
+		 *
+		 * If no headerbar is supported returns null.
+		 *
+		 * @return {NaturalObject} The headerbar or null.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.getHeaderbar
+		 */
 		window.NaturalShell.Base.Window.prototype.getHeaderbar = function()
 		{
-			// Abstract method!
-			/// Gets the window headerbar (if it contains any element, they should be removed)
-			/// and if have, removes the window title. If no headerbar is supported,
-			/// can return null.
+			return null;
 		};
 
+		/**
+		 * Returns the context menu.
+		 *
+		 * It may be non-empty and if it have content, these content should not
+		 * be removed (but if you want, you can remove them).
+		 *
+		 * If no context menu is supported, returns null.
+		 *
+		 * @return {NaturalObject} The context menu or null.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.getContextMenu
+		 */
 		window.NaturalShell.Base.Window.prototype.getContextMenu = function()
 		{
-			// Abstract method!
-			/// Gets the context menu for the window (right-click menu).
-			/// May be non-empty.
-			///
-			/// Can return null if no context menu is supported.
+			return null;
 		};
 
+		/**
+		 * Gets the window menu.
+		 *
+		 * The window menu may return the same object that {@link NaturalShell.Base.Window~getContextMenu},
+		 * and may return null if no menu is supported.
+		 *
+		 * If the window's context menu contains any object, you can
+		 * (if you want) remove they and add your owns, but in this
+		 * object (the window's menu) you should never remove any object,
+		 * only add (specificly, append objects to the end).
+		 *
+		 * @return {NaturalObject} Window menu or null.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.getMenu
+		 */
 		window.NaturalShell.Base.Window.prototype.getMenu = function()
 		{
-			// Abstract method!
-			/// Gets the window's menu (if any) or null if no window's menu
-			/// is supported. May return the same object that getContextMenu,.
-			///
-			/// If the window's context menu contains any object, you can
-			/// (if you want) remove they and add your owns, but in this
-			/// object (the window's menu) you should never remove any object,
-			/// only add (specificly, append objects to the end).
+			return null;
 		};
 
+		/**
+		 * Sets the window's title.
+		 *
+		 * If a headerbar is used, this function is undefined.
+		 *
+		 * @param {string} title - The new window's title.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.setTitle
+		 */
 		window.NaturalShell.Base.Window.prototype.setTitle = function(title)
 		{
-			// Abstract method!
-			/// Sets the title of the window. If a headerbar is used, this
-			/// function is undefined.
+			return;
 		};
 
+		/**
+		 * Gets the window's title.
+		 *
+		 * If a headerbar is used, this function is undefined.
+		 *
+		 * @return {string} The current window's title.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.getTitle
+		 */
 		window.NaturalShell.Base.Window.prototype.getTitle = function()
 		{
-			// Abstract method!
-			/// Gets the title of the window. If a headerbar is used, this
-			/// function is undefined.
+			return "";
 		};
 
+		/**
+		 * Stores some data on the window.
+		 *
+		 * Generally, this data may be atoms or some application-specific data.
+		 *
+		 * @param {string} key - Name (key) of the data value to store.
+		 * @param {string} value - Value of the data to store.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.storeData
+		 */
 		window.NaturalShell.Base.Window.prototype.storeData = function(key, value)
 		{
-			// Abstract method!
-			/// Stores the key "key" with the value "value" in this window.
+			return;
 		};
 
+		/**
+		 * Loads some data on the window.
+		 *
+		 * Generally, this data may be atoms or some application-specific data.
+		 *
+		 * @param {string} key - Name (key) of the value to load.
+		 *
+		 * @return {string} value - Value of the key.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.loadData
+		 */
 		window.NaturalShell.Base.Window.prototype.loadData = function(key)
 		{
-			// Abstract method!
-			/// Loads the key "key" from this window.
+			return null;
 		};
 
+		/**
+		 * Adds an event listener to the window.
+		 *
+		 * Some events are window-specific:
+		 *
+		 * * `close`: The window is closed
+		 * * `iconify`: The window was minimized
+		 * * `deiconify`: The window was unminimized
+		 *
+		 * These can be catched using this function.
+		 *
+		 * There is no warranty about that these events will be raised.
+		 *
+		 * @param {string} event_name - The name of the event.
+		 * @param {function} event_listener - A valid event listener.
+		 *
+		 * @abstract
+		 * @method NaturalShell.Base.Window.prototype.addEventListener
+		 */
 		window.NaturalShell.Base.Window.prototype.addEventListener = function(event_name, event_listener)
 		{
-			// Abstract method!
-			/// Adds an event listener for event_name which is the callback event_listener
+			return;
 		};
 
+		/**
+		 * Gets the window's style.
+		 *
+		 * @return {NaturalShell.Base.WindowStyle}
+		 *
+		 * @method NaturalShell.Base.Window.prototype.getStyle
+		 */
 		window.NaturalShell.Base.Window.prototype.getStyle = function()
 		{
 			return this.style;
