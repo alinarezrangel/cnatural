@@ -11,6 +11,19 @@ system or remote server via web, with a simple and useful interface.
 * Standard library for C99 (or C version used).
 * [GNU libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/).
 * POSIX APIs (like `unistd.h` and others).
+* [libjwt for C](https://github.com/benmcollins/libjwt).
+
+Note that libjwt requires:
+
+* [jansson](https://github.com/akheron/jansson).
+* OpenSSL
+
+And it's recommended to have:
+
+* [libgcrypt](https://www.gnupg.org/documentation/manuals/gcrypt/)
+* [libgnutls](http://www.gnutls.org/)
+
+For use SSL/TLS on the server.
 
 If you want to generate a documentation, you will need too:
 
