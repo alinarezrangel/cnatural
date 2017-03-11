@@ -65,7 +65,7 @@ window.NaturalClient.GetToken((err, token) =>
 				"jscore/apps/native/__open_windows.js",
 				"jscore/apps/native/__desktop_notification.js",
 				"jscore/apps/native/welcome.js",
-				"jscore/apps/native/clock.js"
+				"jscore/apps/base/clock.js"
 			],
 			() =>
 			{

@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * Clock (time and date) app for Native.
+*** * Clock (time and date) app for Natural.
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -49,7 +49,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		// Metadata here
 		this.setName("Clock");
 		this.setID("org.cnatural.applications.clock");
-		this.setNamespace("CNatural:Software:Desktop:Native:Applications:Builtins");
+		this.setNamespace("CNatural:Software:Desktop:Applications:Builtins");
 
 		this.setMetadataIcon("/resources/images/icons/clock-icon.svg");
 		this.setMetadataCategory("System");
