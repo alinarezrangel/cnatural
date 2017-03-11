@@ -104,6 +104,8 @@ docs/
 		(all JS docs)
 	c/
 		(all C docs)
+	handwritten/
+		(all non-generated docs)
 ```
 
 Note that the documentation generation is in development.
