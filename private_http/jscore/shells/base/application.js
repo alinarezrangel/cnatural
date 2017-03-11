@@ -34,21 +34,8 @@ limitations under the License.
 			throw new Error("Error at CNatural.JS.Desktop.Base.ApplicationBase: NaturalShell.Context is undefined");
 		}
 
-		/**
-		 * Main namespace for all shell related things.
-		 *
-		 * In modules and applications is named `window.NaturalShell` instead.
-		 *
-		 * @namespace NaturalShell
-		 */
 		window.NaturalShell = window.NaturalShell || {};
 
-		/**
-		 * The core shell. Is for API definition only.
-		 *
-		 * @namespace Base
-		 * @memberof NaturalShell
-		 */
 		window.NaturalShell.Base = window.NaturalShell.Base || {};
 
 		/**

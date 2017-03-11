@@ -71,8 +71,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		var appdata = this.createInstance();
 		// Lang here
 		var LangMap = window.$natural.selectPOMapIn(POMap,
-			window.NaturalShell.Native.GetShortNameArgument(args, "-l") ||
-			window.NaturalShell.Native.GetLongNameArgument(args, "--lang") ||
+			window.NaturalShell.CurrentShell.GetShortNameArgument(args, "-l") ||
+			window.NaturalShell.CurrentShell.GetLongNameArgument(args, "--lang") ||
 			window.$natural.Localization
 		);
 

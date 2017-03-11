@@ -530,6 +530,11 @@ int request_handler(
 		MHD_add_response_header(res, "Content-type", "image/png");
 		printf("Portable Network Graphics\n");
 	}
+	else if(strcoll(ext, ".woff") == 0)
+	{
+		MHD_add_response_header(res, "Content-type", "application/font-woff");
+		printf("WOFF Font\n");
+	}
 	else
 	{
 		MHD_add_response_header(res, "Content-type", "text/plain");

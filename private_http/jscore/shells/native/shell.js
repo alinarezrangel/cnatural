@@ -20,36 +20,6 @@ limitations under the License.
 **********************
 ************************************************/
 
-// Metadata:
-
-window.NaturalShell = window.NaturalShell || {};
-window.NaturalShell.Native = window.NaturalShell.Native || {};
-window.NaturalShell.Native.Metadata = window.NaturalShell.Native.Metadata || {};
-
-// Name of the current shell
-window.NaturalShell.Native.Metadata.Name = "Native";
-
-// Version of the current shell
-window.NaturalShell.Native.Metadata.Version = "0.0.1";
-
-// Type of the current shell
-window.NaturalShell.Native.Metadata.Type = "tilling/uniwindow";
-
-// Support for the current shell
-window.NaturalShell.Native.Metadata.Supports = "CNatural; Mozilla.Firefox:Gecko";
-
-// Used Window
-window.NaturalShell.Native.Metadata.UsedWindow = "Natural Window";
-
-// Used Window Manager
-window.NaturalShell.Native.Metadata.UsedWindowManager = "Fixed Window Manager";
-
-// Used Window System
-window.NaturalShell.Native.Metadata.UsedWindowSystem = "Natural Window System";
-
-// Used Window Style
-window.NaturalShell.Native.Metadata.UsedWindowStyle = "Natural Window Style";
-
 window.NaturalClient.GetToken((err, token) =>
 {
 	if(err)
@@ -107,6 +77,8 @@ window.NaturalClient.GetToken((err, token) =>
 	importSec(
 		"jscore/shells/base/context.js",
 		[
+			"jscore/shells/base/shell.js",
+			"jscore/shells/native/init_shell.js", // NOTE
 			"jscore/shells/base/window_style.js",
 			"jscore/shells/base/window.js",
 			"jscore/shells/base/window_manager.js",
@@ -119,6 +91,12 @@ window.NaturalClient.GetToken((err, token) =>
 		],
 		() =>
 		{
+			/*
+			NOTE: the init_shell file will init the Native's shell namespace,
+			if we don't init the NS BEFORE any other thing, the entiry program
+			will fail.
+			*/
+
 			// Now all files are loaded.
 			var
 				CNaturalDefaultContext = null,
@@ -219,46 +197,6 @@ window.NaturalClient.GetToken((err, token) =>
 			window.NaturalShell.Native.GetAllApplications = function()
 			{
 				return CNaturalApplicationList;
-			};
-
-			window.NaturalShell.Native.GetShortNameArgument = function(args, argname)
-			{
-				for(var i = 0; i < args.length; i++)
-				{
-					if(args[i] == argname)
-					{
-						return args[i + 1] || null;
-					}
-				}
-
-				return null;
-			};
-
-			window.NaturalShell.Native.GetLongNameArgument = function(args, argname)
-			{
-				for(var i = 0; i < args.length; i++)
-				{
-					if(args[i].startsWith(argname + "="))
-					{
-						return args[i].split("=").slice(1).join("=");
-					}
-				}
-
-				return null;
-			};
-
-			window.NaturalShell.Native.GetLongNameFlagArgument =
-				window.NaturalShell.Native.GetShortNameFlagArgument = function(args, argname)
-			{
-				for(var i = 0; i < args.length; i++)
-				{
-					if(args[i] == argname)
-					{
-						return true;
-					}
-				}
-
-				return false;
 			};
 
 			window.NaturalShell.Native.__DesktopNotifications = [];

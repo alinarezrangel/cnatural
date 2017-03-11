@@ -91,6 +91,9 @@ coreutils_time.o: $(SRC)/coreutils/time.c $(INC)/coreutils/time.h
 clean:
 	rm $(TARGET) $(OBJC)
 
+cleandocs:
+	rm docs/js/out -R
+
 # Other targets:
 
 # Installation
