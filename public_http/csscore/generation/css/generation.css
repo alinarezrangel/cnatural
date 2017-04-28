@@ -268,7 +268,7 @@ html, body {
 	display:            inline-block;
 	background-color:   #fff;
 	color:              #000;
-	border:             none;
+	border:             1px solid #ccc;
 	margin:             4px;
 	padding:            8px 16px;
 	-moz-box-sizing:    border-box;
@@ -279,18 +279,22 @@ html, body {
 .input[type="email"], .input[type="number"], .input[type="search"],
 .input[type="url"], .input[type="tel"], .input[type="text"],
 .input[type="password"], .select, .textarea,
-.inputtext, textarea.input, select.input {
+.inputtext, .inputmultitext, textarea.input, select.input {
 	display:            inline-block;
 	background-color:   #fff;
 	color:              #000;
 	border:             none;
-	border-bottom:      1px solid #ccc;
+	border-bottom:      2px solid #ccc;
 	width:              100%;
 	margin:             4px;
 	padding:            8px 16px;
 	-moz-box-sizing:    border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing:         border-box;
+}
+
+.inputmultitext, textarea.input {
+	border: 2px solid #ccc;
 }
 
 .fieldset {
