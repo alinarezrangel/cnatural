@@ -43,6 +43,7 @@ limitations under the License.
 #include "coreutils/login.h"
 #include "coreutils/import.h"
 #include "coreutils/time.h"
+#include "basicio/readfile.h"
 
 /* End of custom AJAX functions */
 

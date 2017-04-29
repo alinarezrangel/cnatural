@@ -226,5 +226,8 @@ int cnatural_try_ajax(const char* path, cnatural_ajax_argument_t* inout)
 	ret = cnatural_ajax_coreutils_time_get(path, inout);
 	if(ret <= 0)
 		return ret;
+	ret = cnatural_ajax_basicio_readfile(path, inout);
+	if(ret <= 0)
+		return ret;
 	return 1;
 }
