@@ -214,9 +214,14 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			ct.getElement()
 				.on("click", () =>
 				{
-					ct.getElement().remove();
-					window.NaturalShell.CurrentShell.RemoveDesktopNotification(i);
-				});
+					ct.getElement().animatable().fadeOut();
+
+					window.setTimeout(() =>
+					{
+						ct.getElement().remove();
+						window.NaturalShell.CurrentShell.RemoveDesktopNotification(i);
+					}, 350);
+				}).animatable().fadeIn();;
 
 			ttl.getElement()
 				.on("click", () =>
@@ -226,7 +231,9 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				});
 		};
 
-		var interval = window.setInterval(function()
+		var displayDNfcn;
+
+		window.NaturalShell.CurrentShell.ReceiveDesktopNotifications(displayDNfcn = function()
 		{
 			var pg = mainContainer.getElement();
 
@@ -246,14 +253,15 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			});
 
 			window.NaturalShell.CurrentShell.AllNotificationsViewed();
-		}, 1000);
+		});
 
 
 		myWindow.addEventListener("close", () =>
 		{
 			this.isOpenALauncher = false;
-			window.clearInterval(interval);
 		});
+
+		displayDNfcn();
 
 		this.getWindowSystem().getWindowManager().showToplevel();
 

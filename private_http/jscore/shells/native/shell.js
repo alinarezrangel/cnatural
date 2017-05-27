@@ -112,10 +112,12 @@ window.NaturalClient.GetToken((err, token) =>
 					{
 						case "window.add":
 							console.log("Added window " + windowElement);
+							windowElement.animatable().fadeIn();
 							changeDocksColors(CNaturalDefaultWindowManager);
 							break;
 						case "window.remove":
 							console.log("Removed window " + windowElement);
+							windowElement.animatable().fadeOut();
 							changeDocksColors(CNaturalDefaultWindowManager);
 							break;
 						case "window.show":
@@ -200,6 +202,12 @@ window.NaturalClient.GetToken((err, token) =>
 			};
 
 			window.NaturalShell.Native.__DesktopNotifications = [];
+			window.NaturalShell.Native.__DesktopNotificationsEvents = [];
+
+			window.NaturalShell.Native.ReceiveDesktopNotifications = function(ev)
+			{
+				window.NaturalShell.Native.__DesktopNotificationsEvents.push(ev);
+			};
 
 			window.NaturalShell.Native.ShowDesktopNotification =
 				function(title, message, event_activated, opt_image_url)
@@ -216,6 +224,11 @@ window.NaturalClient.GetToken((err, token) =>
 				var nt = window.$ntc("#_shellscreen__alert");
 
 				nt.alertMoveForever();
+
+				window.NaturalShell.Native.__DesktopNotificationsEvents.forEach((ev) =>
+				{
+					return ev();
+				});
 			};
 
 			window.NaturalShell.Native.GetDesktopNotifications =

@@ -214,7 +214,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 					return;
 				}
 
-				var dt1 = new Date(response);
+				var dt1 = new Date(window.NaturalClient.ConvertServerTime(response));
 
 				var hours1 = dt1.getHours();
 				var minutes1 = dt1.getMinutes();

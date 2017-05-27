@@ -237,6 +237,38 @@ window.NaturalClient.APIRequest = function(method, args, cll)
 };
 
 /**
+ * Converts a server-side time string to a `Date` parseable string.
+ *
+ * When using the CNatural `coreutils.time.get` method it will returns
+ * a string of the form `dd-mm-yyThh:nn:ss.00Z` instead of a Date-parseable
+ * string.
+ *
+ * The correct usage of this function is
+ * `new Date(ConvertServerTime(servertimestring))`.
+ *
+ * @param {string} str - The server-formatted time string.
+ * @return {string} The locally adapted time string.
+ *
+ * @function ConvertServerTime
+ * @memberof NaturalClient
+ */
+window.NaturalClient.ConvertServerTime = function(str)
+{
+	var dt = new Date(str);
+
+	if(!isNaN(dt.getDate()))
+		return str;
+
+	str = str.replace("T", " ").replace(".00Z", "");
+	dt = new Date(str);
+
+	if(!isNaN(dt.getDate()))
+		return str;
+
+	throw new Error("Invalid argument time str: format not detected");
+};
+
+/**
  * Attaches the events to the clients front-end.
  *
  * The the user logins and opens the select-DE-screen, this function is

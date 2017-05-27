@@ -76,6 +76,7 @@ limitations under the License.
 
 			windowElement.data("zIndex", (maxIndex + 1) + "");
 			this.context.getWindowArea().appendChild(windowElement);
+
 			this.showingWindow = true;
 			window.$natural.parseSemanticIconsetTags(document, (tag) => {});
 

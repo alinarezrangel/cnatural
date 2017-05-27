@@ -262,6 +262,68 @@ limitations under the License.
 		/**
 		 * Animates the current node/s.
 		 *
+		 * Fades the element from the user.
+		 *
+		 * It's chainable.
+		 *
+		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.hideMoveFromCenterToTop
+		 */
+		window.NaturalObject.prototype.fadeOut = function()
+		{
+			this.animatable();
+
+			if(this.inAnimation)
+				return this;
+
+			this.inAnimation = true;
+
+			this.animatable()
+				.show()
+				.animationEndEvent(() =>
+				{
+					this.hide().removeClass("gui-animation-fade-out");
+				})
+				.addClass("gui-animation-fade-out");
+
+			return this;
+		};
+
+		/**
+		 * Animates the current node/s.
+		 *
+		 * Fades the element to the user.
+		 *
+		 * It's chainable.
+		 *
+		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.showMoveFromTopToCenter
+		 */
+		window.NaturalObject.prototype.fadeIn = function()
+		{
+			this.animatable();
+
+			if(this.inAnimation)
+				return this;
+
+			this.inAnimation = true;
+
+			this.animatable()
+				.show()
+				.animationEndEvent(() =>
+				{
+					this.removeClass("gui-animation-fade-in").removeClass("gui-hidden");
+				})
+				.addClass("gui-animation-fade-in");
+
+			return this;
+		};
+
+		/**
+		 * Animates the current node/s.
+		 *
 		 * Moves the node forever in a alert manner, rotating it from the left
 		 * to the right and progresivesly reducing the rotation angle. At the end
 		 * of a cycle, the rotation angle reset to it's start value.
@@ -321,10 +383,44 @@ limitations under the License.
 				{
 					this
 						/*.removeClass("gui-animation-alert")*/
-						hide()
 						.removeClass("gui-animation-expand");
 				})
 				.addClass("gui-animation-expand");
+
+			return this;
+		};
+
+		/**
+		 * Animates the current node/s.
+		 *
+		 * Exponentialy collapses the element, without moving it. At the end,
+		 * the element is hidden.
+		 *
+		 * It's chainable.
+		 *
+		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.expandElement
+		 */
+		window.NaturalObject.prototype.collapseElement = function()
+		{
+			this.animatable();
+
+			if(this.inAnimation)
+				return this;
+
+			this.inAnimation = true;
+
+			this.animatable()
+				.show()
+				.animationEndEvent(() =>
+				{
+					this
+						/*.removeClass("gui-animation-alert")*/
+						.hide()
+						.removeClass("gui-animation-collapse");
+				})
+				.addClass("gui-animation-collapse");
 
 			return this;
 		};

@@ -316,7 +316,14 @@ limitations under the License.
 
 			windowElement.attach((ev) =>
 			{
-				menu.showMoveFromTopToCenter();
+				if(menu.hasClass("gui-hidden"))
+				{
+					menu.showMoveFromTopToCenter();
+				}
+				else
+				{
+					menu.hideMoveFromCenterToTop();
+				}
 
 				ev.preventDefault();
 			}).on("contextmenu");

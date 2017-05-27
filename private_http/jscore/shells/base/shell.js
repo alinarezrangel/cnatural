@@ -305,6 +305,22 @@ limitations under the License.
 		{
 			return;
 		};
+
+		/**
+		 * Adds the event listener to the DN events.
+		 *
+		 * When a DN is added, this event listened will be called.
+		 *
+		 * @param {eventlistener|callback|function} ev - The event listener.
+		 *
+		 * @function ReceiveDesktopNotifications
+		 *
+		 * @memberof NaturalShell.CurrentShell
+		 */
+		window.NaturalShell.CurrentShell.ReceiveDesktopNotifications = function(ev)
+		{
+			//
+		};
 	};
 
 	if(typeof module !== "undefined")

@@ -92,10 +92,29 @@ limitations under the License.
 @keyframes gui-animation-move-from-top-to-center {
 	from {
 		top: -100%;
+		transform: translate(-50%, -50%);
 	}
 	to {
 		top: 50%;
-		transform: translateY(-50%);
+		transform: translate(-50%, -50%);
+	}
+}
+
+@keyframes gui-animation-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes gui-animation-fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
 	}
 }
 
@@ -147,19 +166,27 @@ limitations under the License.
 }
 
 .gui-animation-hide-slide-up {
-	animation: gui-animation-hide-slide-up 1.5s ease-in-out 0s 1 normal;
+	animation: gui-animation-hide-slide-up 1.5s cubic-bezier(0.4, 0.0, 0.2, 1) 0s 1 normal;
 }
 
 .gui-animation-show-slide-down {
-	animation: gui-animation-hide-slide-up 1.5s ease-in-out 0s 1 reverse;
+	animation: gui-animation-hide-slide-up 1.5s cubic-bezier(0.4, 0.0, 0.2, 1) 0s 1 reverse;
 }
 
 .gui-animation-show-move-from-top-to-center {
-	animation: gui-animation-move-from-top-to-center 0.5s ease-out 0s 1 normal;
+	animation: gui-animation-move-from-top-to-center 0.35s cubic-bezier(0.0, 0.0, 0.2, 1) 0s 1 normal;
 }
 
 .gui-animation-hide-move-from-center-to-top {
-	animation: gui-animation-move-from-top-to-center 0.5s ease-in 0s 1 reverse;
+	animation: gui-animation-move-from-top-to-center 0.35s cubic-bezier(0.4, 0.0, 0.6, 1) 0s 1 reverse;
+}
+
+.gui-animation-fade-in {
+	animation: gui-animation-fade-in 0.35s cubic-bezier(0.4, 0.0, 0.2, 1) 0s 1 normal;
+}
+
+.gui-animation-fade-out {
+	animation: gui-animation-fade-out 0.35s cubic-bezier(0.4, 0.0, 0.6, 1) 0s 1 normal;
 }
 
 .gui-animation-alert {
@@ -167,5 +194,9 @@ limitations under the License.
 }
 
 .gui-animation-expand {
-	animation: gui-animation-expand 0.7s ease-out 0s 1 normal;
+	animation: gui-animation-expand 10s cubic-bezier(0.4, 0.0, 0.2, 1) 0s 1 normal;
+}
+
+.gui-animation-collapse {
+	animation: gui-animation-expand 1s cubic-bezier(0.4, 0.0, 0.2, 1) 0s 1 reverse;
 }

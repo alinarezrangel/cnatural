@@ -492,7 +492,7 @@ limitations under the License.
 		{
 			var func = (to) =>
 			{
-				if(Array.isArray(newremove))
+				if(Array.isArray(className))
 				{
 					for(var i = 0; i < className.length; i++)
 					{
