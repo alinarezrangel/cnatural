@@ -26,12 +26,14 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	var POMap = {
 		"es": {
 			"all": {
+				"shelldesc": "Mira tus notificaciones",
 				"title": "Notificaciones",
 				"throwtestbtn": "Lanzar notificacion de prueba"
 			}
 		},
 		"en": {
 			"all": {
+				"shelldesc": "Look at your notifications",
 				"title": "Notifications",
 				"throwtestbtn": "Raises a test notification"
 			}
@@ -42,6 +44,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	{
 		window.NaturalShell.Base.Application.call(this, context, window_system);
 
+		var LangMap = window.$natural.selectPOMapIn(POMap, window.$natural.Localization);
+
 		// Metadata here
 		this.setName("Desktop Notification");
 		this.setID("org.cnatural.applications.native.desktop_notification");
@@ -49,8 +53,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		this.setMetadataIcon("/resources/images/icons/desktop-notification-icon.svg");
 		this.setMetadataCategory("System");
-		this.setMetadataGenericName("Desktop Notification");
-		this.setMetadataComment("Look at your notifications");
+		this.setMetadataGenericName(LangMap["title"]);
+		this.setMetadataComment(LangMap["shelldesc"]);
 		this.setMetadataGraphical(true);
 		this.setMetadataShowInShell(true);
 
@@ -191,7 +195,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 			ttl.getElement()
 				.addClass("fx-1")
-				.addClass("od-2");
+				.addClass("od-2")
+				.addClass("gui-activable");
 
 			img.getElement()
 				.addClass("od-1")

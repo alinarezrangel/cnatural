@@ -48,9 +48,29 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		}
 	}));
 
+	// POMap: at least es_VEN and en_US
+	var POMap = {
+		"es": {
+			"all": {
+				"shelldesc": "Lanza todas tus aplicaciones desde una GUI simple",
+				"title": "Launcher",
+				"searchplaceholder": "Ingresa la aplicación a buscar..."
+			}
+		},
+		"en": {
+			"all": {
+				"shelldesc": "Launch your applications from a simple GUI",
+				"title": "Launcher",
+				"searchplaceholder": "Enter application to search..."
+			}
+		}
+	};
+
 	function Launcher(context, window_system)
 	{
 		window.NaturalShell.Base.Application.call(this, context, window_system);
+
+		var LangMap = window.$natural.selectPOMapIn(POMap, window.$natural.Localization);
 
 		this.setName("Launcher");
 		this.setID("org.cnatural.applications.native.launcher");
@@ -58,10 +78,10 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		this.setMetadataIcon("/resources/syslog.svg");
 		this.setMetadataCategory("System");
-		this.setMetadataGenericName("Launcher");
-		this.setMetadataComment("Launch applications from a simple interface");
+		this.setMetadataGenericName(LangMap["title"]);
+		this.setMetadataComment(LangMap["shelldesc"]);
 		this.setMetadataGraphical(true);
-		this.setMetadataShowInShell(true);
+		this.setMetadataShowInShell(false);
 
 		this.isOpenALauncher = false;
 	}
@@ -77,9 +97,15 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		this.isOpenALauncher = true;
 		var appdata = this.createInstance();
+		// Lang here
+		var LangMap = window.$natural.selectPOMapIn(POMap,
+			window.NaturalShell.CurrentShell.GetShortNameArgument(args, "-l") ||
+			window.NaturalShell.CurrentShell.GetLongNameArgument(args, "--lang") ||
+			window.$natural.Localization
+		);
 
 		var myWindow = this.getWindowSystem().createDefaultWindow(
-			"Launcher",
+			LangMap["title"],
 			appdata
 		);
 
@@ -97,7 +123,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			{
 				parent: windowMenu,
 				type: "text",
-				placeholder: "Enter application to search..."
+				placeholder: LangMap["searchplaceholder"]
 			}
 		);
 
@@ -221,7 +247,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 				window.NaturalWidgets.Text,
 				{
 					parent: node.getElement(),
-					text: value.getName()
+					text: value.getMetadata().genericName
 				}
 			);
 

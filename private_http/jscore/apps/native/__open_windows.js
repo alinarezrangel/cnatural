@@ -26,11 +26,13 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	var POMap = {
 		"es": {
 			"all": {
+				"shelldesc": "",
 				"title": "Ventanas abiertas"
 			}
 		},
 		"en": {
 			"all": {
+				"shelldesc": "",
 				"title": "Open Windows"
 			}
 		}
@@ -40,6 +42,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	{
 		window.NaturalShell.Base.Application.call(this, context, window_system);
 
+		var LangMap = window.$natural.selectPOMapIn(POMap, window.$natural.Localization);
+
 		// Metadata here
 		this.setName("Open Windows");
 		this.setID("org.cnatural.applications.open_windows");
@@ -47,10 +51,10 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		this.setMetadataIcon("/resources/syslog.svg");
 		this.setMetadataCategory("System");
-		this.setMetadataGenericName("Open Windows");
-		this.setMetadataComment("See all opened windows");
+		this.setMetadataGenericName(LangMap["title"]);
+		this.setMetadataComment(LangMap["shelldesc"]);
 		this.setMetadataGraphical(true);
-		this.setMetadataShowInShell(true);
+		this.setMetadataShowInShell(false);
 
 		this.isOpenALauncher = false;
 	}
@@ -97,6 +101,9 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		var packWindowsOfOn = (parent, appname, appid, win) =>
 		{
+			if(appid == this.getID())
+				return;
+
 			var ct = window.NaturalWidgets.Create(
 				window.NaturalWidgets.ContainerWithHeader,
 				{

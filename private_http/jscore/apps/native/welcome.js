@@ -25,6 +25,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	var POMap = {
 		"es": {
 			"all": {
+				"shelldesc": "Una aplicación de bienvenida a nuevos usuarios",
 				"title": "Bienvenido",
 				"subtitle": "CNatural Araguaney",
 				"message_p1": "CNatural es una implementación parecida a NodeNatural pero en C11 (en vez de NodeJS).",
@@ -35,6 +36,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		},
 		"en": {
 			"all": {
+				"shelldesc": "A welcome application for new users",
 				"title": "Welcome",
 				"subtitle": "CNatural Araguaney",
 				"message_p1": "CNatural is an implementation NodeNatural-like but in C11 instead of NodeJS.",
@@ -49,14 +51,16 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	{
 		window.NaturalShell.Base.Application.call(this, context, window_system);
 
-		this.setName("Welcome Application");
+		var LangMap = window.$natural.selectPOMapIn(POMap, window.$natural.Localization);
+
+		this.setName("Welcome");
 		this.setID("org.cnatural.applications.welcome");
 		this.setNamespace("CNatural:Software:Desktop:Native:Applications:Builtins");
 
 		this.setMetadataIcon("/resources/images/icons/help-icon.svg");
 		this.setMetadataCategory("System");
-		this.setMetadataGenericName("Welcome");
-		this.setMetadataComment("A welcome app for new users");
+		this.setMetadataGenericName(LangMap["title"]);
+		this.setMetadataComment(LangMap["shelldesc"]);
 		this.setMetadataGraphical(true);
 		this.setMetadataShowInShell(true);
 	}

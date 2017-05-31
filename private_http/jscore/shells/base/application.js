@@ -62,7 +62,7 @@ limitations under the License.
 		 *
 		 * @property {string} icon - Path to the icon of the application.
 		 * @property {NaturalShell.Base.AppCategory} category - Category of the application (see table).
-		 * @property {string} genericName - Application Name (can be translated).
+		 * @property {string} genericName - Application Name (may be translated).
 		 * @property {string} onlyShowIn - Name off the client that this application supports.
 		 * @property {string} comment - Short description of the application.
 		 * @property {boolean} graphical - If the application is graphical.

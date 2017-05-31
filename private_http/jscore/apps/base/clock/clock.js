@@ -26,6 +26,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	var POMap = {
 		"es": {
 			"all": {
+				"shelldesc": "Mira la hora en el servidor y el tu cliente",
 				"title": "Reloj",
 				"timeDifference": "Diferencia de tiempo",
 				"serverTime": "Tiempo en el servidor (convertido)",
@@ -34,6 +35,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		},
 		"en": {
 			"all": {
+				"shelldesc": "See the time at the server and at your client",
 				"title": "Clock",
 				"timeDifference": "Time difference",
 				"serverTime": "Time on the server (converted)",
@@ -46,6 +48,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	{
 		window.NaturalShell.Base.Application.call(this, context, window_system);
 
+		var LangMap = window.$natural.selectPOMapIn(POMap, window.$natural.Localization);
+
 		// Metadata here
 		this.setName("Clock");
 		this.setID("org.cnatural.applications.clock");
@@ -53,8 +57,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		this.setMetadataIcon("/resources/images/icons/clock-icon.svg");
 		this.setMetadataCategory("System");
-		this.setMetadataGenericName("Clock (Date and time)");
-		this.setMetadataComment("See the date and time in the client and in the server");
+		this.setMetadataGenericName(LangMap["title"]);
+		this.setMetadataComment(LangMap["shelldesc"]);
 		this.setMetadataGraphical(true);
 		this.setMetadataShowInShell(true);
 	}
