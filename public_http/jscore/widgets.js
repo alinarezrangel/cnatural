@@ -223,6 +223,16 @@ limitations under the License.
 			getElement: function()
 			{
 				return this._element;
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * @return {NaturalObject|NullType} Internal Element or null.
+			 */
+			getContainerArea: function()
+			{
+				return this.getElement();
 			}
 		});
 
@@ -252,6 +262,18 @@ limitations under the License.
 				this._element = window.$natural.wrap(
 					document.createTextNode(args.text)
 				);
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * Because this element is not a container, always returns null.
+			 *
+			 * @return {NaturalObject|NullType} null.
+			 */
+			getContainerArea: function()
+			{
+				return null;
 			}
 		}));
 
@@ -293,6 +315,7 @@ limitations under the License.
 					));
 				}
 			},
+
 			/**
 			 * Changes the current text.
 			 *
@@ -530,6 +553,18 @@ limitations under the License.
 				{
 					this._element.attr("name", args.name);
 				}
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * Because this widget is not a container, always return null.
+			 *
+			 * @return {NaturalObject|NullType} null.
+			 */
+			getContainerArea: function()
+			{
+				return null;
 			}
 		}));
 
@@ -640,6 +675,18 @@ limitations under the License.
 				this._element.original.width = args.width;
 				this._element.original.height = args.height;
 				this._element.original.alt = args.alt;
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * Because this widget is not a container, always return null.
+			 *
+			 * @return {NaturalObject|NullType} null.
+			 */
+			getContainerArea: function()
+			{
+				return null;
 			}
 		}));
 
@@ -733,6 +780,18 @@ limitations under the License.
 			getBody: function()
 			{
 				return this._innerBody;
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * Always returns the body as with `getBody()`.
+			 *
+			 * @return {NaturalObject|NullType} The container's body.
+			 */
+			getContainerArea: function()
+			{
+				return this.getBody();
 			}
 		}));
 
@@ -773,9 +832,29 @@ limitations under the License.
 					})
 					.data("widget", "window");
 			},
+
+			/**
+			 * Gets the inner body of the container.
+			 *
+			 * Use it for pack elements on this container.
+			 *
+			 * @return {NaturalObject} Body container.
+			 */
 			getBody: function()
 			{
-				return this._element;
+				return this.getElement();
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * Always returns the body as with `getBody()`.
+			 *
+			 * @return {NaturalObject|NullType} The container's body.
+			 */
+			getContainerArea: function()
+			{
+				return this.getBody();
 			}
 		}));
 
@@ -817,15 +896,27 @@ limitations under the License.
 			},
 
 			/**
-			 * Gets the dialog body.
+			 * Gets the inner body of the container.
 			 *
-			 * Put here all dialog content.
+			 * Use it for pack elements on this container.
 			 *
-			 * @return {NaturalObject} Dialog's body.
+			 * @return {NaturalObject} Body container.
 			 */
 			getBody: function()
 			{
-				return this._element;
+				return this.getElement();
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * Always returns the body as with `getBody()`.
+			 *
+			 * @return {NaturalObject|NullType} The container's body.
+			 */
+			getContainerArea: function()
+			{
+				return this.getBody();
 			}
 		}));
 
@@ -1031,6 +1122,18 @@ limitations under the License.
 			onSelected: function(callback)
 			{
 				this.onready = callback || function(event, choice) {};
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * Always returns the body as with `getBody()`.
+			 *
+			 * @return {NaturalObject|NullType} The container's body.
+			 */
+			getContainerArea: function()
+			{
+				return this.getBody();
 			}
 		}));
 
@@ -1185,6 +1288,18 @@ limitations under the License.
 			hide: function()
 			{
 				this._element.addClass("gui-hidden");
+			},
+
+			/**
+			 * Gets the area on the widget in which children can be packed.
+			 *
+			 * Always returns the body as with `getBody()`.
+			 *
+			 * @return {NaturalObject|NullType} The container's body.
+			 */
+			getContainerArea: function()
+			{
+				return this.getBody();
 			}
 		}));
 

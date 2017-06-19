@@ -86,6 +86,12 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 		windowStyle.removeBorders();
 		windowStyle.updateColors();
 
+		var builder = new window.NaturalWidgets.Builder();
+
+		var xdoc = builder.parseXMLFromText("");
+
+		/*
+
 		var mainContainer = window.NaturalWidgets.Create(
 			window.NaturalWidgets.MainContainer,
 			{
@@ -202,6 +208,8 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 			.addClass("text-center");
 
 		timeDifference.pack("APPEND");
+
+		*/
 
 		var interval = window.setInterval(function()
 		{

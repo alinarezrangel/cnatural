@@ -96,6 +96,7 @@ clean:
 
 cleandocs:
 	rm docs/js/out -R
+	rm docs/c/out -R
 
 # Other targets:
 
@@ -116,6 +117,10 @@ minimal: $(TARGET)
 	echo "You can remove the " $(SRC) " folder for free up space."
 	echo "Optionally, if you will not compile apps in C, you can remove"
 	echo "the " $(INC) " folder, but this is not recommended"
+
+## Documentation
+
+docs: docsjs
 
 # Documentation of javascript
 # Needs JSDoc3

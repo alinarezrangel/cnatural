@@ -20,7 +20,9 @@ APIs may be defined at that point of code. The order of import is:
 3. `widgets.js`
 4. `cdata.js`
 5. `storage.js`
-6. `main.js`
+6. `builder.js`
+7. `nclient.js`
+8. `main.js`
 
 Depending of your shell, the order of the Shell's Base APIs may be
 different, but in Native the order is:

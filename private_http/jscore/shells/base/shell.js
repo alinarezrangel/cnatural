@@ -55,6 +55,7 @@ limitations under the License.
 		 * @var {object} NaturalShell.CurrentShell.Metadata
 		 *
 		 * @property {string} Name - Name of the shell
+		 * @property {string} Source - The name of the shell in source
 		 * @property {string} Version - Version of the shell
 		 * @property {string} Type - Type of the shell
 		 * @property {string} Supports - Supported servers and browsers

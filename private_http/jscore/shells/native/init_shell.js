@@ -32,6 +32,9 @@ limitations under the License.
 		// Name of the current shell
 		window.NaturalShell.Native.Metadata.Name = "Native";
 
+		// The name of the shell in source
+		window.NaturalShell.Native.Metadata.Source = "native";
+
 		// Version of the current shell
 		window.NaturalShell.Native.Metadata.Version = "0.0.1";
 
