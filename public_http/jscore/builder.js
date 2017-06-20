@@ -58,6 +58,7 @@ limitations under the License.
 			this.doctype = "text/xml";
 			this.parser = new DOMParser();
 			this.widgets = {}; // map.<string: id, object: widget>
+			this.used = false;
 		};
 
 		/**
@@ -115,15 +116,22 @@ limitations under the License.
 		{
 			try
 			{
+				if(this.used)
+				{
+					throw Error("Error: the Builder was used before");
+				}
+
 				var body = win.getBody();
 				var menu = win.getMenu();
 				var style = win.getStyle();
 
 				this._buildWindowFromDocument(xmldoc, style, menu, body, POMap);
+
+				this.used = true;
 			}
 			catch(err)
 			{
-				console.error(err);
+				this.widgets = {};
 
 				throw Error("Error building the window");
 			}

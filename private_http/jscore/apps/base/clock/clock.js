@@ -113,7 +113,15 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 	</body>\
 </window>");
 
-		builder.buildWindowFromDocument(xdoc, myWindow, LangMap);
+		try
+		{
+			builder.buildWindowFromDocument(xdoc, myWindow, LangMap);
+		}
+		catch(err)
+		{
+			console.error("Error building the window");
+			return 1;
+		}
 
 		var serverTime = builder.getWidgetByID("serverTime");
 		var clientTime = builder.getWidgetByID("clientTime");
