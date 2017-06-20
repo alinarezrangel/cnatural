@@ -151,6 +151,16 @@ limitations under the License.
 	}
 }
 
+@keyframes gui-animation-rotate-clockwise-z {
+	from {
+		transform: rotateY(0deg);
+	}
+
+	to {
+		transform: rotateY(-360deg);
+	}
+}
+
 .gui-animation-loadbar-dot-s1 { animation: gui-animation-loadbar-dot-s1-anim 2.5s linear 0.00s infinite normal; }
 .gui-animation-loadbar-dot-s2 { animation: gui-animation-loadbar-dot-s2-anim 2.5s linear 0.25s infinite normal; }
 .gui-animation-loadbar-dot-s3 { animation: gui-animation-loadbar-dot-s3-anim 2.5s linear 0.50s infinite normal; }
@@ -199,4 +209,8 @@ limitations under the License.
 
 .gui-animation-collapse {
 	animation: gui-animation-expand 1s cubic-bezier(0.4, 0.0, 0.2, 1) 0s 1 reverse;
+}
+
+.gui-animation-rotate-clockwise-z {
+	animation: gui-animation-rotate-clockwise-z 1s cubic-bezier(0.4, 0.0, 0.2, 1) 0s 1 normal;
 }

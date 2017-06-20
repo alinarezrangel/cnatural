@@ -325,6 +325,15 @@ html, body {
 	width: 100% !important;
 }
 
+.gui-remove-padding-and-center {
+	padding-right: 128px;
+}
+
+.gui-padding-and-center {
+	padding-left: 128px;
+	margin-top: -16px;
+}
+
 .gui-widget-input[type="email"], .gui-widget-input[type="number"],
 .gui-widget-input[type="search"], .gui-widget-input[type="url"],
 .gui-widget-input[type="tel"], .gui-widget-input[type="text"],

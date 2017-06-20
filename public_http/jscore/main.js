@@ -104,7 +104,7 @@ window.NaturalClient._attach_shell_events = function(token)
 						break;
 				}
 
-				if(value.split("-".length <= 1))
+				if(value.split("-").length <= 1)
 				{
 					value += "-all";
 				}
@@ -184,7 +184,7 @@ $ntc(window).on("load", function()
 	});
 
 	// Replace the semantic iconset tags (like "home") with it's
-	// FontSet value (like "h"), this is NOT DONE automaticlly
+	// FontSet value (like "h"), this is NOT DONE automaticly
 	// until we call NaturalObject.include or
 	// NaturalObject.includeScripts which will not work until
 	// we have a token

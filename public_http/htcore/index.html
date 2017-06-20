@@ -53,12 +53,15 @@
 		**********************************************-->
 	</head>
 	<body>
-		<section data-widget="screen-container" data-action="app.show_login" id="_bootscreen" class="gui-screen gui-clickeable gui-boot-screen gui-flexcore color-ocean">
+		<section data-widget="screen-container" data-action="app.show_login" id="_bootscreen" class="gui-screen gui-clickeable gui-boot-screen direction-row color-white flexible direction-column wrap justify-center align-center">
 			<div data-widget="header-container" class="col od-1 padding-8">
-				<h1 class="text-jumbo-4 margin-8" data-pomap-message="welcomettl">CNatural</h1>
+				<div data-widget="row-container" class="row wrap gui-remove-padding-and-center">
+					<img src="/resources/logicon.svg" alt="CNatural's logo" width="128" height="128" class="box image gui-animation-rotate-clockwise-z" />
+					<h1 class="text-jumbo-5 margin-8 gui-animation-fade-in" data-pomap-message="welcomettl">CNatural</h1>
+				</div>
 			</div>
-			<div data-widget="body-container" class="col od-2 padding-8">
-				<p class="text-ultra-big" data-pomap-message="click2use">
+			<div data-widget="body-container" class="col od-1 padding-8">
+				<p class="text-big gui-margin-left gui-animation-fade-in gui-padding-and-center" data-pomap-message="click2use">
 					Welcome! click anything to login
 				</p>
 			</div>
