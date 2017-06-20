@@ -173,6 +173,7 @@ limitations under the License.
 			{
 				if(this._packed)
 					return;
+
 				this._packed = true;
 				this._parent.appendChild(this._element);
 			},

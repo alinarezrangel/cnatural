@@ -78,6 +78,24 @@ limitations under the License.
 		};
 
 		/**
+		 * Gets a widget by it's ID.
+		 *
+		 * This method is defined only after a sucessful call to
+		 * {@link Builder~buildWindowFromDocument}.
+		 *
+		 * @param {string} id - A valid ID.
+		 *
+		 * @returns {derivated<NaturalWidgets.Widget>} A valid Widget-class specialization.
+		 *
+		 * @method getWidgetByID
+		 * @memberof NaturalWidgets.Builder.prototype
+		 */
+		Builder.prototype.getWidgetByID = function(id)
+		{
+			return this.widgets[id];
+		};
+
+		/**
 		 * Builds a complete shell window from a
 		 * {@link NaturalWidgets.XMLDocument}.
 		 *
@@ -87,6 +105,7 @@ limitations under the License.
 		 * This method is exception-safe.
 		 *
 		 * @param {NaturalWidgets.XMLDocument} xmldoc - The XMLDocument to use.
+		 * @param {NaturalShell.CurrentShell.Window|NaturalShell.Base.Window} win - The window to build.
 		 * @param {NaturalObject.POMap} POMap - The POMap to use to translate special messages.
 		 *
 		 * @returns {NaturalShell.CurrentShell.Window|NaturalShell.Base.Window} The builded window.
@@ -94,16 +113,20 @@ limitations under the License.
 		 * @method buildWindowFromDocument
 		 * @memberof NaturalWidgets.Builder.prototype
 		 */
-		Builder.prototype.buildWindowFromDocument = function(xmldoc, POMap)
+		Builder.prototype.buildWindowFromDocument = function(xmldoc, win, POMap)
 		{
 			try
 			{
-				var r = this._buildWindowFromDocument(xmldoc, menu, body, POMap);
-				return r;
+				var body = win.getBody();
+				var menu = win.getMenu();
+				var style = win.getStyle();
+
+				this._buildWindowFromDocument(xmldoc, style, menu, body, POMap);
 			}
 			catch(err)
 			{
 				console.error(err);
+
 				throw Error("Error building the window");
 			}
 		};
@@ -142,15 +165,44 @@ limitations under the License.
 				return ls;
 			};
 
+			var getInnerText = function(element)
+			{
+				var text = "";
+
+				var iter = xmldoc.createNodeIterator(element, window.NodeFilter.SHOW_TEXT);
+				var textnode = null;
+
+				while(textnode = iter.nextNode())
+				{
+					text += textnode.nodeValue;
+				}
+
+				return text;
+			};
+
+			var specialColorLike = function(colorlike)
+			{
+				if(colorlike == "null")
+					return null;
+				else
+					return colorlike;
+			};
+
 			var rootNode = xmldoc.getElementsByTagName("window")[0];
 
-			var styleNode = getChildByTagName(rootNode, "style");
-			var menuNode = getChildByTagName(rootNode, "menu");
-			var bodyNode = getChildByTagName(rootNode, "body");
+			var styleNode = getChildByTagName(rootNode, "style")[0];
+			var menuNode = getChildByTagName(rootNode, "menu")[0];
+			var bodyNode = getChildByTagName(rootNode, "body")[0];
 
-			var borderColor = getChildByTagName(styleNode, "border-color");
-			var bodyColor = getChildByTagName(styleNode, "body-color");
-			var titlebarColor = getChildByTagName(styleNode, "titlebar-color");
+			var borderColor = getChildByTagName(styleNode, "border-color")[0];
+			var bodyColor = getChildByTagName(styleNode, "body-color")[0];
+			var titlebarColor = getChildByTagName(styleNode, "titlebar-color")[0];
+
+			style.setBorderColor(specialColorLike(getInnerText(borderColor)));
+			style.setBodyColor(specialColorLike(getInnerText(bodyColor)));
+			style.setTitlebarColor(specialColorLike(getInnerText(titlebarColor)));
+
+			style.updateColors();
 
 			var menuElement = this.buildGUIFromElement(xmldoc, menuNode, eMenu, POMap);
 			var bodyElement = this.buildGUIFromElement(xmldoc, bodyNode, eBody, POMap);
@@ -199,10 +251,12 @@ limitations under the License.
 				if(dash)
 				{
 					r += c.toUpperCase();
+
+					dash = false;
 				}
 				else
 				{
-					r += c;
+					r += c.toLowerCase();
 				}
 			}
 
@@ -213,7 +267,18 @@ limitations under the License.
 		{
 			var ch = rootnode.children;
 
-			var carea = parentElement.getContainerArea();
+			var carea = null;
+
+			if(typeof parentElement.getContainerArea !== "function")
+			{
+				// Is a NaturalObject
+				carea = parentElement;
+			}
+			else
+			{
+				// Is a Widget
+				carea = parentElement.getContainerArea();
+			}
 
 			var isDigits = function(str)
 			{
@@ -274,7 +339,7 @@ limitations under the License.
 				var id = "";
 				var className = [];
 
-				for(var j = 0; j < cl.attributes; j++)
+				for(var j = 0; j < cl.attributes.length; j++)
 				{
 					var attr = cl.attributes[j];
 
@@ -342,7 +407,9 @@ limitations under the License.
 				);
 
 				if(id != "")
+				{
 					this.widgets[id] = instance;
+				}
 
 				if(className.length != 0)
 					instance.getElement().addClass(className);

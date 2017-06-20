@@ -9,16 +9,16 @@
 	<body>
 		<main-container no-padding="false">
 			<row-container>
-				<container-with-header color="color-ocean" level="3" size="container.title" title="${serverTime}" class="col od-1 fx-1">
+				<container-with-header color="color-ocean" level="3" size="content.title" title="${serverTime}" class="col od-1 fx-1">
 					<text id="serverTime" class="text-jumbo width-block no-margin no-padding text-center">00:00:00</text>
 				</container-with-header>
-				<container-with-header color="color-ocean" level="3" size="container.title" title="${clientTime}" class="col od-1 fx-1">
+				<container-with-header color="color-ocean" level="3" size="content.title" title="${clientTime}" class="col od-1 fx-1">
 					<text id="clientTime" class="text-jumbo width-block no-margin no-padding text-center">00:00:00</text>
 				</container-with-header>
 			</row-container>
-			<container-with-header color="color-ocean" level="3" size="container.title" title="${timeDifference}" class="col od-1 fx-1">
+			<container-with-header color="color-ocean" level="3" size="content.title" title="${timeDifference}" class="col od-1 fx-1">
 				<text id="timeDifference" class="text-jumbo width-block no-margin no-padding text-center">+00:00:00</text>
 			</container-with-header>
 		</main-container>
-	<body>
+	</body>
 </window>

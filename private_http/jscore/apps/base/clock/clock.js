@@ -88,128 +88,36 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		var builder = new window.NaturalWidgets.Builder();
 
-		var xdoc = builder.parseXMLFromText("");
+		var xdoc = builder.parseXMLFromText("<window id=\"myWindow\">\
+	<style>\
+		<titlebar-color>null</titlebar-color>\
+		<body-color>null</body-color>\
+		<border-color>null</border-color>\
+	</style>\
+	<menu>\
+	</menu>\
+	<body>\
+		<main-container no-padding=\"false\">\
+			<row-container>\
+				<container-with-header color=\"color-ocean\" level=\"3\" size=\"content.title\" title=\"${serverTime}\" class=\"col od-1 fx-1\">\
+					<text id=\"serverTime\" class=\"text-jumbo width-block no-margin no-padding text-center\">00:00:00</text>\
+				</container-with-header>\
+				<container-with-header color=\"color-ocean\" level=\"3\" size=\"content.title\" title=\"${clientTime}\" class=\"col od-1 fx-1\">\
+					<text id=\"clientTime\" class=\"text-jumbo width-block no-margin no-padding text-center\">00:00:00</text>\
+				</container-with-header>\
+			</row-container>\
+			<container-with-header color=\"color-ocean\" level=\"3\" size=\"content.title\" title=\"${timeDifference}\" class=\"col od-1 fx-1\">\
+				<text id=\"timeDifference\" class=\"text-jumbo width-block no-margin no-padding text-center\">+00:00:00</text>\
+			</container-with-header>\
+		</main-container>\
+	</body>\
+</window>");
 
-		/*
+		builder.buildWindowFromDocument(xdoc, myWindow, LangMap);
 
-		var mainContainer = window.NaturalWidgets.Create(
-			window.NaturalWidgets.MainContainer,
-			{
-				parent: windowBody,
-				noPadding: false
-			}
-		);
-
-		mainContainer.pack("BEGIN");
-
-		var rowContainer = window.NaturalWidgets.Create(
-			window.NaturalWidgets.RowContainer,
-			{
-				parent: mainContainer.getElement()
-			}
-		);
-
-		rowContainer.pack("BEGIN");
-
-		var serverTimeContainer = window.NaturalWidgets.Create(
-			window.NaturalWidgets.ContainerWithHeader,
-			{
-				parent: rowContainer.getElement(),
-				color: "color-ocean",
-				level: 3,
-				size: "content.title",
-				title: LangMap.serverTime
-			}
-		);
-
-		serverTimeContainer.pack("APPEND");
-		serverTimeContainer.getElement()
-			.addClass("col")
-			.addClass("od-1")
-			.addClass("fx-1");
-
-		var clientTimeContainer = window.NaturalWidgets.Create(
-			window.NaturalWidgets.ContainerWithHeader,
-			{
-				parent: rowContainer.getElement(),
-				color: "color-ocean",
-				level: 3,
-				size: "content.title",
-				title: LangMap.clientTime
-			}
-		);
-
-		clientTimeContainer.pack("APPEND");
-		clientTimeContainer.getElement()
-			.addClass("col")
-			.addClass("od-1")
-			.addClass("fx-1");
-
-		var serverTime = window.NaturalWidgets.Create(
-			window.NaturalWidgets.Text,
-			{
-				parent: serverTimeContainer.getBody(),
-				text: "00:00:00"
-			}
-		);
-
-		serverTime.getElement()
-			.addClass("text-jumbo")
-			.addClass("width-block")
-			.addClass("no-margin")
-			.addClass("no-padding")
-			.addClass("text-center");
-
-		serverTime.pack("APPEND");
-
-		var clientTime = window.NaturalWidgets.Create(
-			window.NaturalWidgets.Text,
-			{
-				parent: clientTimeContainer.getBody(),
-				text: "00:00:00"
-			}
-		);
-
-		clientTime.getElement()
-			.addClass("text-jumbo")
-			.addClass("width-block")
-			.addClass("no-margin")
-			.addClass("no-padding")
-			.addClass("text-center");
-
-		clientTime.pack("APPEND");
-
-		var differenceContainer = window.NaturalWidgets.Create(
-			window.NaturalWidgets.ContainerWithHeader,
-			{
-				parent: mainContainer.getElement(),
-				color: "color-ocean",
-				level: 3,
-				size: "content.title",
-				title: LangMap.timeDifference
-			}
-		);
-
-		differenceContainer.pack("APPEND");
-
-		var timeDifference = window.NaturalWidgets.Create(
-			window.NaturalWidgets.Text,
-			{
-				parent: differenceContainer.getBody(),
-				text: "+00:00:00"
-			}
-		);
-
-		timeDifference.getElement()
-			.addClass("text-jumbo")
-			.addClass("width-block")
-			.addClass("no-margin")
-			.addClass("no-padding")
-			.addClass("text-center");
-
-		timeDifference.pack("APPEND");
-
-		*/
+		var serverTime = builder.getWidgetByID("serverTime");
+		var clientTime = builder.getWidgetByID("clientTime");
+		var timeDifference = builder.getWidgetByID("timeDifference");
 
 		var interval = window.setInterval(function()
 		{
@@ -254,9 +162,9 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 					((seconds2 < 10)? "0" + seconds2 : seconds2)
 				);
 
-				var hours3 = hours2 - hours1;
-				var minutes3 = minutes2 - minutes1;
-				var seconds3 = seconds2 - seconds1;
+				var hours3 = Math.abs(hours2 - hours1);
+				var minutes3 = Math.abs(minutes2 - minutes1);
+				var seconds3 = Math.abs(seconds2 - seconds1);
 				var sign3 = "+";
 
 				if(dt2 < dt1)
