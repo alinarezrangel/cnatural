@@ -108,8 +108,6 @@ limitations under the License.
 		 * @param {NaturalShell.CurrentShell.Window|NaturalShell.Base.Window} win - The window to build.
 		 * @param {NaturalObject.POMap} POMap - The POMap to use to translate special messages.
 		 *
-		 * @returns {NaturalShell.CurrentShell.Window|NaturalShell.Base.Window} The builded window.
-		 *
 		 * @method buildWindowFromDocument
 		 * @memberof NaturalWidgets.Builder.prototype
 		 */
@@ -263,6 +261,18 @@ limitations under the License.
 			return r;
 		};
 
+		/**
+		 * Creates (recursively) the GUI from an element.
+		 *
+		 * @param {NaturalWidgets.XMLDocument} xmldoc - The document to use.
+		 * @param {opaque_type|Node} rootnode - The node to parse.
+		 * @param {derived<NaturalWidgets.Widget>} parentElement - The widget to use as parent.
+		 * @param {NaturalObject.POMap} POMap - A localized POMap.
+		 *
+		 * @protected
+		 * @method buildGUIFromElement
+		 * @memberof NaturalWidgets.Builder.prototype
+		 */
 		Builder.prototype.buildGUIFromElement = function(xmldoc, rootnode, parentElement, POMap)
 		{
 			var ch = rootnode.children;
