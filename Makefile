@@ -57,6 +57,8 @@ JSFILES_TO_DOC=public_http/jscore/* private_http/jscore/shells/*
 JSDOC_INDEX=docs/js/home.md
 # Configuration file of the JavaScript documentation
 JSDOC_CONF=docs/js/conf.json
+# Path to the Doxyfile conf. file
+DOXYFILE_PATH=docs/c/Doxyfile
 
 $(TARGET): $(OBJC)
 	$(LD) $(OBJC) -o $(TARGET) $(LDFLAGS)
@@ -120,9 +122,15 @@ minimal: $(TARGET)
 
 ## Documentation
 
-docs: docsjs
+docs: docsjs docsc
 
 # Documentation of javascript
 # Needs JSDoc3
 docsjs:
 	jsdoc $(JSFILES_TO_DOC) --readme $(JSDOC_INDEX) -c $(JSDOC_CONF) $(JSDOC_TEMPLATE_ARG) --access all
+
+# Documentation of c
+# Needs Doxygen
+docsc:
+	doxygen $(DOXYFILE_PATH)
+

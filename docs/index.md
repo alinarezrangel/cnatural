@@ -5,7 +5,7 @@ all CNatural's APIs and usage. This folder is divided into four subfolders:
 
 * [`js/`](js/out/index.html): Contains the documentation of the JavaScript
 client-side APIs of CNatural.
-* [`c/`](c/out/index.html): Contains the documentation of the C server-side
+* [`c/`](c/out/html/index.html): Contains the documentation of the C server-side
 APIs of CNatural.
 * [`handwritten/`](handwritten/index.md): Contains (in Markdown) the documentation
 of misc. APIs and others. Generally contains help about how to install
