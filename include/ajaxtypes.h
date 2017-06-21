@@ -29,15 +29,13 @@ limitations under the License.
 * Contains the basic types for the AJAX API.
 */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <locale.h>
 
 #include <microhttpd.h>
+
+#include "inc.h"
+
+CNATURAL_BEGIN_DECLRS
 
 /**
 * @brief The size of a HTTP POST request.
@@ -150,5 +148,7 @@ cnatural_post_processor_node_t* cnatural_get_arg(
 	cnatural_post_processor_node_t**,
 	const char*
 );
+
+CNATURAL_END_DECLRS
 
 #endif /* ~__CNATURAL_AJAX_TYPES_H__ */

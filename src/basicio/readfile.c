@@ -22,6 +22,18 @@ limitations under the License.
 
 #include "basicio/readfile.h"
 
+/* Implementation headers: */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <ctype.h>
+
+#include <jwt.h>
+
+#include "tokens.h"
+
 static int valid_fpos(const char* s, size_t z)
 {
 	size_t j = 0;

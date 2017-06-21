@@ -22,6 +22,10 @@ limitations under the License.
 
 #include "list.h"
 
+/* Implementation headers: */
+
+/* none */
+
 int cnatural_natural_list_create(cnatural_natural_list_t** head)
 {
 	if(head == NULL)

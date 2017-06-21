@@ -22,6 +22,21 @@ limitations under the License.
 
 #include "coreutils/import.h"
 
+/* Implementation headers: */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+
+#include <jwt.h>
+
+#include "tokens.h"
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 int cnatural_ajax_coreutils_import(
 	const char* path,
 	cnatural_ajax_argument_t* args

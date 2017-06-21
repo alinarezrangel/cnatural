@@ -22,6 +22,14 @@ limitations under the License.
 
 #include "tokens.h"
 
+/* Implementation headers: */
+
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+
+#include "ajaxtypes.h"
+
 int cnatural_natural_token_create(cnatural_natural_token_t** token)
 {
 	if(token == NULL)

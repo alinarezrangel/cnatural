@@ -28,25 +28,17 @@ limitations under the License.
 * CoreUtils time (all) function.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
-#include <time.h>
-
-#include <jwt.h>
-
-#include "tokens.h"
 #include "ajaxtypes.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include "inc.h"
+
+CNATURAL_BEGIN_DECLRS
 
 /*
 * @brief gets the current server time in ISO 8601 format.
 */
 int cnatural_ajax_coreutils_time_get(const char*, cnatural_ajax_argument_t*);
+
+CNATURAL_END_DECLRS
 
 #endif /* ~__CNATURAL_MODULE_COREUTILS_TIME_H__ */

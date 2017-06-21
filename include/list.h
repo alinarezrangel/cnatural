@@ -28,14 +28,11 @@ limitations under the License.
 * list functions and type.
 */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
-#include <time.h>
 
-#include "ajaxtypes.h"
+#include "inc.h"
+
+CNATURAL_BEGIN_DECLRS
 
 /**
 * @brief Is a circular linked list.
@@ -161,5 +158,7 @@ int cnatural_natural_list_pop_back(cnatural_natural_list_t*, cnatural_natural_li
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
 int cnatural_natural_list_size(cnatural_natural_list_t* head, size_t* size);
+
+CNATURAL_END_DECLRS
 
 #endif /* ~__CNATURAL_NATURAL_LIST_FUNCTIONS_H__ */

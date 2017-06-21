@@ -19,7 +19,7 @@ SRC=src
 # Directory with the server include headers
 INC=include
 # All objects files (starting with main.o)
-OBJC=main.o ajaxcore.o ajaxtypes.o coreutils_import.o list.o tokens.o configfile.o coreutils_login.o coreutils_time.o basicio_readfile.o
+OBJC=main.o ajaxcore.o ajaxtypes.o coreutils_import.o list.o tokens.o configfile.o coreutils_login.o coreutils_timefcn.o basicio_readfile.o
 # All compilation libraries
 LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil
 # All compilation include paths
@@ -87,7 +87,7 @@ coreutils_import.o: $(SRC)/coreutils/import.c $(INC)/coreutils/import.h
 coreutils_login.o: $(SRC)/coreutils/login.c $(INC)/coreutils/login.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-coreutils_time.o: $(SRC)/coreutils/time.c $(INC)/coreutils/time.h
+coreutils_timefcn.o: $(SRC)/coreutils/timefcn.c $(INC)/coreutils/timefcn.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 basicio_readfile.o: $(SRC)/basicio/readfile.c $(INC)/basicio/readfile.h

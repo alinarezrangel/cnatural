@@ -28,26 +28,18 @@ limitations under the License.
 * CoreUtils import function.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
-
-#include <jwt.h>
-
-#include "tokens.h"
 #include "ajaxtypes.h"
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include "inc.h"
 
+CNATURAL_BEGIN_DECLRS
 
 /*
 * @brief returns a file in the private_http directory.
 * Is needed a valid token, maked by coreutils.createToken
 */
 int cnatural_ajax_coreutils_import(const char*, cnatural_ajax_argument_t*);
+
+CNATURAL_END_DECLRS
 
 #endif /* ~__CNATURAL_MODULE_COREUTILS_IMPORT_H__ */

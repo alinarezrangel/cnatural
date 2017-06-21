@@ -28,10 +28,7 @@ limitations under the License.
 * Core of the AJAX API.
 */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <errno.h>
 #include <stdint.h>
 
 #include <microhttpd.h>
@@ -42,10 +39,14 @@ limitations under the License.
 
 #include "coreutils/login.h"
 #include "coreutils/import.h"
-#include "coreutils/time.h"
+#include "coreutils/timefcn.h"
 #include "basicio/readfile.h"
 
 /* End of custom AJAX functions */
+
+#include "inc.h"
+
+CNATURAL_BEGIN_DECLRS
 
 /**
 * @brief Handles a POST request using the provided data.
@@ -109,5 +110,7 @@ int cnatural_ajax_test(const char*, cnatural_ajax_argument_t*);
 * @brief Tries to execute the specified AJAX path with the provided arguments.
 */
 int cnatural_try_ajax(const char*, cnatural_ajax_argument_t*);
+
+CNATURAL_END_DECLRS
 
 #endif /* ~__CNATURAL_AJAX_CORE_H__ */

@@ -20,7 +20,15 @@ limitations under the License.
 **********************
 ************************************************/
 
-#include "coreutils/login.h"
+#include "coreutils/timefcn.h"
+
+/* Implementation headers: */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <time.h>
 
 int cnatural_ajax_coreutils_time_get(
 	const char* path,

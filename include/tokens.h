@@ -28,24 +28,12 @@ limitations under the License.
 * CoreUtils token management.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
 #include <time.h>
-
-#include <errno.h>
-
-#ifndef __STDC_NO_THREADS__
-#	include <threads.h>
-#	define CNATURAL_NATURAL_USE_THREADS 1
-#endif
-
 #include <jwt.h>
 
-#include "list.h"
-#include "ajaxtypes.h"
+#include "inc.h"
+
+CNATURAL_BEGIN_DECLRS
 
 /**
 * @brief Represents a timestamp.
@@ -208,5 +196,7 @@ int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t* token, jwt_t* j
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t* jwt);
+
+CNATURAL_END_DECLRS
 
 #endif /* ~__CNATURAL_NATURAL_TOKENS_FUNCTIONS_H__ */

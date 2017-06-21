@@ -22,6 +22,16 @@ limitations under the License.
 
 #include "coreutils/login.h"
 
+/* Implementation headers: */
+
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+
+#include <jwt.h>
+
+#include "tokens.h"
+
 int cnatural_ajax_coreutils_login(
 	const char* path,
 	cnatural_ajax_argument_t* args

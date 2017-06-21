@@ -22,6 +22,11 @@ limitations under the License.
 
 #include "ajaxcore.h"
 
+/* Implementation headers: */
+
+#include <stdio.h>
+#include <errno.h>
+
 int cnatural_basic_post_data_handler(
 	void* conn_klass,
 	enum MHD_ValueKind kind,

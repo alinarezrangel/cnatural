@@ -29,14 +29,11 @@ limitations under the License.
 */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <errno.h>
-#include <stdint.h>
-#include <time.h>
 
+#include "inc.h"
 #include "ajaxtypes.h"
-#include "list.h"
+
+CNATURAL_BEGIN_DECLRS
 
 /**
 * @brief Reads a file and saves the configuration into a systdt.
@@ -48,5 +45,7 @@ limitations under the License.
 * @return -1 on error, 0 on success.
 */
 int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t* systdt);
+
+CNATURAL_END_DECLRS
 
 #endif /* ~__CNATURAL_CONFIGURATION_FILE_READER_H__ */

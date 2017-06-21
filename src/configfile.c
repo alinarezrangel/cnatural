@@ -22,6 +22,10 @@ limitations under the License.
 
 #include "configfile.h"
 
+/* Implementation headers: */
+
+#include <string.h>
+
 int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t* systdt)
 {
 	char chr = '\0';
