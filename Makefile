@@ -12,14 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Name of the target binary
-TARGET=cnatural.out
-# Directory with the server source code
+# Directory with the source code
 SRC=src
-# Directory with the server include headers
+# Directory with the include headers
 INC=include
+# Directory with the binaries
+BIN=bin
+# Directory with the libraries
+DLIB=libs
+
+# Name of the target binary
+TARGET=$(BIN)/cnatural.out
+
 # All objects files (starting with main.o)
-OBJC=main.o ajaxcore.o ajaxtypes.o coreutils_import.o list.o tokens.o configfile.o coreutils_login.o coreutils_timefcn.o basicio_readfile.o
+OBJC= \
+	$(DLIB)/main.o \
+	$(DLIB)/ajaxcore.o \
+	$(DLIB)/ajaxtypes.o \
+	$(DLIB)/coreutils_import.o \
+	$(DLIB)/list.o \
+	$(DLIB)/tokens.o \
+	$(DLIB)/configfile.o \
+	$(DLIB)/coreutils_login.o \
+	$(DLIB)/coreutils_timefcn.o \
+	$(DLIB)/basicio_readfile.o
 # All compilation libraries
 LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil
 # All compilation include paths
@@ -36,12 +52,15 @@ STD=-std=c99
 CFLAGS=$(STD) $(WARN) $(OPT) $(DEBUG) $(INCLUDES) -pthread
 # Linker flags
 LDFLAGS=$(LIBS) -ljwt
+
 # C compiler
 CC=gcc
 # Linker
 LD=gcc
+
 # Path where the server will be installed
 INSTALLPATH=/opt/cnatural-server
+
 # Prefix of NPM when installs a module
 NPM_PREFIX=/usr/local/lib/node_modules
 # Template used to the JSDoc3 output
@@ -59,53 +78,81 @@ JSDOC_INDEX=docs/js/home.md
 JSDOC_CONF=docs/js/conf.json
 # Path to the Doxyfile conf. file
 DOXYFILE_PATH=docs/c/Doxyfile
+# Output folder for JS docs
+DOCS_OUTPUT_JS=docs/js/out/
+# Output folder for C docs
+DOCS_OUTPUT_C=docs/c/out/
 
-$(TARGET): $(OBJC)
+$(TARGET): prepare $(OBJC)
 	$(LD) $(OBJC) -o $(TARGET) $(LDFLAGS)
 
-main.o: $(SRC)/main.c
+# Build files:
+
+$(DLIB)/main.o: $(SRC)/main.c
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-ajaxcore.o: $(SRC)/ajaxcore.c $(INC)/ajaxcore.h
+$(DLIB)/ajaxcore.o: $(SRC)/ajaxcore.c $(INC)/ajaxcore.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-ajaxtypes.o: $(SRC)/ajaxtypes.c $(INC)/ajaxtypes.h
+$(DLIB)/ajaxtypes.o: $(SRC)/ajaxtypes.c $(INC)/ajaxtypes.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-configfile.o: $(SRC)/configfile.c $(INC)/configfile.h
+$(DLIB)/configfile.o: $(SRC)/configfile.c $(INC)/configfile.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-list.o: $(SRC)/list.c $(INC)/list.h
+$(DLIB)/list.o: $(SRC)/list.c $(INC)/list.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-tokens.o: $(SRC)/tokens.c $(INC)/tokens.h
+$(DLIB)/tokens.o: $(SRC)/tokens.c $(INC)/tokens.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-coreutils_import.o: $(SRC)/coreutils/import.c $(INC)/coreutils/import.h
+$(DLIB)/coreutils_import.o: $(SRC)/coreutils/import.c $(INC)/coreutils/import.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-coreutils_login.o: $(SRC)/coreutils/login.c $(INC)/coreutils/login.h
+$(DLIB)/coreutils_login.o: $(SRC)/coreutils/login.c $(INC)/coreutils/login.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-coreutils_timefcn.o: $(SRC)/coreutils/timefcn.c $(INC)/coreutils/timefcn.h
+$(DLIB)/coreutils_timefcn.o: $(SRC)/coreutils/timefcn.c $(INC)/coreutils/timefcn.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-basicio_readfile.o: $(SRC)/basicio/readfile.c $(INC)/basicio/readfile.h
+$(DLIB)/basicio_readfile.o: $(SRC)/basicio/readfile.c $(INC)/basicio/readfile.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
+# Special targets:
+
+# Prepares the current directory to build cnatural
+prepare:
+	if [ "!" "(" -d $(BIN) ")" ]; then
+		mkdir $(BIN)
+	fi
+	if [ "!" "(" -d $(DLIB) ")" ]; then
+		mkdir $(DLIB)
+	fi
+
+# Prepares the current directory to generate the docs
+prepare_docs: prepare
+	if [ "!" "(" -d $(DOCS_OUTPUT_C) ")" ]; then
+		mkdir $(DOCS_OUTPUT_C)
+	fi
+	if [ "!" "(" -d $(DOCS_OUTPUT_JS) ")" ]; then
+		mkdir $(DOCS_OUTPUT_JS)
+	fi
+
+# Removes all generated files (except for documentation)
 clean:
 	rm $(TARGET) $(OBJC)
 
+# Removes all generated documentation
 cleandocs:
 	rm docs/js/out -R
 	rm docs/c/out -R
 
 # Other targets:
 
-# Installation
+# Installs cnatural
 install: $(TARGET)
 	mkdir $(INSTALLPATH)
-	cp $(TARGET) $(INSTALLPATH)
+	cp $(BIN) $(INSTALLPATH) -R
 	cp cnatural.conf $(INSTALLPATH)
 	if [ -d docs/ ]; then
 		cp docs/ $(INSTALLPATH)/docs -R
@@ -126,11 +173,11 @@ docs: docsjs docsc
 
 # Documentation of javascript
 # Needs JSDoc3
-docsjs:
+docsjs: prepare_docs
 	jsdoc $(JSFILES_TO_DOC) --readme $(JSDOC_INDEX) -c $(JSDOC_CONF) $(JSDOC_TEMPLATE_ARG) --access all
 
 # Documentation of c
 # Needs Doxygen
-docsc:
+docsc: prepare_docs
 	doxygen $(DOXYFILE_PATH)
 

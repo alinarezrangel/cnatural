@@ -101,6 +101,11 @@ with limited storage using:
 
 Running the server is easy:
 
+	./bin/cnatural.out
+
+But this will not work:
+
+	cd ./bin/
 	./cnatural.out
 
 All configuration data will be readed from `cnatural.conf`
@@ -132,7 +137,7 @@ is the documentation (for now is ~33% of the project size).
 
 * Alejandro Linarez Rangel @alinarezrangel (GitHub)
 
-**Add your name here after doing a contribution**
+*Add your name here after doing a contribution*
 
 ## License ##
 

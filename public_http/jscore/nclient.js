@@ -357,7 +357,7 @@ limitations under the License.
 
 			/*
 			// The method basicio.file.open does not exist yet, use a fake call
-			window.NaturalClient.APIRequest("", {
+			window.NaturalClient.APIRequest("basicio.file.open", {
 				//
 			}, function(err, res)
 			{

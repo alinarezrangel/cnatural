@@ -25,6 +25,7 @@ limitations under the License.
 /* Implementation headers: */
 
 #include <stdio.h>
+#include <string.h>
 #include <errno.h>
 
 int cnatural_basic_post_data_handler(
