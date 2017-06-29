@@ -31,6 +31,7 @@ limitations under the License.
 #include <jwt.h>
 
 #include "tokens.h"
+#include "authcall.h"
 
 int cnatural_ajax_coreutils_login(
 	const char* path,
@@ -106,12 +107,17 @@ int cnatural_ajax_coreutils_login(
 		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: exp");
 		return -1;
 	}
-	if(jwt_add_grant(jwt, "nt_svr", "CNatural 1.0.0") != 0)
+	if(jwt_add_grant(jwt, "nt_svr", "CNatural " CNATURAL_VERSION) != 0)
 	{
 		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: nt_svr");
 		return -1;
 	}
-	if(jwt_set_alg(jwt, JWT_ALG_HS512, (unsigned char*) args->systdt->secret, strlen(args->systdt->secret)) != 0)
+	if(jwt_set_alg(
+			jwt,
+			CNATURAL_AUTH_METHOD,
+			(unsigned char*) args->systdt->secret,
+			strlen(args->systdt->secret))
+		!= 0)
 	{
 		perror("Unable to set the JWT (JSON Web Tokens/Signature) algorithm");
 		return -1;

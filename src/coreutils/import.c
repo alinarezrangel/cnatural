@@ -32,6 +32,7 @@ limitations under the License.
 #include <jwt.h>
 
 #include "tokens.h"
+#include "authcall.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -45,15 +46,13 @@ int cnatural_ajax_coreutils_import(
 	const char* privatepath = "private_http/";
 
 	cnatural_post_processor_node_t* it = NULL;
+	int autherr = 0;
 	int ofile = -1;
 	char* token = "";
-	char* uname = "";
 	char* fname = "";
 	char* mimetype = "";
 	char* realpath = NULL;
-	char* rdbytes = "";
-	jwt_t* jwt = NULL;
-	cnatural_natural_token_t* tkobj = NULL;
+	cnatural_authcall_token_t* tkobj = NULL;
 
 	if(strcmp(path, "/api/ajax/coreutils/import") != 0)
 		return 1;
@@ -80,52 +79,19 @@ int cnatural_ajax_coreutils_import(
 		}
 	}
 
+	if((autherr = cnatural_authcall_authenticate(token, &tkobj, args->systdt)) != 1)
+	{
+		if(autherr == 0)
+		{
+			cnatural_authcall_destroy(&tkobj);
+		}
+
+		fprintf(stderr, "Error authenticating the user\n");
+
+		return -1;
+	}
+
 	args->output_mimetype = cnatural_strdup(mimetype);
-
-	if((errno = jwt_decode(&jwt, token, (unsigned char*) args->systdt->secret, strlen(args->systdt->secret))) != 0)
-	{
-		perror("Error decoding the token");
-
-		args->output_buffer = cnatural_strdup("enotoken");
-		args->output_buffer_size = strlen(args->output_buffer);
-		return -1;
-	}
-
-	if(cnatural_natural_token_create(&tkobj) != 0)
-	{
-		fprintf(stderr, "Error creating the token\n");
-		return -1;
-	}
-
-	if(cnatural_natural_token_load_from_jwt(tkobj, jwt) != 0)
-	{
-		fprintf(stderr, "Error loading the token\n");
-		return -1;
-	}
-
-	if(jwt_get_alg(jwt) != JWT_ALG_HS512)
-	{
-		fprintf(stderr, "Error decrypting the token: the algorithm is not JWT_ALG_HS512\n");
-
-		args->output_buffer = cnatural_strdup("enotoken");
-		args->output_buffer_size = strlen(args->output_buffer);
-		return -1;
-	}
-
-	jwt_free(jwt);
-
-	cnatural_natural_token_get_username(tkobj, &uname);
-	cnatural_natural_token_get_random_bytes(tkobj, &rdbytes);
-
-	printf("Loaded the token: %s <%s>\n", uname, rdbytes);
-
-	if((strcmp(uname, args->systdt->username) != 0) || (strcmp(rdbytes, args->systdt->random) != 0))
-	{
-		printf("Error: the token is not the current systdt\n");
-		free(args->output_mimetype);
-		cnatural_natural_token_destroy(&tkobj);
-		return -1;
-	}
 
 	realpath = malloc(strlen(fname) + strlen(privatepath) + 1);
 	if(realpath == NULL)
@@ -143,8 +109,7 @@ int cnatural_ajax_coreutils_import(
 	ofile = open(realpath, O_RDONLY);
 	args->output_filedesc = ofile;
 
-	cnatural_natural_token_destroy(&tkobj);
-	free(realpath);
+	cnatural_authcall_destroy(&tkobj);
 
 	return 0;
 }

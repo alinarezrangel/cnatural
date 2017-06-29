@@ -21,8 +21,8 @@ limitations under the License.
 ************************************************/
 
 
-#if !defined(__CNATURAL_AJAX_TYPES_H__)
-#define __CNATURAL_AJAX_TYPES_H__ 1
+#if !defined(_CNATURAL_AJAX_TYPES_H_)
+#define _CNATURAL_AJAX_TYPES_H_ 1
 
 /**
 * @file ajaxtypes.h
@@ -59,6 +59,8 @@ CNATURAL_BEGIN_DECLRS
 * @brief Is the CNatural Server version in a string macro.
 *
 * It's something like "1.0.2", for example.
+*
+* Note that this version may not be the same than CNATURAL_VERSION.
 */
 #define CNATURAL_SERVER_VERSION "1.0.0"
 
@@ -151,4 +153,4 @@ cnatural_post_processor_node_t* cnatural_get_arg(
 
 CNATURAL_END_DECLRS
 
-#endif /* ~__CNATURAL_AJAX_TYPES_H__ */
+#endif /* ~_CNATURAL_AJAX_TYPES_H_ */

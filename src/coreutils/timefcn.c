@@ -30,18 +30,47 @@ limitations under the License.
 #include <errno.h>
 #include <time.h>
 
+#include "authcall.h"
+
 int cnatural_ajax_coreutils_time_get(
 	const char* path,
 	cnatural_ajax_argument_t* args
 )
 {
+	cnatural_post_processor_node_t* it = NULL;
 	struct tm current_server_time;
 	int sz = 0;
+	int autherr = 0;
+	char* token = "";
 	time_t t;
+	cnatural_authcall_token_t* tkobj = NULL;
 
 	if(strcmp(path, "/api/ajax/coreutils/time/get") != 0)
 		return 1;
 	printf("Catched /api/ajax/coreutils/time/get...\n");
+
+	for(it = args->arguments->data; it != NULL; it = it->next)
+	{
+		printf("At %s = %s\n", it->key, it->value);
+
+		if(strcmp(it->key, "token") == 0)
+		{
+			token = it->value;
+			continue;
+		}
+	}
+
+	if((autherr = cnatural_authcall_authenticate(token, &tkobj, args->systdt)) != 1)
+	{
+		if(autherr == 0)
+		{
+			cnatural_authcall_destroy(&tkobj);
+		}
+
+		fprintf(stderr, "Error authenticating the user\n");
+
+		return -1;
+	}
 
 	args->output_mimetype = cnatural_strdup("text/plain");
 
@@ -80,6 +109,8 @@ int cnatural_ajax_coreutils_time_get(
 		current_server_time.tm_min,
 		current_server_time.tm_sec
 	);
+
+	cnatural_authcall_destroy(&tkobj);
 
 	return 0;
 }

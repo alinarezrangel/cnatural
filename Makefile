@@ -33,6 +33,7 @@ OBJC= \
 	$(DLIB)/list.o \
 	$(DLIB)/tokens.o \
 	$(DLIB)/configfile.o \
+	$(DLIB)/authcall.o \
 	$(DLIB)/coreutils_login.o \
 	$(DLIB)/coreutils_timefcn.o \
 	$(DLIB)/basicio_readfile.o
@@ -106,6 +107,9 @@ $(DLIB)/list.o: $(SRC)/list.c $(INC)/list.h
 $(DLIB)/tokens.o: $(SRC)/tokens.c $(INC)/tokens.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
+$(DLIB)/authcall.o: $(SRC)/authcall.c $(INC)/authcall.h
+	$(CC) -c $< -o $@ $(CFLAGS)
+
 $(DLIB)/coreutils_import.o: $(SRC)/coreutils/import.c $(INC)/coreutils/import.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
@@ -122,21 +126,13 @@ $(DLIB)/basicio_readfile.o: $(SRC)/basicio/readfile.c $(INC)/basicio/readfile.h
 
 # Prepares the current directory to build cnatural
 prepare:
-	if [ "!" "(" -d $(BIN) ")" ]; then
-		mkdir $(BIN)
-	fi
-	if [ "!" "(" -d $(DLIB) ")" ]; then
-		mkdir $(DLIB)
-	fi
+	mkdir -p $(BIN)
+	mkdir -p $(DLIB)
 
 # Prepares the current directory to generate the docs
 prepare_docs: prepare
-	if [ "!" "(" -d $(DOCS_OUTPUT_C) ")" ]; then
-		mkdir $(DOCS_OUTPUT_C)
-	fi
-	if [ "!" "(" -d $(DOCS_OUTPUT_JS) ")" ]; then
-		mkdir $(DOCS_OUTPUT_JS)
-	fi
+	mkdir $(DOCS_OUTPUT_C)
+	mkdir $(DOCS_OUTPUT_JS)
 
 # Removes all generated files (except for documentation)
 clean:

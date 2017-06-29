@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(__CNATURAL_CONFIGURATION_FILE_READER_H__)
-#define __CNATURAL_CONFIGURATION_FILE_READER_H__ 1
+#if !defined(_CNATURAL_CONFIGURATION_FILE_READER_H_)
+#define _CNATURAL_CONFIGURATION_FILE_READER_H_ 1
 
 /**
 * @file configfile.h
@@ -30,8 +30,9 @@ limitations under the License.
 
 #include <stdio.h>
 
-#include "inc.h"
 #include "ajaxtypes.h"
+
+#include "inc.h"
 
 CNATURAL_BEGIN_DECLRS
 
@@ -48,4 +49,4 @@ int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t
 
 CNATURAL_END_DECLRS
 
-#endif /* ~__CNATURAL_CONFIGURATION_FILE_READER_H__ */
+#endif /* ~_CNATURAL_CONFIGURATION_FILE_READER_H_ */

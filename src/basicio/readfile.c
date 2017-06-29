@@ -33,6 +33,7 @@ limitations under the License.
 #include <jwt.h>
 
 #include "tokens.h"
+#include "authcall.h"
 
 static int valid_fpos(const char* s, size_t z)
 {
@@ -53,19 +54,17 @@ int cnatural_ajax_basicio_readfile(
 )
 {
 	cnatural_post_processor_node_t* it = NULL;
-	cnatural_natural_token_t* tkobj = NULL;
-	jwt_t* jwt = NULL;
 	char* fname = "";
 	char* mimetype = "";
 	char* token = "";
-	char* uname = "";
-	char* rdbytes = "";
 	char* chunksize = "";
 	char* chunk = "";
 	int rt = 0;
 	long int pos = 0;
 	long int siz = 0;
+	int autherr = 0;
 	FILE* fh = NULL;
+	cnatural_authcall_token_t* tkobj = NULL;
 
 	if(strcmp(path, "/api/ajax/basicio/readfile") != 0)
 		return 1;
@@ -101,59 +100,26 @@ int cnatural_ajax_basicio_readfile(
 			continue;
 		}
 	}
+	
+	if((autherr = cnatural_authcall_authenticate(token, &tkobj, args->systdt)) != 1)
+	{
+		if(autherr == 0)
+		{
+			cnatural_authcall_destroy(&tkobj);
+		}
+
+		fprintf(stderr, "Error authenticating the user\n");
+
+		return -1;
+	}
 
 	args->output_mimetype = cnatural_strdup(mimetype);
-
-	if((errno = jwt_decode(&jwt, token, (unsigned char*) args->systdt->secret, strlen(args->systdt->secret))) != 0)
-	{
-		perror("Error decoding the token");
-
-		args->output_buffer = cnatural_strdup("enotoken");
-		args->output_buffer_size = strlen(args->output_buffer);
-		return -1;
-	}
-
-	if(cnatural_natural_token_create(&tkobj) != 0)
-	{
-		fprintf(stderr, "Error creating the token\n");
-		return -1;
-	}
-
-	if(cnatural_natural_token_load_from_jwt(tkobj, jwt) != 0)
-	{
-		fprintf(stderr, "Error loading the token\n");
-		return -1;
-	}
-
-	if(jwt_get_alg(jwt) != JWT_ALG_HS512)
-	{
-		fprintf(stderr, "Error decrypting the token: the algorithm is not JWT_ALG_HS512\n");
-
-		args->output_buffer = cnatural_strdup("enotoken");
-		args->output_buffer_size = strlen(args->output_buffer);
-		return -1;
-	}
-
-	jwt_free(jwt);
-
-	cnatural_natural_token_get_username(tkobj, &uname);
-	cnatural_natural_token_get_random_bytes(tkobj, &rdbytes);
-
-	printf("Loaded the token: %s <%s>\n", uname, rdbytes);
-
-	if((strcmp(uname, args->systdt->username) != 0) || (strcmp(rdbytes, args->systdt->random) != 0))
-	{
-		printf("Error: the token is not the current systdt\n");
-		free(args->output_mimetype);
-		cnatural_natural_token_destroy(&tkobj);
-		return -1;
-	}
 
 	if(!valid_fpos(chunk, strlen(chunk)))
 	{
 		printf("Error: the chunk position is not an valid integer\n");
 		free(args->output_mimetype);
-		cnatural_natural_token_destroy(&tkobj);
+		cnatural_authcall_destroy(&tkobj);
 		return -1;
 	}
 
@@ -161,7 +127,7 @@ int cnatural_ajax_basicio_readfile(
 	{
 		printf("Error: the chunk size is not an valid integer\n");
 		free(args->output_mimetype);
-		cnatural_natural_token_destroy(&tkobj);
+		cnatural_authcall_destroy(&tkobj);
 		return -1;
 	}
 
@@ -178,7 +144,7 @@ int cnatural_ajax_basicio_readfile(
 	{
 		perror("Error opening the file");
 		free(args->output_mimetype);
-		cnatural_natural_token_destroy(&tkobj);
+		cnatural_authcall_destroy(&tkobj);
 		return -1;
 	}
 
@@ -197,7 +163,7 @@ int cnatural_ajax_basicio_readfile(
 		}
 
 		free(args->output_mimetype);
-		cnatural_natural_token_destroy(&tkobj);
+		cnatural_authcall_destroy(&tkobj);
 		return -1;
 	}
 
@@ -225,7 +191,7 @@ int cnatural_ajax_basicio_readfile(
 		}
 
 		free(args->output_mimetype);
-		cnatural_natural_token_destroy(&tkobj);
+		cnatural_authcall_destroy(&tkobj);
 		return -1;
 	}
 
@@ -236,11 +202,11 @@ int cnatural_ajax_basicio_readfile(
 		perror("closing the file");
 
 		free(args->output_mimetype);
-		cnatural_natural_token_destroy(&tkobj);
+		cnatural_authcall_destroy(&tkobj);
 		return -1;
 	}
 
-	cnatural_natural_token_destroy(&tkobj);
+	cnatural_authcall_destroy(&tkobj);
 
 	return 0;
 }

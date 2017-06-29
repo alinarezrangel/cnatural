@@ -36,6 +36,7 @@ limitations under the License.
 
 #include "tokens.h"
 #include "ajaxcore.h"
+#include "authcall.h"
 #include "configfile.h"
 
 #define FILE_TYPE_ANY 0
@@ -421,9 +422,9 @@ int request_handler(
 			return MHD_NO;
 		}
 
-		if(jwt_get_alg(jwt) != JWT_ALG_HS512)
+		if(jwt_get_alg(jwt) != CNATURAL_AUTH_METHOD)
 		{
-			fprintf(stderr, "Error: the JWT token algorithm is not JWT_ALG_HS512: aborting\n");
+			fprintf(stderr, "Error: the JWT token algorithm is not CNATURAL_AUTH_METHOD: aborting\n");
 
 			free(http_api_path);
 			free(http_api_token);
@@ -434,7 +435,7 @@ int request_handler(
 
 		if(strcmp(jwt_get_grant(jwt, "un"), dt.username) != 0)
 		{
-			fprintf(stderr, "Error: the JWT token's username is not of this system (but have the same secret??? ALERT)\n");
+			fprintf(stderr, "Error: the JWT token's username is not of this system (but have the same secret? ALERT)\n");
 
 			free(http_api_path);
 			free(http_api_token);

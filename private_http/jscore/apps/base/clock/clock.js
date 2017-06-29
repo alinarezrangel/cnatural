@@ -129,12 +129,7 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 
 		var interval = window.setInterval(function()
 		{
-			window.$natural.ajax({
-				url: "/api/ajax/coreutils/time/get",
-				args: {},
-				pdata: {},
-				async: true
-			}, (err, response) =>
+			window.NaturalClient.GetToken((err, token) =>
 			{
 				if(err)
 				{
@@ -142,54 +137,70 @@ window.NaturalShell.CurrentShell.RegisterApplication(function(window, document)
 					return;
 				}
 
-				var dt1 = new Date(window.NaturalClient.ConvertServerTime(response));
-
-				var hours1 = dt1.getHours();
-				var minutes1 = dt1.getMinutes();
-				var seconds1 = dt1.getSeconds();
-
-				serverTime.changeText(
-					((hours1 < 10)? "0" + hours1 : hours1) +
-					":" +
-					((minutes1 < 10)? "0" + minutes1 : minutes1) +
-					":" +
-					((seconds1 < 10)? "0" + seconds1 : seconds1)
-				);
-
-				var dt2 = new Date();
-
-				var hours2 = dt2.getHours();
-				var minutes2 = dt2.getMinutes();
-				var seconds2 = dt2.getSeconds();
-
-				clientTime.changeText(
-					((hours2 < 10)? "0" + hours2 : hours2) +
-					":" +
-					((minutes2 < 10)? "0" + minutes2 : minutes2) +
-					":" +
-					((seconds2 < 10)? "0" + seconds2 : seconds2)
-				);
-
-				var hours3 = Math.abs(hours2 - hours1);
-				var minutes3 = Math.abs(minutes2 - minutes1);
-				var seconds3 = Math.abs(seconds2 - seconds1);
-				var sign3 = "+";
-
-				if(dt2 < dt1)
+				window.$natural.ajax({
+					url: "/api/ajax/coreutils/time/get",
+					args: {},
+					pdata: {
+						"token": token
+					},
+					async: true
+				}, (err, response) =>
 				{
-					sign3 = "-";
-				}
+					if(err)
+					{
+						console.error("ClockApplication: " + err);
+						return;
+					}
 
-				timeDifference.changeText(
-					sign3 +
-					((hours3 < 10)? "0" + hours3 : hours3) +
-					":" +
-					((minutes3 < 10)? "0" + minutes3 : minutes3) +
-					":" +
-					((seconds3 < 10)? "0" + seconds3 : seconds3)
-				);
+					var dt1 = new Date(window.NaturalClient.ConvertServerTime(response));
+
+					var hours1 = dt1.getHours();
+					var minutes1 = dt1.getMinutes();
+					var seconds1 = dt1.getSeconds();
+
+					serverTime.changeText(
+						((hours1 < 10)? "0" + hours1 : hours1) +
+						":" +
+						((minutes1 < 10)? "0" + minutes1 : minutes1) +
+						":" +
+						((seconds1 < 10)? "0" + seconds1 : seconds1)
+					);
+
+					var dt2 = new Date();
+
+					var hours2 = dt2.getHours();
+					var minutes2 = dt2.getMinutes();
+					var seconds2 = dt2.getSeconds();
+
+					clientTime.changeText(
+						((hours2 < 10)? "0" + hours2 : hours2) +
+						":" +
+						((minutes2 < 10)? "0" + minutes2 : minutes2) +
+						":" +
+						((seconds2 < 10)? "0" + seconds2 : seconds2)
+					);
+
+					var hours3 = Math.abs(hours2 - hours1);
+					var minutes3 = Math.abs(minutes2 - minutes1);
+					var seconds3 = Math.abs(seconds2 - seconds1);
+					var sign3 = "+";
+
+					if(dt2 < dt1)
+					{
+						sign3 = "-";
+					}
+
+					timeDifference.changeText(
+						sign3 +
+						((hours3 < 10)? "0" + hours3 : hours3) +
+						":" +
+						((minutes3 < 10)? "0" + minutes3 : minutes3) +
+						":" +
+						((seconds3 < 10)? "0" + seconds3 : seconds3)
+					);
+				});
 			});
-		}, 500);
+		}, 1500);
 
 		myWindow.addEventListener("close", () =>
 		{

@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(__CNATURAL_NATURAL_LIST_FUNCTIONS_H__)
-#define __CNATURAL_NATURAL_LIST_FUNCTIONS_H__ 1
+#if !defined(_CNATURAL_NATURAL_LIST_FUNCTIONS_H_)
+#define _CNATURAL_NATURAL_LIST_FUNCTIONS_H_ 1
 
 /**
 * @file list.h
@@ -161,4 +161,4 @@ int cnatural_natural_list_size(cnatural_natural_list_t* head, size_t* size);
 
 CNATURAL_END_DECLRS
 
-#endif /* ~__CNATURAL_NATURAL_LIST_FUNCTIONS_H__ */
+#endif /* ~_CNATURAL_NATURAL_LIST_FUNCTIONS_H_ */

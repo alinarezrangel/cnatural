@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(__CNATURAL_MODULE_COREUTILS_IMPORT_H__)
-#define __CNATURAL_MODULE_COREUTILS_IMPORT_H__ 1
+#if !defined(_CNATURAL_MODULE_COREUTILS_IMPORT_H_)
+#define _CNATURAL_MODULE_COREUTILS_IMPORT_H_ 1
 
 /**
 * @file import.h
@@ -42,4 +42,4 @@ int cnatural_ajax_coreutils_import(const char*, cnatural_ajax_argument_t*);
 
 CNATURAL_END_DECLRS
 
-#endif /* ~__CNATURAL_MODULE_COREUTILS_IMPORT_H__ */
+#endif /* ~_CNATURAL_MODULE_COREUTILS_IMPORT_H_ */

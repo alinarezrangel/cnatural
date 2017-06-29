@@ -35,7 +35,7 @@ for now this file is a doxygen-adapted version of the `docs/c/home.md`.
 * are executed on the **server**.
 *
 * \section sec1 Using the APIs on your app/changes
-* 
+*
 * Remember to explicitly include all your dependencies before use
 * your code! CNatural's Server side API will not import automaticly
 * anything as the client side API will.
