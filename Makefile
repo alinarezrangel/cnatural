@@ -34,6 +34,7 @@ OBJC= \
 	$(DLIB)/tokens.o \
 	$(DLIB)/configfile.o \
 	$(DLIB)/authcall.o \
+	$(DLIB)/servercore.o \
 	$(DLIB)/coreutils_login.o \
 	$(DLIB)/coreutils_timefcn.o \
 	$(DLIB)/basicio_readfile.o
@@ -108,6 +109,9 @@ $(DLIB)/tokens.o: $(SRC)/tokens.c $(INC)/tokens.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 $(DLIB)/authcall.o: $(SRC)/authcall.c $(INC)/authcall.h
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+$(DLIB)/servercore.o: $(SRC)/servercore.c $(INC)/servercore.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 $(DLIB)/coreutils_import.o: $(SRC)/coreutils/import.c $(INC)/coreutils/import.h
