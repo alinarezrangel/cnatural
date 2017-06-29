@@ -67,6 +67,7 @@ int cnatural_ajax_coreutils_login(
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
 		printf("At %s = %s\n", it->key, it->value);
+
 		if(strcmp(it->key, "uname") == 0)
 		{
 			uname = it->value;
@@ -81,16 +82,20 @@ int cnatural_ajax_coreutils_login(
 
 	printf("Getting the udata at uname:<%s> upass:<%s>\n", uname, upass);
 
-	if((strcmp(args->systdt->username, uname) != 0) || (strcmp(args->systdt->password, upass) != 0))
+	if((strcmp(args->systdt->username, uname) != 0)
+		|| (strcmp(args->systdt->password, upass) != 0))
 	{
 		printf("Invalid login\n");
+
 		args->output_buffer = cnatural_strdup("enopass");
 		args->output_buffer_size = strlen(args->output_buffer);
+
 		return 0;
 	}
 
-	printf("Logined...\n");
+	printf("Logged, creating token...\n");
 
+	/* Create and fill a JWT */
 	if(jwt_new(&jwt) != 0)
 	{
 		perror("Unable to create the JWT (JSON Web Tokens/Signature) object");
@@ -100,18 +105,30 @@ int cnatural_ajax_coreutils_login(
 	if(jwt_add_grant(jwt, "iss", "cnatural_client_default") != 0)
 	{
 		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: iss");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
+
 	if(jwt_add_grant_int(jwt, "exp", 9999999L) != 0)
 	{
 		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: exp");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
+
 	if(jwt_add_grant(jwt, "nt_svr", "CNatural " CNATURAL_VERSION) != 0)
 	{
 		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: nt_svr");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
+
 	if(jwt_set_alg(
 			jwt,
 			CNATURAL_AUTH_METHOD,
@@ -120,37 +137,64 @@ int cnatural_ajax_coreutils_login(
 		!= 0)
 	{
 		perror("Unable to set the JWT (JSON Web Tokens/Signature) algorithm");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
 
+	/* Create a Natural token and save it in the JWT */
 	if(cnatural_natural_token_create(&tk) != 0)
 	{
 		fprintf(stderr, "Error creating the token\n");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
+
 	if(cnatural_natural_token_set_username(tk, (const char*) uname) != 0)
 	{
 		fprintf(stderr, "Error setting the token data: username\n");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
+
 	if(cnatural_natural_token_set_random_bytes(tk, rd) != 0)
 	{
 		fprintf(stderr, "Error setting the token data: random bytes\n");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
+
 	if(cnatural_natural_token_set_timestamp(tk, &tms) != 0)
 	{
 		fprintf(stderr, "Error setting the token data: timestamp\n");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
+
 	if(cnatural_natural_token_save_in_jwt(tk, jwt) != 0)
 	{
 		perror("Serializing the token");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
+
 	if(cnatural_natural_token_destroy(&tk) != 0)
 	{
 		fprintf(stderr, "Error destroying the token\n");
+
+		jwt_free(jwt);
+
 		return -1;
 	}
 

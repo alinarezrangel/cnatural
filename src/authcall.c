@@ -42,12 +42,20 @@ int cnatural_authcall_authenticate(
 	if((rawtk == NULL) || (systdt == NULL))
 		return -1;
 
+	/* Create and authenticate the token */
+
 	*token = malloc(sizeof(cnatural_authcall_token_t));
 
 	if(*token == NULL)
 		return -1;
 
-	if((errno = jwt_decode(&jwt, rawtk, (unsigned char*) systdt->secret, strlen(systdt->secret))) != 0)
+	/* First, decode the JWT string `rawtk` into a JWT object */
+	if((errno = jwt_decode(
+			&jwt,
+			rawtk,
+			(unsigned char*) systdt->secret,
+			strlen(systdt->secret)))
+		!= 0)
 	{
 		serrno = errno;
 		free(*token);
@@ -55,6 +63,9 @@ int cnatural_authcall_authenticate(
 
 		return -1;
 	}
+
+	/* Now, create the Natural token and use it to extract the authdata
+	** from the JWT object */
 
 	if(cnatural_natural_token_create(&(*token)->token) != 0)
 	{
@@ -75,6 +86,8 @@ int cnatural_authcall_authenticate(
 
 		return -1;
 	}
+
+	/* Authenticate algorithm and systdt data */
 
 	if(jwt_get_alg(jwt) != CNATURAL_AUTH_METHOD)
 	{

@@ -60,7 +60,10 @@ int cnatural_natural_token_destroy(cnatural_natural_token_t** token)
 	return 0;
 }
 
-int cnatural_natural_token_copy(cnatural_natural_token_t* src, cnatural_natural_token_t* dest)
+int cnatural_natural_token_copy(
+	cnatural_natural_token_t* src,
+	cnatural_natural_token_t* dest
+)
 {
 	if((src == NULL) || (dest == NULL))
 		return -1;
@@ -75,7 +78,10 @@ int cnatural_natural_token_copy(cnatural_natural_token_t* src, cnatural_natural_
 	return 0;
 }
 
-int cnatural_natural_token_set_username(cnatural_natural_token_t* token, const char* username)
+int cnatural_natural_token_set_username(
+	cnatural_natural_token_t* token,
+	const char* username
+)
 {
 	if(token == NULL)
 		return -1;
@@ -86,7 +92,10 @@ int cnatural_natural_token_set_username(cnatural_natural_token_t* token, const c
 	return 0;
 }
 
-int cnatural_natural_token_set_random_bytes(cnatural_natural_token_t* token, const char* random_bytes)
+int cnatural_natural_token_set_random_bytes(
+	cnatural_natural_token_t* token,
+	const char* random_bytes
+)
 {
 	if(token == NULL)
 		return -1;
@@ -97,7 +106,10 @@ int cnatural_natural_token_set_random_bytes(cnatural_natural_token_t* token, con
 	return 0;
 }
 
-int cnatural_natural_token_set_timestamp(cnatural_natural_token_t* token, cnatural_natural_timestamp_t* timestamp)
+int cnatural_natural_token_set_timestamp(
+	cnatural_natural_token_t* token,
+	cnatural_natural_timestamp_t* timestamp
+)
 {
 	if(token == NULL)
 		return -1;
@@ -107,7 +119,10 @@ int cnatural_natural_token_set_timestamp(cnatural_natural_token_t* token, cnatur
 	return 0;
 }
 
-int cnatural_natural_token_get_username(cnatural_natural_token_t* token, char** username)
+int cnatural_natural_token_get_username(
+	cnatural_natural_token_t* token,
+	char** username
+)
 {
 	if(token == NULL)
 		return -1;
@@ -117,7 +132,10 @@ int cnatural_natural_token_get_username(cnatural_natural_token_t* token, char** 
 	return 0;
 }
 
-int cnatural_natural_token_get_random_bytes(cnatural_natural_token_t* token, char** random_bytes)
+int cnatural_natural_token_get_random_bytes(
+	cnatural_natural_token_t* token,
+	char** random_bytes
+)
 {
 	if(token == NULL)
 		return -1;
@@ -127,7 +145,10 @@ int cnatural_natural_token_get_random_bytes(cnatural_natural_token_t* token, cha
 	return 0;
 }
 
-int cnatural_natural_token_get_timestamp(cnatural_natural_token_t* token, cnatural_natural_timestamp_t** timestamp)
+int cnatural_natural_token_get_timestamp(
+	cnatural_natural_token_t* token,
+	cnatural_natural_timestamp_t** timestamp
+)
 {
 	if(token == NULL)
 		return -1;
@@ -137,7 +158,10 @@ int cnatural_natural_token_get_timestamp(cnatural_natural_token_t* token, cnatur
 	return 0;
 }
 
-bool cnatural_natural_token_are_equals(cnatural_natural_token_t* token1, cnatural_natural_token_t* token2)
+bool cnatural_natural_token_are_equals(
+	cnatural_natural_token_t* token1,
+	cnatural_natural_token_t* token2
+)
 {
 	if((token1 == NULL) || (token2 == NULL))
 		return false;
@@ -160,7 +184,10 @@ bool cnatural_natural_token_are_equals(cnatural_natural_token_t* token1, cnatura
 	return true;
 }
 
-int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t* token, jwt_t* jwt)
+int cnatural_natural_token_save_in_jwt(
+	cnatural_natural_token_t* token,
+	jwt_t* jwt
+)
 {
 	if(token == NULL)
 		return -1;
@@ -177,7 +204,10 @@ int cnatural_natural_token_save_in_jwt(cnatural_natural_token_t* token, jwt_t* j
 	return 0;
 }
 
-int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t* jwt)
+int cnatural_natural_token_load_from_jwt(
+	cnatural_natural_token_t* token,
+	jwt_t* jwt
+)
 {
 	char* bf = NULL;
 	if(token == NULL)

@@ -79,6 +79,7 @@ int cnatural_ajax_coreutils_import(
 		}
 	}
 
+	/* Authenticate */
 	if((autherr = cnatural_authcall_authenticate(token, &tkobj, args->systdt)) != 1)
 	{
 		if(autherr == 0)
@@ -91,14 +92,16 @@ int cnatural_ajax_coreutils_import(
 		return -1;
 	}
 
-	args->output_mimetype = cnatural_strdup(mimetype);
-
 	realpath = malloc(strlen(fname) + strlen(privatepath) + 1);
+
 	if(realpath == NULL)
 	{
 		perror("Error allocating the realpath");
+
 		return -1;
 	}
+
+	args->output_mimetype = cnatural_strdup(mimetype);
 
 	memset(realpath, '\0', strlen(fname) + strlen(privatepath) + 1);
 

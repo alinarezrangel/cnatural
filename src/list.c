@@ -26,6 +26,8 @@ limitations under the License.
 
 /* none */
 
+/* This file implements a double-linked list for AJAX modules usage */
+
 int cnatural_natural_list_create(cnatural_natural_list_t** head)
 {
 	if(head == NULL)
@@ -78,7 +80,9 @@ int cnatural_natural_list_get_at(cnatural_natural_list_t* head, size_t at, void*
 			return 0;
 		}
 	}
-	// This code will never execute:
+
+	/* This code will never execute because the precond. is
+	** at >= 0 && at < len(list) */
 	return 1;
 }
 
@@ -100,7 +104,9 @@ int cnatural_natural_list_set_at(cnatural_natural_list_t* head, size_t at, void*
 			return 0;
 		}
 	}
-	// This code will never execute:
+
+	/* This code will never execute because the precond. is
+	** at >= 0 && at < len(list) */
 	return 1;
 }
 

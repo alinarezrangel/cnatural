@@ -35,6 +35,9 @@ limitations under the License.
 #include "tokens.h"
 #include "authcall.h"
 
+/*
+* Determines if a string can be safetly converted to an integer.
+*/
 static int valid_fpos(const char* s, size_t z)
 {
 	size_t j = 0;
@@ -100,7 +103,8 @@ int cnatural_ajax_basicio_readfile(
 			continue;
 		}
 	}
-	
+
+	/* Authenticate */
 	if((autherr = cnatural_authcall_authenticate(token, &tkobj, args->systdt)) != 1)
 	{
 		if(autherr == 0)
@@ -118,16 +122,20 @@ int cnatural_ajax_basicio_readfile(
 	if(!valid_fpos(chunk, strlen(chunk)))
 	{
 		printf("Error: the chunk position is not an valid integer\n");
+
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
+
 		return -1;
 	}
 
 	if(!valid_fpos(chunksize, strlen(chunksize)))
 	{
 		printf("Error: the chunk size is not an valid integer\n");
+
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
+
 		return -1;
 	}
 
@@ -143,8 +151,10 @@ int cnatural_ajax_basicio_readfile(
 	if(fh == NULL)
 	{
 		perror("Error opening the file");
+
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
+
 		return -1;
 	}
 
@@ -155,6 +165,7 @@ int cnatural_ajax_basicio_readfile(
 	if(rt != 0)
 	{
 		perror("Error setting the chunk position");
+
 		rt = fclose(fh);
 
 		if(rt != 0)
@@ -164,6 +175,7 @@ int cnatural_ajax_basicio_readfile(
 
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
+
 		return -1;
 	}
 
@@ -176,13 +188,16 @@ int cnatural_ajax_basicio_readfile(
 
 	fread(args->output_buffer, sizeof(char), siz, fh);
 
+	/* Save errno because ferror can reset it */
 	rt = errno;
 
 	if(ferror(fh))
 	{
+		/* An error, restore errno: */
 		errno = rt;
 
 		perror("Error reading the chunk");
+
 		rt = fclose(fh);
 
 		if(rt != 0)
@@ -192,6 +207,7 @@ int cnatural_ajax_basicio_readfile(
 
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
+
 		return -1;
 	}
 
@@ -203,6 +219,7 @@ int cnatural_ajax_basicio_readfile(
 
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
+
 		return -1;
 	}
 

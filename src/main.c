@@ -261,6 +261,7 @@ int request_handler(
 			perror("Using ajax");
 			return MHD_NO;
 		}
+
 		if(use_ajax == 1)
 		{
 			printf("The AJAX method %s not exist\n", url);
@@ -294,6 +295,7 @@ int request_handler(
 				fdstat.st_size,
 				arg.output_filedesc
 			);
+
 			if(res == NULL)
 			{
 				perror("Unable to alloc the response filedesc");

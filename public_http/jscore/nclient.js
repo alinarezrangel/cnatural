@@ -191,7 +191,7 @@ limitations under the License.
 		 * @callback NaturalClient~GetApplicationResourceCallback
 		 *
 		 * @param {Error} err - Error getting the resource (or null).
-		 * @param {opaque_type} resc - The resource file handler (or undefined).
+		 * @param {opaque_type|string} resc - The resource file handler or content (or undefined).
 		 */
 
 		/**
@@ -322,9 +322,21 @@ limitations under the License.
 		 * will not need to verify this (because the function `RegisterApplication`
 		 * verifies this), but some non-standard APIs will not verify this.
 		 *
+		 * If the argument `sz` is `true`, the file optimization will be activated.
+		 * The file optimization will query a file handler instead of the full file
+		 * contents, making the request faster and more efficient. For small text
+		 * files, this will increase the complexity of the program, but for large
+		 * files is recommended. When the optimization is enabled, the callback will
+		 * called with a *file handler* of type {@link NaturalClient.BasicIO.FileStream},
+		 * but when is disabled, the callback will be called with an opaque object
+		 * containing the entire file contents. If you want to use both, try with
+		 * the function {@link NaturalClient.BasicIO.streamify} on the resource
+		 * handler.
+		 *
 		 * @param {string} rspath - A valid path inside the resources directory.
 		 * @param {NaturalShell.Base.ApplicationData} appid - The data of the application.
 		 * @param {NaturalClient.ApplicationType} type - The type of the application.
+		 * @param {NaturalClient.BooleanFileSize} sz - `true` if the file optimization should be used.
 		 * @param {NaturalClient~GetApplicationResourceCallback} cll - A callback, will
 		 * be called when the resource is ready to be used.
 		 *
@@ -357,7 +369,7 @@ limitations under the License.
 
 			/*
 			// The method basicio.file.open does not exist yet, use a fake call
-			window.NaturalClient.APIRequest("basicio.file.open", {
+			window.NaturalClient.APIRequest(sz? "basicio.file.open" : "coreutils.import", {
 				//
 			}, function(err, res)
 			{

@@ -45,7 +45,7 @@ INCLUDES=-I$PATH_TO_LIBMHD_INCLUDES -I$(INC)
 WARN=-Wall
 # Optimization flags (by default, none or -O0)
 OPT=-O0
-# Debug flags (may be removed in production)
+# Debug flags (can be removed in production)
 DEBUG=-g
 # C starndard to be used (by default, C99)
 STD=-std=c99

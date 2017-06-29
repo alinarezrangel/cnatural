@@ -49,6 +49,15 @@ int cnatural_ajax_coreutils_time_get(
 		return 1;
 	printf("Catched /api/ajax/coreutils/time/get...\n");
 
+	/*
+	* A token is required to get the time for security purposes, this is a
+	* weak way to prevent DoS attacks, but the real motivation was to prevent
+	* anybody to get any kind of data from the server. Also, if a program uses
+	* `rand`, is posible that it uses `srand(time(NULL))` to init the seed and
+	* making possible to anybody to get the time on the server is a security
+	* risk (note that in cnatural, `rand` and `srand` should be avoided, see
+	* the file at `docs/handwritten/random.md`).
+	*/
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
 		printf("At %s = %s\n", it->key, it->value);
@@ -60,6 +69,7 @@ int cnatural_ajax_coreutils_time_get(
 		}
 	}
 
+	/* Authenticate */
 	if((autherr = cnatural_authcall_authenticate(token, &tkobj, args->systdt)) != 1)
 	{
 		if(autherr == 0)
@@ -74,9 +84,12 @@ int cnatural_ajax_coreutils_time_get(
 
 	args->output_mimetype = cnatural_strdup("text/plain");
 
+	/* Get the time and convert it to a calendar time struct */
 	t = time(NULL);
 	current_server_time = *gmtime(&t);
 
+	/* Calculate the resulting string size, the format is ISO
+	** YYYY-MM-DDThh:mm:ss.00Z */
 	sz = snprintf(
 		NULL,
 		0,
@@ -92,9 +105,13 @@ int cnatural_ajax_coreutils_time_get(
 	if(sz <= 0)
 	{
 		perror("Error snprintfing the current time");
+
+		free(args->output_mimetype);
+
 		return -1;
 	}
 
+	/* Now, snprintf the date on the string */
 	args->output_buffer_size = sz;
 	args->output_buffer = malloc(sz + 1);
 

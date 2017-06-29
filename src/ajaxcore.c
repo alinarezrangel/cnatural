@@ -99,7 +99,10 @@ int cnatural_create_post_data(
 		return MHD_NO;
 	}
 
-	(*data)->type = (create_post == 0)? CNATURAL_POST_TYPE_POST : CNATURAL_POST_TYPE_GET;
+	(*data)->type =
+		(create_post == 0)?
+			CNATURAL_POST_TYPE_POST :
+			CNATURAL_POST_TYPE_GET;
 
 	kl->back = NULL;
 	kl->next = NULL;
@@ -220,6 +223,9 @@ int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
 int cnatural_try_ajax(const char* path, cnatural_ajax_argument_t* inout)
 {
 	int ret = 0;
+
+	/* Try with all ajax methods */
+
 	ret = cnatural_ajax_test(path, inout);
 	if(ret <= 0)
 		return ret;
