@@ -39,8 +39,43 @@ limitations under the License.
 #include "authcall.h"
 #include "configfile.h"
 #include "servercore.h"
+#include "cmdline.h"
+
+/* Forward declarations for cmdline handlers */
+int cmdline_help(int argc, char** argv);
+int cmdline_pass(int argc, char** argv);
+int cmdline_rand(int argc, char** argv);
+int cmdline_secr(int argc, char** argv);
+int cmdline_port(int argc, char** argv);
+int cmdline_conf(int argc, char** argv);
+
+cnatural_cmdline_argument_t options[] =
+{
+	{"-c", "--conf", 1, cmdline_conf, "Sets the configuration file"},
+	{"-s", "--pass", 0, cmdline_pass, "Ask the user for an username to authenticate"},
+	{"-r", "--rand", 0, cmdline_rand, "Ask the user for a random string to authenticate"},
+	{"-s", "--secr", 0, cmdline_secr, "Ask the user for a secret to encrypt"},
+	{"-p", "--port", 1, cmdline_port, "Sets the port where the server will be executed"},
+	{NULL, NULL, 0, NULL, NULL}
+};
 
 cnatural_system_data_t systdt;
+
+const char* configfile_name = "cnatural.conf";
+
+struct
+{
+	int port;
+	int ask_password;
+	int ask_secret;
+	int ask_random;
+} preset_config_data =
+{
+	.port = -1,
+	.ask_password = -1,
+	.ask_secret = -1,
+	.ask_random = -1
+};
 
 cnatural_system_data_t* get_global_system_data(void);
 
@@ -48,19 +83,32 @@ int main(int argc, char** argv)
 {
 	struct MHD_Daemon* daemon;
 	FILE* configfile = NULL;
-	char* configfile_name = "cnatural.conf";
 	int n = 0, i = 0;
 
 	setlocale(LC_ALL, "");
 
 	cnatural_servercore_set_systdt(&get_global_system_data);
 
-	if(argc > 1)
+	n = cnatural_cmdline_parse(
+		argc,
+		argv,
+		options,
+		cmdline_help
+	);
+
+	if(n < 0)
 	{
-		configfile_name = argv[1];
+		/* n < 0 = error */
+		perror("Error reading the cmdline options");
+		exit(EXIT_FAILURE);
 	}
 
-	printf("CNatural version " CNATURAL_VERSION "\n");
+	if(n == 1)
+	{
+		/* n == 1 = help function called */
+		exit(EXIT_SUCCESS);
+	}
+
 	printf("CNatural Server version " CNATURAL_SERVER_VERSION "\n");
 	printf("Starting...\n");
 	printf("Reading configuration file (%s)\n\n", configfile_name);
@@ -97,6 +145,32 @@ int main(int argc, char** argv)
 		free(systdt.random);
 		free(systdt.secret);
 		exit(EXIT_FAILURE);
+	}
+
+	printf("Importing global preset data (settings in the command line options)...\n");
+
+	if(preset_config_data.port > 0)
+	{
+		printf("Imported port\n");
+		systdt.port = preset_config_data.port;
+	}
+
+	if(preset_config_data.ask_secret >= 0)
+	{
+		printf("Imported use secret\n");
+		systdt.use_live_secret = preset_config_data.ask_secret;
+	}
+
+	if(preset_config_data.ask_password >= 0)
+	{
+		printf("Imported use password\n");
+		systdt.use_live_password = preset_config_data.ask_password;
+	}
+
+	if(preset_config_data.ask_random >= 0)
+	{
+		printf("Imported use random\n");
+		systdt.use_live_random = preset_config_data.ask_random;
 	}
 
 	printf("Scaning for NULL data...\n");
@@ -277,4 +351,73 @@ int main(int argc, char** argv)
 cnatural_system_data_t* get_global_system_data(void)
 {
 	return &systdt;
+}
+
+int cmdline_help(int argc, char** argv)
+{
+	printf(
+		"CNatural server v" CNATURAL_SERVER_VERSION "\n"
+		"\n"
+		"This is the CNatural Server, use it to open a server in which the\n"
+		"CNatural client can be accessed by using a web browser with javascript\n"
+		"and CSS.\n"
+		"\n"
+		"You can get more information about the project at:\n"
+		"\n"
+		"- <https://github.com/alinarezrangel/cnatural>\n"
+		"- <https://cnatural.sourceforge.io/>\n"
+		"\n"
+		"To configure the server, see the <cnatural.conf> file.\n"
+		"\n"
+		"Warning: this program can only be executed at the cnatural installation\n"
+		"directory.\n"
+		"\n"
+		"The options available are:\n"
+		"\n"
+	);
+
+	return 0;
+}
+
+int cmdline_pass(int argc, char** argv)
+{
+	printf("Warning: `password` and `useLivePassword` overrided by `--pass` option");
+
+	preset_config_data.ask_password = true;
+
+	return 0;
+}
+
+int cmdline_rand(int argc, char** argv)
+{
+	printf("Warning: `random` and `useLiveRandom` overrided by `--rand` option");
+
+	preset_config_data.ask_random = true;
+
+	return 0;
+}
+
+int cmdline_secr(int argc, char** argv)
+{
+	printf("Warning: `secret` and `useLiveSecret` overrided by `--secr` option");
+
+	preset_config_data.ask_secret = true;
+
+	return 0;
+}
+
+int cmdline_port(int argc, char** argv)
+{
+	printf("Warning: `port` overrided by `--port` option");
+
+	preset_config_data.port = strtol(argv[1], NULL, 10);
+
+	return 0;
+}
+
+int cmdline_conf(int argc, char** argv)
+{
+	configfile_name = argv[1];
+
+	return 0;
 }

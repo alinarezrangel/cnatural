@@ -65,6 +65,16 @@ clients cannot access in a simple way to the random.
 This field specifies the port number for the server. The port cannot be used
 by other program.
 
+## Priority ##
+
+The priority of the fields is:
+
+1. The field value (for example, `secret`).
+2. The `useLive` variation (for example, `useLiveSecret`).
+3. The command line option (for example, `-s` or `--secr`).
+
+The highest-priority options overrides the lower-priority ones.
+
 ## Starting ##
 
 Only execute the file `cnatural.out` (it is not in the dot out format).

@@ -20,7 +20,6 @@ limitations under the License.
 **********************
 ************************************************/
 
-
 #if !defined(_CNATURAL_AJAX_TYPES_H_)
 #define _CNATURAL_AJAX_TYPES_H_ 1
 

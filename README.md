@@ -43,7 +43,7 @@ Makefile: see `NPM_PREFIX`, `JSDOC_TEMPLATE` and `JSDOC_TEMPLATE_ARG`.
 * Secure and user-sandboxed sessions
 * Material-like based interface (we call it *Natural Design*)
 * Interface maded upon usability and simplicity
-* Light server (~11Mb versus the **80Mb** of NodeNatural)
+* Light server (~24Mb versus the **80Mb** of NodeNatural)
 * Powerful JavaScript and C API
 
 ## Server overload ##
@@ -131,7 +131,7 @@ Note that the documentation generation is in development.
 ## Size ##
 
 CNatural it's in development, so it size may vary. The most sized component
-is the documentation (for now is ~33% of the project size).
+is the documentation (for now is ~43% of the project size).
 
 ## Authors ##
 

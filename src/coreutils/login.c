@@ -120,7 +120,7 @@ int cnatural_ajax_coreutils_login(
 		return -1;
 	}
 
-	if(jwt_add_grant(jwt, "nt_svr", "CNatural " CNATURAL_VERSION) != 0)
+	if(jwt_add_grant(jwt, "nt_svr", "CNatural " CNATURAL_SERVER_VERSION) != 0)
 	{
 		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: nt_svr");
 
