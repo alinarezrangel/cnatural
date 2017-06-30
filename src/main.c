@@ -189,7 +189,7 @@ int main(int argc, char** argv)
 			exit(EXIT_FAILURE);
 		}
 
-		memset(systdt.random, '\0', 254)
+		memset(systdt.random, '\0', 254);
 
 		if(fgets(systdt.random, 254, stdin) == NULL)
 		{
@@ -221,11 +221,11 @@ int main(int argc, char** argv)
 			fputc(systdt.random[0], stdout);
 			fputc(systdt.random[1], stdout);
 
-			for(i = 1; i < (n - 2); i++)
+			for(i = 1; i < (n - 4); ++i)
 				fputc('*', stdout);
 
+			fputc(systdt.random[n - 3], stdout);
 			fputc(systdt.random[n - 2], stdout);
-			fputc(systdt.random[n - 1], stdout);
 			fputc('\n', stdout);
 		}
 	}
