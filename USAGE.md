@@ -54,6 +54,12 @@ If this value is set to `"true"`, the field `secret` will be ignored and
 CNatural will ask the user for a secret. This method is the safest because the
 clients cannot access in a simple way to the secret.
 
+#### `useLiveRandom` - Security secret ####
+
+If this value is set to `"true"`, the field `random` will be ignored and
+CNatural will ask the user for a random. This method is the safest because the
+clients cannot access in a simple way to the random.
+
 #### `port` - Port number ####
 
 This field specifies the port number for the server. The port cannot be used

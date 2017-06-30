@@ -25,7 +25,23 @@ limitations under the License.
 
 #include <stdbool.h> /* For bool */
 
+/**
+* @brief Is the CNatural version in a string macro.
+*
+* It's something like "1.0.2", for example.
+*
+* Note that this version may not be the same than CNATURAL_SERVER_VERSION.
+*/
 #define CNATURAL_VERSION "0.1.0"
+
+/**
+* @brief Is the CNatural Server version in a string macro.
+*
+* It's something like "1.0.2", for example.
+*
+* Note that this version may not be the same than CNATURAL_VERSION.
+*/
+#define CNATURAL_SERVER_VERSION "1.0.0"
 
 #if !defined(__cplusplus)
 #	define CNATURAL_BEGIN_DECLRS /**/

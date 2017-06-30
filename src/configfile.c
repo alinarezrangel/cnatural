@@ -78,6 +78,18 @@ int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t
 				{
 					systdt->port = strtol(value, NULL, 10);
 				}
+				if(strcmp(name, "useLivePassword") == 0)
+				{
+					systdt->use_live_password = strcmp(value, "true") == 0;
+				}
+				if(strcmp(name, "useLiveSecret") == 0)
+				{
+					systdt->use_live_secret = strcmp(value, "true") == 0;
+				}
+				if(strcmp(name, "useLiveRandom") == 0)
+				{
+					systdt->use_live_random = strcmp(value, "true") == 0;
+				}
 
 				name_it = 0;
 				value_it = 0;

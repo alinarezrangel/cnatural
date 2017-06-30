@@ -49,6 +49,7 @@ int main(int argc, char** argv)
 	struct MHD_Daemon* daemon;
 	FILE* configfile = NULL;
 	char* configfile_name = "cnatural.conf";
+	int n = 0, i = 0;
 
 	setlocale(LC_ALL, "");
 
@@ -59,7 +60,8 @@ int main(int argc, char** argv)
 		configfile_name = argv[1];
 	}
 
-	printf("CNatural Server version %s\n", CNATURAL_SERVER_VERSION);
+	printf("CNatural version " CNATURAL_VERSION "\n");
+	printf("CNatural Server version " CNATURAL_SERVER_VERSION "\n");
 	printf("Starting...\n");
 	printf("Reading configuration file (%s)\n\n", configfile_name);
 
@@ -75,6 +77,9 @@ int main(int argc, char** argv)
 	systdt.password = NULL;
 	systdt.random = NULL;
 	systdt.secret = NULL;
+	systdt.use_live_password = false;
+	systdt.use_live_secret = false;
+	systdt.use_live_random = false;
 	systdt.port = 0;
 
 	if(cnatural_configfile_read_systdt_from_file(configfile, &systdt) != 0)
@@ -99,27 +104,130 @@ int main(int argc, char** argv)
 	if(systdt.username == NULL)
 	{
 		systdt.username = cnatural_strdup("cnatural");
-		fprintf(stderr, "Warning: The configuration file does not have a username field, setting to it's default: cnatural\n");
+		fprintf(stderr,
+			"Warning: The configuration file does not have a username field, "
+			"setting to it's default: cnatural\n");
 	}
 	if(systdt.password == NULL)
 	{
 		systdt.password = cnatural_strdup("a123b456");
-		fprintf(stderr, "Warning: The configuration file does not have a password field, setting to it's default: a123b456\n");
+		fprintf(stderr,
+			"Warning: The configuration file does not have a password field, "
+			"setting to it's default: a123b456\n");
 	}
 	if(systdt.random == NULL)
 	{
 		systdt.random = cnatural_strdup("not random");
-		fprintf(stderr, "Warning: The configuration file does not have a random field, setting to it's default: not random\n");
+		fprintf(stderr,
+			"Warning: The configuration file does not have a random field, setting "
+			"to it's default: not random\n");
 	}
 	if(systdt.secret == NULL)
 	{
 		systdt.secret = cnatural_strdup("not secret");
-		fprintf(stderr, "Warning: The configuration file does not have a secret field, setting to it's default: not secret\n");
+		fprintf(stderr,
+			"Warning: The configuration file does not have a secret field, setting "
+			"to it's default: not secret\n");
 	}
 	if(systdt.port == 0)
 	{
 		systdt.port = 8888;
-		fprintf(stderr, "Warning: The configuration file does not have a port field, setting to it's default: 8888\n");
+		fprintf(stderr,
+			"Warning: The configuration file does not have a port field, setting "
+			"to it's default: 8888\n");
+	}
+
+	if(systdt.use_live_password)
+	{
+		/*
+		** TODO: Read the characters but without display them.
+		*/
+		fprintf(stderr,
+			"Aborting: the useLivePassword field is not implemented for security reasons\n");
+
+		free(systdt.username);
+		free(systdt.password);
+		free(systdt.random);
+		free(systdt.secret);
+		exit(EXIT_FAILURE);
+	}
+
+	if(systdt.use_live_secret)
+	{
+		/*
+		** TODO: Read the characters but without display them.
+		*/
+		fprintf(stderr,
+			"Aborting: the useLiveSecret field is not implemented for security reasons\n");
+
+		free(systdt.username);
+		free(systdt.password);
+		free(systdt.random);
+		free(systdt.secret);
+		exit(EXIT_FAILURE);
+	}
+
+	if(systdt.use_live_random)
+	{
+		printf("useLiveRandom is active:\n\n");
+		printf("Requirements: max-size 255, set ASCII\n\n");
+		printf("Please introduce a random string or \"-\" for a generated one\n");
+		printf("> ");
+		fflush(stdout);
+
+		free(systdt.random);
+
+#if !defined(CNATURAL_USE_POSIX_STDIO)
+		systdt.random = malloc(sizeof(char) * 255);
+
+		if(systdt.random == NULL)
+		{
+			perror("Initializing memory for the random field");
+			free(systdt.username);
+			free(systdt.password);
+			free(systdt.secret);
+			exit(EXIT_FAILURE);
+		}
+
+		memset(systdt.random, '\0', 254)
+
+		if(fgets(systdt.random, 254, stdin) == NULL)
+		{
+			perror("Reading the random bytes");
+			free(systdt.username);
+			free(systdt.password);
+			free(systdt.secret);
+			exit(EXIT_FAILURE);
+		}
+#else
+		errno = 0;
+		n = scanf("%m", &systdt.random);
+
+		if((n != 1) || (errno != 0))
+		{
+			perror("Reading the random bytes");
+			free(systdt.username);
+			free(systdt.password);
+			free(systdt.secret);
+			exit(EXIT_FAILURE);
+		}
+#endif
+
+		n = strlen(systdt.random);
+
+		if(n > 4)
+		{
+			printf("Readed ");
+			fputc(systdt.random[0], stdout);
+			fputc(systdt.random[1], stdout);
+
+			for(i = 1; i < (n - 2); i++)
+				fputc('*', stdout);
+
+			fputc(systdt.random[n - 2], stdout);
+			fputc(systdt.random[n - 1], stdout);
+			fputc('\n', stdout);
+		}
 	}
 
 	printf("Starting the HTTP daemon...\n");
