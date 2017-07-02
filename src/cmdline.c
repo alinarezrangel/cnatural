@@ -25,7 +25,10 @@ limitations under the License.
 /* Implementation headers: */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include "utilfcn.h"
 
 int cnatural_cmdline_parse(
 	int argc,

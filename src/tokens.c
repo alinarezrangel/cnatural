@@ -29,6 +29,7 @@ limitations under the License.
 #include <errno.h>
 
 #include "ajaxtypes.h"
+#include "utilfcn.h"
 
 int cnatural_natural_token_create(cnatural_natural_token_t** token)
 {

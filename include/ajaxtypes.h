@@ -131,12 +131,6 @@ typedef struct cnatural_ajax_argument
 } cnatural_ajax_argument_t;
 
 /**
-* @brief Duplicates a string.
-* Like strdup, but is universal.
-*/
-char* cnatural_strdup(const char*);
-
-/**
 * @brief Gets an argument.
 */
 cnatural_post_processor_node_t* cnatural_get_arg(

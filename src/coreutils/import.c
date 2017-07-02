@@ -33,6 +33,7 @@ limitations under the License.
 
 #include "tokens.h"
 #include "authcall.h"
+#include "utilfcn.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>

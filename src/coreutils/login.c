@@ -32,6 +32,7 @@ limitations under the License.
 
 #include "tokens.h"
 #include "authcall.h"
+#include "utilfcn.h"
 
 int cnatural_ajax_coreutils_login(
 	const char* path,

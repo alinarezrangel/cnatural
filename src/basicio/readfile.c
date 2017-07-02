@@ -34,6 +34,7 @@ limitations under the License.
 
 #include "tokens.h"
 #include "authcall.h"
+#include "utilfcn.h"
 
 /*
 * Determines if a string can be safetly converted to an integer.

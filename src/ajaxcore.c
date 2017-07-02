@@ -28,6 +28,8 @@ limitations under the License.
 #include <string.h>
 #include <errno.h>
 
+#include "utilfcn.h"
+
 int cnatural_basic_post_data_handler(
 	void* conn_klass,
 	enum MHD_ValueKind kind,

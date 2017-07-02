@@ -28,8 +28,6 @@ limitations under the License.
 * Command Line Arguments parsing APIs.
 */
 
-#include <stdlib.h>
-
 #include "inc.h"
 
 CNATURAL_BEGIN_DECLRS

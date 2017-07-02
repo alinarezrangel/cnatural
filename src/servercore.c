@@ -25,6 +25,7 @@ limitations under the License.
 /* Implementation headers: */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <locale.h>
@@ -38,6 +39,7 @@ limitations under the License.
 #include "tokens.h"
 #include "ajaxcore.h"
 #include "authcall.h"
+#include "utilfcn.h"
 
 /* Global handler */
 cnatural_servercore_cll_systdt_t cnatural_servercore_get_systdt_handler = NULL;

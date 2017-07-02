@@ -40,6 +40,7 @@ limitations under the License.
 #include "configfile.h"
 #include "servercore.h"
 #include "cmdline.h"
+#include "utilfcn.h"
 
 /* Forward declarations for cmdline handlers */
 int cmdline_help(int argc, char** argv);
@@ -48,6 +49,8 @@ int cmdline_rand(int argc, char** argv);
 int cmdline_secr(int argc, char** argv);
 int cmdline_port(int argc, char** argv);
 int cmdline_conf(int argc, char** argv);
+
+void generate_random_field(void);
 
 cnatural_cmdline_argument_t options[] =
 {
@@ -86,6 +89,8 @@ int main(int argc, char** argv)
 	int n = 0, i = 0;
 
 	setlocale(LC_ALL, "");
+
+	cnatural_srandom((long int) time(NULL));
 
 	cnatural_servercore_set_systdt(&get_global_system_data);
 
@@ -244,14 +249,14 @@ int main(int argc, char** argv)
 	if(systdt.use_live_random)
 	{
 		printf("useLiveRandom is active:\n\n");
-		printf("Requirements: max-size 255, set ASCII\n\n");
+		printf("Requirements: max-size 255, set ASCII letters and numbers\n\n");
 		printf("Please introduce a random string or \"-\" for a generated one\n");
 		printf("> ");
 		fflush(stdout);
 
 		free(systdt.random);
 
-#if !defined(CNATURAL_USE_POSIX_STDIO)
+#ifndef CNATURAL_USE_POSIX_STDIO
 		systdt.random = malloc(sizeof(char) * 255);
 
 		if(systdt.random == NULL)
@@ -275,7 +280,7 @@ int main(int argc, char** argv)
 		}
 #else
 		errno = 0;
-		n = scanf("%m", &systdt.random);
+		n = scanf("%ms", &systdt.random);
 
 		if((n != 1) || (errno != 0))
 		{
@@ -285,23 +290,49 @@ int main(int argc, char** argv)
 			free(systdt.secret);
 			exit(EXIT_FAILURE);
 		}
+
+		/* FIXME: %ms always leaves one character on stdin,
+		** because the server stops on the first character readed,
+		** this prevents the server from start */
+
+		/* Just ignore */
+		fgetc(stdin);
 #endif
 
 		n = strlen(systdt.random);
 
+		if((n == 1) && (strcmp("-", systdt.random) == 0))
+		{
+			/* Generate a random */
+			generate_random_field();
+
+			n = strlen(systdt.random);
+		}
+
 		if(n > 4)
 		{
-			printf("Readed ");
+			printf("< ");
 			fputc(systdt.random[0], stdout);
 			fputc(systdt.random[1], stdout);
 
-			for(i = 1; i < (n - 4); ++i)
+			for(i = 1; i < (n - 3); ++i)
 				fputc('*', stdout);
 
-			fputc(systdt.random[n - 3], stdout);
 			fputc(systdt.random[n - 2], stdout);
+			fputc(systdt.random[n - 1], stdout);
 			fputc('\n', stdout);
 		}
+		else
+		{
+			fprintf(stderr, "Warning: the random is too small (< 4)\n");
+		}
+	}
+	else if(strcmp(systdt.random, "random") == 0)
+	{
+		/* Generate a random */
+		fputc('\n', stdout);
+		generate_random_field();
+		fputc('\n', stdout);
 	}
 
 	printf("Starting the HTTP daemon...\n");
@@ -420,4 +451,25 @@ int cmdline_conf(int argc, char** argv)
 	configfile_name = argv[1];
 
 	return 0;
+}
+
+void generate_random_field(void)
+{
+	/* Generate a random */
+	free(systdt.random);
+
+	printf("Generating random bytes\n");
+
+	systdt.random = malloc(sizeof(char) * 255);
+
+	if(systdt.random == NULL)
+	{
+		perror("Allocating the random string");
+		free(systdt.username);
+		free(systdt.password);
+		free(systdt.secret);
+		exit(EXIT_FAILURE);
+	}
+
+	cnatural_fill_random(systdt.random, 255, NULL);
 }

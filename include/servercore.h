@@ -28,8 +28,6 @@ limitations under the License.
 * HTTPd server core functions.
 */
 
-#include <stdlib.h>
-
 #include <microhttpd.h>
 
 #include "ajaxtypes.h"

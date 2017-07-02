@@ -36,6 +36,7 @@ OBJC= \
 	$(DLIB)/authcall.o \
 	$(DLIB)/servercore.o \
 	$(DLIB)/cmdline.o \
+	$(DLIB)/utilfcn.o \
 	$(DLIB)/coreutils_login.o \
 	$(DLIB)/coreutils_timefcn.o \
 	$(DLIB)/basicio_readfile.o
@@ -51,8 +52,17 @@ OPT=-O0
 DEBUG=-g
 # C starndard to be used (by default, C99)
 STD=-std=c99
+# Compilation flags used by CNatural
+# For an explanation about the macros, see the `docs/handwritten/macros.md`
+# file
+DFLAGS= \
+	-D"CNATURAL_USE_POSIX_STDIO" \
+	-U"CNATURAL_TOKEN_NO_IGNORE_ZERO" \
+	-D"CNATURAL_DEBUG" \
+	-D"CNATURAL_RANDOM_ENGINE" \
+	-U"CNATURAL_RDC_SAFE_MODE"
 # Compilation flags
-CFLAGS=$(STD) $(WARN) $(OPT) $(DEBUG) $(INCLUDES) -pthread
+CFLAGS=$(STD) $(WARN) $(OPT) $(DEBUG) $(INCLUDES) -pthread $(DFLAGS)
 # Linker flags
 LDFLAGS=$(LIBS) -ljwt
 
@@ -116,6 +126,9 @@ $(DLIB)/servercore.o: $(SRC)/servercore.c $(INC)/servercore.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 $(DLIB)/cmdline.o: $(SRC)/cmdline.c $(INC)/cmdline.h
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+$(DLIB)/utilfcn.o: $(SRC)/utilfcn.c $(INC)/utilfcn.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 $(DLIB)/coreutils_import.o: $(SRC)/coreutils/import.c $(INC)/coreutils/import.h

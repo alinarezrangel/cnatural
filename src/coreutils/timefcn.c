@@ -31,6 +31,7 @@ limitations under the License.
 #include <time.h>
 
 #include "authcall.h"
+#include "utilfcn.h"
 
 int cnatural_ajax_coreutils_time_get(
 	const char* path,

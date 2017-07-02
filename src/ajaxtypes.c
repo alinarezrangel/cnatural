@@ -23,20 +23,8 @@ limitations under the License.
 #include "ajaxtypes.h"
 
 /* Implementation headers: */
-#include <string.h>
 
-char* cnatural_strdup(const char* str)
-{
-	char* res = malloc((strlen(str) + 1) * sizeof(char));
-	if(res == NULL)
-		return NULL;
-	/*
-	strcpy(res, str);
-	res[strlen(str)] = '\0';
-	return res;
-	*/
-	return strcpy(res, str);
-}
+#include <string.h>
 
 cnatural_post_processor_node_t* cnatural_get_arg(
 	cnatural_post_processor_node_t** list,

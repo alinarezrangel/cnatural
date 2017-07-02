@@ -26,6 +26,8 @@ limitations under the License.
 
 #include <string.h>
 
+#include "utilfcn.h"
+
 int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t* systdt)
 {
 	char chr = '\0';

@@ -28,6 +28,8 @@ limitations under the License.
 #include <string.h>
 #include <errno.h>
 
+#include "utilfcn.h"
+
 int cnatural_authcall_authenticate(
 	char* CNATURAL_RESTRICT rawtk,
 	cnatural_authcall_token_t** CNATURAL_RESTRICT token,
