@@ -79,6 +79,28 @@ return zero always, which will raise an error at each token validation.
 
 It default value in the `Makefile` is *undef* (the macro is not defined).
 
+## `CNATURAL_NOT_USE_RESTRICT_KEYWORD` - Not use the C `restrict` keyword ##
+
+If this macro is defined, the macro `CNATURAL_RESTRICT` will expand to
+nothing. Otherwise, the macro `CNATURAL_RESTRICT` will expand to the C's
+`restrict` keyword. Defining this macro should not change the observable
+behavior of CNatural (as declared on the C99 spec, see the note 1).
+
+If your compiler does not support the `restrict` keyword, you should define
+this macro. Otherwise, undefining it will only probably decrease the
+optimization level of the output (see below).
+
+Remember that the `restrict` keyword is defined only for optimization
+purposes, so you should not worry about is defining or not this macro.
+
+### Requirements ###
+
+* A C compiler that supports the `restrict` keyword (C99+).
+
+### Default ###
+
+It default value in the `Makefile` is *defined* (the macro is defined).
+
 ## `_CNATURAL_*_H_` - Header macros ##
 
 You should **never** define any macro which name begins with `_CNATURAL_`
@@ -86,7 +108,8 @@ and ends with `_H_` because these macros are used in header guards.
 
 ## Links and notes ##
 
-*There are no notes for now*
+1. C99 standard (ISO/IEC 9899:1999): 6.7.3.1 Formal definition of restrict
+(p: 110-112)
 
 [drand48]: man://drand48
 [rand]: man://rand
