@@ -124,6 +124,8 @@ docs/
 		(all C docs)
 	handwritten/
 		(all non-generated docs)
+	usage/
+		(all help for non-programmers)
 ```
 
 Note that the documentation generation is in development.

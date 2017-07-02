@@ -9,7 +9,8 @@ client-side APIs of CNatural.
 APIs of CNatural.
 * [`handwritten/`](handwritten/index.md): Contains (in Markdown) the documentation
 of misc. APIs and others. Generally contains help about how to install
-CNatural and other general resources.
+CNatural, programming interfaces not defined in `c/` or `js/` and other general
+resources.
 * [`usage/`](usage/index.md): Contains (in Markdown) help about CNatural. This
 documentation is designed more for a end-user of CNatural.
 
