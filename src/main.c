@@ -51,6 +51,7 @@ int cmdline_port(int argc, char** argv);
 int cmdline_conf(int argc, char** argv);
 
 void generate_random_field(void);
+void generate_salt(char* salt);
 
 cnatural_cmdline_argument_t options[] =
 {
@@ -138,7 +139,7 @@ int main(int argc, char** argv)
 	systdt.port = 0;
 
 	/* Generate a salt, use it to fill the NULL data and crypt the password,
-	** destroy the salt (and the uncrypted password) fast as possible */
+	** destroy the salt (and the unencrypted password) fast as possible */
 
 	printf("Danger zone: generating salt...\n");
 
@@ -151,13 +152,11 @@ int main(int argc, char** argv)
 		exit(EXIT_FAILURE);
 	}
 
-	/*
-	** We cannot use fill_random because 2 is lesser than sizeof(uint_least64_t)
-	*/
-	/* cnatural_fill_random(salt, 3, NULL); */
-	strcpy(salt, "7/");
+	/* Generate a random salt */
+	generate_salt(salt);
 
-	printf("Using salt %s\n", salt);
+	/* The following code is safe? */
+	/* printf("Using salt %s\n", salt); */
 
 	printf("\nParsing configuration file\n");
 
@@ -502,4 +501,30 @@ void generate_random_field(void)
 	}
 
 	cnatural_fill_random(systdt.random, 255, NULL);
+}
+
+void generate_salt(char* salt)
+{
+	char* salt_bp = NULL;
+	uint_least64_t salt_rd = 0;
+
+	/*
+	** We cannot use fill_random because the size of the salt is lesser than
+	** sizeof(uint_least64_t) (at least 64 bits is at least 8 bytes)
+	*/
+
+	/* This function is a danger zone! */
+
+	salt_rd = cnatural_random();
+	salt_bp = (char*) &salt_rd;
+
+	salt[0] = cnatural_asciify(*salt_bp);
+
+	++salt_bp;
+
+	salt[1] = cnatural_asciify(*salt_bp);
+
+	salt[2] = '\0';
+
+	salt_bp = NULL;
 }

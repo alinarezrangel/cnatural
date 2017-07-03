@@ -139,6 +139,17 @@ int_least64_t cnatural_random(void);
 int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate_t* state);
 
 /**
+* @brief ASCIIifies a byte.
+*
+* The input byte can contain any valid value, but the returned byte always
+* is a valid graphical ASCII character.
+*
+* @arg chr The character to ASCIIify
+* @return The ACIIfied character.
+*/
+char cnatural_asciify(char chr);
+
+/**
 * @brief Gets a random ASCII string.
 *
 * To get random bytes, it uses cnatural_random if state is NULL or

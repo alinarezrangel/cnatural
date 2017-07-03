@@ -101,6 +101,18 @@ int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate_t* state)
 	return state->xsubi;
 }
 
+char cnatural_asciify(char chr)
+{
+	if(chr < 0)
+		chr = -(chr + 1);
+	if(chr < 0x21)
+		chr += 0x23;
+	if(chr > 0x7E)
+		chr -= 0x05;
+
+	return chr;
+}
+
 void cnatural_fill_random(
 	char* str,
 	size_t len,
@@ -129,14 +141,7 @@ void cnatural_fill_random(
 
 		for(j = 0; j < sizeof(uint_least64_t); ++j)
 		{
-			btc = *bt;
-
-			if(btc < 0)
-				btc = -(btc + 1);
-			if(btc < 0x21)
-				btc += 0x23;
-			if(btc > 0x7E)
-				btc -= 0x3;
+			btc = cnatural_asciify(*bt);
 
 			str[i * sizeof(uint_least64_t) + j] = btc;
 
