@@ -515,14 +515,42 @@ void generate_salt(char* salt)
 
 	/* This function is a danger zone! */
 
+	/*
+	** Notes: we cannot use cnatural_asciify to make the bytes ASCII characters
+	** because the cnatural_passwd_crypt function uses `crypt` which requires
+	** the salt to be in the range [a-zA-Z0-9./]
+	*/
+
 	salt_rd = cnatural_random();
 	salt_bp = (char*) &salt_rd;
 
-	salt[0] = cnatural_asciify(*salt_bp);
+	if(*salt_bp < 0)
+		*salt_bp = -(*salt_bp + 1);
+	if(*salt_bp < 0x30)
+		*salt_bp += 0x30;
+	if(*salt_bp > 0x7B)
+		*salt_bp -= 0x07;
+	if((*salt_bp > 0x39) && (*salt_bp < 0x41))
+		*salt_bp += 0x08;
+	if((*salt_bp > 0x5A) && (*salt_bp < 0x61))
+		*salt_bp += 0x07;
+
+	salt[0] = *salt_bp;
 
 	++salt_bp;
 
-	salt[1] = cnatural_asciify(*salt_bp);
+	if(*salt_bp < 0)
+		*salt_bp = -(*salt_bp + 1);
+	if(*salt_bp < 0x30)
+		*salt_bp += 0x30;
+	if(*salt_bp > 0x7B)
+		*salt_bp -= 0x07;
+	if((*salt_bp > 0x39) && (*salt_bp < 0x41))
+		*salt_bp += 0x08;
+	if((*salt_bp > 0x5A) && (*salt_bp < 0x61))
+		*salt_bp += 0x07;
+
+	salt[1] = *salt_bp;
 
 	salt[2] = '\0';
 

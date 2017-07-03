@@ -53,7 +53,7 @@ int cnatural_basic_post_data_handler(
 	cnatural_post_processor_data_t* data = conn_klass;
 	cnatural_post_processor_node_t* it = data->data;
 
-	printf("Handling POST data %s:%s %li\n", key, sdata, strlen(sdata));
+	printf("Handling POST data %s %li\n", key, strlen(sdata));
 	fflush(stdout);
 
 	if(strlen(sdata) == 0)
