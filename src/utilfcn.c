@@ -25,6 +25,12 @@ limitations under the License.
 /* Implementation headers: */
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+
+#include <unistd.h>
+#if !defined(CNATURAL_PASSWD_CRYPT_MTH) || (CNATURAL_PASSWD_CRYPT_MTH == 0)
+#	include <crypt.h>
+#endif
 
 static struct cnatural_utilfcn_rdstate cnatural_utilfcn_global_state = {
 	.sum = INT64_C(0xB),
@@ -126,7 +132,7 @@ void cnatural_fill_random(
 			btc = *bt;
 
 			if(btc < 0)
-				btc = -btc;
+				btc = -(btc + 1);
 			if(btc < 0x21)
 				btc += 0x23;
 			if(btc > 0x7E)
@@ -137,4 +143,34 @@ void cnatural_fill_random(
 			bt ++;
 		}
 	}
+}
+
+char* cnatural_passwd_crypt(const char* salt, const char* pass)
+{
+	char* r = NULL;
+
+	r = crypt(pass, salt);
+
+	if(r == NULL)
+	{
+		/* Should perror the error? */
+		return NULL;
+	}
+
+	return cnatural_strdup(r);
+}
+
+int cnatural_passwd_verify(const char* epass, const char* vpass)
+{
+	char* r = NULL;
+
+	r = crypt(vpass, epass);
+
+	if(r == NULL)
+		return -1;
+
+	if(strcmp(r, epass) == 0)
+		return 1;
+	else
+		return 0;
 }

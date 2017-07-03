@@ -40,6 +40,7 @@ int cnatural_ajax_coreutils_login(
 )
 {
 	cnatural_post_processor_node_t* it = NULL;
+	cnatural_post_processor_node_t* passwd = NULL;
 	cnatural_natural_token_t* tk = NULL;
 	char* uname = "";
 	char* upass = "";
@@ -67,8 +68,6 @@ int cnatural_ajax_coreutils_login(
 
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
-		printf("At %s = %s\n", it->key, it->value);
-
 		if(strcmp(it->key, "uname") == 0)
 		{
 			uname = it->value;
@@ -77,14 +76,15 @@ int cnatural_ajax_coreutils_login(
 		if(strcmp(it->key, "upass") == 0)
 		{
 			upass = it->value;
+			passwd = it;
 			continue;
 		}
 	}
 
-	printf("Getting the udata at uname:<%s> upass:<%s>\n", uname, upass);
+	printf("Getting the udata at uname:<%s>\n", uname);
 
 	if((strcmp(args->systdt->username, uname) != 0)
-		|| (strcmp(args->systdt->password, upass) != 0))
+		|| (cnatural_passwd_verify(args->systdt->password, upass) != 1))
 	{
 		printf("Invalid login\n");
 
@@ -93,6 +93,10 @@ int cnatural_ajax_coreutils_login(
 
 		return 0;
 	}
+
+	/* Destroy the uncrypted pass fast as possible */
+	free(passwd->value);
+	passwd->value = NULL;
 
 	printf("Logged, creating token...\n");
 

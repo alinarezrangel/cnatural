@@ -33,8 +33,8 @@ limitations under the License.
 #include <sys/select.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "tokens.h"
 #include "ajaxcore.h"

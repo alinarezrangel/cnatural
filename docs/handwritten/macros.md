@@ -101,6 +101,22 @@ purposes, so you should not worry about is defining or not this macro.
 
 It default value in the `Makefile` is *defined* (the macro is defined).
 
+## `CNATURAL_PASSWD_CRYPT_MTH` - Password crypt method ##
+
+If this macro is defined with a valid value, the password encrypton method
+can be selected by using other macros (not defined yet).
+
+### Values ###
+
+* `0` or `CNATURAL_CRYPTO_GNU_CRYPT`: The header `<crypt.h>` should be
+included in order to use the `crypt` function.
+* `1` or `CNATURAL_CRYPTO_POSIX_CRYPT`: The header `<crypt.h>` is not
+required to use the `crypt` function if the header `<unistd.h>` is included.
+
+### Default ###
+
+It default value in the `Makefile` is `1` (`CNATURAL_CRYPTO_GNU_CRYPT`).
+
 ## `_CNATURAL_*_H_` - Header macros ##
 
 You should **never** define any macro which name begins with `_CNATURAL_`

@@ -43,9 +43,14 @@ CNATURAL_BEGIN_DECLRS
 *
 * @arg file FILE where the configuration will be readed.
 * @arg systdt Pointer where the readed configuration will be saved.
+* @arg salt The salt to use when encrypting the password.
 * @return -1 on error, 0 on success.
 */
-int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t* systdt);
+int cnatural_configfile_read_systdt_from_file(
+	FILE* file,
+	cnatural_system_data_t* systdt,
+	const char* salt
+);
 
 CNATURAL_END_DECLRS
 

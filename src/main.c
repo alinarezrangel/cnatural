@@ -88,6 +88,7 @@ int main(int argc, char** argv)
 	struct MHD_Daemon* daemon;
 	FILE* configfile = NULL;
 	int n = 0, i = 0;
+	char* salt = NULL;
 
 	setlocale(LC_ALL, "");
 
@@ -136,7 +137,31 @@ int main(int argc, char** argv)
 	systdt.use_live_random = false;
 	systdt.port = 0;
 
-	if(cnatural_configfile_read_systdt_from_file(configfile, &systdt) != 0)
+	/* Generate a salt, use it to fill the NULL data and crypt the password,
+	** destroy the salt (and the uncrypted password) fast as possible */
+
+	printf("Danger zone: generating salt...\n");
+
+	/* 3 bytes: 2 for the salt and the NULL byte: */
+	salt = malloc(sizeof(char) * 3);
+
+	if(salt == NULL)
+	{
+		perror("allocating the salt");
+		exit(EXIT_FAILURE);
+	}
+
+	/*
+	** We cannot use fill_random because 2 is lesser than sizeof(uint_least64_t)
+	*/
+	/* cnatural_fill_random(salt, 3, NULL); */
+	strcpy(salt, "7/");
+
+	printf("Using salt %s\n", salt);
+
+	printf("\nParsing configuration file\n");
+
+	if(cnatural_configfile_read_systdt_from_file(configfile, &systdt, salt) != 0)
 	{
 		printf("Error reading the configuration file\n");
 		fclose(configfile);
@@ -190,7 +215,7 @@ int main(int argc, char** argv)
 	}
 	if(systdt.password == NULL)
 	{
-		systdt.password = cnatural_strdup("a123b456");
+		systdt.password = cnatural_passwd_crypt(salt, "a123b456");
 		fprintf(stderr,
 			"Warning: The configuration file does not have a password field, "
 			"setting to it's default: a123b456\n");
@@ -231,6 +256,10 @@ int main(int argc, char** argv)
 		free(systdt.secret);
 		exit(EXIT_FAILURE);
 	}
+
+	/* Now we can destroy the salt */
+	printf("Exiting danger zone: destroying the salt...\n");
+	free(salt);
 
 	if(systdt.use_live_secret)
 	{

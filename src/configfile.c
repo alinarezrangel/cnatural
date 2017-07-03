@@ -28,7 +28,11 @@ limitations under the License.
 
 #include "utilfcn.h"
 
-int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t* systdt)
+int cnatural_configfile_read_systdt_from_file(
+	FILE* file,
+	cnatural_system_data_t* systdt,
+	const char* salt
+)
 {
 	char chr = '\0';
 	char name[255];
@@ -66,7 +70,12 @@ int cnatural_configfile_read_systdt_from_file(FILE* file, cnatural_system_data_t
 				}
 				if(strcmp(name, "password") == 0)
 				{
-					systdt->password = cnatural_strdup(value);
+					systdt->password = cnatural_passwd_crypt(salt, value);
+
+					if(systdt->password == NULL)
+					{
+						perror("Error crypting the password");
+					}
 				}
 				if(strcmp(name, "secret") == 0)
 				{

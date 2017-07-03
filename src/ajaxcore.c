@@ -42,19 +42,65 @@ int cnatural_basic_post_data_handler(
 	size_t size
 )
 {
-	if(conn_klass == NULL)
+	size_t cursz = 0, newsz = 0, cnt = 0;
+
+	if((conn_klass == NULL) || (sdata == NULL) || (key == NULL))
 	{
 		printf("The POST data not exist\n");
 		return MHD_YES;
 	}
+
 	cnatural_post_processor_data_t* data = conn_klass;
 	cnatural_post_processor_node_t* it = data->data;
 
-	printf("Handling POST data %s:%s\n", key, sdata);
+	printf("Handling POST data %s:%s %li\n", key, sdata, strlen(sdata));
 	fflush(stdout);
 
-	/* Go to the last element in the list */
-	for(;it->next != NULL; it = it->next);
+	if(strlen(sdata) == 0)
+	{
+		printf("Zero-length value: prevent null data\n");
+		return MHD_NO;
+	}
+
+	/* Go to the last element in the list
+	** Note that if a POST request exceeds the POST_BUFFER_SIZE, it will
+	** split into more request, so we need to stop on the first token
+	** with equal key and append to it: */
+	for(;it->next != NULL; it = it->next)
+		printf("Advanced %li %s=%s\n", ++cnt, it->key, it->value);
+
+	printf("TAdvanced %li\n", cnt);
+
+	printf("At POST %s=%s\n", it->key, it->value);
+	fflush(stdout);
+
+	if(strcmp(it->key, key) == 0)
+	{
+		printf("\nAppending to %s=%s\n\n", key, sdata);
+		fflush(stdout);
+
+		cursz = strlen(it->value);
+		newsz = cursz + strlen(sdata);
+
+		char* newvl = malloc(sizeof(char) * newsz + 1);
+		if(newvl == NULL)
+		{
+			perror("Error apending a value to the existing key");
+			return MHD_NO;
+		}
+
+		printf("\n\nLook at %li %li\n\n", newsz, cursz);
+
+		strncpy(newvl, it->value, newsz);
+		strncat(newvl, sdata, strlen(sdata));
+
+		it->value = newvl;
+
+		printf("Created APPEND %s=%s %li\n\n", key, it->value, strlen(it->value));
+		fflush(stdout);
+
+		return MHD_YES;
+	}
 
 	cnatural_post_processor_node_t* kl =
 		malloc(sizeof(cnatural_post_processor_node_t));
@@ -149,11 +195,19 @@ int cnatural_destroy_post_data(cnatural_post_processor_data_t** data)
 	for(;it != NULL;)
 	{
 		cnatural_post_processor_node_t* bc = it->back;
+
+		if(it->key != NULL)
+			free(it->key);
+		if(it->value != NULL)
+			free(it->value);
+
 		free(it); /* Delete current node and go back */
 		it = bc;
 	}
+
 	if((*data)->postprocessor != NULL)
 		MHD_destroy_post_processor((*data)->postprocessor);
+
 	free(*data);
 	printf("Destroyed POST data\n");
 	fflush(stdout);
@@ -178,6 +232,9 @@ void cnatural_basic_post_destroy(
 
 	printf("Destroy...\n");
 	cnatural_destroy_post_data(&data);
+
+	data = NULL;
+
 	conn_klass = NULL;
 }
 

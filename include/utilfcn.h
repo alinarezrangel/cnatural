@@ -60,6 +60,22 @@ CNATURAL_BEGIN_DECLRS
 #define CNATURAL_RD_STDRAND 2
 
 /**
+* @brief Uses the GNU extension for the crypt function.
+*
+* When programming with macros, you can use both the macro name or
+* value, CNatural will not change the values of these macros.
+*/
+#define CNATURAL_CRYPTO_GNU_CRYPT 1
+
+/**
+* @brief Uses the POSIX API for the crypt function.
+*
+* When programming with macros, you can use both the macro name or
+* value, CNatural will not change the values of these macros.
+*/
+#define CNATURAL_CRYPTO_POSIX_CRYPT 0
+
+/**
 * @brief The random engine state.
 *
 * You should use this type as an opaque struct, because the algorithm
@@ -130,6 +146,15 @@ int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate_t* state);
 *
 * str always is NULL-terminated after calling this function.
 *
+* Notes: The size of the string should be at least `sizeof(uint_least64_t)`
+* or nothing will be written. Also, the string will be written in sections
+* of `sizeof(uint_least64_t)` bytes each, so the string will not be fully
+* used unless it size is a multiplo of `sizeof(uint_least64_t)`.
+*
+* This may be a problem with strings with size less than
+* `sizeof(uint_least64_t)`, in which nothing will be written but they will
+* be cleaned (filled with zeros).
+*
 * @arg str The string to fill.
 * @arg len The length of the string, in bytes including the terminating
 * NULL-byte.
@@ -140,6 +165,30 @@ void cnatural_fill_random(
 	size_t len,
 	cnatural_utilfcn_rdstate_t* state
 );
+
+/**
+* @brief Encrypts a password using the specified salt.
+*
+* This uses the crypt(3) function if possible, if no encryption method
+* was selected by using the macro CNATURAL_PASSWD_CRYPT_MTH, a copy of
+* password is returned (this is a security risk).
+*
+* @arg salt The salt to use.
+* @arg pass The password.
+* @return NULL on error, a malloc-created string on success.
+*/
+char* cnatural_passwd_crypt(const char* salt, const char* pass);
+
+/**
+* @brief Verifies a encrypted password.
+*
+* The password should be encrypted by using cnatural_passwd_crypt.
+*
+* @arg epass The encrypted password.
+* @arg vpass The password to verify.
+* @return -1 if error, 0 if the passwords not match or 1 if their match.
+*/
+int cnatural_passwd_verify(const char* epass, const char* vpass);
 
 CNATURAL_END_DECLRS
 

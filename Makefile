@@ -41,7 +41,7 @@ OBJC= \
 	$(DLIB)/coreutils_timefcn.o \
 	$(DLIB)/basicio_readfile.o
 # All compilation libraries
-LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil
+LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil -lcrypt
 # All compilation include paths
 INCLUDES=-I$PATH_TO_LIBMHD_INCLUDES -I$(INC)
 # Warning flags (-Wall by default)
@@ -61,7 +61,8 @@ DFLAGS= \
 	-D"CNATURAL_DEBUG" \
 	-D"CNATURAL_RANDOM_ENGINE" \
 	-U"CNATURAL_RDC_SAFE_MODE" \
-	-U"CNATURAL_NOT_USE_RESTRICT_KEYWORD"
+	-U"CNATURAL_NOT_USE_RESTRICT_KEYWORD" \
+	-D"CNATURAL_PASSWD_CRYPT_MTH=0"
 # Compilation flags
 CFLAGS=$(STD) $(WARN) $(OPT) $(DEBUG) $(INCLUDES) -pthread $(DFLAGS)
 # Linker flags

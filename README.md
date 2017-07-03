@@ -9,9 +9,9 @@ system or remote server via web, with a simple and useful interface.
 ## Dependencies ##
 
 * Standard library for C99 (or C version used).
-* [GNU libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/).
-* POSIX APIs (like `unistd.h` and others).
-* [libjwt for C](https://github.com/benmcollins/libjwt).
+* [GNU libmicrohttpd](https://www.gnu.org/software/libmicrohttpd/) (`-lmicrohttpd`).
+* POSIX APIs (like `unistd.h` and others, `-lutil -lcrypt`).
+* [libjwt for C](https://github.com/benmcollins/libjwt) (`-ljwt`).
 
 Note that libjwt requires:
 
