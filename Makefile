@@ -154,8 +154,8 @@ prepare:
 
 # Prepares the current directory to generate the docs
 prepare_docs: prepare
-	mkdir $(DOCS_OUTPUT_C)
-	mkdir $(DOCS_OUTPUT_JS)
+	mkdir -p $(DOCS_OUTPUT_C)
+	mkdir -p $(DOCS_OUTPUT_JS)
 
 # Removes all generated files (except for documentation)
 clean:

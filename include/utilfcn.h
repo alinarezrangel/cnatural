@@ -24,7 +24,7 @@ limitations under the License.
 #define _CNATURAL_UTILFCN_H_ 1
 
 /**
-* @file cmdline.h
+* @file utilfcn.h
 * General purpose utility functions.
 */
 
