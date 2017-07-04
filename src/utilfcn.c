@@ -154,7 +154,14 @@ char* cnatural_passwd_crypt(const char* salt, const char* pass)
 {
 	char* r = NULL;
 
+#if defined(CNATURAL_PASSWD_CRYPT_MTH)
 	r = crypt(pass, salt);
+#else
+	/* No password encryption method was selected, what I should do?
+	** The docs says: "if no password encryption method was selected,
+	** it will return a copy of the password" */
+	r = pass;
+#endif
 
 	if(r == NULL)
 	{
@@ -169,7 +176,11 @@ int cnatural_passwd_verify(const char* epass, const char* vpass)
 {
 	char* r = NULL;
 
+#if defined(CNATURAL_PASSWD_CRYPT_MTH)
 	r = crypt(vpass, epass);
+#else
+	r = vpass;
+#endif
 
 	if(r == NULL)
 		return -1;
