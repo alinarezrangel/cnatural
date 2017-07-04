@@ -177,7 +177,11 @@ $ntc(window).on("load", function()
 		if(res === "Hello World")
 			return;
 
-		NaturalWidgets.CreateTextDialog($ntc("#_bootscreen"), "Fatal error", "Error: " + res, function(win, msg, txt)
+		NaturalWidgets.CreateTextDialog(
+			$ntc("#_bootscreen"),
+			"Fatal error",
+			"Error: " + res,
+			function(win, msg, txt)
 		{
 			win.getElement().addClass("text-natural-darkred");
 		});
@@ -287,5 +291,8 @@ $ntc(window).on("load", function()
 				});
 			});
 		});
+
+		/* For security reasons, delete the password from the field */
+		$ntc("#login_password").value("");
 	}).on("click");
 });
