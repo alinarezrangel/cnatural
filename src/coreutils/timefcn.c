@@ -94,7 +94,7 @@ int cnatural_ajax_coreutils_time_get(
 	sz = snprintf(
 		NULL,
 		0,
-		"%d-%d-%dT%d:%d:%d.00Z",
+		"%.2d-%.2d-%.2dT%.2d:%.2d:%.2d.00Z",
 		current_server_time.tm_year + 1900,
 		current_server_time.tm_mon + 1,
 		current_server_time.tm_mday,
@@ -119,7 +119,7 @@ int cnatural_ajax_coreutils_time_get(
 	snprintf(
 		args->output_buffer,
 		sz + 1,
-		"%d-%d-%dT%d:%d:%d.00Z",
+		"%.2d-%.2d-%.2dT%.2d:%.2d:%.2d.00Z",
 		current_server_time.tm_year + 1900,
 		current_server_time.tm_mon + 1,
 		current_server_time.tm_mday,

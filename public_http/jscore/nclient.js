@@ -289,11 +289,13 @@ limitations under the License.
 		window.NaturalClient.ConvertServerTime = function(str)
 		{
 			var dt = new Date(str);
+			console.log(str);
 
 			if(!isNaN(dt.getDate()))
 				return str;
 
 			str = str.replace("T", " ").replace(".00Z", "");
+			console.log(str);
 			dt = new Date(str);
 
 			if(!isNaN(dt.getDate()))

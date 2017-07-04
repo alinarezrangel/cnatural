@@ -99,7 +99,7 @@ purposes, so you should not worry about is defining or not this macro.
 
 ### Default ###
 
-It default value in the `Makefile` is *defined* (the macro is defined).
+It default value in the `Makefile` is *undef* (the macro is not defined).
 
 ## `CNATURAL_PASSWD_CRYPT_MTH` - Password crypt method ##
 

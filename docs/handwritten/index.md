@@ -6,4 +6,5 @@ these files are available:
 
 * **(Client)** [Modules import specification](import_spec.md)
 * **(Server)** [C Macros index](macros.md)
+* **(Server)** [C Random utilities](random.md)
 
