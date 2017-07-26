@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_AJAX_TYPES_H_)
-#define _CNATURAL_AJAX_TYPES_H_ 1
+#if !defined(H_CNATURAL_AJAX_TYPES_H_)
+#define H_CNATURAL_AJAX_TYPES_H_ 1
 
 /**
 * @file ajaxtypes.h
@@ -140,4 +140,4 @@ cnatural_post_processor_node_t* cnatural_get_arg(
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_AJAX_TYPES_H_ */
+#endif /* ~H_CNATURAL_AJAX_TYPES_H_ */

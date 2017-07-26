@@ -14,10 +14,6 @@ Here are the help topics:
 * [From scratch - Launching apps][lnk3]
 * [From scratch - Advanced desktop][lnk4]
 
-## General (DM-independent) ##
-
-* [a][lnk5]
-
 ## Notes and links ##
 
 *There are no notes for now*.
@@ -26,5 +22,4 @@ Here are the help topics:
 [lnk2]: from-scratch/the-native-desktop.md
 [lnk3]: from-scratch/launching-apps.md
 [lnk4]: from-scratch/advanced-desktop.md
-[lnk5]: none
 

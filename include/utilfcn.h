@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_UTILFCN_H_)
-#define _CNATURAL_UTILFCN_H_ 1
+#if !defined(H_CNATURAL_UTILFCN_H_)
+#define H_CNATURAL_UTILFCN_H_ 1
 
 /**
 * @file utilfcn.h
@@ -203,4 +203,4 @@ int cnatural_passwd_verify(const char* epass, const char* vpass);
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_UTILFCN_H_ */
+#endif /* ~H_CNATURAL_UTILFCN_H_ */

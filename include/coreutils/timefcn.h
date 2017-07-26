@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_MODULE_COREUTILS_TIME_H_)
-#define _CNATURAL_MODULE_COREUTILS_TIME_H_ 1
+#if !defined(H_CNATURAL_MODULE_COREUTILS_TIME_H_)
+#define H_CNATURAL_MODULE_COREUTILS_TIME_H_ 1
 
 /**
 * @file time.h
@@ -41,4 +41,4 @@ int cnatural_ajax_coreutils_time_get(const char*, cnatural_ajax_argument_t*);
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_MODULE_COREUTILS_TIME_H_ */
+#endif /* ~H_CNATURAL_MODULE_COREUTILS_TIME_H_ */

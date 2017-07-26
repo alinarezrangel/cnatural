@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_CONFIGURATION_FILE_READER_H_)
-#define _CNATURAL_CONFIGURATION_FILE_READER_H_ 1
+#if !defined(H_CNATURAL_CONFIGURATION_FILE_READER_H_)
+#define H_CNATURAL_CONFIGURATION_FILE_READER_H_ 1
 
 /**
 * @file configfile.h
@@ -54,4 +54,4 @@ int cnatural_configfile_read_systdt_from_file(
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_CONFIGURATION_FILE_READER_H_ */
+#endif /* ~H_CNATURAL_CONFIGURATION_FILE_READER_H_ */

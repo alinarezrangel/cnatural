@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_)
-#define _CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_ 1
+#if !defined(H_CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_)
+#define H_CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_ 1
 
 /**
 * @file tokens.h
@@ -199,4 +199,4 @@ int cnatural_natural_token_load_from_jwt(cnatural_natural_token_t* token, jwt_t*
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_ */
+#endif /* ~H_CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_ */

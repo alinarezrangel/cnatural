@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_AUTHENTICATION_CALLS_H_)
-#define _CNATURAL_AUTHENTICATION_CALLS_H_ 1
+#if !defined(H_CNATURAL_AUTHENTICATION_CALLS_H_)
+#define H_CNATURAL_AUTHENTICATION_CALLS_H_ 1
 
 /**
 * @file authcall.h
@@ -84,4 +84,4 @@ int cnatural_authcall_destroy(cnatural_authcall_token_t** token);
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_AUTHENTICATION_CALLS_H_ */
+#endif /* ~H_CNATURAL_AUTHENTICATION_CALLS_H_ */

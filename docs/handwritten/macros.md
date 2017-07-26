@@ -117,9 +117,9 @@ required to use the `crypt` function if the header `<unistd.h>` is included.
 
 It default value in the `Makefile` is `1` (`CNATURAL_CRYPTO_GNU_CRYPT`).
 
-## `_CNATURAL_*_H_` - Header macros ##
+## `H_CNATURAL_*_H_` - Header macros ##
 
-You should **never** define any macro which name begins with `_CNATURAL_`
+You should **never** define any macro which name begins with `H_CNATURAL_`
 and ends with `_H_` because these macros are used in header guards.
 
 ## Links and notes ##

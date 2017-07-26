@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_CMDLINE_H_)
-#define _CNATURAL_CMDLINE_H_ 1
+#if !defined(H_CNATURAL_CMDLINE_H_)
+#define H_CNATURAL_CMDLINE_H_ 1
 
 /**
 * @file cmdline.h
@@ -84,4 +84,4 @@ int cnatural_cmdline_parse(
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_CMDLINE_H_ */
+#endif /* ~H_CNATURAL_CMDLINE_H_ */

@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_AJAX_CORE_H_)
-#define _CNATURAL_AJAX_CORE_H_ 1
+#if !defined(H_CNATURAL_AJAX_CORE_H_)
+#define H_CNATURAL_AJAX_CORE_H_ 1
 
 /**
 * @file ajaxcore.h
@@ -113,4 +113,4 @@ int cnatural_try_ajax(const char*, cnatural_ajax_argument_t*);
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_AJAX_CORE_H_ */
+#endif /* ~H_CNATURAL_AJAX_CORE_H_ */

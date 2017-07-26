@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_SERVER_CORE_H_)
-#define _CNATURAL_SERVER_CORE_H_ 1
+#if !defined(H_CNATURAL_SERVER_CORE_H_)
+#define H_CNATURAL_SERVER_CORE_H_ 1
 
 /**
 * @file servercore.h
@@ -86,4 +86,4 @@ void cnatural_servercore_set_response_headers(
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_SERVER_CORE_H_ */
+#endif /* ~H_CNATURAL_SERVER_CORE_H_ */

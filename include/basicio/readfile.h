@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_MODULE_BAICIO_READFILE_H_)
-#define _CNATURAL_MODULE_BAICIO_READFILE_H_ 1
+#if !defined(H_CNATURAL_MODULE_BAICIO_READFILE_H_)
+#define H_CNATURAL_MODULE_BAICIO_READFILE_H_ 1
 
 /**
 * @file readfile.h
@@ -42,4 +42,4 @@ int cnatural_ajax_basicio_readfile(const char*, cnatural_ajax_argument_t*);
 
 CNATURAL_END_DECLRS
 
-#endif /* ~_CNATURAL_MODULE_BAICIO_READFILE_H_ */
+#endif /* ~H_CNATURAL_MODULE_BAICIO_READFILE_H_ */

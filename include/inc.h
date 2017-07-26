@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(_CNATURAL_BASIC_MACROS_H_)
-#define _CNATURAL_BASIC_MACROS_H_ 1
+#if !defined(H_CNATURAL_BASIC_MACROS_H_)
+#define H_CNATURAL_BASIC_MACROS_H_ 1
 
 #include <stdbool.h> /* For bool */
 
@@ -60,4 +60,4 @@ limitations under the License.
 #	define CNATURAL_RESTRICT restrict
 #endif
 
-#endif /* ~_CNATURAL_BASIC_MACROS_H_ */
+#endif /* ~H_CNATURAL_BASIC_MACROS_H_ */
