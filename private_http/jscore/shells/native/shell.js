@@ -93,7 +93,7 @@ window.NaturalClient.GetToken((err, token) =>
 		{
 			/*
 			NOTE: the init_shell file will init the Native's shell namespace,
-			if we don't init the NS BEFORE any other thing, the entiry program
+			if we don't init the NS BEFORE any other thing, the entire program
 			will fail.
 			*/
 

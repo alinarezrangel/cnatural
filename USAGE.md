@@ -79,3 +79,7 @@ The highest-priority options overrides the lower-priority ones.
 ## Starting ##
 
 Only execute the file `bin/cnatural.out` (it is not in the dot out format).
+
+## More help ##
+
+For more help see the [docs/usage/index](docs/usage/index.md) file.

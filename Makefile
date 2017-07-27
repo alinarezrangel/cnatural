@@ -199,4 +199,3 @@ docsjs: prepare_docs
 # Needs Doxygen
 docsc: prepare_docs
 	doxygen $(DOXYFILE_PATH)
-

@@ -84,31 +84,22 @@ For build, use the Make tool:
 
 	make
 
-If you need the docs, use:
-
-	make docs
-
-For install use the:
+Install CNatural using:
 
 	make install
-
-command.
-
-Note that you can install a minimal version of the server, better for system
-with limited storage using:
-
-	make minimal
 
 Running the server is easy:
 
 	./bin/cnatural.out
 
-But this will not work:
+But running the CNatural binary outside the installation directory will not
+work, so avoid using it like:
 
 	cd ./bin/
 	./cnatural.out
 
-All configuration data will be readed from `cnatural.conf`
+All configuration data will be readed from `cnatural.conf` (see
+`./bin/cnatural.out --help` or [USAGE](USAGE.md) for more help).
 
 ## Documentation ##
 
@@ -127,8 +118,6 @@ docs/
 	usage/
 		(all help for non-programmers)
 ```
-
-Note that the documentation generation is in development.
 
 ## Size ##
 
