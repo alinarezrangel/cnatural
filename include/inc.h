@@ -32,32 +32,38 @@ limitations under the License.
 */
 #define CNATURAL_SERVER_VERSION "1.0.0"
 
+/* If this is C, not C++ */
 #if !defined(__cplusplus)
-#	define CNATURAL_BEGIN_DECLRS /**/
-#	define CNATURAL_END_DECLRS /**/
-#
-#	if defined(__STDC_VERSION__)
-#		if __STDC_VERSION__ == 201112L
-#			define CNATURAL_LANG_11 1
-#		endif
-#	else
-#		error "Error: __STDC_VERSION__ undefined"
-#	endif
-#else
-#	define CNATURAL_BEGIN_DECLRS extern "C" {
-#	define CNATURAL_END_DECLRS }
-#
-#	define CNATURAL_USING_CPP 1
-#
-#	if __cplusplus >= 201103L
-#		define CNATURAL_LANG_11 1
-#	endif
-#endif
+/* These macros are used only in C++ */
+#define CNATURAL_BEGIN_DECLRS
+#define CNATURAL_END_DECLRS
+
+/* Detect if this is C11 */
+#if defined(__STDC_VERSION__)
+#if __STDC_VERSION__ == 201112L
+#define CNATURAL_LANG_11 1
+#endif /* __STDC_VERSION__ == 201112L */
+#else /* defined(__STDC_VERSION__) */
+#error "Error: __STDC_VERSION__ undefined"
+#endif /* defined(__STDC_VERSION__) */
+#else /* !defined(__cplusplus) */
+/* This is C++, so we need to wrap the C-code */
+#define CNATURAL_BEGIN_DECLRS extern "C" {
+#define CNATURAL_END_DECLRS }
+
+/* To make easy in other headers to detect C++ */
+#define CNATURAL_USING_CPP 1
+
+/* Detect if this is C++11 */
+#if __cplusplus >= 201103L
+#define CNATURAL_LANG_11 1
+#endif /* __cplusplus >= 201103L */
+#endif /* !defined(__cplusplus) */
 
 #if defined(CNATURAL_NOT_USE_RESTRICT_KEYWORD)
-#	define CNATURAL_RESTRICT /**/
-#else
-#	define CNATURAL_RESTRICT restrict
-#endif
+#define CNATURAL_RESTRICT
+#else /* defined(CNATURAL_NOT_USE_RESTRICT_KEYWORD) */
+#define CNATURAL_RESTRICT restrict
+#endif /* defined(CNATURAL_NOT_USE_RESTRICT_KEYWORD) */
 
 #endif /* ~H_CNATURAL_BASIC_MACROS_H_ */

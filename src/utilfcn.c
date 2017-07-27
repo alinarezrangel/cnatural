@@ -29,8 +29,9 @@ limitations under the License.
 
 #include <unistd.h>
 #if !defined(CNATURAL_PASSWD_CRYPT_MTH) || (CNATURAL_PASSWD_CRYPT_MTH == 0)
-#	include <crypt.h>
-#endif
+#include <crypt.h>
+#endif /* !defined(CNATURAL_PASSWD_CRYPT_MTH) \
+	|| (CNATURAL_PASSWD_CRYPT_MTH == 0) */
 
 static struct cnatural_utilfcn_rdstate cnatural_utilfcn_global_state = {
 	.sum = INT64_C(0xB),
@@ -57,24 +58,33 @@ cnatural_utilfcn_rdstate_t cnatural_srandom(int_least64_t seed)
 	const int_least64_t p2t48 = INT64_C(281474976710656);
 
 #ifdef CNATURAL_RDC_SAFE_MODE
-#	if defined(CNATURAL_RDC_ARG1) && defined(CNATURAL_RDC_ARG2) && defined(CNATURAL_RDC_ARG3)
+#if defined(CNATURAL_RDC_ARG1) \
+	&& defined(CNATURAL_RDC_ARG2) \
+	&& defined(CNATURAL_RDC_ARG3)
 	cnatural_utilfcn_global_state = (cnatural_utilfcn_rdstate_t) {
 		.sum = INT64_C(CNATURAL_RDC_ARG2) + (seed / INT64_C(2)),
 		.mul = INT64_C(CNATURAL_RDC_ARG1) + INT64_C(1),
-		.mod = (INT64_C(CNATURAL_RDC_ARG3) < p2t48)? p2t48 : INT64_C(CNATURAL_RDC_ARG3),
+		.mod = (INT64_C(CNATURAL_RDC_ARG3) < p2t48)?
+			p2t48
+			: INT64_C(CNATURAL_RDC_ARG3),
 		.xsubi = seed
 	};
-#	else
-#		error "CNatural " __FILE__ " " __LINE__ ": macros CNATURAL_RDC_ARG* are bad defined"
-#	endif
-#else
+#else /* defined(CNATURAL_RDC_ARG1) \
+	&& defined(CNATURAL_RDC_ARG2) \
+	&& defined(CNATURAL_RDC_ARG3) */
+#error "CNatural " __FILE__ " " __LINE__ ": macros CNATURAL_RDC_ARG* are bad \
+defined"
+#endif /* defined(CNATURAL_RDC_ARG1) \
+	&& defined(CNATURAL_RDC_ARG2) \
+	&& defined(CNATURAL_RDC_ARG3) */
+#else /* CNATURAL_RDC_SAFE_MODE */
 	cnatural_utilfcn_global_state = (cnatural_utilfcn_rdstate_t) {
 		.sum = INT64_C(0xB),
 		.mul = INT64_C(0x5DEECE66D),
 		.mod = p2t48,
 		.xsubi = seed
 	};
-#endif
+#endif /* CNATURAL_RDC_SAFE_MODE */
 
 	return cnatural_utilfcn_global_state;
 }
