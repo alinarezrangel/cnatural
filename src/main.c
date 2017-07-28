@@ -56,7 +56,7 @@ void generate_salt(char* salt);
 cnatural_cmdline_argument_t options[] =
 {
 	{"-c", "--conf", 1, cmdline_conf, "Sets the configuration file"},
-	{"-p", "--pass", 0, cmdline_pass, "Ask the user for an username to authenticate"},
+	{"-a", "--pass", 0, cmdline_pass, "Ask the user for an username to authenticate"},
 	{"-r", "--rand", 0, cmdline_rand, "Ask the user for a random string to authenticate"},
 	{"-s", "--secr", 0, cmdline_secr, "Ask the user for a secret to encrypt"},
 	{"-p", "--port", 1, cmdline_port, "Sets the port where the server will be executed"},

@@ -14,6 +14,14 @@ Here are the help topics:
 * [From scratch - Launching apps][lnk3]
 * [From scratch - Advanced desktop][lnk4]
 
+## CNatural CLI ##
+
+The *Command Line Interface* (CLI) of the CNatural server is simple and easy,
+with each command represented by a one-letter flag (`-s` for example) or a
+long-name setting (`--password` for example).
+
+* [CNatural Server CLI][lnk5]
+
 ## Notes and links ##
 
 *There are no notes for now*.
@@ -22,4 +30,4 @@ Here are the help topics:
 [lnk2]: from-scratch/the-native-desktop.md
 [lnk3]: from-scratch/launching-apps.md
 [lnk4]: from-scratch/advanced-desktop.md
-
+[lnk5]: cli.md
