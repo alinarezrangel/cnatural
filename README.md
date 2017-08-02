@@ -90,16 +90,16 @@ Install CNatural using:
 
 Running the server is easy:
 
-	./bin/cnatural.out
+	./bin/cnatural
 
 But running the CNatural binary outside the installation directory will not
 work, so avoid using it like:
 
 	cd ./bin/
-	./cnatural.out
+	./cnatural
 
 All configuration data will be readed from `cnatural.conf` (see
-`./bin/cnatural.out --help` or [USAGE](USAGE.md) for more help).
+`./bin/cnatural --help` or [USAGE](USAGE.md) for more help).
 
 ## Documentation ##
 

@@ -78,7 +78,7 @@ The highest-priority options overrides the lower-priority ones.
 
 ## Starting ##
 
-Only execute the file `bin/cnatural.out` (it is not in the dot out format).
+Only execute the file `bin/cnatural`.
 
 ## More help ##
 

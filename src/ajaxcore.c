@@ -300,5 +300,11 @@ int cnatural_try_ajax(const char* path, cnatural_ajax_argument_t* inout)
 	ret = cnatural_ajax_basicio_readfile(path, inout);
 	if(ret <= 0)
 		return ret;
+	ret = cnatural_ajax_basicio_openfile(path, inout);
+	if(ret <= 0)
+		return ret;
+	ret = cnatural_ajax_basicio_closefile(path, inout);
+	if(ret <= 0)
+		return ret;
 	return 1;
 }

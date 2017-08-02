@@ -22,7 +22,7 @@ BIN=bin
 DLIB=libs
 
 # Name of the target binary
-TARGET=$(BIN)/cnatural.out
+TARGET=$(BIN)/cnatural
 
 # All objects files (starting with main.o)
 OBJC= \
@@ -39,7 +39,9 @@ OBJC= \
 	$(DLIB)/utilfcn.o \
 	$(DLIB)/coreutils_login.o \
 	$(DLIB)/coreutils_timefcn.o \
-	$(DLIB)/basicio_readfile.o
+	$(DLIB)/basicio_readfile.o \
+	$(DLIB)/basicio_openf.o \
+	$(DLIB)/basicio_closef.o
 # All compilation libraries
 LIBS=-L$PATH_TO_LIBMHD_LIBS -lmicrohttpd -lutil -lcrypt
 # All compilation include paths
@@ -143,6 +145,12 @@ $(DLIB)/coreutils_timefcn.o: $(SRC)/coreutils/timefcn.c $(INC)/coreutils/timefcn
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 $(DLIB)/basicio_readfile.o: $(SRC)/basicio/readfile.c $(INC)/basicio/readfile.h
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+$(DLIB)/basicio_openf.o: $(SRC)/basicio/openf.c $(INC)/basicio/openf.h
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+$(DLIB)/basicio_closef.o: $(SRC)/basicio/closef.c $(INC)/basicio/closef.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Special targets:

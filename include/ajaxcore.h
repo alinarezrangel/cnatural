@@ -41,6 +41,8 @@ limitations under the License.
 #include "coreutils/import.h"
 #include "coreutils/timefcn.h"
 #include "basicio/readfile.h"
+#include "basicio/openf.h"
+#include "basicio/closef.h"
 
 /* End of custom AJAX functions */
 

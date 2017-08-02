@@ -116,6 +116,15 @@ int cnatural_ajax_coreutils_time_get(
 	args->output_buffer_size = sz;
 	args->output_buffer = malloc(sz + 1);
 
+	if(args->output_buffer == NULL)
+	{
+		perror("Error allocating the current time");
+
+		free(args->output_mimetype);
+
+		return -1;
+	}
+
 	snprintf(
 		args->output_buffer,
 		sz + 1,
