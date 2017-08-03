@@ -46,4 +46,4 @@ docs/js/out/
 docs/c/out/
 
 # The target binary
-bin/cnatural
+bin/cnatural*
