@@ -24,7 +24,7 @@ limitations under the License.
 #define H_CNATURAL_CMDLINE_H_ 1
 
 /**
-* @file cmdline.h
+* @file
 * Command Line Arguments parsing APIs.
 */
 
@@ -33,12 +33,17 @@ limitations under the License.
 CNATURAL_BEGIN_DECLRS
 
 /**
+* @addtogroup cmdline Command Line Utilities
+* @{
+*/
+
+/**
 * @brief Type handler for command line options.
 *
 * A function pointer to a command line option handler.
 *
-* @arg argc The argument counter.
-* @arg argv The arguments passed to the handlers.
+* @param argc The argument counter.
+* @param argv The arguments passed to the handlers.
 */
 typedef int (*cnatural_cmdline_argument_handler_t)(int argc, char** argv);
 
@@ -69,10 +74,10 @@ typedef struct cnatural_cmdline_argument
 * The `help_handler` will be called with the `-h` or `--help` flags without
 * arguments.
 *
-* @arg argc The argument count.
-* @arg argv The argument values, an array of at least `argc` strings.
-* @arg opts An array of all options.
-* @arg help_handler The handler function for the help option.
+* @param argc The argument count.
+* @param argv The argument values, an array of at least `argc` strings.
+* @param opts An array of all options.
+* @param help_handler The handler function for the help option.
 * @return -1 on error, 0 on success or 1 if the help handler was called.
 */
 int cnatural_cmdline_parse(
@@ -81,6 +86,10 @@ int cnatural_cmdline_parse(
 	cnatural_cmdline_argument_t* opts,
 	cnatural_cmdline_argument_handler_t help_handler
 );
+
+/**
+* @}
+*/
 
 CNATURAL_END_DECLRS
 

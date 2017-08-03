@@ -24,7 +24,7 @@ limitations under the License.
 #define H_CNATURAL_AUTHENTICATION_CALLS_H_ 1
 
 /**
-* @file authcall.h
+* @file
 * Utility functions for authentication of API calls.
 *
 * These calls are simply wrappers around more complex calls.
@@ -36,6 +36,11 @@ limitations under the License.
 #include "inc.h"
 
 CNATURAL_BEGIN_DECLRS
+
+/**
+* @addtogroup authcall Authentication Library
+* @{
+*/
 
 /**
 * @brief The JWT encrypton method used to authenticate the tokens.
@@ -63,9 +68,9 @@ typedef struct cnatural_authcall_token
 * The token should be a pointer to a pointer where the uninitialized token
 * is.
 *
-* @arg rawtk The raw token string
-* @arg token [OUT] The token.
-* @arg systdt Pointer to a valid system data.
+* @param rawtk The raw token string
+* @param[out] token The token.
+* @param systdt Pointer to a valid system data.
 * @return -1 on error, 0 if the token is valid and 1 otherwise.
 */
 int cnatural_authcall_authenticate(
@@ -77,10 +82,14 @@ int cnatural_authcall_authenticate(
 /**
 * @brief Destroyes a call to authenticate.
 *
-* @arg token The call to authenticate to destroy.
+* @param token The call to authenticate to destroy.
 * @return -1 on error, 0 on sucess.
 */
 int cnatural_authcall_destroy(cnatural_authcall_token_t** token);
+
+/**
+* @}
+*/
 
 CNATURAL_END_DECLRS
 

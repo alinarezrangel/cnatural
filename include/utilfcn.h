@@ -24,7 +24,7 @@ limitations under the License.
 #define H_CNATURAL_UTILFCN_H_ 1
 
 /**
-* @file utilfcn.h
+* @file
 * General purpose utility functions.
 */
 
@@ -36,28 +36,9 @@ limitations under the License.
 CNATURAL_BEGIN_DECLRS
 
 /**
-* @brief Uses the drand48 functions as random generation engine.
-*
-* When programming with macros, you can use both the macro name or
-* value, CNatural will not change the values of these macros.
+* @addtogroup utilfcn Utility Functions
+* @{
 */
-#define CNATURAL_RD_DRAND48 0
-
-/**
-* @brief Uses the internal algorithm as random generation engine.
-*
-* When programming with macros, you can use both the macro name or
-* value, CNatural will not change the values of these macros.
-*/
-#define CNATURAL_RD_LCE 1
-
-/**
-* @brief Uses the standard rand function as random generation engine.
-*
-* When programming with macros, you can use both the macro name or
-* value, CNatural will not change the values of these macros.
-*/
-#define CNATURAL_RD_STDRAND 2
 
 /**
 * @brief Uses the GNU extension for the crypt function.
@@ -78,9 +59,7 @@ CNATURAL_BEGIN_DECLRS
 /**
 * @brief The random engine state.
 *
-* You should use this type as an opaque struct, because the algorithm
-* and state of the random engine may change in incompatible-ways between
-* compatible versions of CNatural.
+* Implements a linear-congruential engine.
 */
 typedef struct cnatural_utilfcn_rdstate
 {
@@ -96,7 +75,7 @@ typedef struct cnatural_utilfcn_rdstate
 *
 * Like strdup, but is portable.
 *
-* @arg str String to duplicate (is not modified).
+* @param str String to duplicate (is not modified).
 * @return A malloc-created copy of str.
 */
 char* cnatural_strdup(const char* str);
@@ -104,12 +83,12 @@ char* cnatural_strdup(const char* str);
 /**
 * @brief Seeds the random number engine.
 *
-* For help about the random number engine, see the cnatural_random function.
+* For help about the random number engine, see the cnatural_random() function.
 *
 * This function is not reentrant and is not thread-safe. The default seed
 * is 1.
 *
-* @arg seed The new seed.
+* @param seed The new seed.
 * @return A copy of the new global state.
 */
 cnatural_utilfcn_rdstate_t cnatural_srandom(int_least64_t seed);
@@ -118,11 +97,11 @@ cnatural_utilfcn_rdstate_t cnatural_srandom(int_least64_t seed);
 * @brief Gets a random number and updates the global random state.
 *
 * Really, it returns an uniform pseudo-random number picked from the
-* global random state and updates it. This uses an unespecified algorithm
-* to do that.
+* global random state and updates it. The engine used is a linear-congruential
+* engine.
 *
 * This function uses the global state and is not thread safe. For a reentrant
-* aproach, see the cnatural_random_r function.
+* aproach, see the cnatural_random_r() function.
 *
 * @return The next pseudo-random number generated.
 */
@@ -131,9 +110,9 @@ int_least64_t cnatural_random(void);
 /**
 * @brief Gets a random number and updates a local random state.
 *
-* Like cnatural_random, but reentrant.
+* Like cnatural_random(), but reentrant.
 *
-* @arg state The random state.
+* @param state The random state.
 * @return The next pseudo-random number generated.
 */
 int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate_t* state);
@@ -144,7 +123,7 @@ int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate_t* state);
 * The input byte can contain any valid value, but the returned byte always
 * is a valid graphical ASCII character.
 *
-* @arg chr The character to ASCIIify
+* @param chr The character to ASCIIify
 * @return The ACIIfied character.
 */
 char cnatural_asciify(char chr);
@@ -152,24 +131,25 @@ char cnatural_asciify(char chr);
 /**
 * @brief Gets a random ASCII string.
 *
-* To get random bytes, it uses cnatural_random if state is NULL or
-* cnatural_random_r otherwise.
+* To get random bytes, it uses cnatural_random() if state is NULL or
+* cnatural_random_r() otherwise.
 *
 * str always is NULL-terminated after calling this function.
 *
-* Notes: The size of the string should be at least `sizeof(uint_least64_t)`
-* or nothing will be written. Also, the string will be written in sections
-* of `sizeof(uint_least64_t)` bytes each, so the string will not be fully
-* used unless it size is a multiplo of `sizeof(uint_least64_t)`.
+* @note
+*  The size of the string should be at least `sizeof(uint_least64_t)`
+*  or nothing will be written. Also, the string will be written in sections
+*  of `sizeof(uint_least64_t)` bytes each, so the string will not be fully
+*  used unless it size is a multiplo of `sizeof(uint_least64_t)`.
+* @note
+*  This may be a problem with strings with size less than
+*  `sizeof(uint_least64_t)`, in which nothing will be written but they will
+*  be cleaned (filled with zeros).
 *
-* This may be a problem with strings with size less than
-* `sizeof(uint_least64_t)`, in which nothing will be written but they will
-* be cleaned (filled with zeros).
-*
-* @arg str The string to fill.
-* @arg len The length of the string, in bytes including the terminating
+* @param str The string to fill.
+* @param len The length of the string, in bytes including the terminating
 * NULL-byte.
-* @arg state The random state or NULL.
+* @param state The random state or NULL.
 */
 void cnatural_fill_random(
 	char* str,
@@ -184,8 +164,8 @@ void cnatural_fill_random(
 * was selected by using the macro CNATURAL_PASSWD_CRYPT_MTH, a copy of
 * password is returned (this is a security risk).
 *
-* @arg salt The salt to use.
-* @arg pass The password.
+* @param salt The salt to use.
+* @param pass The password.
 * @return NULL on error, a malloc-created string on success.
 */
 char* cnatural_passwd_crypt(const char* salt, const char* pass);
@@ -193,13 +173,17 @@ char* cnatural_passwd_crypt(const char* salt, const char* pass);
 /**
 * @brief Verifies a encrypted password.
 *
-* The password should be encrypted by using cnatural_passwd_crypt.
+* The password should be encrypted with cnatural_passwd_crypt().
 *
-* @arg epass The encrypted password.
-* @arg vpass The password to verify.
+* @param epass The encrypted password.
+* @param vpass The password to verify.
 * @return -1 if error, 0 if the passwords not match or 1 if their match.
 */
 int cnatural_passwd_verify(const char* epass, const char* vpass);
+
+/**
+* @}
+*/
 
 CNATURAL_END_DECLRS
 

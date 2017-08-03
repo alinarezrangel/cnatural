@@ -70,7 +70,7 @@ int cnatural_servercore_request_handler(
 	const char* method,
 	const char* version,
 	const char* upload_data,
-	long unsigned int* upload_data_size,
+	unsigned long int* upload_data_size,
 	void** conn_klass
 )
 {

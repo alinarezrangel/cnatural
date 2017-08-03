@@ -24,8 +24,10 @@ limitations under the License.
 #define H_CNATURAL_SERVER_CORE_H_ 1
 
 /**
-* @file servercore.h
+* @file
 * HTTPd server core functions.
+*
+* These functions are only useful when working with the HTTP core.
 */
 
 #include <microhttpd.h>
@@ -35,6 +37,11 @@ limitations under the License.
 #include "inc.h"
 
 CNATURAL_BEGIN_DECLRS
+
+/**
+* @addtogroup servercore Server core functions
+* @{
+*/
 
 /**
 * @brief This callback is used to get a systdt.
@@ -47,7 +54,8 @@ typedef cnatural_system_data_t* (*cnatural_servercore_cll_systdt_t)(void);
 extern cnatural_servercore_cll_systdt_t cnatural_servercore_get_systdt_handler;
 
 /**
-* @brief Gets the global systdt by calling `cnatural_servercore_get_systdt_handler`.
+* @brief Gets the global systdt by calling
+* cnatural_servercore_get_systdt_handler.
 *
 * @return The global systdt or NULL if no handler was attached.
 */
@@ -56,12 +64,13 @@ cnatural_system_data_t* cnatural_servercore_get_systdt(void);
 /**
 * @brief Sets the global systdt callback.
 *
-* @arg handler The new systdt get handler.
+* @param handler The new systdt get handler.
 */
 void cnatural_servercore_set_systdt(cnatural_servercore_cll_systdt_t handler);
 
 /**
 * @brief Handles a HTTP request.
+*
 * Designed to be used ONLY by the MicroHTTPd library.
 */
 int cnatural_servercore_request_handler(
@@ -71,18 +80,29 @@ int cnatural_servercore_request_handler(
 	const char* method,
 	const char* version,
 	const char* upload_data,
-	long unsigned int* upload_data_size,
+	unsigned long int* upload_data_size,
 	void** conn_klass
 );
 
 /**
 * @brief Sets the HTTP headers.
+*
 * Designed to be used ONLY by the MicroHTTPd library.
+*
+* The HTTP headers set depends on the version of CNatural, but always sets
+* at least:
+*
+* - The Content Security Police headers.
+* - The Frame options headers.
 */
 void cnatural_servercore_set_response_headers(
 	struct MHD_Response** res,
 	int type
 );
+
+/**
+* @}
+*/
 
 CNATURAL_END_DECLRS
 

@@ -30,6 +30,15 @@ limitations under the License.
 
 #include "utilfcn.h"
 
+/* NOTE: These headers are included for it's usage in the cnatural_try_ajax */
+
+#include "coreutils/login.h"
+#include "coreutils/import.h"
+#include "coreutils/timefcn.h"
+#include "basicio/readfile.h"
+#include "basicio/openf.h"
+#include "basicio/closef.h"
+
 int cnatural_basic_post_data_handler(
 	void* conn_klass,
 	enum MHD_ValueKind kind,

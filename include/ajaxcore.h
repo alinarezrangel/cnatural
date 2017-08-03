@@ -24,7 +24,7 @@ limitations under the License.
 #define H_CNATURAL_AJAX_CORE_H_ 1
 
 /**
-* @file ajaxcore.h
+* @file
 * Core of the AJAX API.
 */
 
@@ -35,20 +35,16 @@ limitations under the License.
 
 #include "ajaxtypes.h"
 
-/* NOTE: These headers are included for it's usage in the cnatural_try_ajax */
-
-#include "coreutils/login.h"
-#include "coreutils/import.h"
-#include "coreutils/timefcn.h"
-#include "basicio/readfile.h"
-#include "basicio/openf.h"
-#include "basicio/closef.h"
-
 /* End of custom AJAX functions */
 
 #include "inc.h"
 
 CNATURAL_BEGIN_DECLRS
+
+/**
+* @addtogroup ajax AJAX Bridge API
+* @{
+*/
 
 /**
 * @brief Handles a POST request using the provided data.
@@ -91,11 +87,12 @@ void cnatural_basic_post_destroy(
 
 /**
 * @brief A simple AJAX handler.
+*
 * The availables return codes are:
 *
-*  -1: An error occours and ERRNO is set.
-*  0: Good.
-*  1: This path not matches with this AJAX handler path.
+* - `-1`: An error occours and ERRNO is set.
+* - `0`: Good.
+* - `1`: This path not matches with this AJAX handler path.
 *
 * @param path String with the AJAX path.
 * @param inout Arguments for the AJAX.
@@ -112,6 +109,10 @@ int cnatural_ajax_test(const char*, cnatural_ajax_argument_t*);
 * @brief Tries to execute the specified AJAX path with the provided arguments.
 */
 int cnatural_try_ajax(const char*, cnatural_ajax_argument_t*);
+
+/**
+* @}
+*/
 
 CNATURAL_END_DECLRS
 
