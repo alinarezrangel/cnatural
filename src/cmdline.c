@@ -40,6 +40,13 @@ int cnatural_cmdline_parse(
 	int i = 0, j = 0, w = 0, cc = 0, wc = 0, mx = 0, rt = 0, cln = 0;
 	bool x = false;
 
+	/*
+	* mx = Number of registered commands
+	* cc, rt, wc = Return values from IO operations or command callbacks
+	* i, j, w = Common indexes
+	* cln = Column to write command descriptions
+	*/
+
 	for(j = 0; ; ++j)
 	{
 		if((opts[j].short_option == NULL)
@@ -162,6 +169,8 @@ int cnatural_cmdline_parse(
 
 		for(j = 0; j < mx; j++)
 		{
+			x = false;
+
 			if((opts[j].short_option != NULL)
 				&& (strcmp(opts[j].short_option, argv[i]) == 0))
 			{
@@ -184,9 +193,11 @@ int cnatural_cmdline_parse(
 				fprintf(stderr,
 					"Parsing command error:\n");
 				fprintf(stderr,
-					"    Argument requires %d arguments, but only %d are given\n",
+					"    Argument %s/%s requires %d arguments, but only %d are given\n",
+					opts[j].short_option,
+					opts[j].long_option,
 					opts[j].nth_args,
-					mx - j);
+					opts[j].nth_args - ((i + opts[j].nth_args) - argc) - 1);
 				fprintf(stderr,
 					"abort()\n");
 

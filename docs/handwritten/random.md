@@ -12,7 +12,7 @@ system, some systems (like most GNU/Linux distros, see note 1) have a very
 good randomness for `rand`, some others not. The standard does not specify a
 minimal implementation, distribution or other requirements so is unsafe to use
 `rand` for cryptography and others. CNatural implements it's own pseudo-random
-number generator by hte (very similar) `cnatural_random`, `cnatural_srandom`
+number generator by the (very similar) `cnatural_random`, `cnatural_srandom`
 and `cnatural_random_r`.
 
 ## The CNatural random API ##

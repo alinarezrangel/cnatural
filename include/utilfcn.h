@@ -30,6 +30,7 @@ limitations under the License.
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdarg.h>
 
 #include "inc.h"
 
@@ -55,6 +56,37 @@ CNATURAL_BEGIN_DECLRS
 * value, CNatural will not change the values of these macros.
 */
 #define CNATURAL_CRYPTO_POSIX_CRYPT 0
+
+/**
+* @brief Defines the DEBUG log level.
+*
+* In the DEBUG log level all calls to cnatural_log_base() and similars are
+* printed to stdout or stderr.
+*/
+#define CNATURAL_LOG_DEBUG 0
+
+/**
+* @brief Defines the INFO log level.
+*
+* In the INFO log level, only messages with informational purposes and
+* warnings/errors will be printed to stdout or stderr.
+*/
+#define CNATURAL_LOG_INFO 3
+
+/**
+* @brief Defines the WARNING log level.
+*
+* In the WARNING log level, only warnings and errors are printed to stdout
+* or stderr.
+*/
+#define CNATURAL_LOG_WARNING 6
+
+/**
+* @brief Defines the ERROR log level.
+*
+* In the ERROR log level only errors will be printed to stdout or stderr.
+*/
+#define CNATURAL_LOG_ERROR 9
 
 /**
 * @brief The random engine state.
@@ -180,6 +212,153 @@ char* cnatural_passwd_crypt(const char* salt, const char* pass);
 * @return -1 if error, 0 if the passwords not match or 1 if their match.
 */
 int cnatural_passwd_verify(const char* epass, const char* vpass);
+
+/**
+* @brief Sets or gets the global log level.
+*
+* If `level` is a valid log level (a positive number between
+* CNATURAL_LOG_DEBUG and CNATURAL both inclusive) then the global log level
+* will be set to `level` and `level` will be returned.
+*
+* If `level` is not a valid level (a negative number) then the global log
+* level will be returned.
+*
+* @param level The new global log level or `-1`.
+* @return The global log level.
+*/
+int cnatural_log_level(int level);
+
+/**
+* @brief Sets if the log functions should use ANSI colors.
+*
+* If CNatural was compiled with the CNATURAL_USE_ANSI_COLOR macro, then
+* this function enables the colored output if `use_color` is `true`, and
+* disables it if is `false`. If CNatural was not compiled with the
+* `CNATURAL_USE_ANSI_COLOR` macro, then does nothing and always returns
+* `false`.
+*
+* @note
+*   If CNatural was compiled without the `CNATURAL_USE_ANSI_COLOR` macro,
+*   the log output will never been colored.
+*
+* @param use_color If a colored output should be used.
+* @return `true` if the colored output is currently activated, `false`
+* otherwise.
+*/
+bool cnatural_log_color(bool use_color);
+
+/**
+* @brief Base log function.
+*
+* If you want to log something, please don't use this function, it is designed
+* **only** to be used by the others `cnatural_log_*` functions.
+*
+* It prints a string showing the level of the warning (like `"ERROR"` or
+* `"DEBUG"`), prints the current date and time, prints the first message
+* and prints the second messages all on the same line. If
+* CNATURAL_USE_ANSI_COLOR is defined, it will wrap the printf() calls with an
+* ANSI escape code that will change the **text** color according to the log
+* level.
+*
+* This function will skip messages with log levels lesser than the global log
+* level, so if the current global log level is CNATURAL_LOG_WARNING an you try
+* to print a message with log level of CNATURAL_LOG_DEBUG, it will not be
+* showed.
+*
+* The formatting strings and arguments will be passed to internal printf() and
+* vprintf() calls.
+*
+* While checking the return value to be greater than 0 can be useful to detect
+* IO errors, if `level` is lesser than the global log level this will always
+* return 0, so don't worry about IO errors and just ignore the return value.
+*
+* @param level Level of the output log.
+* @param fmt The formatting string of the first log message (like printf()).
+* @param args The arguments for the first formatting string.
+* @param fmt2 The formatting string for the second log message (like printf()).
+* @param ... The arguments for the second formatting string.
+* @return The number of characters written.
+*/
+int cnatural_log_base(
+	int level,
+	const char* fmt,
+	va_list args,
+	const char* fmt2,
+	...
+);
+
+/**
+* @brief Logs a message as DEBUG.
+*
+* This function should be used only to log data that is not important, that is,
+* the DEBUG log messages are only show on "very verbose" modes.
+*
+* It's usage is exactly like the printf() family of functions, but this uses
+* cnatural_log_base() to output the message and adds a trailing newline.
+*
+* @param fmt The formatting string (passed to an internal printf())
+* @param ... The arguments for the printf() call.
+* @return The number of characters written.
+*/
+int cnatural_log_debug(const char* fmt, ...);
+
+/**
+* @brief Logs a message as INFO.
+*
+* This function should be used only to log data that is important but not
+* critical, that is, the INFO log messages are only show on "verbose"
+* modes.
+*
+* It's usage is exactly like the printf() family of functions, but this uses
+* cnatural_log_base() to output the message and adds a trailing newline.
+*
+* @param fmt The formatting string (passed to an internal printf())
+* @param ... The arguments for the printf() call.
+* @return The number of characters written.
+*/
+int cnatural_log_info(const char* fmt, ...);
+
+/**
+* @brief Logs a message as WARNING.
+*
+* This function should be used only to log warnings, their will be show unless
+* the global log level is ERROR.
+*
+* It's usage is exactly like the printf() family of functions, but this uses
+* cnatural_log_base() to output the message and adds a trailing newline.
+*
+* @param fmt The formatting string (passed to an internal printf())
+* @param ... The arguments for the printf() call.
+* @return The number of characters written.
+*/
+int cnatural_log_warning(const char* fmt, ...);
+
+/**
+* @brief Logs a message as ERROR.
+*
+* This function should be used to print errors, these messages are **always**
+* show.
+*
+* It's usage is exactly like the printf() family of functions, but this uses
+* cnatural_log_base() to output the message and adds a trailing newline.
+*
+* @param fmt The formatting string (passed to an internal printf())
+* @param ... The arguments for the printf() call.
+* @return The number of characters written.
+*/
+int cnatural_log_error(const char* fmt, ...);
+
+/**
+* @brief Prints an errno message.
+*
+* Like cnatural_log_error, but this prints an errno message like the function
+* perror().
+*
+* @param fmt The formatting string (passed to an internal printf())
+* @param ... The arguments for the printf() call.
+* @return The number of characters written.
+*/
+int cnatural_perror(const char* fmt, ...);
 
 /**
 * @}

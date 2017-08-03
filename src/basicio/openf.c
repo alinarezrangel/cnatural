@@ -59,11 +59,11 @@ int cnatural_ajax_basicio_openfile(
 
 	if(strcmp(path, "/api/ajax/basicio/openfile") != 0)
 		return 1;
-	printf("Catched /api/ajax/basicio/openfile...\n");
+	cnatural_log_debug("Catched /api/ajax/basicio/openfile...");
 
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
-		printf("At %s = %s\n", it->key, it->value);
+		cnatural_log_debug("At %s = %s", it->key, it->value);
 
 		if(strcmp(it->key, "file") == 0)
 		{
@@ -90,7 +90,7 @@ int cnatural_ajax_basicio_openfile(
 			cnatural_authcall_destroy(&tkobj);
 		}
 
-		fprintf(stderr, "Error authenticating the user\n");
+		cnatural_log_error("Error authenticating the user");
 
 		return -1;
 	}
@@ -175,7 +175,7 @@ int cnatural_ajax_basicio_openfile(
 
 	if(fhandler < 0)
 	{
-		perror("Error opening the file");
+		cnatural_perror("Error opening the file");
 
 		err = errno;
 
@@ -191,7 +191,7 @@ int cnatural_ajax_basicio_openfile(
 
 		if(sz <= 0)
 		{
-			perror("Error calculating the size of the error string");
+			cnatural_perror("Error calculating the size of the error string");
 
 			cnatural_authcall_destroy(&tkobj);
 
@@ -205,7 +205,7 @@ int cnatural_ajax_basicio_openfile(
 
 		if(args->output_buffer == NULL)
 		{
-			perror("Error allocating the error string");
+			cnatural_perror("Error allocating the error string");
 
 			free(args->output_mimetype);
 			cnatural_authcall_destroy(&tkobj);
@@ -223,7 +223,7 @@ int cnatural_ajax_basicio_openfile(
 
 		if(sz <= 0)
 		{
-			perror("Error printing the error string");
+			cnatural_perror("Error printing the error string");
 
 			free(args->output_mimetype);
 			free(args->output_buffer);
@@ -246,7 +246,7 @@ int cnatural_ajax_basicio_openfile(
 
 	if(sz <= 0)
 	{
-		perror("Error snprintfing the file descriptor");
+		cnatural_perror("Error snprintfing the file descriptor");
 
 		close(fhandler);
 		cnatural_authcall_destroy(&tkobj);
@@ -261,7 +261,7 @@ int cnatural_ajax_basicio_openfile(
 
 	if(args->output_buffer == NULL)
 	{
-		perror("Error allocating the file descriptor string");
+		cnatural_perror("Error allocating the file descriptor string");
 
 		free(args->output_mimetype);
 		close(fhandler);
@@ -279,7 +279,7 @@ int cnatural_ajax_basicio_openfile(
 
 	if(sz <= 0)
 	{
-		perror("Error snprintfing the real file descriptor");
+		cnatural_perror("Error snprintfing the real file descriptor");
 
 		free(args->output_mimetype);
 		free(args->output_buffer);

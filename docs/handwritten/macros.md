@@ -117,6 +117,44 @@ required to use the `crypt` function if the header `<unistd.h>` is included.
 
 It default value in the `Makefile` is `1` (`CNATURAL_CRYPTO_GNU_CRYPT`).
 
+## `CNATURAL_DEFAULT_LOG_LEVEL` - The default log level ##
+
+If this macro is defined, it's value will be used to set the default log level
+of CNatural. The log levels are:
+
+* `0` or `CNATURAL_LOG_DEBUG`: Logs all (very verbose).
+* `3` or `CNATURAL_LOG_INFO`: Logs informational messages (verbose).
+* `6` or `CNATURAL_LOG_WARNING`: Logs warnings and errors.
+* `9` or `CNATURAL_LOG_ERROR`: Logs only errors.
+
+Note that all log levels logs messages with the same level **or more**, so
+a log level of `0` (DEBUG) will show **all** messaged but a log level of
+`6` (WARNING) will show both warnings **and** errors because the error's
+log level is 9.
+
+If the macro `CNATURAL_DEBUG` is defined, this macro is ignored and the log
+level is always set to `0` (DEBUG).
+
+### Values ###
+
+* `0` or `CNATURAL_LOG_DEBUG`: Logs all (very verbose).
+* `3` or `CNATURAL_LOG_INFO`: Logs informational messages (verbose).
+* `6` or `CNATURAL_LOG_WARNING`: Logs warnings and errors.
+* `9` or `CNATURAL_LOG_ERROR`: Logs only errors.
+
+### Default ###
+
+The default value in the `Makefile` is `3` (INFO).
+
+## `CNATURAL_USE_ANSI_COLOR` - Enables colored output ##
+
+If this macro is defined, the log messages will be printed in full color using
+[ANSI color codes][ansi-color].
+
+### Default ###
+
+The default value in the `Makefile` is *undef* (the macro is not defined).
+
 ## `H_CNATURAL_*_H_` - Header macros ##
 
 You should **never** define any macro which name begins with `H_CNATURAL_`
@@ -131,3 +169,4 @@ and ends with `_H_` because these macros are used in header guards.
 [rand]: man://rand
 [scanf]: man://scanf
 [dprinf]: man://dprintf
+[ansi-color]: https://en.wikipedia.org/wiki/ANSI_escape_code

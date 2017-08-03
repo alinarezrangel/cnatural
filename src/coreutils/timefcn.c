@@ -48,7 +48,7 @@ int cnatural_ajax_coreutils_time_get(
 
 	if(strcmp(path, "/api/ajax/coreutils/time/get") != 0)
 		return 1;
-	printf("Catched /api/ajax/coreutils/time/get...\n");
+	cnatural_log_debug("Catched /api/ajax/coreutils/time/get...");
 
 	/*
 	* A token is required to get the time for security purposes, this is a
@@ -61,7 +61,7 @@ int cnatural_ajax_coreutils_time_get(
 	*/
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
-		printf("At %s = %s\n", it->key, it->value);
+		cnatural_log_debug("At %s = %s", it->key, it->value);
 
 		if(strcmp(it->key, "token") == 0)
 		{
@@ -78,7 +78,7 @@ int cnatural_ajax_coreutils_time_get(
 			cnatural_authcall_destroy(&tkobj);
 		}
 
-		fprintf(stderr, "Error authenticating the user\n");
+		cnatural_log_error("Error authenticating the user");
 
 		return -1;
 	}
@@ -105,7 +105,7 @@ int cnatural_ajax_coreutils_time_get(
 
 	if(sz <= 0)
 	{
-		perror("Error snprintfing the current time");
+		cnatural_perror("Error snprintfing the current time");
 
 		free(args->output_mimetype);
 
@@ -118,7 +118,7 @@ int cnatural_ajax_coreutils_time_get(
 
 	if(args->output_buffer == NULL)
 	{
-		perror("Error allocating the current time");
+		cnatural_perror("Error allocating the current time");
 
 		free(args->output_mimetype);
 

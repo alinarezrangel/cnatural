@@ -49,6 +49,11 @@ int cmdline_rand(int argc, char** argv);
 int cmdline_secr(int argc, char** argv);
 int cmdline_port(int argc, char** argv);
 int cmdline_conf(int argc, char** argv);
+int cmdline_logl(int argc, char** argv);
+
+#if defined(CNATURAL_USE_ANSI_COLOR)
+int cmdline_colr(int argc, char** argv);
+#endif
 
 void generate_random_field(void);
 void generate_salt(char* salt);
@@ -56,11 +61,14 @@ void generate_salt(char* salt);
 cnatural_cmdline_argument_t options[] =
 {
 	{"-c", "--conf", 1, cmdline_conf, "Sets the configuration file"},
-	{"-a", "--pass", 0, cmdline_pass, "Ask the user for an username to authenticate"},
-	{"-r", "--rand", 0, cmdline_rand, "Ask the user for a random string to authenticate"},
-	{"-s", "--secr", 0, cmdline_secr, "Ask the user for a secret to encrypt"},
+	{"-a", "--password", 0, cmdline_pass, "Ask the user for an username to authenticate"},
+	{"-r", "--random", 0, cmdline_rand, "Ask the user for a random string to authenticate"},
+	{"-s", "--secret", 0, cmdline_secr, "Ask the user for a secret to encrypt"},
 	{"-p", "--port", 1, cmdline_port, "Sets the port where the server will be executed"},
-	{"-d", "--seed", 1, NULL, "Sets the global random seed"},
+	{"-v", "--verbose", 1, cmdline_logl, "Sets the global log level from 1 (ALL) to 4 (ERRORS)"},
+#if defined(CNATURAL_USE_ANSI_COLOR)
+	{"-l", "--no-color", 0, cmdline_colr, "Disables colored output"},
+#endif
 	{NULL, NULL, 0, NULL, NULL}
 };
 
@@ -95,6 +103,8 @@ int main(int argc, char** argv)
 
 	cnatural_srandom((long int) time(NULL));
 
+	errno = 0;
+
 	cnatural_servercore_set_systdt(&get_global_system_data);
 
 	n = cnatural_cmdline_parse(
@@ -107,7 +117,7 @@ int main(int argc, char** argv)
 	if(n < 0)
 	{
 		/* n < 0 = error */
-		perror("Error reading the cmdline options");
+		cnatural_perror("Error reading the cmdline options");
 		exit(EXIT_FAILURE);
 	}
 
@@ -125,7 +135,7 @@ int main(int argc, char** argv)
 
 	if(configfile == NULL)
 	{
-		perror("Error opening the configuration file");
+		cnatural_perror("Error opening the configuration file");
 		exit(EXIT_FAILURE);
 	}
 
@@ -141,14 +151,14 @@ int main(int argc, char** argv)
 	/* Generate a salt, use it to fill the NULL data and crypt the password,
 	** destroy the salt (and the unencrypted password) fast as possible */
 
-	printf("Danger zone: generating salt...\n");
+	cnatural_log_warning("Danger zone: generating salt...");
 
 	/* 3 bytes: 2 for the salt and the NULL byte: */
 	salt = malloc(sizeof(char) * 3);
 
 	if(salt == NULL)
 	{
-		perror("allocating the salt");
+		cnatural_perror("allocating the salt");
 		exit(EXIT_FAILURE);
 	}
 
@@ -162,14 +172,14 @@ int main(int argc, char** argv)
 
 	if(cnatural_configfile_read_systdt_from_file(configfile, &systdt, salt) != 0)
 	{
-		printf("Error reading the configuration file\n");
+		cnatural_log_error("Error reading the configuration file");
 		fclose(configfile);
 		exit(EXIT_FAILURE);
 	}
 
 	if(fclose(configfile) != 0)
 	{
-		perror("Error closing the configuration file\n");
+		cnatural_perror("Error closing the configuration file");
 		free(systdt.username);
 		free(systdt.password);
 		free(systdt.random);
@@ -181,64 +191,64 @@ int main(int argc, char** argv)
 
 	if(preset_config_data.port > 0)
 	{
-		printf("Imported port\n");
+		cnatural_log_info("Imported port");
 		systdt.port = preset_config_data.port;
 	}
 
 	if(preset_config_data.ask_secret >= 0)
 	{
-		printf("Imported use secret\n");
+		cnatural_log_info("Imported use secret");
 		systdt.use_live_secret = preset_config_data.ask_secret;
 	}
 
 	if(preset_config_data.ask_password >= 0)
 	{
-		printf("Imported use password\n");
+		cnatural_log_info("Imported use password");
 		systdt.use_live_password = preset_config_data.ask_password;
 	}
 
 	if(preset_config_data.ask_random >= 0)
 	{
-		printf("Imported use random\n");
+		cnatural_log_info("Imported use random");
 		systdt.use_live_random = preset_config_data.ask_random;
 	}
 
-	printf("Scaning for NULL data...\n");
+	printf("Scaning for NULL data...\n\n");
 
 	if(systdt.username == NULL)
 	{
 		systdt.username = cnatural_strdup("cnatural");
-		fprintf(stderr,
+		cnatural_log_warning(
 			"Warning: The configuration file does not have a username field, "
-			"setting to it's default: cnatural\n");
+			"setting to it's default: cnatural");
 	}
 	if(systdt.password == NULL)
 	{
 		systdt.password = cnatural_passwd_crypt(salt, "a123b456");
-		fprintf(stderr,
-			"Warning: The configuration file does not have a password field, "
-			"setting to it's default: a123b456\n");
+		cnatural_log_warning(
+			"The configuration file does not have a password field, "
+			"setting to it's default: a123b456");
 	}
 	if(systdt.random == NULL)
 	{
 		systdt.random = cnatural_strdup("not random");
-		fprintf(stderr,
-			"Warning: The configuration file does not have a random field, setting "
-			"to it's default: not random\n");
+		cnatural_log_warning(
+			"The configuration file does not have a random field, setting "
+			"to it's default: not random");
 	}
 	if(systdt.secret == NULL)
 	{
 		systdt.secret = cnatural_strdup("not secret");
-		fprintf(stderr,
-			"Warning: The configuration file does not have a secret field, setting "
-			"to it's default: not secret\n");
+		cnatural_log_warning(
+			"The configuration file does not have a secret field, setting "
+			"to it's default: not secret");
 	}
 	if(systdt.port == 0)
 	{
 		systdt.port = 8888;
-		fprintf(stderr,
-			"Warning: The configuration file does not have a port field, setting "
-			"to it's default: 8888\n");
+		cnatural_log_warning(
+			"The configuration file does not have a port field, setting "
+			"to it's default: 8888");
 	}
 
 	if(systdt.use_live_password)
@@ -246,8 +256,8 @@ int main(int argc, char** argv)
 		/*
 		** TODO: Read the characters but without display them.
 		*/
-		fprintf(stderr,
-			"Aborting: the useLivePassword field is not implemented for security reasons\n");
+		cnatural_log_error(
+			"Aborting: the useLivePassword field is not implemented for security reasons");
 
 		free(systdt.username);
 		free(systdt.password);
@@ -257,16 +267,16 @@ int main(int argc, char** argv)
 	}
 
 	/* Now we can destroy the salt */
-	printf("Exiting danger zone: destroying the salt...\n");
 	free(salt);
+	cnatural_log_warning("Exiting danger zone: destroying the salt...");
 
 	if(systdt.use_live_secret)
 	{
 		/*
 		** TODO: Read the characters but without display them.
 		*/
-		fprintf(stderr,
-			"Aborting: the useLiveSecret field is not implemented for security reasons\n");
+		cnatural_log_error(
+			"Aborting: the useLiveSecret field is not implemented for security reasons");
 
 		free(systdt.username);
 		free(systdt.password);
@@ -290,7 +300,7 @@ int main(int argc, char** argv)
 
 		if(systdt.random == NULL)
 		{
-			perror("Initializing memory for the random field");
+			cnatural_perror("Initializing memory for the random field");
 			free(systdt.username);
 			free(systdt.password);
 			free(systdt.secret);
@@ -301,7 +311,7 @@ int main(int argc, char** argv)
 
 		if(fgets(systdt.random, 254, stdin) == NULL)
 		{
-			perror("Reading the random bytes");
+			cnatural_perror("Reading the random bytes");
 			free(systdt.username);
 			free(systdt.password);
 			free(systdt.secret);
@@ -313,7 +323,7 @@ int main(int argc, char** argv)
 
 		if((n != 1) || (errno != 0))
 		{
-			perror("Reading the random bytes");
+			cnatural_perror("Reading the random bytes");
 			free(systdt.username);
 			free(systdt.password);
 			free(systdt.secret);
@@ -353,7 +363,7 @@ int main(int argc, char** argv)
 		}
 		else
 		{
-			fprintf(stderr, "Warning: the random is too small (< 4)\n");
+			cnatural_log_warning("The random is too small (< 4)");
 		}
 	}
 	else if(strcmp(systdt.random, "random") == 0)
@@ -380,7 +390,7 @@ int main(int argc, char** argv)
 	);
 	if(daemon == NULL)
 	{
-		perror("Error getting the HTTP daemon");
+		cnatural_perror("Error getting the HTTP daemon");
 		free(systdt.username);
 		free(systdt.password);
 		free(systdt.random);
@@ -468,7 +478,7 @@ int cmdline_secr(int argc, char** argv)
 
 int cmdline_port(int argc, char** argv)
 {
-	printf("Warning: `port` overrided by `--port` option");
+	cnatural_log_warning("Warning: `port` overrided by `--port` option");
 
 	preset_config_data.port = strtol(argv[1], NULL, 10);
 
@@ -481,6 +491,40 @@ int cmdline_conf(int argc, char** argv)
 
 	return 0;
 }
+
+int cmdline_logl(int argc, char** argv)
+{
+	int level = CNATURAL_LOG_DEBUG;
+
+	switch(strtol(argv[1], NULL, 10))
+	{
+		case 1:
+			level = CNATURAL_LOG_DEBUG;
+			break;
+		case 2:
+			level = CNATURAL_LOG_INFO;
+			break;
+		case 3:
+			level = CNATURAL_LOG_WARNING;
+			break;
+		case 4:
+			level = CNATURAL_LOG_ERROR;
+			break;
+	}
+
+	cnatural_log_level(level);
+
+	return 0;
+}
+
+#if defined(CNATURAL_USE_ANSI_COLOR)
+int cmdline_colr(int argc, char** argv)
+{
+	cnatural_log_color(false);
+
+	return 0;
+}
+#endif
 
 void generate_random_field(void)
 {

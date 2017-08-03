@@ -57,11 +57,11 @@ int cnatural_ajax_coreutils_import(
 
 	if(strcmp(path, "/api/ajax/coreutils/import") != 0)
 		return 1;
-	printf("Catched /api/ajax/coreutils/import...\n");
+	cnatural_log_debug("Catched /api/ajax/coreutils/import...");
 
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
-		printf("At %s = %s\n", it->key, it->value);
+		cnatural_log_debug("At %s = %s", it->key, it->value);
 
 		if(strcmp(it->key, "file") == 0)
 		{
@@ -88,7 +88,7 @@ int cnatural_ajax_coreutils_import(
 			cnatural_authcall_destroy(&tkobj);
 		}
 
-		fprintf(stderr, "Error authenticating the user\n");
+		cnatural_log_error("Error authenticating the user");
 
 		return -1;
 	}
@@ -97,7 +97,7 @@ int cnatural_ajax_coreutils_import(
 
 	if(realpath == NULL)
 	{
-		perror("Error allocating the realpath");
+		cnatural_perror("Error allocating the realpath");
 
 		return -1;
 	}
@@ -108,7 +108,12 @@ int cnatural_ajax_coreutils_import(
 
 	sprintf(realpath, "%s%s", privatepath, fname);
 
-	printf("Sended file at %s (%s + %s + 1)\n", realpath, privatepath, fname);
+	cnatural_log_debug(
+		"Sended file at %s (%s + %s + 1)",
+		realpath,
+		privatepath,
+		fname
+	);
 
 	ofile = open(realpath, O_RDONLY);
 	args->output_filedesc = ofile;

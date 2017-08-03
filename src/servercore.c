@@ -100,29 +100,38 @@ int cnatural_servercore_request_handler(
 	cnatural_post_processor_data_t* data = NULL;
 	jwt_t* jwt = NULL;
 
-	printf("Reading POST data %lu...\n> Processing the URL %s with the method %s %s\n", *upload_data_size, url, method, version);
+	cnatural_log_info(
+		"Reading POST data %lu...",
+		*upload_data_size
+	);
+	cnatural_log_info(
+		"> Processing the URL %s with the method %s %s",
+		url,
+		method,
+		version
+	);
 	fflush(stdout);
 
 	if(*conn_klass == NULL)
 	{
 		data = *conn_klass;
 		ret = cnatural_create_post_data(conn, strcmp(method, MHD_HTTP_METHOD_POST), &data);
-		printf("Exiting C!\n");
+		cnatural_log_debug("Created POST data");
 		fflush(stdout);
 		*conn_klass = (void*) data;
 		return ret;
 	}
 
-	printf("Successfull created POST data\n");
+	cnatural_log_debug("Successfull created POST data");
 	fflush(stdout);
 
 	if(strcmp(method, MHD_HTTP_METHOD_POST) == 0)
 	{
-		printf("Handling AJAX to %s\n", url);
+		cnatural_log_info("Handling AJAX to %s", url);
 
 		if(*upload_data_size)
 		{
-			printf("Uploaded data size\n");
+			cnatural_log_debug("Uploaded data size");
 			fflush(stdout);
 			data = *conn_klass;
 			MHD_post_process(data->postprocessor, upload_data, *upload_data_size);
@@ -145,13 +154,13 @@ int cnatural_servercore_request_handler(
 
 		if(use_ajax == -1)
 		{
-			perror("Using ajax");
+			cnatural_perror("Using ajax");
 			return MHD_NO;
 		}
 
 		if(use_ajax == 1)
 		{
-			printf("The AJAX method %s not exist\n", url);
+			cnatural_log_error("The AJAX method %s not exist", url);
 			return MHD_NO;
 		}
 
@@ -164,16 +173,17 @@ int cnatural_servercore_request_handler(
 			);
 			if(res == NULL)
 			{
-				perror("Unable to alloc the response buffer");
+				cnatural_perror("Unable to alloc the response buffer");
 				return MHD_NO;
 			}
 		}
 		else if(arg.output_filedesc != -1)
 		{
 			ret = fstat(arg.output_filedesc, &fdstat);
+
 			if(ret == -1)
 			{
-				perror("stating the file");
+				cnatural_perror("stating the file");
 				close(arg.output_filedesc);
 				return MHD_NO;
 			}
@@ -185,14 +195,14 @@ int cnatural_servercore_request_handler(
 
 			if(res == NULL)
 			{
-				perror("Unable to alloc the response filedesc");
+				cnatural_perror("Unable to alloc the response filedesc");
 				close(arg.output_filedesc);
 				return MHD_NO;
 			}
 		}
 		else
 		{
-			fprintf(stderr, "Error in the AJAX call: not response provided\n");
+			cnatural_log_error("Error in the AJAX call: not response provided");
 			return MHD_NO;
 		}
 
@@ -217,7 +227,7 @@ int cnatural_servercore_request_handler(
 	ufile = malloc(sizeof(char) * (urlsize + 1));
 	if(ufile == NULL)
 	{
-		perror("Error malloc(ufile)");
+		cnatural_perror("Error malloc(ufile)");
 		return MHD_NO;
 	}
 
@@ -246,7 +256,7 @@ int cnatural_servercore_request_handler(
 
 		if(http_api_token_charat == NULL)
 		{
-			fprintf(stderr, "Invalid HTTP API request\n");
+			cnatural_log_error("Invalid HTTP API request");
 			free(ufile);
 			return MHD_NO;
 		}
@@ -261,13 +271,18 @@ int cnatural_servercore_request_handler(
 
 		length_http_api_path = strlen(url) - 13 - length_http_api_token;
 
-		printf("Length of token/path/url: %lu/%lu/%d\n", length_http_api_token, length_http_api_path, urlsize);
+		cnatural_log_debug(
+			"Length of token/path/url: %lu/%lu/%d",
+			length_http_api_token,
+			length_http_api_path,
+			urlsize
+		);
 
 		http_api_token = malloc(sizeof(char) * (length_http_api_token + 2));
 
 		if(http_api_token == NULL)
 		{
-			perror("Unable to alloc the /api/private token");
+			cnatural_perror("Unable to alloc the /api/private token");
 			free(ufile);
 			return MHD_NO;
 		}
@@ -283,7 +298,7 @@ int cnatural_servercore_request_handler(
 
 		if(http_api_path == NULL)
 		{
-			perror("Unable to alloc the /api/private path");
+			cnatural_perror("Unable to alloc the /api/private path");
 			free(ufile);
 			free(http_api_token);
 			return MHD_NO;
@@ -298,7 +313,12 @@ int cnatural_servercore_request_handler(
 			http_api_path[i] = url[14 + length_http_api_token + i];
 		}
 
-		printf("Token: %s\nPath %s\nURL %s\n", http_api_token, http_api_path, url);
+		cnatural_log_debug(
+			"Token: %s\nPath %s\nURL %s",
+			http_api_token,
+			http_api_path,
+			url
+		);
 
 		if((errno = jwt_decode(
 				&jwt,
@@ -307,7 +327,7 @@ int cnatural_servercore_request_handler(
 				strlen(cnatural_servercore_get_systdt()->secret)))
 			!= 0)
 		{
-			perror("Unable to decode the token");
+			cnatural_perror("Unable to decode the token");
 
 			free(http_api_path);
 			free(http_api_token);
@@ -318,7 +338,10 @@ int cnatural_servercore_request_handler(
 
 		if(jwt_get_alg(jwt) != CNATURAL_AUTH_METHOD)
 		{
-			fprintf(stderr, "Error: the JWT token algorithm is not CNATURAL_AUTH_METHOD: aborting\n");
+			cnatural_log_error(
+				"Error: the JWT token algorithm is not CNATURAL_AUTH_METHOD: "
+				"aborting"
+			);
 
 			free(http_api_path);
 			free(http_api_token);
@@ -332,7 +355,10 @@ int cnatural_servercore_request_handler(
 				cnatural_servercore_get_systdt()->username)
 			!= 0)
 		{
-			fprintf(stderr, "Error: the JWT token's username is not of this system (but have the same secret? ALERT)\n");
+			cnatural_log_error(
+				"Error: the JWT token's username is not the same of this system "
+				"(but have the same secret, this can be an attack!)"
+			);
 
 			free(http_api_path);
 			free(http_api_token);
@@ -358,20 +384,28 @@ int cnatural_servercore_request_handler(
 			strlen(ufile) + 1
 		)
 	);
+
 	if(final_file_name == NULL)
 	{
-		perror("final_file_name = malloc()");
+		cnatural_perror("final_file_name = malloc()");
 		free(ufile);
 		return MHD_NO;
 	}
+
 	sprintf(final_file_name, "%s%s", prefix, ufile);
 
-	printf("Handling URL %s with the method %s and the version %s.\n", final_file_name, method, version);
+	cnatural_log_info(
+		"Handling URL %s with the method %s and the HTTP version %s.",
+		final_file_name,
+		method,
+		version
+	);
+
 	/* Open the file */
 	filedesc = open(final_file_name, O_RDONLY);
 	if(filedesc == -1)
 	{
-		perror("Opening the resource");
+		cnatural_perror("Opening the resource");
 		free(ufile);
 		free(final_file_name);
 		return MHD_NO;
@@ -380,7 +414,7 @@ int cnatural_servercore_request_handler(
 	ret = fstat(filedesc, &fdstat);
 	if(ret == -1)
 	{
-		perror("stating the file");
+		cnatural_perror("stating the file");
 		free(ufile);
 		free(final_file_name);
 		close(filedesc);
@@ -393,7 +427,7 @@ int cnatural_servercore_request_handler(
 	);
 	if(res == NULL)
 	{
-		perror("Unable to alloc the response filedesc system");
+		cnatural_perror("Unable to alloc the response filedesc system");
 		close(filedesc);
 		free(ufile);
 		free(final_file_name);
@@ -402,43 +436,43 @@ int cnatural_servercore_request_handler(
 
 	ext = strrchr(final_file_name, '.');
 
-	printf("Detected MIME type is %s\n", ext);
+	cnatural_log_info("Detected extension is %s", ext);
 
 	if(strcoll(ext, ".html") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "text/html");
-		printf("HiperText Markup Language\n");
+		cnatural_log_info("HiperText Markup Language");
 	}
 	else if(strcoll(ext, ".js") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "application/javascript");
-		printf("JavaScript / ECMAScript\n");
+		cnatural_log_info("JavaScript / ECMAScript");
 	}
 	else if(strcoll(ext, ".css") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "text/css");
-		printf("Cascading Style Sheets\n");
+		cnatural_log_info("Cascading Style Sheets");
 	}
 	else if(strcoll(ext, ".svg") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "image/svg+xml");
 		filetype = FILE_TYPE_SVG;
-		printf("Scalable Vector Graphics\n");
+		cnatural_log_info("Scalable Vector Graphics");
 	}
 	else if(strcoll(ext, ".png") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "image/png");
-		printf("Portable Network Graphics\n");
+		cnatural_log_info("Portable Network Graphics");
 	}
 	else if(strcoll(ext, ".woff") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "application/font-woff");
-		printf("WOFF Font\n");
+		cnatural_log_info("WOFF Font");
 	}
 	else
 	{
 		MHD_add_response_header(res, "Content-type", "text/plain");
-		printf("Plain Text\n");
+		cnatural_log_info("Plain Text");
 	}
 
 	cnatural_servercore_set_response_headers(&res, filetype);
@@ -457,18 +491,27 @@ void cnatural_servercore_set_response_headers(
 	int type
 )
 {
-	const char* csp = "default-src 'self'; script-src 'self'; connect-src 'self'; child-src: 'self'; img-src: 'self'; style-src: 'self' 'unsafe-inline'";
+	const char* csp =
+		"default-src 'self'; script-src 'self'; connect-src "
+		"'self'; child-src: 'self'; img-src: 'self'; style-src: 'self' "
+		"'unsafe-inline'";
 
 	if(type == FILE_TYPE_SVG)
 	{
-		csp = "default-src 'none'; frame-ancestors 'none'; style-src 'self' 'unsafe-inline'";
+		csp =
+			"default-src 'none'; frame-ancestors 'none'; style-src 'self' "
+			"'unsafe-inline'";
 	}
 
 	MHD_add_response_header(*res, "X-Content-Type-Options", "nosniff");
 	MHD_add_response_header(*res, "X-Permitted-Cross-Domain-Policies", "none");
 	MHD_add_response_header(*res, "X-Frame-Options", "SAMEORIGIN");
 	MHD_add_response_header(*res, "X-XSS-Protection", "0");
-	MHD_add_response_header(*res, "Strict-Transport-Security", "max-age=31536000 ; includeSubDomains");
+	MHD_add_response_header(
+		*res,
+		"Strict-Transport-Security",
+		"max-age=31536000 ; includeSubDomains"
+	);
 	MHD_add_response_header(*res, "Content-Security-Policy", csp);
 	MHD_add_response_header(*res, "X-Content-Security-Policy", csp);
 	MHD_add_response_header(*res, "X-Webkit-CSP", csp);

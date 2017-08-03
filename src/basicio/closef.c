@@ -56,11 +56,11 @@ int cnatural_ajax_basicio_closefile(
 
 	if(strcmp(path, "/api/ajax/basicio/closefile") != 0)
 		return 1;
-	printf("Catched /api/ajax/basicio/closefile...\n");
+	cnatural_log_debug("Catched /api/ajax/basicio/closefile...");
 
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
-		printf("At %s = %s\n", it->key, it->value);
+		cnatural_log_debug("At %s = %s", it->key, it->value);
 
 		if(strcmp(it->key, "handler") == 0)
 		{
@@ -82,7 +82,7 @@ int cnatural_ajax_basicio_closefile(
 			cnatural_authcall_destroy(&tkobj);
 		}
 
-		fprintf(stderr, "Error authenticating the user\n");
+		cnatural_log_error("Error authenticating the user");
 
 		return -1;
 	}
@@ -97,7 +97,7 @@ int cnatural_ajax_basicio_closefile(
 			errno = ERANGE;
 		}
 
-		perror("Error converting the file handler to string");
+		cnatural_perror("Error converting the file handler to string");
 
 		err = errno;
 
@@ -113,7 +113,7 @@ int cnatural_ajax_basicio_closefile(
 
 		if(sz <= 0)
 		{
-			perror("Error calculating the size of the error string");
+			cnatural_perror("Error calculating the size of the error string");
 
 			cnatural_authcall_destroy(&tkobj);
 
@@ -127,7 +127,7 @@ int cnatural_ajax_basicio_closefile(
 
 		if(args->output_buffer == NULL)
 		{
-			perror("Error allocating the error string");
+			cnatural_perror("Error allocating the error string");
 
 			free(args->output_mimetype);
 			cnatural_authcall_destroy(&tkobj);
@@ -145,7 +145,7 @@ int cnatural_ajax_basicio_closefile(
 
 		if(sz <= 0)
 		{
-			perror("Error printing the error string");
+			cnatural_perror("Error printing the error string");
 
 			free(args->output_mimetype);
 			free(args->output_buffer);
@@ -161,7 +161,7 @@ int cnatural_ajax_basicio_closefile(
 
 	if(close(fhandler) < 0)
 	{
-		perror("Error closing the file");
+		cnatural_perror("Error closing the file");
 
 		cnatural_authcall_destroy(&tkobj);
 

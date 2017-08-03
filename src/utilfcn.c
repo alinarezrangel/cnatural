@@ -23,9 +23,11 @@ limitations under the License.
 #include "utilfcn.h"
 
 /* Implementation headers: */
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <time.h>
 
 #include <unistd.h>
 #if !defined(CNATURAL_PASSWD_CRYPT_MTH) || (CNATURAL_PASSWD_CRYPT_MTH == 0)
@@ -39,6 +41,17 @@ static struct cnatural_utilfcn_rdstate cnatural_utilfcn_global_state = {
 	.mod = INT64_C(281474976710656),
 	.xsubi = INT64_C(1)
 };
+
+#if defined(CNATURAL_DEFAULT_LOG_LEVEL) && !defined(CNATURAL_DEBUG)
+static int cnatural_utilfcn_global_log_level = CNATURAL_DEFAULT_LOG_LEVEL;
+#else /* defined(CNATURAL_DEFAULT_LOG_LEVEL) */
+/* Log all */
+static int cnatural_utilfcn_global_log_level = 0;
+#endif /* defined(CNATURAL_DEFAULT_LOG_LEVEL) */
+
+#if defined(CNATURAL_USE_ANSI_COLOR)
+static bool cnatural_utilfcn_global_log_use_ansi_color = true;
+#endif /* defined(CNATURAL_USE_ANSI_COLOR) */
 
 char* cnatural_strdup(const char* str)
 {
@@ -199,4 +212,155 @@ int cnatural_passwd_verify(const char* epass, const char* vpass)
 		return 1;
 	else
 		return 0;
+}
+
+int cnatural_log_level(int level)
+{
+	if(level >= 0)
+	{
+		cnatural_utilfcn_global_log_level = level;
+	}
+
+	return cnatural_utilfcn_global_log_level;
+}
+
+bool cnatural_log_color(bool use_color)
+{
+#if defined(CNATURAL_USE_ANSI_COLOR)
+	return cnatural_utilfcn_global_log_use_ansi_color = use_color;
+#else
+	return false;
+#endif
+}
+
+int cnatural_log_base(
+	int level,
+	const char* fmt,
+	va_list args,
+	const char* fmt2,
+	...
+)
+{
+	char strbuf[50];
+	int c = 0;
+	int ansicolor = 0;
+
+	va_list vargs;
+
+	if(level < cnatural_utilfcn_global_log_level)
+		return 0;
+
+	strftime(strbuf, 50, "%F %T 000", localtime(&(time_t) { time(NULL) }));
+
+	switch(level)
+	{
+		case CNATURAL_LOG_DEBUG:
+			c += printf("DEBG");
+			ansicolor = 6; /* cyan */
+			break;
+		case CNATURAL_LOG_INFO:
+			c += printf("INFO");
+			ansicolor = 2; /* green */
+			break;
+		case CNATURAL_LOG_WARNING:
+			c += printf("WARN");
+			ansicolor = 3; /* yellow */
+			break;
+		case CNATURAL_LOG_ERROR:
+			c += printf("ERRR");
+			ansicolor = 1; /* red */
+			break;
+	}
+
+#if defined(CNATURAL_USE_ANSI_COLOR)
+	if(cnatural_utilfcn_global_log_use_ansi_color)
+		c += printf("\x1B[%dm", 30 + ansicolor);
+#endif
+
+	va_start(vargs, fmt2);
+
+	c += printf(" {%d} [%s] ", level, strbuf);
+	c += vprintf(fmt, args);
+	c += vprintf(fmt2, vargs);
+
+	va_end(vargs);
+
+#if defined(CNATURAL_USE_ANSI_COLOR)
+	//if(cnatural_utilfcn_global_log_use_ansi_color)
+		c += printf("\x1B[0m");
+#endif
+
+	return c;
+}
+
+int cnatural_log_debug(const char* fmt, ...)
+{
+	va_list args;
+	int c = 0;
+
+	va_start(args, fmt);
+
+	c = cnatural_log_base(CNATURAL_LOG_DEBUG, fmt, args, "\n");
+
+	va_end(args);
+
+	return c;
+}
+
+int cnatural_log_info(const char* fmt, ...)
+{
+	va_list args;
+	int c = 0;
+
+	va_start(args, fmt);
+
+	c = cnatural_log_base(CNATURAL_LOG_INFO, fmt, args, "\n");
+
+	va_end(args);
+
+	return c;
+}
+
+int cnatural_log_warning(const char* fmt, ...)
+{
+	va_list args;
+	int c = 0;
+
+	va_start(args, fmt);
+
+	c = cnatural_log_base(CNATURAL_LOG_WARNING, fmt, args, "\n");
+
+	va_end(args);
+
+	return c;
+}
+
+int cnatural_log_error(const char* fmt, ...)
+{
+	va_list args;
+	int c = 0;
+
+	va_start(args, fmt);
+
+	c = cnatural_log_base(CNATURAL_LOG_ERROR, fmt, args, "\n");
+
+	va_end(args);
+
+	return c;
+}
+
+int cnatural_perror(const char* fmt, ...)
+{
+	va_list args;
+	int c = 0;
+
+	int err = errno;
+
+	va_start(args, fmt);
+
+	c = cnatural_log_base(CNATURAL_LOG_ERROR, fmt, args, ": %s\n", strerror(err));
+
+	va_end(args);
+
+	return c;
 }

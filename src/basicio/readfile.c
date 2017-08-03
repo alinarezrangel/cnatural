@@ -72,11 +72,11 @@ int cnatural_ajax_basicio_readfile(
 
 	if(strcmp(path, "/api/ajax/basicio/readfile") != 0)
 		return 1;
-	printf("Catched /api/ajax/basicio/readfile...\n");
+	cnatural_log_debug("Catched /api/ajax/basicio/readfile...");
 
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
-		printf("At %s = %s\n", it->key, it->value);
+		cnatural_log_debug("At %s = %s", it->key, it->value);
 
 		if(strcmp(it->key, "file") == 0)
 		{
@@ -113,7 +113,7 @@ int cnatural_ajax_basicio_readfile(
 			cnatural_authcall_destroy(&tkobj);
 		}
 
-		fprintf(stderr, "Error authenticating the user\n");
+		cnatural_log_error("Error authenticating the user");
 
 		return -1;
 	}
@@ -122,7 +122,7 @@ int cnatural_ajax_basicio_readfile(
 
 	if(!valid_fpos(chunk, strlen(chunk)))
 	{
-		printf("Error: the chunk position is not an valid integer\n");
+		cnatural_log_error("Error: the chunk position is not an valid integer");
 
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
@@ -132,7 +132,7 @@ int cnatural_ajax_basicio_readfile(
 
 	if(!valid_fpos(chunksize, strlen(chunksize)))
 	{
-		printf("Error: the chunk size is not an valid integer\n");
+		cnatural_log_error("Error: the chunk size is not an valid integer");
 
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
@@ -151,7 +151,7 @@ int cnatural_ajax_basicio_readfile(
 
 	if(fh == NULL)
 	{
-		perror("Error opening the file");
+		cnatural_perror("Error opening the file");
 
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);
@@ -165,13 +165,13 @@ int cnatural_ajax_basicio_readfile(
 
 	if(rt != 0)
 	{
-		perror("Error setting the chunk position");
+		cnatural_perror("Error setting the chunk position");
 
 		rt = fclose(fh);
 
 		if(rt != 0)
 		{
-			perror("Error closing the file");
+			cnatural_perror("Error closing the file");
 		}
 
 		free(args->output_mimetype);
@@ -197,13 +197,13 @@ int cnatural_ajax_basicio_readfile(
 		/* An error, restore errno: */
 		errno = rt;
 
-		perror("Error reading the chunk");
+		cnatural_perror("Error reading the chunk");
 
 		rt = fclose(fh);
 
 		if(rt != 0)
 		{
-			perror("Error closing the file");
+			cnatural_perror("Error closing the file");
 		}
 
 		free(args->output_mimetype);
@@ -216,7 +216,7 @@ int cnatural_ajax_basicio_readfile(
 
 	if(rt != 0)
 	{
-		perror("closing the file");
+		cnatural_perror("closing the file");
 
 		free(args->output_mimetype);
 		cnatural_authcall_destroy(&tkobj);

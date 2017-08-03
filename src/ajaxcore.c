@@ -55,19 +55,19 @@ int cnatural_basic_post_data_handler(
 
 	if((conn_klass == NULL) || (sdata == NULL) || (key == NULL))
 	{
-		printf("The POST data not exist\n");
+		cnatural_log_error("The POST data not exist");
 		return MHD_YES;
 	}
 
 	cnatural_post_processor_data_t* data = conn_klass;
 	cnatural_post_processor_node_t* it = data->data;
 
-	printf("Handling POST data %s %li\n", key, strlen(sdata));
+	cnatural_log_debug("Handling POST data %s %li", key, strlen(sdata));
 	fflush(stdout);
 
 	if(strlen(sdata) == 0)
 	{
-		printf("Zero-length value: prevent null data\n");
+		cnatural_log_error("Zero-length value: prevent null data");
 		return MHD_NO;
 	}
 
@@ -76,36 +76,42 @@ int cnatural_basic_post_data_handler(
 	** split into more request, so we need to stop on the first token
 	** with equal key and append to it: */
 	for(;it->next != NULL; it = it->next)
-		printf("Advanced %li %s=%s\n", ++cnt, it->key, it->value);
+		cnatural_log_debug("Advanced %li %s=%s", ++cnt, it->key, it->value);
 
-	printf("TAdvanced %li\n", cnt);
+	cnatural_log_debug("TAdvanced %li", cnt);
 
-	printf("At POST %s=%s\n", it->key, it->value);
+	cnatural_log_debug("At POST %s=%s", it->key, it->value);
 	fflush(stdout);
 
 	if(strcmp(it->key, key) == 0)
 	{
-		printf("\nAppending to %s=%s\n\n", key, sdata);
+		cnatural_log_debug("Appending to %s=%s", key, sdata);
 		fflush(stdout);
 
 		cursz = strlen(it->value);
 		newsz = cursz + strlen(sdata);
 
 		char* newvl = malloc(sizeof(char) * newsz + 1);
+
 		if(newvl == NULL)
 		{
-			perror("Error apending a value to the existing key");
+			cnatural_perror("Error apending a value to the existing key");
 			return MHD_NO;
 		}
 
-		printf("\n\nLook at %li %li\n\n", newsz, cursz);
+		cnatural_log_debug("Look at %li %li", newsz, cursz);
 
 		strncpy(newvl, it->value, newsz);
 		strncat(newvl, sdata, strlen(sdata));
 
 		it->value = newvl;
 
-		printf("Created APPEND %s=%s %li\n\n", key, it->value, strlen(it->value));
+		cnatural_log_debug(
+			"Created APPEND %s=%s %li",
+			key,
+			it->value,
+			strlen(it->value)
+		);
 		fflush(stdout);
 
 		return MHD_YES;
@@ -115,7 +121,7 @@ int cnatural_basic_post_data_handler(
 		malloc(sizeof(cnatural_post_processor_node_t));
 	if(kl == NULL)
 	{
-		perror("Error appending a key to the keylist");
+		cnatural_perror("Error appending a key to the keylist");
 		return MHD_NO;
 	}
 
@@ -127,7 +133,7 @@ int cnatural_basic_post_data_handler(
 	kl->key = cnatural_strdup(key);
 	kl->value = cnatural_strdup(sdata);
 
-	printf("Created %s=%s\n", key, sdata);
+	cnatural_log_debug("Created %s=%s", key, sdata);
 	fflush(stdout);
 
 	return MHD_YES;
@@ -141,18 +147,18 @@ int cnatural_create_post_data(
 {
 	cnatural_post_processor_node_t* kl;
 
-	printf("Creating POST data\n");
+	cnatural_log_debug("Creating POST data");
 
 	(*data) = malloc(sizeof(cnatural_post_processor_data_t));
 	if((*data) == NULL)
 	{
-		perror("Error creating the data");
+		cnatural_perror("Error creating the data");
 		return MHD_NO;
 	}
 	kl = malloc(sizeof(cnatural_post_processor_node_t));
 	if(kl == NULL)
 	{
-		perror("Error making the main list chain");
+		cnatural_perror("Error making the main list chain");
 		return MHD_NO;
 	}
 
@@ -179,7 +185,7 @@ int cnatural_create_post_data(
 		);
 		if((*data)->postprocessor == NULL)
 		{
-			perror("Error creating a new PP");
+			cnatural_perror("Error creating a new PP");
 			free(kl);
 			free(*data);
 			return MHD_NO;
@@ -189,7 +195,8 @@ int cnatural_create_post_data(
 	{
 		(*data)->postprocessor = NULL;
 	}
-	printf("Done (creating)\n");
+
+	cnatural_log_debug("Done (creating)");
 	fflush(stdout);
 	return MHD_YES;
 }
@@ -218,7 +225,8 @@ int cnatural_destroy_post_data(cnatural_post_processor_data_t** data)
 		MHD_destroy_post_processor((*data)->postprocessor);
 
 	free(*data);
-	printf("Destroyed POST data\n");
+
+	cnatural_log_debug("Destroyed POST data");
 	fflush(stdout);
 	return MHD_YES;
 }
@@ -232,14 +240,15 @@ void cnatural_basic_post_destroy(
 {
 	cnatural_post_processor_data_t* data = *conn_klass;
 
-	printf("Destroying POST request DATA\n");
+	cnatural_log_debug("Destroying POST request DATA");
 
 	if(data == NULL)
 	{
 		return;
 	}
 
-	printf("Destroy...\n");
+	cnatural_log_debug("Destroy...");
+
 	cnatural_destroy_post_data(&data);
 
 	data = NULL;
@@ -266,7 +275,7 @@ int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
 	int ecpy = 0;
 	if(strcmp(path, "/api/ajax/coreutils/test") != 0)
 		return 1;
-	printf("Catched /api/ajax/coreutils/test AJAX: sending Hello World\n");
+	cnatural_log_debug("Catched /api/ajax/coreutils/test AJAX");
 	inout->output_buffer = malloc(sizeof(char) * msglen);
 	if(inout->output_buffer == NULL)
 	{

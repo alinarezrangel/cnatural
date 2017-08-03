@@ -15,9 +15,9 @@ The options are separated by spaces, and their arguments too:
 Most options are simply flags to override the `cnatural.conf` settings, like
 `--pass` and others.
 
-* `-a` or `--pass`: Overrides `useLivePassword`.
-* `-r` or `--rand`: Overrides `useLiveRandom`.
-* `-s` or `--secr`: Overrides `useLiveSecret`.
+* `-a` or `--password`: Overrides `useLivePassword`.
+* `-r` or `--random`: Overrides `useLiveRandom`.
+* `-s` or `--secret`: Overrides `useLiveSecret`.
 * `-p` or `--port`: Overrides `port`.
 
 For more help about the configuration files, see the [USAGE](../../USAGE.md)
@@ -37,7 +37,7 @@ option you can read the configuration from files other than `cnatural.conf`.
 # Always prompt for password
 ./bin/cnatural.out -a
 # Alias:
-./bin/cnatural.out --pass
+./bin/cnatural.out --password
 
 # Show Help
 ./bin/cnatural.out -h

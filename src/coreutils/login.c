@@ -53,9 +53,7 @@ int cnatural_ajax_coreutils_login(
 
 	if(strcmp(path, "/api/ajax/coreutils/login") != 0)
 		return 1;
-	printf("Catched /api/ajax/coreutils/login...\n");
-
-	args->output_mimetype = cnatural_strdup("text/plain");
+	cnatural_log_debug("Catched /api/ajax/coreutils/login...");
 
 	/*
 	it = cnatural_get_arg(&args->arguments->data, "file");
@@ -81,15 +79,16 @@ int cnatural_ajax_coreutils_login(
 		}
 	}
 
-	printf("Getting the udata at uname:<%s>\n", uname);
+	cnatural_log_info("Getting the udata at uname:<%s>", uname);
 
 	if((strcmp(args->systdt->username, uname) != 0)
 		|| (cnatural_passwd_verify(args->systdt->password, upass) != 1))
 	{
-		printf("Invalid login\n");
+		cnatural_log_error("Invalid login");
 
 		args->output_buffer = cnatural_strdup("enopass");
 		args->output_buffer_size = strlen(args->output_buffer);
+		args->output_mimetype = cnatural_strdup("text/plain");
 
 		return 0;
 	}
@@ -98,18 +97,23 @@ int cnatural_ajax_coreutils_login(
 	free(passwd->value);
 	passwd->value = NULL;
 
-	printf("Logged, creating token...\n");
+	cnatural_log_info("Logged, creating token...");
 
 	/* Create and fill a JWT */
 	if(jwt_new(&jwt) != 0)
 	{
-		perror("Unable to create the JWT (JSON Web Tokens/Signature) object");
+		cnatural_perror(
+			"Unable to create the JWT (JSON Web Tokens/Signature) object"
+		);
+
 		return -1;
 	}
 
 	if(jwt_add_grant(jwt, "iss", "cnatural_client_default") != 0)
 	{
-		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: iss");
+		cnatural_perror(
+			"Unable to set the JWT (JSON Web Tokens/Signature) object: iss"
+		);
 
 		jwt_free(jwt);
 
@@ -118,7 +122,9 @@ int cnatural_ajax_coreutils_login(
 
 	if(jwt_add_grant_int(jwt, "exp", 9999999L) != 0)
 	{
-		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: exp");
+		cnatural_perror(
+			"Unable to set the JWT (JSON Web Tokens/Signature) object: exp"
+		);
 
 		jwt_free(jwt);
 
@@ -127,7 +133,9 @@ int cnatural_ajax_coreutils_login(
 
 	if(jwt_add_grant(jwt, "nt_svr", "CNatural " CNATURAL_SERVER_VERSION) != 0)
 	{
-		perror("Unable to set the JWT (JSON Web Tokens/Signature) object: nt_svr");
+		cnatural_perror(
+			"Unable to set the JWT (JSON Web Tokens/Signature) object: nt_svr"
+		);
 
 		jwt_free(jwt);
 
@@ -141,7 +149,9 @@ int cnatural_ajax_coreutils_login(
 			strlen(args->systdt->secret))
 		!= 0)
 	{
-		perror("Unable to set the JWT (JSON Web Tokens/Signature) algorithm");
+		cnatural_perror(
+			"Unable to set the JWT (JSON Web Tokens/Signature) algorithm"
+		);
 
 		jwt_free(jwt);
 
@@ -151,7 +161,7 @@ int cnatural_ajax_coreutils_login(
 	/* Create a Natural token and save it in the JWT */
 	if(cnatural_natural_token_create(&tk) != 0)
 	{
-		fprintf(stderr, "Error creating the token\n");
+		cnatural_log_error("Error creating the token");
 
 		jwt_free(jwt);
 
@@ -160,7 +170,7 @@ int cnatural_ajax_coreutils_login(
 
 	if(cnatural_natural_token_set_username(tk, (const char*) uname) != 0)
 	{
-		fprintf(stderr, "Error setting the token data: username\n");
+		cnatural_log_error("Error setting the token data: username");
 
 		jwt_free(jwt);
 
@@ -169,7 +179,7 @@ int cnatural_ajax_coreutils_login(
 
 	if(cnatural_natural_token_set_random_bytes(tk, rd) != 0)
 	{
-		fprintf(stderr, "Error setting the token data: random bytes\n");
+		cnatural_log_error("Error setting the token data: random bytes");
 
 		jwt_free(jwt);
 
@@ -178,7 +188,7 @@ int cnatural_ajax_coreutils_login(
 
 	if(cnatural_natural_token_set_timestamp(tk, &tms) != 0)
 	{
-		fprintf(stderr, "Error setting the token data: timestamp\n");
+		cnatural_log_error("Error setting the token data: timestamp");
 
 		jwt_free(jwt);
 
@@ -187,7 +197,7 @@ int cnatural_ajax_coreutils_login(
 
 	if(cnatural_natural_token_save_in_jwt(tk, jwt) != 0)
 	{
-		perror("Serializing the token");
+		cnatural_perror("Serializing the token");
 
 		jwt_free(jwt);
 
@@ -196,7 +206,7 @@ int cnatural_ajax_coreutils_login(
 
 	if(cnatural_natural_token_destroy(&tk) != 0)
 	{
-		fprintf(stderr, "Error destroying the token\n");
+		cnatural_log_error("Error destroying the token");
 
 		jwt_free(jwt);
 
@@ -206,9 +216,11 @@ int cnatural_ajax_coreutils_login(
 	sr = jwt_encode_str(jwt);
 	if(sr == NULL)
 	{
-		perror("Unable to encode the JWT");
+		cnatural_perror("Unable to encode the JWT");
 		return -1;
 	}
+
+	args->output_mimetype = cnatural_strdup("text/plain");
 
 	args->output_buffer = sr;
 	args->output_buffer_size = strlen(sr);

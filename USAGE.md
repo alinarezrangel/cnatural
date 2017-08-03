@@ -72,7 +72,7 @@ The priority of the fields is:
 
 1. The field value (for example, `secret`).
 2. The `useLive` variation (for example, `useLiveSecret`).
-3. The command line option (for example, `-s` or `--secr`).
+3. The command line option (for example, `-s` or `--secret`).
 
 The highest-priority options overrides the lower-priority ones.
 
@@ -83,3 +83,4 @@ Only execute the file `bin/cnatural`.
 ## More help ##
 
 For more help see the [docs/usage/index](docs/usage/index.md) file.
+
