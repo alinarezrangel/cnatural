@@ -144,7 +144,7 @@ level is always set to `0` (DEBUG).
 
 ### Default ###
 
-The default value in the `Makefile` is `3` (INFO).
+The default value in the `Makefile` is `0` (DEBUG).
 
 ## `CNATURAL_USE_ANSI_COLOR` - Enables colored output ##
 
