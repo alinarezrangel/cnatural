@@ -24,7 +24,7 @@ limitations under the License.
 #define H_CNATURAL_MODULE_COREUTILS_TIME_H_ 1
 
 /**
-* @file time.h
+* @file
 * CoreUtils time (all) function.
 */
 
@@ -34,7 +34,7 @@ limitations under the License.
 
 CNATURAL_BEGIN_DECLRS
 
-/*
+/**
 * @brief gets the current server time in ISO 8601 format.
 */
 int cnatural_ajax_coreutils_time_get(const char*, cnatural_ajax_argument_t*);

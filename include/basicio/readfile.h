@@ -34,8 +34,9 @@ limitations under the License.
 
 CNATURAL_BEGIN_DECLRS
 
-/*
+/**
 * @brief returns a file in the private_http directory.
+*
 * Is needed a valid token, maked by coreutils.createToken
 */
 int cnatural_ajax_basicio_readfile(const char*, cnatural_ajax_argument_t*);

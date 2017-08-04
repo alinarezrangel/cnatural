@@ -24,7 +24,7 @@ limitations under the License.
 #define H_CNATURAL_MODULE_BASICIO_CLOSEF_H_ 1
 
 /**
-* @file openf.h
+* @file
 * BasicIO CloseFile function.
 */
 
@@ -34,8 +34,9 @@ limitations under the License.
 
 CNATURAL_BEGIN_DECLRS
 
-/*
+/**
 * @brief Closes a file opened by basicio.openFile
+*
 * Is needed a valid token, maked by coreutils.createToken and a valid handler,
 * maked by basicio.openFile
 */

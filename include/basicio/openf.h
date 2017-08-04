@@ -34,8 +34,9 @@ limitations under the License.
 
 CNATURAL_BEGIN_DECLRS
 
-/*
+/**
 * @brief Opens a file in the accessible filesystem and returns a handler.
+*
 * Is needed a valid token, maked by coreutils.createToken
 */
 int cnatural_ajax_basicio_openfile(const char*, cnatural_ajax_argument_t*);
