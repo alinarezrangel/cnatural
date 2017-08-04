@@ -355,6 +355,10 @@ textarea.gui-widget-input, select.gui-widget-input {
 	cursor: not-allowed !important;
 }
 
+.width-50 {
+	width: 50% !important;
+}
+
 @media all and (max-width: 470px) {
 	/* Small */
 

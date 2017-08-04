@@ -153,7 +153,8 @@ $ntc(window).on("load", function()
 	// the users right-clicks anything
 	$ntc(document.body).on("contextmenu", (ev) =>
 	{
-		ev.preventDefault();
+		if(!ev.ctrlKey)
+			ev.preventDefault();
 	}, false);
 
 	// We should test that the server is accesible via the coreutils.test
