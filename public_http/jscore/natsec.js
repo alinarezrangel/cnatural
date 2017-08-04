@@ -560,6 +560,27 @@ limitations under the License.
 		};
 
 		/**
+		 * Gives the focus to this element.
+		 *
+		 * It's chainable.
+		 *
+		 * @return {NaturalObject} Always returns this object.
+		 *
+		 * @method NaturalObject.prototype.focus
+		 */
+		NaturalObject.prototype.focus = function()
+		{
+			var func = (to) =>
+			{
+				to.focus();
+			};
+
+			this._forAll(func);
+
+			return this;
+		};
+
+		/**
 		 * Attaches an event handler.
 		 *
 		 * If only an event name is specified, the setted event

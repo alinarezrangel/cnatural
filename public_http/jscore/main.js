@@ -153,7 +153,7 @@ $ntc(window).on("load", function()
 	// the users right-clicks anything
 	$ntc(document.body).on("contextmenu", (ev) =>
 	{
-		//ev.preventDefault();
+		ev.preventDefault();
 	}, false);
 
 	// We should test that the server is accesible via the coreutils.test
@@ -200,12 +200,14 @@ $ntc(window).on("load", function()
 	{
 		$ntc("#_bootscreen").hideSlideUp();
 		$ntc("#_loginscreen").removeClass("gui-hidden");
+
+		$ntc("#login_username").focus();
 	}).on("click");
 
-	// When the users tries to login:
-	$ntc("#login_button").attach(function(ev) // attach() .. on("click")
+	var attemptLogin = function(ev)
 	{
 		$ntc("#login_button").original.disabled = true;
+		$ntc("#login_password").original.disabled = true;
 
 		// Show a dialog saying that the login is in process
 		// (if something go wrong like connection failed, the user
@@ -239,6 +241,7 @@ $ntc(window).on("load", function()
 			if(res === "enopass")
 			{
 				$ntc("#login_button").original.disabled = false;
+				$ntc("#login_password").original.disabled = false;
 
 				// Bad username or password
 				var err = NaturalWidgets.CreateTextDialog(
@@ -294,5 +297,30 @@ $ntc(window).on("load", function()
 
 		/* For security reasons, delete the password from the field */
 		$ntc("#login_password").value("");
+	};
+
+	// If the user presses enter on the <enter username> input,
+	// move focus to the password input. An enter event on the password
+	// input will try to login
+	$ntc("#login_username").attach(function(ev) // attach() ... on("keypress")
+	{
+		if(ev.key == "Enter")
+		{
+			$ntc("#login_password").focus();
+		}
+	}).on("keypress");
+
+	$ntc("#login_password").attach(function(ev) // attach() .. on("keypress")
+	{
+		if(ev.key == "Enter")
+		{
+			return attemptLogin(ev);
+		}
+	}).on("keypress");
+
+	// When the users tries to login:
+	$ntc("#login_button").attach(function(ev) // attach() .. on("click")
+	{
+		return attemptLogin(ev);
 	}).on("click");
 });
