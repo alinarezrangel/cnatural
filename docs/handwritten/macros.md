@@ -153,7 +153,7 @@ If this macro is defined, the log messages will be printed in full color using
 
 ### Default ###
 
-The default value in the `Makefile` is *undef* (the macro is not defined).
+The default value in the `Makefile` is *defined* (the macro is defined).
 
 ## `H_CNATURAL_*_H_` - Header macros ##
 
