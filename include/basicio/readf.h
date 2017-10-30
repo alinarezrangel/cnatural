@@ -20,11 +20,11 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(H_CNATURAL_MODULE_BAICIO_READFILE_H_)
-#define H_CNATURAL_MODULE_BAICIO_READFILE_H_ 1
+#if !defined(H_CNATURAL_MODULE_BASICIO_READF_H_)
+#define H_CNATURAL_MODULE_BASICIO_READF_H_ 1
 
 /**
-* @file readfile.h
+* @file readf.h
 * BasicIO ReadFile function.
 */
 
@@ -35,7 +35,7 @@ limitations under the License.
 CNATURAL_BEGIN_DECLRS
 
 /**
-* @brief returns a file in the private_http directory.
+* @brief Reads from a valid file handler opened by basicio.openFile.
 *
 * Is needed a valid token, maked by coreutils.createToken
 */
@@ -43,4 +43,4 @@ int cnatural_ajax_basicio_readfile(const char*, cnatural_ajax_argument_t*);
 
 CNATURAL_END_DECLRS
 
-#endif /* ~H_CNATURAL_MODULE_BAICIO_READFILE_H_ */
+#endif /* ~H_CNATURAL_MODULE_BASICIO_READF_H_ */

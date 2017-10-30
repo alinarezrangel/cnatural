@@ -139,6 +139,9 @@ Other resources used by CNatural may have other licenses:
 * `public_http/resources/backgrounds/`:
 [node-natural-background-images][naturalbkg] it's licensed under the
 CC-BY-SA 4.0 (please see the LICENSE for that project)
+* `public_http/generation/`:
+[generation][genrepo]
 
 
 [naturalbkg]: https://github.com/alinarezrangel/node-natural-background-images
+[genrepo]: https://github.com/alinarezrangel/generation/releases/tag/v1.1.0

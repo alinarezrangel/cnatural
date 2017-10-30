@@ -1,7 +1,7 @@
 /************************************************
 **********************
 *** CNatural: Remote embed systems control.
-*** * AJAX BasicIO module: OpenFile function.
+*** * AJAX BasicIO module: ReadFile function.
 **********************
 
 Copyright 2016 Alejandro Linarez Rangel
@@ -20,7 +20,7 @@ limitations under the License.
 **********************
 ************************************************/
 
-#include "basicio/closef.h"
+#include "basicio/readf.h"
 
 /* Implementation headers: */
 
@@ -37,26 +37,23 @@ limitations under the License.
 #include "authcall.h"
 #include "utilfcn.h"
 
-int cnatural_ajax_basicio_closefile(
+int cnatural_ajax_basicio_readfile(
 	const char* path,
 	cnatural_ajax_argument_t* args
 )
 {
 	cnatural_post_processor_node_t* it = NULL;
-	char* fhdn = NULL;
+	char* handler = NULL;
 	char* token = NULL;
-	int sz = 0;
-	int err = 0;
-	int autherr = 0;
-	int fhandler = -1;
+	char* chunksize = NULL;
 	cnatural_authcall_token_t* tkobj = NULL;
 
 	const char* error_json_format =
 		"{\"type\": \"error\", \"errno\": %d, \"error\": \"%s\"}";
 
-	if(strcmp(path, "/api/ajax/basicio/closefile") != 0)
+	if(strcmp(path, "/api/ajax/basicio/readfile") != 0)
 		return 1;
-	cnatural_log_debug("Catched /api/ajax/basicio/closefile...");
+	cnatural_log_debug("Catched /api/ajax/basicio/readfile...");
 
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{
@@ -64,12 +61,17 @@ int cnatural_ajax_basicio_closefile(
 
 		if(strcmp(it->key, "handler") == 0)
 		{
-			fhdn = it->value;
+			handler = it->value;
 			continue;
 		}
 		if(strcmp(it->key, "token") == 0)
 		{
 			token = it->value;
+			continue;
+		}
+		if(strcmp(it->key, "chunksize") == 0)
+		{
+			chunksize = it->value;
 			continue;
 		}
 	}
@@ -87,90 +89,7 @@ int cnatural_ajax_basicio_closefile(
 		return -1;
 	}
 
-	errno = 0;
-	fhandler = strtol(fhdn, NULL, 10);
-
-	if((errno != 0) || (fhandler < 0))
-	{
-		if((errno == 0) && (fhandler < 0))
-		{
-			errno = ERANGE;
-		}
-
-		cnatural_perror("Error converting the file handler to string");
-
-		err = errno;
-
-		/* This error should be notified to the client */
-
-		sz = snprintf(
-			NULL,
-			0,
-			error_json_format,
-			err,
-			strerror(err)
-		);
-
-		if(sz <= 0)
-		{
-			cnatural_perror("Error calculating the size of the error string");
-
-			cnatural_authcall_destroy(&tkobj);
-
-			return -1;
-		}
-
-		args->output_mimetype = cnatural_strdup("application/json");
-
-		args->output_buffer_size = sz;
-		args->output_buffer = malloc(sz + 1);
-
-		if(args->output_buffer == NULL)
-		{
-			cnatural_perror("Error allocating the error string");
-
-			free(args->output_mimetype);
-			cnatural_authcall_destroy(&tkobj);
-
-			return -1;
-		}
-
-		sz = snprintf(
-			args->output_buffer,
-			sz + 1,
-			error_json_format,
-			err,
-			strerror(err)
-		);
-
-		if(sz <= 0)
-		{
-			cnatural_perror("Error printing the error string");
-
-			free(args->output_mimetype);
-			free(args->output_buffer);
-			cnatural_authcall_destroy(&tkobj);
-
-			return -1;
-		}
-
-		cnatural_authcall_destroy(&tkobj);
-
-		return 0;
-	}
-
-	if(close(fhandler) < 0)
-	{
-		cnatural_perror("Error closing the file");
-
-		cnatural_authcall_destroy(&tkobj);
-
-		return -1;
-	}
-
-	args->output_mimetype = cnatural_strdup("text/plain");
-	args->output_buffer = cnatural_strdup("done");
-	args->output_buffer_size = 4;
+	//
 
 	cnatural_authcall_destroy(&tkobj);
 

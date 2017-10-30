@@ -20,7 +20,7 @@ limitations under the License.
 **********************
 ************************************************/
 
-#include "basicio/readfile.h"
+#include "basicio/readfilecontents.h"
 
 /* Implementation headers: */
 
@@ -52,7 +52,7 @@ static int valid_fpos(const char* s, size_t z)
 	return 1;
 }
 
-int cnatural_ajax_basicio_readfile(
+int cnatural_ajax_basicio_readfilecontents(
 	const char* path,
 	cnatural_ajax_argument_t* args
 )
@@ -70,9 +70,9 @@ int cnatural_ajax_basicio_readfile(
 	FILE* fh = NULL;
 	cnatural_authcall_token_t* tkobj = NULL;
 
-	if(strcmp(path, "/api/ajax/basicio/readfile") != 0)
+	if(strcmp(path, "/api/ajax/basicio/readfilecontents") != 0)
 		return 1;
-	cnatural_log_debug("Catched /api/ajax/basicio/readfile...");
+	cnatural_log_debug("Catched /api/ajax/basicio/readfilecontents...");
 
 	for(it = args->arguments->data; it != NULL; it = it->next)
 	{

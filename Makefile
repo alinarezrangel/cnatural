@@ -39,7 +39,7 @@ OBJC= \
 	$(DLIB)/utilfcn.o \
 	$(DLIB)/coreutils_login.o \
 	$(DLIB)/coreutils_timefcn.o \
-	$(DLIB)/basicio_readfile.o \
+	$(DLIB)/basicio_readfilecontents.o \
 	$(DLIB)/basicio_openf.o \
 	$(DLIB)/basicio_closef.o
 # All compilation libraries
@@ -146,7 +146,7 @@ $(DLIB)/coreutils_login.o: $(SRC)/coreutils/login.c $(INC)/coreutils/login.h
 $(DLIB)/coreutils_timefcn.o: $(SRC)/coreutils/timefcn.c $(INC)/coreutils/timefcn.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
-$(DLIB)/basicio_readfile.o: $(SRC)/basicio/readfile.c $(INC)/basicio/readfile.h
+$(DLIB)/basicio_readfilecontents.o: $(SRC)/basicio/readfilecontents.c $(INC)/basicio/readfilecontents.h
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 $(DLIB)/basicio_openf.o: $(SRC)/basicio/openf.c $(INC)/basicio/openf.h

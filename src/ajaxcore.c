@@ -35,7 +35,7 @@ limitations under the License.
 #include "coreutils/login.h"
 #include "coreutils/import.h"
 #include "coreutils/timefcn.h"
-#include "basicio/readfile.h"
+#include "basicio/readfilecontents.h"
 #include "basicio/openf.h"
 #include "basicio/closef.h"
 
@@ -315,7 +315,7 @@ int cnatural_try_ajax(const char* path, cnatural_ajax_argument_t* inout)
 	ret = cnatural_ajax_coreutils_time_get(path, inout);
 	if(ret <= 0)
 		return ret;
-	ret = cnatural_ajax_basicio_readfile(path, inout);
+	ret = cnatural_ajax_basicio_readfilecontents(path, inout);
 	if(ret <= 0)
 		return ret;
 	ret = cnatural_ajax_basicio_openfile(path, inout);

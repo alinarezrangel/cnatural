@@ -20,7 +20,7 @@ limitations under the License.
 **********************
 ************************************************/
 
-#include "basicio/readfile.h"
+#include "basicio/openf.h"
 
 /* Implementation headers: */
 

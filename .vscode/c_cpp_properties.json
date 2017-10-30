@@ -4,8 +4,8 @@
             "name": "Mac",
             "includePath": [
                 "/usr/include",
-								"/usr/include/clang/3.8/include/",
-                    "${workspaceRoot}/include"
+                "/usr/include/clang/3.8/include/",
+                "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
@@ -15,14 +15,18 @@
                     "${workspaceRoot}"
                 ]
             },
-            "intelliSenseMode": "clang-x64"
+            "intelliSenseMode": "clang-x64",
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ]
         },
         {
             "name": "Linux",
             "includePath": [
-								"/usr/include",
-								"/usr/include/clang/3.8/include/",
-                    "${workspaceRoot}/include"
+                "/usr/include",
+                "/usr/include/clang/3.8/include/",
+                "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
@@ -38,7 +42,7 @@
             "name": "Win32",
             "includePath": [
                 "c:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/include",
-                    "${workspaceRoot}/include"
+                "${workspaceRoot}/include"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
@@ -51,5 +55,5 @@
             "intelliSenseMode": "msvc-x64"
         }
     ],
-    "version": 2
+    "version": 3
 }
