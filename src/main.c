@@ -58,7 +58,7 @@ int cmdline_colr(int argc, char** argv);
 void generate_random_field(void);
 void generate_salt(char* salt);
 
-cnatural_cmdline_argument_t options[] =
+cnatural_cmdline_argument options[] =
 {
 	{"-c", "--conf", 1, cmdline_conf, "Sets the configuration file"},
 	{"-a", "--password", 0, cmdline_pass, "Ask the user for an username to authenticate"},
@@ -72,7 +72,7 @@ cnatural_cmdline_argument_t options[] =
 	{NULL, NULL, 0, NULL, NULL}
 };
 
-cnatural_system_data_t systdt;
+cnatural_system_data systdt;
 
 const char* configfile_name = "cnatural.conf";
 
@@ -90,7 +90,7 @@ struct
 	.ask_random = -1
 };
 
-cnatural_system_data_t* get_global_system_data(void);
+cnatural_system_data* get_global_system_data(void);
 
 int main(int argc, char** argv)
 {
@@ -418,7 +418,7 @@ int main(int argc, char** argv)
 	exit(EXIT_SUCCESS);
 }
 
-cnatural_system_data_t* get_global_system_data(void)
+cnatural_system_data* get_global_system_data(void)
 {
 	return &systdt;
 }

@@ -54,10 +54,10 @@ static int valid_fpos(const char* s, size_t z)
 
 int cnatural_ajax_basicio_readfilecontents(
 	const char* path,
-	cnatural_ajax_argument_t* args
+	cnatural_ajax_argument* args
 )
 {
-	cnatural_post_processor_node_t* it = NULL;
+	cnatural_post_processor_node* it = NULL;
 	char* fname = "";
 	char* mimetype = "";
 	char* token = "";
@@ -68,7 +68,7 @@ int cnatural_ajax_basicio_readfilecontents(
 	long int siz = 0;
 	int autherr = 0;
 	FILE* fh = NULL;
-	cnatural_authcall_token_t* tkobj = NULL;
+	cnatural_authcall_token* tkobj = NULL;
 
 	if(strcmp(path, "/api/ajax/basicio/readfilecontents") != 0)
 		return 1;

@@ -55,12 +55,12 @@ CNATURAL_BEGIN_DECLRS
 *
 * The public attributes of this struct are:
 *
-* - `cnatural_natural_token_t* token`: The natural token used.
+* - `cnatural_natural_token* token`: The natural token used.
 */
 typedef struct cnatural_authcall_token
 {
-	cnatural_natural_token_t* token;
-} cnatural_authcall_token_t;
+	cnatural_natural_token* token;
+} cnatural_authcall_token;
 
 /**
 * @brief Authenticates a raw token string and gets useful data.
@@ -75,8 +75,8 @@ typedef struct cnatural_authcall_token
 */
 int cnatural_authcall_authenticate(
 	char* CNATURAL_RESTRICT rawtk,
-	cnatural_authcall_token_t** CNATURAL_RESTRICT token,
-	cnatural_system_data_t* CNATURAL_RESTRICT systdt
+	cnatural_authcall_token** CNATURAL_RESTRICT token,
+	cnatural_system_data* CNATURAL_RESTRICT systdt
 );
 
 /**
@@ -85,7 +85,7 @@ int cnatural_authcall_authenticate(
 * @param token The call to authenticate to destroy.
 * @return -1 on error, 0 on sucess.
 */
-int cnatural_authcall_destroy(cnatural_authcall_token_t** token);
+int cnatural_authcall_destroy(cnatural_authcall_token** token);
 
 /**
 * @}

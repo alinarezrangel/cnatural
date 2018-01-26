@@ -41,19 +41,19 @@ limitations under the License.
 
 int cnatural_ajax_coreutils_import(
 	const char* path,
-	cnatural_ajax_argument_t* args
+	cnatural_ajax_argument* args
 )
 {
 	const char* privatepath = "private_http/";
 
-	cnatural_post_processor_node_t* it = NULL;
+	cnatural_post_processor_node* it = NULL;
 	int autherr = 0;
 	int ofile = -1;
 	char* token = "";
 	char* fname = "";
 	char* mimetype = "";
 	char* realpath = NULL;
-	cnatural_authcall_token_t* tkobj = NULL;
+	cnatural_authcall_token* tkobj = NULL;
 
 	if(strcmp(path, "/api/ajax/coreutils/import") != 0)
 		return 1;

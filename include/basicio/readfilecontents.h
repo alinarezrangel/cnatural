@@ -39,7 +39,7 @@ CNATURAL_BEGIN_DECLRS
 *
 * Is needed a valid token, maked by coreutils.createToken
 */
-int cnatural_ajax_basicio_readfilecontents(const char*, cnatural_ajax_argument_t*);
+int cnatural_ajax_basicio_readfilecontents(const char*, cnatural_ajax_argument*);
 
 CNATURAL_END_DECLRS
 

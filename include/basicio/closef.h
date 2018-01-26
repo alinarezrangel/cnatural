@@ -40,7 +40,7 @@ CNATURAL_BEGIN_DECLRS
 * Is needed a valid token, maked by coreutils.createToken and a valid handler,
 * maked by basicio.openFile
 */
-int cnatural_ajax_basicio_closefile(const char*, cnatural_ajax_argument_t*);
+int cnatural_ajax_basicio_closefile(const char*, cnatural_ajax_argument*);
 
 CNATURAL_END_DECLRS
 

@@ -45,7 +45,7 @@ CNATURAL_BEGIN_DECLRS
 * @param argc The argument counter.
 * @param argv The arguments passed to the handlers.
 */
-typedef int (*cnatural_cmdline_argument_handler_t)(int argc, char** argv);
+typedef int (*cnatural_cmdline_argument_handler)(int argc, char** argv);
 
 /**
 * @brief The command-line option.
@@ -64,9 +64,9 @@ typedef struct cnatural_cmdline_argument
 	const char* short_option;
 	const char* long_option;
 	int nth_args;
-	cnatural_cmdline_argument_handler_t handler;
+	cnatural_cmdline_argument_handler handler;
 	const char* doc_option;
-} cnatural_cmdline_argument_t;
+} cnatural_cmdline_argument;
 
 /**
 * @brief Parses all command line options.
@@ -83,8 +83,8 @@ typedef struct cnatural_cmdline_argument
 int cnatural_cmdline_parse(
 	int argc,
 	char** argv,
-	cnatural_cmdline_argument_t* opts,
-	cnatural_cmdline_argument_handler_t help_handler
+	cnatural_cmdline_argument* opts,
+	cnatural_cmdline_argument_handler help_handler
 );
 
 /**

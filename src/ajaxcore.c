@@ -59,8 +59,8 @@ int cnatural_basic_post_data_handler(
 		return MHD_YES;
 	}
 
-	cnatural_post_processor_data_t* data = conn_klass;
-	cnatural_post_processor_node_t* it = data->data;
+	cnatural_post_processor_data* data = conn_klass;
+	cnatural_post_processor_node* it = data->data;
 
 	cnatural_log_debug("Handling POST data %s %li", key, strlen(sdata));
 	fflush(stdout);
@@ -117,8 +117,8 @@ int cnatural_basic_post_data_handler(
 		return MHD_YES;
 	}
 
-	cnatural_post_processor_node_t* kl =
-		malloc(sizeof(cnatural_post_processor_node_t));
+	cnatural_post_processor_node* kl =
+		malloc(sizeof(cnatural_post_processor_node));
 	if(kl == NULL)
 	{
 		cnatural_perror("Error appending a key to the keylist");
@@ -142,20 +142,20 @@ int cnatural_basic_post_data_handler(
 int cnatural_create_post_data(
 	struct MHD_Connection* conn,
 	int create_post,
-	cnatural_post_processor_data_t** data
+	cnatural_post_processor_data** data
 )
 {
-	cnatural_post_processor_node_t* kl;
+	cnatural_post_processor_node* kl;
 
 	cnatural_log_debug("Creating POST data");
 
-	(*data) = malloc(sizeof(cnatural_post_processor_data_t));
+	(*data) = malloc(sizeof(cnatural_post_processor_data));
 	if((*data) == NULL)
 	{
 		cnatural_perror("Error creating the data");
 		return MHD_NO;
 	}
-	kl = malloc(sizeof(cnatural_post_processor_node_t));
+	kl = malloc(sizeof(cnatural_post_processor_node));
 	if(kl == NULL)
 	{
 		cnatural_perror("Error making the main list chain");
@@ -201,16 +201,16 @@ int cnatural_create_post_data(
 	return MHD_YES;
 }
 
-int cnatural_destroy_post_data(cnatural_post_processor_data_t** data)
+int cnatural_destroy_post_data(cnatural_post_processor_data** data)
 {
-	cnatural_post_processor_node_t* it = (*data)->data;
+	cnatural_post_processor_node* it = (*data)->data;
 
 	/* Go to list end */
 	for(;it->next != NULL; it = it->next);
 	/* Iterate in reverse */
 	for(;it != NULL;)
 	{
-		cnatural_post_processor_node_t* bc = it->back;
+		cnatural_post_processor_node* bc = it->back;
 
 		if(it->key != NULL)
 			free(it->key);
@@ -238,7 +238,7 @@ void cnatural_basic_post_destroy(
 	enum MHD_RequestTerminationCode toe
 )
 {
-	cnatural_post_processor_data_t* data = *conn_klass;
+	cnatural_post_processor_data* data = *conn_klass;
 
 	cnatural_log_debug("Destroying POST request DATA");
 
@@ -266,7 +266,7 @@ void cnatural_basic_post_destroy(
  * but all AJAX calls are always HTTP POST requests.
 */
 
-int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
+int cnatural_ajax_test(const char* path, cnatural_ajax_argument* inout)
 {
 	const char* msg = "Hello World";
 	size_t msglen = strlen(msg) + 1; /* strlen not includes the NULL byte */
@@ -297,7 +297,7 @@ int cnatural_ajax_test(const char* path, cnatural_ajax_argument_t* inout)
 	return 0;
 }
 
-int cnatural_try_ajax(const char* path, cnatural_ajax_argument_t* inout)
+int cnatural_try_ajax(const char* path, cnatural_ajax_argument* inout)
 {
 	int ret = 0;
 

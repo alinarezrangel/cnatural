@@ -36,17 +36,17 @@ limitations under the License.
 
 int cnatural_ajax_coreutils_login(
 	const char* path,
-	cnatural_ajax_argument_t* args
+	cnatural_ajax_argument* args
 )
 {
-	cnatural_post_processor_node_t* it = NULL;
-	cnatural_post_processor_node_t* passwd = NULL;
-	cnatural_natural_token_t* tk = NULL;
+	cnatural_post_processor_node* it = NULL;
+	cnatural_post_processor_node* passwd = NULL;
+	cnatural_natural_token* tk = NULL;
 	char* uname = "";
 	char* upass = "";
 	char* sr = "";
 	jwt_t* jwt = NULL;
-	cnatural_natural_timestamp_t tms;
+	cnatural_natural_timestamp tms;
 	const char* rd = args->systdt->random;
 
 	tms.bdata = time(NULL);

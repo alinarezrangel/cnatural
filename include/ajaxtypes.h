@@ -91,7 +91,7 @@ typedef struct cnatural_post_processor_node
 	* A NULL-terminated string.
 	*/
 	char* value;
-} cnatural_post_processor_node_t;
+} cnatural_post_processor_node;
 
 /**
 * @brief Is a HTTP POST processor (parser) state.
@@ -113,8 +113,8 @@ typedef struct cnatural_post_processor_data
 	/**
 	* @brief The head node of the doble linked list containing the POST data.
 	*/
-	cnatural_post_processor_node_t* data;
-} cnatural_post_processor_data_t;
+	cnatural_post_processor_node* data;
+} cnatural_post_processor_data;
 
 /**
 * @brief Is the system data and configuration.
@@ -183,7 +183,7 @@ typedef struct cnatural_system_data
 	* Contains an integer in which the HTTP server will listen.
 	*/
 	int port;
-} cnatural_system_data_t;
+} cnatural_system_data;
 
 /**
 * @brief Contains all argument, data and output values passed to an AJAX
@@ -254,24 +254,24 @@ typedef struct cnatural_ajax_argument
 	* @brief The POST arguments.
 	*
 	* Contains all arguments passed via the POST method, see the specific
-	* cnatural_post_processor_data_t documentation for the specific methods to
+	* cnatural_post_processor_data documentation for the specific methods to
 	* access the data.
 	*/
-	cnatural_post_processor_data_t* arguments;
+	cnatural_post_processor_data* arguments;
 
 	/**
 	* @brief The global systdt.
 	*
 	* Just a pointer to the systdt copied when the AJAX method was received.
 	*/
-	cnatural_system_data_t* systdt;
-} cnatural_ajax_argument_t;
+	cnatural_system_data* systdt;
+} cnatural_ajax_argument;
 
 /**
 * @brief Gets an argument.
 */
-cnatural_post_processor_node_t* cnatural_get_arg(
-	cnatural_post_processor_node_t**,
+cnatural_post_processor_node* cnatural_get_arg(
+	cnatural_post_processor_node**,
 	const char*
 );
 

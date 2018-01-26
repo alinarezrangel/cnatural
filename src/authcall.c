@@ -32,8 +32,8 @@ limitations under the License.
 
 int cnatural_authcall_authenticate(
 	char* CNATURAL_RESTRICT rawtk,
-	cnatural_authcall_token_t** CNATURAL_RESTRICT token,
-	cnatural_system_data_t* CNATURAL_RESTRICT systdt
+	cnatural_authcall_token** CNATURAL_RESTRICT token,
+	cnatural_system_data* CNATURAL_RESTRICT systdt
 )
 {
 	jwt_t* jwt = NULL;
@@ -46,7 +46,7 @@ int cnatural_authcall_authenticate(
 
 	/* Create and authenticate the token */
 
-	*token = malloc(sizeof(cnatural_authcall_token_t));
+	*token = malloc(sizeof(cnatural_authcall_token));
 
 	if(*token == NULL)
 		return -1;
@@ -110,7 +110,7 @@ int cnatural_authcall_authenticate(
 	return 1;
 }
 
-int cnatural_authcall_destroy(cnatural_authcall_token_t** token)
+int cnatural_authcall_destroy(cnatural_authcall_token** token)
 {
 	if((token == NULL) || (*token == NULL))
 		return -1;

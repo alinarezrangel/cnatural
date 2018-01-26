@@ -26,12 +26,12 @@ limitations under the License.
 
 #include <string.h>
 
-cnatural_post_processor_node_t* cnatural_get_arg(
-	cnatural_post_processor_node_t** list,
+cnatural_post_processor_node* cnatural_get_arg(
+	cnatural_post_processor_node** list,
 	const char* key
 )
 {
-	cnatural_post_processor_node_t* it = NULL;
+	cnatural_post_processor_node* it = NULL;
 
 	if(list == NULL)
 		return NULL;

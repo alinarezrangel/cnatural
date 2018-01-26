@@ -65,7 +65,7 @@ typedef struct cnatural_natural_list
 	* cnatural_natural_list_get_at().
 	*/
 	void* value;
-} cnatural_natural_list_t;
+} cnatural_natural_list;
 
 /**
 * @brief Creates a node.
@@ -76,7 +76,7 @@ typedef struct cnatural_natural_list
 * @param node Node to create.
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
-int cnatural_natural_list_create(cnatural_natural_list_t** node);
+int cnatural_natural_list_create(cnatural_natural_list** node);
 
 /**
 * @brief Destroyes a node.
@@ -87,7 +87,7 @@ int cnatural_natural_list_create(cnatural_natural_list_t** node);
 * @param node Node to destroy.
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
-int cnatural_natural_list_destroy(cnatural_natural_list_t** node);
+int cnatural_natural_list_destroy(cnatural_natural_list** node);
 
 /**
 * @brief Gets the value at position.
@@ -102,7 +102,7 @@ int cnatural_natural_list_destroy(cnatural_natural_list_t** node);
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
 int cnatural_natural_list_get_at(
-	cnatural_natural_list_t* head,
+	cnatural_natural_list* head,
 	size_t at,
 	void** res
 );
@@ -120,7 +120,7 @@ int cnatural_natural_list_get_at(
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
 int cnatural_natural_list_set_at(
-	cnatural_natural_list_t* head,
+	cnatural_natural_list* head,
 	size_t at,
 	void* value
 );
@@ -134,7 +134,7 @@ int cnatural_natural_list_set_at(
 * @param node Node to remove from the list.
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
-int cnatural_natural_list_remove(cnatural_natural_list_t* node);
+int cnatural_natural_list_remove(cnatural_natural_list* node);
 
 /**
 * @brief Removes and destroyes this node from the list.
@@ -147,7 +147,7 @@ int cnatural_natural_list_remove(cnatural_natural_list_t* node);
 * @param node Pointer to the node to remove and destroy from the list.
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
-int cnatural_natural_list_remove_and_destroy(cnatural_natural_list_t** node);
+int cnatural_natural_list_remove_and_destroy(cnatural_natural_list** node);
 
 /**
 * @brief Push a node at the front.
@@ -159,8 +159,8 @@ int cnatural_natural_list_remove_and_destroy(cnatural_natural_list_t** node);
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
 int cnatural_natural_list_push_front(
-	cnatural_natural_list_t* head,
-	cnatural_natural_list_t* node
+	cnatural_natural_list* head,
+	cnatural_natural_list* node
 );
 
 /**
@@ -173,8 +173,8 @@ int cnatural_natural_list_push_front(
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
 int cnatural_natural_list_push_back(
-	cnatural_natural_list_t* head,
-	cnatural_natural_list_t* node
+	cnatural_natural_list* head,
+	cnatural_natural_list* node
 );
 
 /**
@@ -187,8 +187,8 @@ int cnatural_natural_list_push_back(
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
 int cnatural_natural_list_pop_front(
-	cnatural_natural_list_t* head,
-	cnatural_natural_list_t** node
+	cnatural_natural_list* head,
+	cnatural_natural_list** node
 );
 
 
@@ -202,8 +202,8 @@ int cnatural_natural_list_pop_front(
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
 int cnatural_natural_list_pop_back(
-	cnatural_natural_list_t* head,
-	cnatural_natural_list_t** node
+	cnatural_natural_list* head,
+	cnatural_natural_list** node
 );
 
 /**
@@ -213,7 +213,7 @@ int cnatural_natural_list_pop_back(
 * @param size Pointer (reference) where the size will be stored.
 * @return 0 on sucess, -1 on failure or 1 if the action cannot be done.
 */
-int cnatural_natural_list_size(cnatural_natural_list_t* head, size_t* size);
+int cnatural_natural_list_size(cnatural_natural_list* head, size_t* size);
 
 /**
 * @}

@@ -55,7 +55,7 @@ CNATURAL_BEGIN_DECLRS
 typedef struct cnatural_natural_timestamp
 {
 	time_t bdata;
-} cnatural_natural_timestamp_t;
+} cnatural_natural_timestamp;
 
 /**
 * @brief Represents a token.
@@ -73,7 +73,7 @@ typedef struct cnatural_natural_token
 	* Is used to prevent the usage of tokens generated on old server sessions
 	* to be used in newer server sessions.
 	*/
-	cnatural_natural_timestamp_t timestamp;
+	cnatural_natural_timestamp timestamp;
 
 	/**
 	* @brief The server username.
@@ -90,7 +90,7 @@ typedef struct cnatural_natural_token
 	* authentication purposes.
 	*/
 	char* random_bytes;
-} cnatural_natural_token_t;
+} cnatural_natural_token;
 
 /**
 * @brief Creates a new token.
@@ -100,7 +100,7 @@ typedef struct cnatural_natural_token
 * @param token Token to create.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_create(cnatural_natural_token_t** token);
+int cnatural_natural_token_create(cnatural_natural_token** token);
 
 /**
 * @brief Destroyes a token.
@@ -110,7 +110,7 @@ int cnatural_natural_token_create(cnatural_natural_token_t** token);
 * @param token Token to destroy.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_destroy(cnatural_natural_token_t** token);
+int cnatural_natural_token_destroy(cnatural_natural_token** token);
 
 /**
 * @brief Clones (copy) a token.
@@ -127,8 +127,8 @@ int cnatural_natural_token_destroy(cnatural_natural_token_t** token);
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_copy(
-	cnatural_natural_token_t* src,
-	cnatural_natural_token_t* dest
+	cnatural_natural_token* src,
+	cnatural_natural_token* dest
 );
 
 /**
@@ -141,7 +141,7 @@ int cnatural_natural_token_copy(
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_set_username(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	const char* username
 );
 
@@ -155,7 +155,7 @@ int cnatural_natural_token_set_username(
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_set_random_bytes(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	const char* random_bytes
 );
 
@@ -169,8 +169,8 @@ int cnatural_natural_token_set_random_bytes(
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_set_timestamp(
-	cnatural_natural_token_t* token,
-	cnatural_natural_timestamp_t* timestamp
+	cnatural_natural_token* token,
+	cnatural_natural_timestamp* timestamp
 );
 
 /**
@@ -187,7 +187,7 @@ int cnatural_natural_token_set_timestamp(
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_get_username(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	char** username
 );
 
@@ -205,7 +205,7 @@ int cnatural_natural_token_get_username(
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_get_random_bytes(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	char** random_bytes
 );
 
@@ -223,8 +223,8 @@ int cnatural_natural_token_get_random_bytes(
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_get_timestamp(
-	cnatural_natural_token_t* token,
-	cnatural_natural_timestamp_t** timestamp
+	cnatural_natural_token* token,
+	cnatural_natural_timestamp** timestamp
 );
 
 /**
@@ -237,8 +237,8 @@ int cnatural_natural_token_get_timestamp(
 * @returns true if the tokens are equal, false otherwise.
 */
 bool cnatural_natural_token_are_equals(
-	cnatural_natural_token_t* token1,
-	cnatural_natural_token_t* token2
+	cnatural_natural_token* token1,
+	cnatural_natural_token* token2
 );
 
 /**
@@ -252,7 +252,7 @@ bool cnatural_natural_token_are_equals(
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_save_in_jwt(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	jwt_t* jwt
 );
 
@@ -267,7 +267,7 @@ int cnatural_natural_token_save_in_jwt(
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
 int cnatural_natural_token_load_from_jwt(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	jwt_t* jwt
 );
 

@@ -99,7 +99,7 @@ typedef struct cnatural_utilfcn_rdstate
 	int_least64_t mul;
 	int_least64_t mod;
 	int_least64_t xsubi;
-} cnatural_utilfcn_rdstate_t;
+} cnatural_utilfcn_rdstate;
 
 
 /**
@@ -123,7 +123,7 @@ char* cnatural_strdup(const char* str);
 * @param seed The new seed.
 * @return A copy of the new global state.
 */
-cnatural_utilfcn_rdstate_t cnatural_srandom(int_least64_t seed);
+cnatural_utilfcn_rdstate cnatural_srandom(int_least64_t seed);
 
 /**
 * @brief Gets a random number and updates the global random state.
@@ -147,7 +147,7 @@ int_least64_t cnatural_random(void);
 * @param state The random state.
 * @return The next pseudo-random number generated.
 */
-int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate_t* state);
+int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate* state);
 
 /**
 * @brief ASCIIifies a byte.
@@ -186,7 +186,7 @@ char cnatural_asciify(char chr);
 void cnatural_fill_random(
 	char* str,
 	size_t len,
-	cnatural_utilfcn_rdstate_t* state
+	cnatural_utilfcn_rdstate* state
 );
 
 /**

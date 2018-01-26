@@ -66,7 +66,7 @@ char* cnatural_strdup(const char* str)
 	return strcpy(res, str);
 }
 
-cnatural_utilfcn_rdstate_t cnatural_srandom(int_least64_t seed)
+cnatural_utilfcn_rdstate cnatural_srandom(int_least64_t seed)
 {
 	const int_least64_t p2t48 = INT64_C(281474976710656);
 
@@ -74,7 +74,7 @@ cnatural_utilfcn_rdstate_t cnatural_srandom(int_least64_t seed)
 #if defined(CNATURAL_RDC_ARG1) \
 	&& defined(CNATURAL_RDC_ARG2) \
 	&& defined(CNATURAL_RDC_ARG3)
-	cnatural_utilfcn_global_state = (cnatural_utilfcn_rdstate_t) {
+	cnatural_utilfcn_global_state = (cnatural_utilfcn_rdstate) {
 		.sum = INT64_C(CNATURAL_RDC_ARG2) + (seed / INT64_C(2)),
 		.mul = INT64_C(CNATURAL_RDC_ARG1) + INT64_C(1),
 		.mod = (INT64_C(CNATURAL_RDC_ARG3) < p2t48)?
@@ -91,7 +91,7 @@ defined"
 	&& defined(CNATURAL_RDC_ARG2) \
 	&& defined(CNATURAL_RDC_ARG3) */
 #else /* CNATURAL_RDC_SAFE_MODE */
-	cnatural_utilfcn_global_state = (cnatural_utilfcn_rdstate_t) {
+	cnatural_utilfcn_global_state = (cnatural_utilfcn_rdstate) {
 		.sum = INT64_C(0xB),
 		.mul = INT64_C(0x5DEECE66D),
 		.mod = p2t48,
@@ -113,7 +113,7 @@ int_least64_t cnatural_random(void)
 	return cnatural_utilfcn_global_state.xsubi;
 }
 
-int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate_t* state)
+int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate* state)
 {
 	state->xsubi = (
 			state->mul
@@ -139,7 +139,7 @@ char cnatural_asciify(char chr)
 void cnatural_fill_random(
 	char* str,
 	size_t len,
-	cnatural_utilfcn_rdstate_t* state
+	cnatural_utilfcn_rdstate* state
 )
 {
 	size_t n = 0, i = 0, j = 0;

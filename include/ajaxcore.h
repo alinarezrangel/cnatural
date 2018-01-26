@@ -67,13 +67,13 @@ int cnatural_basic_post_data_handler(
 int cnatural_create_post_data(
 	struct MHD_Connection*,
 	int,
-	cnatural_post_processor_data_t**
+	cnatural_post_processor_data**
 );
 
 /**
 * @brief Destroyes a HTTP POST processor (parser).
 */
-int cnatural_destroy_post_data(cnatural_post_processor_data_t**);
+int cnatural_destroy_post_data(cnatural_post_processor_data**);
 
 /**
 * @brief Destroyes a HTTP POST data with the provided arguments.
@@ -98,17 +98,17 @@ void cnatural_basic_post_destroy(
 * @param inout Arguments for the AJAX.
 * @return Any of the return codes.
 */
-typedef int (*cnatural_ajax_handler_t)(
+typedef int (*cnatural_ajax_handler)(
 	const char* path,
-	cnatural_ajax_argument_t* inout
+	cnatural_ajax_argument* inout
 );
 
-int cnatural_ajax_test(const char*, cnatural_ajax_argument_t*);
+int cnatural_ajax_test(const char*, cnatural_ajax_argument*);
 
 /**
 * @brief Tries to execute the specified AJAX path with the provided arguments.
 */
-int cnatural_try_ajax(const char*, cnatural_ajax_argument_t*);
+int cnatural_try_ajax(const char*, cnatural_ajax_argument*);
 
 /**
 * @}

@@ -31,12 +31,12 @@ limitations under the License.
 #include "ajaxtypes.h"
 #include "utilfcn.h"
 
-int cnatural_natural_token_create(cnatural_natural_token_t** token)
+int cnatural_natural_token_create(cnatural_natural_token** token)
 {
 	if(token == NULL)
 		return -1;
 
-	*token = malloc(sizeof(cnatural_natural_token_t));
+	*token = malloc(sizeof(cnatural_natural_token));
 
 	if(*token == NULL)
 		return -1;
@@ -48,7 +48,7 @@ int cnatural_natural_token_create(cnatural_natural_token_t** token)
 	return 0;
 }
 
-int cnatural_natural_token_destroy(cnatural_natural_token_t** token)
+int cnatural_natural_token_destroy(cnatural_natural_token** token)
 {
 	if(token == NULL)
 		return -1;
@@ -62,8 +62,8 @@ int cnatural_natural_token_destroy(cnatural_natural_token_t** token)
 }
 
 int cnatural_natural_token_copy(
-	cnatural_natural_token_t* src,
-	cnatural_natural_token_t* dest
+	cnatural_natural_token* src,
+	cnatural_natural_token* dest
 )
 {
 	if((src == NULL) || (dest == NULL))
@@ -80,7 +80,7 @@ int cnatural_natural_token_copy(
 }
 
 int cnatural_natural_token_set_username(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	const char* username
 )
 {
@@ -94,7 +94,7 @@ int cnatural_natural_token_set_username(
 }
 
 int cnatural_natural_token_set_random_bytes(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	const char* random_bytes
 )
 {
@@ -108,8 +108,8 @@ int cnatural_natural_token_set_random_bytes(
 }
 
 int cnatural_natural_token_set_timestamp(
-	cnatural_natural_token_t* token,
-	cnatural_natural_timestamp_t* timestamp
+	cnatural_natural_token* token,
+	cnatural_natural_timestamp* timestamp
 )
 {
 	if(token == NULL)
@@ -121,7 +121,7 @@ int cnatural_natural_token_set_timestamp(
 }
 
 int cnatural_natural_token_get_username(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	char** username
 )
 {
@@ -134,7 +134,7 @@ int cnatural_natural_token_get_username(
 }
 
 int cnatural_natural_token_get_random_bytes(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	char** random_bytes
 )
 {
@@ -147,8 +147,8 @@ int cnatural_natural_token_get_random_bytes(
 }
 
 int cnatural_natural_token_get_timestamp(
-	cnatural_natural_token_t* token,
-	cnatural_natural_timestamp_t** timestamp
+	cnatural_natural_token* token,
+	cnatural_natural_timestamp** timestamp
 )
 {
 	if(token == NULL)
@@ -160,8 +160,8 @@ int cnatural_natural_token_get_timestamp(
 }
 
 bool cnatural_natural_token_are_equals(
-	cnatural_natural_token_t* token1,
-	cnatural_natural_token_t* token2
+	cnatural_natural_token* token1,
+	cnatural_natural_token* token2
 )
 {
 	if((token1 == NULL) || (token2 == NULL))
@@ -186,7 +186,7 @@ bool cnatural_natural_token_are_equals(
 }
 
 int cnatural_natural_token_save_in_jwt(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	jwt_t* jwt
 )
 {
@@ -206,7 +206,7 @@ int cnatural_natural_token_save_in_jwt(
 }
 
 int cnatural_natural_token_load_from_jwt(
-	cnatural_natural_token_t* token,
+	cnatural_natural_token* token,
 	jwt_t* jwt
 )
 {

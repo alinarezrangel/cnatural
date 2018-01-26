@@ -37,7 +37,7 @@ CNATURAL_BEGIN_DECLRS
 /**
 * @brief gets the current server time in ISO 8601 format.
 */
-int cnatural_ajax_coreutils_time_get(const char*, cnatural_ajax_argument_t*);
+int cnatural_ajax_coreutils_time_get(const char*, cnatural_ajax_argument*);
 
 CNATURAL_END_DECLRS
 

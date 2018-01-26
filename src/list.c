@@ -28,11 +28,11 @@ limitations under the License.
 
 /* This file implements a double-linked list for AJAX modules usage */
 
-int cnatural_natural_list_create(cnatural_natural_list_t** head)
+int cnatural_natural_list_create(cnatural_natural_list** head)
 {
 	if(head == NULL)
 		return -1;
-	*head = malloc(sizeof(cnatural_natural_list_t));
+	*head = malloc(sizeof(cnatural_natural_list));
 	if(*head == NULL)
 		return -1;
 
@@ -42,9 +42,9 @@ int cnatural_natural_list_create(cnatural_natural_list_t** head)
 	return 0;
 }
 
-int cnatural_natural_list_destroy(cnatural_natural_list_t** head)
+int cnatural_natural_list_destroy(cnatural_natural_list** head)
 {
-	cnatural_natural_list_t *it = NULL, *cp = NULL;
+	cnatural_natural_list *it = NULL, *cp = NULL;
 
 	if((head == NULL) || (*head == NULL))
 		return -1;
@@ -62,9 +62,9 @@ int cnatural_natural_list_destroy(cnatural_natural_list_t** head)
 	return 0;
 }
 
-int cnatural_natural_list_get_at(cnatural_natural_list_t* head, size_t at, void** result)
+int cnatural_natural_list_get_at(cnatural_natural_list* head, size_t at, void** result)
 {
-	cnatural_natural_list_t* it = NULL;
+	cnatural_natural_list* it = NULL;
 	size_t i = 0;
 
 	if(head == NULL)
@@ -86,9 +86,9 @@ int cnatural_natural_list_get_at(cnatural_natural_list_t* head, size_t at, void*
 	return 1;
 }
 
-int cnatural_natural_list_set_at(cnatural_natural_list_t* head, size_t at, void* value)
+int cnatural_natural_list_set_at(cnatural_natural_list* head, size_t at, void* value)
 {
-	cnatural_natural_list_t* it = NULL;
+	cnatural_natural_list* it = NULL;
 	size_t i = 0;
 
 	if(head == NULL)
@@ -110,7 +110,7 @@ int cnatural_natural_list_set_at(cnatural_natural_list_t* head, size_t at, void*
 	return 1;
 }
 
-int cnatural_natural_list_remove(cnatural_natural_list_t* node)
+int cnatural_natural_list_remove(cnatural_natural_list* node)
 {
 	if(node == NULL)
 		return -1;
@@ -123,7 +123,7 @@ int cnatural_natural_list_remove(cnatural_natural_list_t* node)
 	return 0;
 }
 
-int cnatural_natural_list_remove_and_destroy(cnatural_natural_list_t** node)
+int cnatural_natural_list_remove_and_destroy(cnatural_natural_list** node)
 {
 	int ret = 0;
 
@@ -140,7 +140,7 @@ int cnatural_natural_list_remove_and_destroy(cnatural_natural_list_t** node)
 	return 0;
 }
 
-int cnatural_natural_list_push_front(cnatural_natural_list_t* head, cnatural_natural_list_t* node)
+int cnatural_natural_list_push_front(cnatural_natural_list* head, cnatural_natural_list* node)
 {
 	if(head == NULL)
 		return -1;
@@ -153,7 +153,7 @@ int cnatural_natural_list_push_front(cnatural_natural_list_t* head, cnatural_nat
 	return 0;
 }
 
-int cnatural_natural_list_push_back(cnatural_natural_list_t* head, cnatural_natural_list_t* node)
+int cnatural_natural_list_push_back(cnatural_natural_list* head, cnatural_natural_list* node)
 {
 	if(head == NULL)
 		return -1;
@@ -166,7 +166,7 @@ int cnatural_natural_list_push_back(cnatural_natural_list_t* head, cnatural_natu
 	return 0;
 }
 
-int cnatural_natural_list_pop_front(cnatural_natural_list_t* head, cnatural_natural_list_t** node)
+int cnatural_natural_list_pop_front(cnatural_natural_list* head, cnatural_natural_list** node)
 {
 	int ret = 0;
 
@@ -185,7 +185,7 @@ int cnatural_natural_list_pop_front(cnatural_natural_list_t* head, cnatural_natu
 	return 0;
 }
 
-int cnatural_natural_list_pop_back(cnatural_natural_list_t* head, cnatural_natural_list_t** node)
+int cnatural_natural_list_pop_back(cnatural_natural_list* head, cnatural_natural_list** node)
 {
 	int ret = 0;
 
@@ -204,9 +204,9 @@ int cnatural_natural_list_pop_back(cnatural_natural_list_t* head, cnatural_natur
 	return 0;
 }
 
-int cnatural_natural_list_size(cnatural_natural_list_t* head, size_t* s)
+int cnatural_natural_list_size(cnatural_natural_list* head, size_t* s)
 {
-	cnatural_natural_list_t* it = NULL;
+	cnatural_natural_list* it = NULL;
 	size_t i = 0;
 
 	if(head == NULL)

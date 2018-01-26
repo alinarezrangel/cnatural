@@ -39,10 +39,10 @@ limitations under the License.
 
 int cnatural_ajax_basicio_openfile(
 	const char* path,
-	cnatural_ajax_argument_t* args
+	cnatural_ajax_argument* args
 )
 {
-	cnatural_post_processor_node_t* it = NULL;
+	cnatural_post_processor_node* it = NULL;
 	char* fname = NULL;
 	char* token = NULL;
 	char* mode = NULL;
@@ -52,7 +52,7 @@ int cnatural_ajax_basicio_openfile(
 	int fhandler = -1;
 	int flags = 0;
 	int postype = 0;
-	cnatural_authcall_token_t* tkobj = NULL;
+	cnatural_authcall_token* tkobj = NULL;
 
 	const char* error_json_format =
 		"{\"type\": \"error\", \"errno\": %d, \"error\": \"%s\"}";

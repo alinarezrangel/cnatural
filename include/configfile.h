@@ -53,7 +53,7 @@ CNATURAL_BEGIN_DECLRS
 */
 int cnatural_configfile_read_systdt_from_file(
 	FILE* file,
-	cnatural_system_data_t* systdt,
+	cnatural_system_data* systdt,
 	const char* salt
 );
 

@@ -35,16 +35,16 @@ limitations under the License.
 
 int cnatural_ajax_coreutils_time_get(
 	const char* path,
-	cnatural_ajax_argument_t* args
+	cnatural_ajax_argument* args
 )
 {
-	cnatural_post_processor_node_t* it = NULL;
+	cnatural_post_processor_node* it = NULL;
 	struct tm current_server_time;
 	int sz = 0;
 	int autherr = 0;
 	char* token = "";
 	time_t t;
-	cnatural_authcall_token_t* tkobj = NULL;
+	cnatural_authcall_token* tkobj = NULL;
 
 	if(strcmp(path, "/api/ajax/coreutils/time/get") != 0)
 		return 1;

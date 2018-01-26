@@ -25,8 +25,12 @@
             "name": "Linux",
             "includePath": [
                 "/usr/include",
+								"/usr/local/include",
+								"/usr/include/x86_64-linux-gnu/",
+								"/usr/include/linux",
                 "/usr/include/clang/3.8/include/",
-                "${workspaceRoot}/include"
+                "${workspaceRoot}/include",
+                "${workspaceRoot}"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,

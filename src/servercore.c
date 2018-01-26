@@ -42,13 +42,13 @@ limitations under the License.
 #include "utilfcn.h"
 
 /* Global handler */
-cnatural_servercore_cll_systdt_t cnatural_servercore_get_systdt_handler = NULL;
+cnatural_servercore_cll_systdt cnatural_servercore_get_systdt_handler = NULL;
 
 /* These are private macros that only exists on this file */
 #define FILE_TYPE_ANY 0
 #define FILE_TYPE_SVG 1
 
-cnatural_system_data_t* cnatural_servercore_get_systdt(void)
+cnatural_system_data* cnatural_servercore_get_systdt(void)
 {
 	if(cnatural_servercore_get_systdt_handler == NULL)
 		return NULL;
@@ -56,7 +56,7 @@ cnatural_system_data_t* cnatural_servercore_get_systdt(void)
 	return (*cnatural_servercore_get_systdt_handler)();
 }
 
-void cnatural_servercore_set_systdt(cnatural_servercore_cll_systdt_t handler)
+void cnatural_servercore_set_systdt(cnatural_servercore_cll_systdt handler)
 {
 	cnatural_servercore_get_systdt_handler = handler;
 }
@@ -95,9 +95,9 @@ int cnatural_servercore_request_handler(
 		i = 0,
 		length_http_api_token = 0,
 		length_http_api_path = 0;
-	cnatural_ajax_argument_t arg;
+	cnatural_ajax_argument arg;
 	struct stat fdstat;
-	cnatural_post_processor_data_t* data = NULL;
+	cnatural_post_processor_data* data = NULL;
 	jwt_t* jwt = NULL;
 
 	cnatural_log_info(

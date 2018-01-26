@@ -46,12 +46,12 @@ CNATURAL_BEGIN_DECLRS
 /**
 * @brief This callback is used to get a systdt.
 */
-typedef cnatural_system_data_t* (*cnatural_servercore_cll_systdt_t)(void);
+typedef cnatural_system_data* (*cnatural_servercore_cll_systdt)(void);
 
 /**
 * @brief Global handler to get a systdt.
 */
-extern cnatural_servercore_cll_systdt_t cnatural_servercore_get_systdt_handler;
+extern cnatural_servercore_cll_systdt cnatural_servercore_get_systdt_handler;
 
 /**
 * @brief Gets the global systdt by calling
@@ -59,14 +59,14 @@ extern cnatural_servercore_cll_systdt_t cnatural_servercore_get_systdt_handler;
 *
 * @return The global systdt or NULL if no handler was attached.
 */
-cnatural_system_data_t* cnatural_servercore_get_systdt(void);
+cnatural_system_data* cnatural_servercore_get_systdt(void);
 
 /**
 * @brief Sets the global systdt callback.
 *
 * @param handler The new systdt get handler.
 */
-void cnatural_servercore_set_systdt(cnatural_servercore_cll_systdt_t handler);
+void cnatural_servercore_set_systdt(cnatural_servercore_cll_systdt handler);
 
 /**
 * @brief Handles a HTTP request.
