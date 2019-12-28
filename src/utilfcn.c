@@ -35,7 +35,7 @@ limitations under the License.
 #endif /* !defined(CNATURAL_PASSWD_CRYPT_MTH) \
 	|| (CNATURAL_PASSWD_CRYPT_MTH == 0) */
 
-static struct cnatural_utilfcn_rdstate cnatural_utilfcn_global_state = {
+static struct cnatural_random_state cnatural_global_random_state = {
 	.sum = INT64_C(0xB),
 	.mul = INT64_C(0x5DEECE66D),
 	.mod = INT64_C(281474976710656),
@@ -43,14 +43,14 @@ static struct cnatural_utilfcn_rdstate cnatural_utilfcn_global_state = {
 };
 
 #if defined(CNATURAL_DEFAULT_LOG_LEVEL) && !defined(CNATURAL_DEBUG)
-static int cnatural_utilfcn_global_log_level = CNATURAL_DEFAULT_LOG_LEVEL;
+static int cnatural_global_log_level = CNATURAL_DEFAULT_LOG_LEVEL;
 #else /* defined(CNATURAL_DEFAULT_LOG_LEVEL) */
 /* Log all */
-static int cnatural_utilfcn_global_log_level = 0;
+static int cnatural_global_log_level = 0;
 #endif /* defined(CNATURAL_DEFAULT_LOG_LEVEL) */
 
 #if defined(CNATURAL_USE_ANSI_COLOR)
-static bool cnatural_utilfcn_global_log_use_ansi_color = true;
+static bool cnatural_global_log_color = true;
 #endif /* defined(CNATURAL_USE_ANSI_COLOR) */
 
 char* cnatural_strdup(const char* str)
@@ -66,7 +66,7 @@ char* cnatural_strdup(const char* str)
 	return strcpy(res, str);
 }
 
-cnatural_utilfcn_rdstate cnatural_srandom(int_least64_t seed)
+cnatural_random_state cnatural_srandom(int_least64_t seed)
 {
 	const int_least64_t p2t48 = INT64_C(281474976710656);
 
@@ -74,7 +74,7 @@ cnatural_utilfcn_rdstate cnatural_srandom(int_least64_t seed)
 #if defined(CNATURAL_RDC_ARG1) \
 	&& defined(CNATURAL_RDC_ARG2) \
 	&& defined(CNATURAL_RDC_ARG3)
-	cnatural_utilfcn_global_state = (cnatural_utilfcn_rdstate) {
+	cnatural_global_random_state = (cnatural_random_state) {
 		.sum = INT64_C(CNATURAL_RDC_ARG2) + (seed / INT64_C(2)),
 		.mul = INT64_C(CNATURAL_RDC_ARG1) + INT64_C(1),
 		.mod = (INT64_C(CNATURAL_RDC_ARG3) < p2t48)?
@@ -91,7 +91,7 @@ defined"
 	&& defined(CNATURAL_RDC_ARG2) \
 	&& defined(CNATURAL_RDC_ARG3) */
 #else /* CNATURAL_RDC_SAFE_MODE */
-	cnatural_utilfcn_global_state = (cnatural_utilfcn_rdstate) {
+	cnatural_global_random_state = (cnatural_random_state) {
 		.sum = INT64_C(0xB),
 		.mul = INT64_C(0x5DEECE66D),
 		.mod = p2t48,
@@ -99,21 +99,21 @@ defined"
 	};
 #endif /* CNATURAL_RDC_SAFE_MODE */
 
-	return cnatural_utilfcn_global_state;
+	return cnatural_global_random_state;
 }
 
 int_least64_t cnatural_random(void)
 {
-	cnatural_utilfcn_global_state.xsubi = (
-			cnatural_utilfcn_global_state.mul
-			* cnatural_utilfcn_global_state.xsubi
-			+ cnatural_utilfcn_global_state.sum
-		) % cnatural_utilfcn_global_state.mod;
+	cnatural_global_random_state.xsubi = (
+			cnatural_global_random_state.mul
+			* cnatural_global_random_state.xsubi
+			+ cnatural_global_random_state.sum
+		) % cnatural_global_random_state.mod;
 
-	return cnatural_utilfcn_global_state.xsubi;
+	return cnatural_global_random_state.xsubi;
 }
 
-int_least64_t cnatural_random_r(cnatural_utilfcn_rdstate* state)
+int_least64_t cnatural_random_r(cnatural_random_state* state)
 {
 	state->xsubi = (
 			state->mul
@@ -139,7 +139,7 @@ char cnatural_asciify(char chr)
 void cnatural_fill_random(
 	char* str,
 	size_t len,
-	cnatural_utilfcn_rdstate* state
+	cnatural_random_state* state
 )
 {
 	size_t n = 0, i = 0, j = 0;
@@ -218,16 +218,16 @@ int cnatural_log_level(int level)
 {
 	if(level >= 0)
 	{
-		cnatural_utilfcn_global_log_level = level;
+		cnatural_global_log_level = level;
 	}
 
-	return cnatural_utilfcn_global_log_level;
+	return cnatural_global_log_level;
 }
 
 bool cnatural_log_color(bool use_color)
 {
 #if defined(CNATURAL_USE_ANSI_COLOR)
-	return cnatural_utilfcn_global_log_use_ansi_color = use_color;
+	return cnatural_global_log_color = use_color;
 #else
 	return false;
 #endif
@@ -247,7 +247,7 @@ int cnatural_log_base(
 
 	va_list vargs;
 
-	if(level < cnatural_utilfcn_global_log_level)
+	if(level < cnatural_global_log_level)
 		return 0;
 
 	strftime(strbuf, 50, "%F %T 000", localtime(&(time_t) { time(NULL) }));
@@ -273,7 +273,7 @@ int cnatural_log_base(
 	}
 
 #if defined(CNATURAL_USE_ANSI_COLOR)
-	if(cnatural_utilfcn_global_log_use_ansi_color)
+	if(cnatural_global_log_color)
 		c += printf("\x1B[%dm", 30 + ansicolor);
 #endif
 
@@ -286,7 +286,7 @@ int cnatural_log_base(
 	va_end(vargs);
 
 #if defined(CNATURAL_USE_ANSI_COLOR)
-	//if(cnatural_utilfcn_global_log_use_ansi_color)
+	if(cnatural_global_log_color)
 		c += printf("\x1B[0m");
 #endif
 

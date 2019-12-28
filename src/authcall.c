@@ -69,20 +69,20 @@ int cnatural_authcall_authenticate(
 	/* Now, create the Natural token and use it to extract the authdata
 	** from the JWT object */
 
-	if(cnatural_natural_token_create(&(*token)->token) != 0)
+	if(cnatural_token_create(&(*token)->token) != 0)
 	{
 		serrno = errno;
-		cnatural_natural_token_destroy(&(*token)->token);
+		cnatural_token_destroy(&(*token)->token);
 		free(*token);
 		errno = serrno;
 
 		return -1;
 	}
 
-	if(cnatural_natural_token_load_from_jwt((*token)->token, jwt) != 0)
+	if(cnatural_token_load_from_jwt((*token)->token, jwt) != 0)
 	{
 		serrno = errno;
-		cnatural_natural_token_destroy(&(*token)->token);
+		cnatural_token_destroy(&(*token)->token);
 		free(*token);
 		errno = serrno;
 
@@ -98,8 +98,8 @@ int cnatural_authcall_authenticate(
 
 	jwt_free(jwt);
 
-	cnatural_natural_token_get_username((*token)->token, &uname);
-	cnatural_natural_token_get_random_bytes((*token)->token, &rdbytes);
+	cnatural_token_get_username((*token)->token, &uname);
+	cnatural_token_get_random_bytes((*token)->token, &rdbytes);
 
 	if((strcmp(uname, systdt->username) != 0)
 		|| (strcmp(rdbytes, systdt->random) != 0))
@@ -115,7 +115,7 @@ int cnatural_authcall_destroy(cnatural_authcall_token** token)
 	if((token == NULL) || (*token == NULL))
 		return -1;
 
-	cnatural_natural_token_destroy(&(*token)->token);
+	cnatural_token_destroy(&(*token)->token);
 	free(*token);
 
 	return 0;

@@ -63,4 +63,3 @@ using the desktop "Native" is recommended.
 
 [wiki]: https://cnatural.sourceforge.io/wiki/
 [contrib-i18n]: https://cnatural.sourceforge.io/i18n/
-

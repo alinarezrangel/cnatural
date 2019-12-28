@@ -441,7 +441,7 @@ int cnatural_servercore_request_handler(
 	if(strcoll(ext, ".html") == 0)
 	{
 		MHD_add_response_header(res, "Content-type", "text/html");
-		cnatural_log_info("HiperText Markup Language");
+		cnatural_log_info("HyperText Markup Language");
 	}
 	else if(strcoll(ext, ".js") == 0)
 	{

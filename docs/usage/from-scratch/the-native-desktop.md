@@ -22,9 +22,9 @@ When a window is opened or minimized, all docks change their color from
 The main component of Native is the topbar, which only have two (2) buttons:
 
 * The launcher button will open the *Launcher* in which you can open more
-applications by a single click.
+  applications by a single click.
 * The windows button will open the *Open Windows* in which you can see
-all opened windows and access to them.
+  all opened windows and access to them.
 
 Try to click any of those buttons to see how the apps are distributed.
 
@@ -38,4 +38,3 @@ shortcuts. There are some shortcuts that you cannot change.
 ## Notes and links ##
 
 *There are no notes for now*
-

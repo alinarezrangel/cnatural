@@ -41,12 +41,12 @@ int cnatural_ajax_coreutils_login(
 {
 	cnatural_post_processor_node* it = NULL;
 	cnatural_post_processor_node* passwd = NULL;
-	cnatural_natural_token* tk = NULL;
+	cnatural_token* tk = NULL;
 	char* uname = "";
 	char* upass = "";
 	char* sr = "";
 	jwt_t* jwt = NULL;
-	cnatural_natural_timestamp tms;
+	cnatural_token_timestamp tms;
 	const char* rd = args->systdt->random;
 
 	tms.bdata = time(NULL);
@@ -159,7 +159,7 @@ int cnatural_ajax_coreutils_login(
 	}
 
 	/* Create a Natural token and save it in the JWT */
-	if(cnatural_natural_token_create(&tk) != 0)
+	if(cnatural_token_create(&tk) != 0)
 	{
 		cnatural_log_error("Error creating the token");
 
@@ -168,7 +168,7 @@ int cnatural_ajax_coreutils_login(
 		return -1;
 	}
 
-	if(cnatural_natural_token_set_username(tk, (const char*) uname) != 0)
+	if(cnatural_token_set_username(tk, (const char*) uname) != 0)
 	{
 		cnatural_log_error("Error setting the token data: username");
 
@@ -177,7 +177,7 @@ int cnatural_ajax_coreutils_login(
 		return -1;
 	}
 
-	if(cnatural_natural_token_set_random_bytes(tk, rd) != 0)
+	if(cnatural_token_set_random_bytes(tk, rd) != 0)
 	{
 		cnatural_log_error("Error setting the token data: random bytes");
 
@@ -186,7 +186,7 @@ int cnatural_ajax_coreutils_login(
 		return -1;
 	}
 
-	if(cnatural_natural_token_set_timestamp(tk, &tms) != 0)
+	if(cnatural_token_set_timestamp(tk, &tms) != 0)
 	{
 		cnatural_log_error("Error setting the token data: timestamp");
 
@@ -195,7 +195,7 @@ int cnatural_ajax_coreutils_login(
 		return -1;
 	}
 
-	if(cnatural_natural_token_save_in_jwt(tk, jwt) != 0)
+	if(cnatural_token_save_in_jwt(tk, jwt) != 0)
 	{
 		cnatural_perror("Serializing the token");
 
@@ -204,7 +204,7 @@ int cnatural_ajax_coreutils_login(
 		return -1;
 	}
 
-	if(cnatural_natural_token_destroy(&tk) != 0)
+	if(cnatural_token_destroy(&tk) != 0)
 	{
 		cnatural_log_error("Error destroying the token");
 

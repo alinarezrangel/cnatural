@@ -7,7 +7,7 @@ level.
 
 ## `CNATURAL_DEBUG` - Debug control ##
 
-If this macro is defined, CNatural will enable assertions and will optimize
+If this macro is defined, CNatural will enable assertions and will (de)optimize
 for debug.
 
 ### Requirements ###
@@ -168,5 +168,5 @@ and ends with `_H_` because these macros are used in header guards.
 [drand48]: man://drand48
 [rand]: man://rand
 [scanf]: man://scanf
-[dprinf]: man://dprintf
+[dprintf]: man://dprintf
 [ansi-color]: https://en.wikipedia.org/wiki/ANSI_escape_code

@@ -50,16 +50,16 @@ CNATURAL_BEGIN_DECLRS
 /**
 * @brief An authenticate call token.
 *
-* Basicly a wrapper around cnatural_natural_token_t, but useful to provede
+* Basicly a wrapper around cnatural_token_t, but useful to provede
 * a single-call authenticate method.
 *
 * The public attributes of this struct are:
 *
-* - `cnatural_natural_token* token`: The natural token used.
+* - `cnatural_token_t* token`: The natural token used.
 */
 typedef struct cnatural_authcall_token
 {
-	cnatural_natural_token* token;
+	cnatural_token* token;
 } cnatural_authcall_token;
 
 /**

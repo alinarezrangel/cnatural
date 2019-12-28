@@ -41,7 +41,7 @@ Makefile: see `NPM_PREFIX`, `JSDOC_TEMPLATE` and `JSDOC_TEMPLATE_ARG`.
 * Not overloads the server (see below)
 * Applications in JavaScript
 * Secure and user-sandboxed sessions
-* Material-like based interface (we call it *Natural Design*)
+* Material-like based interface
 * Interface maded upon usability and simplicity
 * Light server (~24Mb versus the **80Mb** of NodeNatural)
 * Powerful JavaScript and C API

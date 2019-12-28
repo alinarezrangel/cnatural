@@ -34,7 +34,7 @@ int cnatural_cmdline_parse(
 	int argc,
 	char** argv,
 	cnatural_cmdline_argument* opts,
-	cnatural_cmdline_argument_handler help_handler
+	cnatural_cmdline_arg_handler help_handler
 )
 {
 	int i = 0, j = 0, w = 0, cc = 0, wc = 0, mx = 0, rt = 0, cln = 0;

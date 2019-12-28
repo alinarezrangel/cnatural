@@ -20,8 +20,8 @@ limitations under the License.
 **********************
 ************************************************/
 
-#if !defined(H_CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_)
-#define H_CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_ 1
+#if !defined(H_CNATURAL_TOKENS_FUNCTIONS_H_)
+#define H_CNATURAL_TOKENS_FUNCTIONS_H_ 1
 
 /**
 * @file
@@ -52,10 +52,10 @@ CNATURAL_BEGIN_DECLRS
 * @warning
 *   Never use the `time_t bdata` field.
 */
-typedef struct cnatural_natural_timestamp
+typedef struct cnatural_token_timestamp
 {
 	time_t bdata;
-} cnatural_natural_timestamp;
+} cnatural_token_timestamp;
 
 /**
 * @brief Represents a token.
@@ -65,7 +65,7 @@ typedef struct cnatural_natural_timestamp
 * Is used with the server auth system (by default JWS) for
 * authenticate the clients.
 */
-typedef struct cnatural_natural_token
+typedef struct cnatural_token
 {
 	/**
 	* @brief The token timestamp.
@@ -73,7 +73,7 @@ typedef struct cnatural_natural_token
 	* Is used to prevent the usage of tokens generated on old server sessions
 	* to be used in newer server sessions.
 	*/
-	cnatural_natural_timestamp timestamp;
+	cnatural_token_timestamp timestamp;
 
 	/**
 	* @brief The server username.
@@ -90,7 +90,7 @@ typedef struct cnatural_natural_token
 	* authentication purposes.
 	*/
 	char* random_bytes;
-} cnatural_natural_token;
+} cnatural_token;
 
 /**
 * @brief Creates a new token.
@@ -100,7 +100,7 @@ typedef struct cnatural_natural_token
 * @param token Token to create.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_create(cnatural_natural_token** token);
+int cnatural_token_create(cnatural_token** token);
 
 /**
 * @brief Destroyes a token.
@@ -110,14 +110,14 @@ int cnatural_natural_token_create(cnatural_natural_token** token);
 * @param token Token to destroy.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_destroy(cnatural_natural_token** token);
+int cnatural_token_destroy(cnatural_token** token);
 
 /**
 * @brief Clones (copy) a token.
 *
 * The result is a token with all members sharing the same value
 * (but not indentity) that the source operand. The two tokens need to be
-* created with cnatural_natural_token_create().
+* created with cnatural_token_create().
 *
 * The dest token will be destroyed in order to made this copy, making possible
 * `dest` to be both a newly created token or one token filled with data.
@@ -126,9 +126,9 @@ int cnatural_natural_token_destroy(cnatural_natural_token** token);
 * @param dest Destination token, will be modified.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_copy(
-	cnatural_natural_token* src,
-	cnatural_natural_token* dest
+int cnatural_token_copy(
+	cnatural_token* src,
+	cnatural_token* dest
 );
 
 /**
@@ -140,8 +140,8 @@ int cnatural_natural_token_copy(
 * @param username New username.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_set_username(
-	cnatural_natural_token* token,
+int cnatural_token_set_username(
+	cnatural_token* token,
 	const char* username
 );
 
@@ -154,8 +154,8 @@ int cnatural_natural_token_set_username(
 * @param random_bytes New random bytes.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_set_random_bytes(
-	cnatural_natural_token* token,
+int cnatural_token_set_random_bytes(
+	cnatural_token* token,
 	const char* random_bytes
 );
 
@@ -168,9 +168,9 @@ int cnatural_natural_token_set_random_bytes(
 * @param timestamp New timestamp.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_set_timestamp(
-	cnatural_natural_token* token,
-	cnatural_natural_timestamp* timestamp
+int cnatural_token_set_timestamp(
+	cnatural_token* token,
+	cnatural_token_timestamp* timestamp
 );
 
 /**
@@ -186,8 +186,8 @@ int cnatural_natural_token_set_timestamp(
 * @param username Pointer to the string where the username will be setted.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_get_username(
-	cnatural_natural_token* token,
+int cnatural_token_get_username(
+	cnatural_token* token,
 	char** username
 );
 
@@ -204,8 +204,8 @@ int cnatural_natural_token_get_username(
 * @param random_bytes Pointer to the string where the random bytes will be setted.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_get_random_bytes(
-	cnatural_natural_token* token,
+int cnatural_token_get_random_bytes(
+	cnatural_token* token,
 	char** random_bytes
 );
 
@@ -222,9 +222,9 @@ int cnatural_natural_token_get_random_bytes(
 * @param timestamp Pointer to the object where the timestamp will be setted.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_get_timestamp(
-	cnatural_natural_token* token,
-	cnatural_natural_timestamp** timestamp
+int cnatural_token_get_timestamp(
+	cnatural_token* token,
+	cnatural_token_timestamp** timestamp
 );
 
 /**
@@ -236,23 +236,23 @@ int cnatural_natural_token_get_timestamp(
 * @param token2 Token to compare.
 * @returns true if the tokens are equal, false otherwise.
 */
-bool cnatural_natural_token_are_equals(
-	cnatural_natural_token* token1,
-	cnatural_natural_token* token2
+bool cnatural_token_are_equals(
+	cnatural_token* token1,
+	cnatural_token* token2
 );
 
 /**
 * @brief Serializes a token in a JWT.
 *
 * The JWT (JSON Web Token / JSON Web Signature) object can be used
-* later with the cnatural_natural_token_load_from_jwt().
+* later with the cnatural_token_load_from_jwt().
 *
 * @param token Token to serialize.
 * @param jwt JWT Object where the token will be serialized.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_save_in_jwt(
-	cnatural_natural_token* token,
+int cnatural_token_save_in_jwt(
+	cnatural_token* token,
 	jwt_t* jwt
 );
 
@@ -260,14 +260,14 @@ int cnatural_natural_token_save_in_jwt(
 * @brief Deserializes a token in a JWT.
 *
 * The JWT (JSON Web Token / JSON Web Signature) object can be used
-* later with the cnatural_natural_token_save_in_jwt().
+* later with the cnatural_token_save_in_jwt().
 *
 * @param token Token to deserialize.
 * @param jwt JWT Object where the token will be deserialize.
 * @returns 0 on success, 1 when the action cannot be executed and -1 on error.
 */
-int cnatural_natural_token_load_from_jwt(
-	cnatural_natural_token* token,
+int cnatural_token_load_from_jwt(
+	cnatural_token* token,
 	jwt_t* jwt
 );
 
@@ -277,4 +277,4 @@ int cnatural_natural_token_load_from_jwt(
 
 CNATURAL_END_DECLRS
 
-#endif /* ~H_CNATURAL_NATURAL_TOKENS_FUNCTIONS_H_ */
+#endif /* ~H_CNATURAL_TOKENS_FUNCTIONS_H_ */

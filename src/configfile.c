@@ -28,7 +28,7 @@ limitations under the License.
 
 #include "utilfcn.h"
 
-int cnatural_configfile_read_systdt_from_file(
+int cnatural_read_config_from_file(
 	FILE* file,
 	cnatural_system_data* systdt,
 	const char* salt

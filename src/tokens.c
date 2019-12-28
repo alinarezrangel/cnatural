@@ -31,12 +31,12 @@ limitations under the License.
 #include "ajaxtypes.h"
 #include "utilfcn.h"
 
-int cnatural_natural_token_create(cnatural_natural_token** token)
+int cnatural_token_create(cnatural_token** token)
 {
 	if(token == NULL)
 		return -1;
 
-	*token = malloc(sizeof(cnatural_natural_token));
+	*token = malloc(sizeof(cnatural_token));
 
 	if(*token == NULL)
 		return -1;
@@ -48,7 +48,7 @@ int cnatural_natural_token_create(cnatural_natural_token** token)
 	return 0;
 }
 
-int cnatural_natural_token_destroy(cnatural_natural_token** token)
+int cnatural_token_destroy(cnatural_token** token)
 {
 	if(token == NULL)
 		return -1;
@@ -61,9 +61,9 @@ int cnatural_natural_token_destroy(cnatural_natural_token** token)
 	return 0;
 }
 
-int cnatural_natural_token_copy(
-	cnatural_natural_token* src,
-	cnatural_natural_token* dest
+int cnatural_token_copy(
+	cnatural_token* src,
+	cnatural_token* dest
 )
 {
 	if((src == NULL) || (dest == NULL))
@@ -79,8 +79,8 @@ int cnatural_natural_token_copy(
 	return 0;
 }
 
-int cnatural_natural_token_set_username(
-	cnatural_natural_token* token,
+int cnatural_token_set_username(
+	cnatural_token* token,
 	const char* username
 )
 {
@@ -93,8 +93,8 @@ int cnatural_natural_token_set_username(
 	return 0;
 }
 
-int cnatural_natural_token_set_random_bytes(
-	cnatural_natural_token* token,
+int cnatural_token_set_random_bytes(
+	cnatural_token* token,
 	const char* random_bytes
 )
 {
@@ -107,9 +107,9 @@ int cnatural_natural_token_set_random_bytes(
 	return 0;
 }
 
-int cnatural_natural_token_set_timestamp(
-	cnatural_natural_token* token,
-	cnatural_natural_timestamp* timestamp
+int cnatural_token_set_timestamp(
+	cnatural_token* token,
+	cnatural_token_timestamp* timestamp
 )
 {
 	if(token == NULL)
@@ -120,8 +120,8 @@ int cnatural_natural_token_set_timestamp(
 	return 0;
 }
 
-int cnatural_natural_token_get_username(
-	cnatural_natural_token* token,
+int cnatural_token_get_username(
+	cnatural_token* token,
 	char** username
 )
 {
@@ -133,8 +133,8 @@ int cnatural_natural_token_get_username(
 	return 0;
 }
 
-int cnatural_natural_token_get_random_bytes(
-	cnatural_natural_token* token,
+int cnatural_token_get_random_bytes(
+	cnatural_token* token,
 	char** random_bytes
 )
 {
@@ -146,9 +146,9 @@ int cnatural_natural_token_get_random_bytes(
 	return 0;
 }
 
-int cnatural_natural_token_get_timestamp(
-	cnatural_natural_token* token,
-	cnatural_natural_timestamp** timestamp
+int cnatural_token_get_timestamp(
+	cnatural_token* token,
+	cnatural_token_timestamp** timestamp
 )
 {
 	if(token == NULL)
@@ -159,9 +159,9 @@ int cnatural_natural_token_get_timestamp(
 	return 0;
 }
 
-bool cnatural_natural_token_are_equals(
-	cnatural_natural_token* token1,
-	cnatural_natural_token* token2
+bool cnatural_token_are_equals(
+	cnatural_token* token1,
+	cnatural_token* token2
 )
 {
 	if((token1 == NULL) || (token2 == NULL))
@@ -185,8 +185,8 @@ bool cnatural_natural_token_are_equals(
 	return true;
 }
 
-int cnatural_natural_token_save_in_jwt(
-	cnatural_natural_token* token,
+int cnatural_token_save_in_jwt(
+	cnatural_token* token,
 	jwt_t* jwt
 )
 {
@@ -205,8 +205,8 @@ int cnatural_natural_token_save_in_jwt(
 	return 0;
 }
 
-int cnatural_natural_token_load_from_jwt(
-	cnatural_natural_token* token,
+int cnatural_token_load_from_jwt(
+	cnatural_token* token,
 	jwt_t* jwt
 )
 {

@@ -170,7 +170,7 @@ int main(int argc, char** argv)
 
 	printf("\nParsing configuration file\n");
 
-	if(cnatural_configfile_read_systdt_from_file(configfile, &systdt, salt) != 0)
+	if(cnatural_read_config_from_file(configfile, &systdt, salt) != 0)
 	{
 		cnatural_log_error("Error reading the configuration file");
 		fclose(configfile);

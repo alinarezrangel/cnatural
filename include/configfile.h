@@ -51,7 +51,7 @@ CNATURAL_BEGIN_DECLRS
 * @param salt The salt to use when encrypting the password.
 * @return -1 on error, 0 on success.
 */
-int cnatural_configfile_read_systdt_from_file(
+int cnatural_read_config_from_file(
 	FILE* file,
 	cnatural_system_data* systdt,
 	const char* salt

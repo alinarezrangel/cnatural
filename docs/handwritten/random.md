@@ -86,4 +86,3 @@ See the [macros][macros] file to get a list of macros used by the LCE.
 > randomness is needed.  (Use random(3) instead.)
 
 [macros]: macros.md
-
