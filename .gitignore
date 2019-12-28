@@ -47,3 +47,6 @@ docs/c/out/
 
 # The target binary
 bin/cnatural*
+
+# Backup files from the editor
+*~
